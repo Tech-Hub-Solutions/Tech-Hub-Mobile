@@ -11,7 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.techhub.ui.theme.PrimaryBlue
 
 @Composable
@@ -36,6 +38,6 @@ fun ElevatedButtonTH(
         ),
         shape = RoundedCornerShape(10.dp),
     ) {
-        Text(text = text)
+        Text(text = text, fontSize = 16.sp, fontWeight = FontWeight(300))
     }
 }
