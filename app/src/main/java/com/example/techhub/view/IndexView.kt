@@ -125,7 +125,7 @@ fun ButtonsSection(navController: NavController) {
         )
 
         ElevatedButtonTH(
-            onClick = { /*TODO*/ },
+            onClick = { navController.navigate(Screen.CadastroScreen.route) },
             text = "Cadastrar",
             backgroundColor = Color(Color.White.value),
             textColor = Color(PrimaryBlue.value),

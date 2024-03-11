@@ -8,6 +8,7 @@ import com.example.techhub.utils.Screen
 import com.example.techhub.view.IndexView
 import com.example.techhub.view.LoginAuth
 import com.example.techhub.view.LoginView
+import com.example.techhub.view.CadastroView
 
 @Composable
 fun Navigation() {
@@ -24,7 +25,13 @@ fun Navigation() {
             LoginAuth(navController = navController)
         }
         composable(route = Screen.CadastroScreen.route) {
-            // CadastroView()
+           CadastroView(navController = navController)
+        }
+        composable(route = Screen.CadastroFreelancerScreen.route) {
+            // rota cadastro freelancer
+        }
+        composable(route = Screen.CadastroEmpresaScreen.route) {
+            // rota cadastro freelancer
         }
     }
 }
