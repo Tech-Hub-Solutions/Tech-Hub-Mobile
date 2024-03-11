@@ -20,7 +20,7 @@ import com.example.techhub.utils.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(navController: NavController, title: String) {
+fun TopBar(navController: NavController, title: String, route: String) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.White,
@@ -36,7 +36,7 @@ fun TopBar(navController: NavController, title: String) {
             )
         },
         navigationIcon = {
-            IconButton(onClick = { navController.navigate(Screen.IndexScreen.route) }) {
+            IconButton(onClick = { navController.navigate(route) }) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
                     contentDescription = "botão de retornar ao início",

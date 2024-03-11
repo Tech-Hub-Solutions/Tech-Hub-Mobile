@@ -36,7 +36,7 @@ import com.example.techhub.utils.Screen
 fun LoginView(navController: NavController) {
     Scaffold(
         topBar = {
-            TopBar(navController = navController, title = "Login")
+            TopBar(navController = navController, title = "Login", route = Screen.IndexScreen.route)
         },
     ) { innerPadding ->
         Column(
@@ -90,9 +90,11 @@ fun LoginView(navController: NavController) {
             Spacer(modifier = Modifier.padding(12.dp))
 
             ElevatedButtonTH(
-                onClick = { /*TODO*/ }, text = "Entrar", backgroundColor = Color(
-                    PrimaryBlue.value
-                )
+                onClick = { navController.navigate(Screen.LoginAuthScreen.route) },
+                text = "Entrar",
+                backgroundColor = Color(PrimaryBlue.value),
+                width = (350),
+                height = (60),
             )
 
             Spacer(modifier = Modifier.padding(8.dp))
