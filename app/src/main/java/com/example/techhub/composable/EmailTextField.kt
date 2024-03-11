@@ -59,7 +59,7 @@ fun EmailTextField() {
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Filled.Mail,
-                    contentDescription = "campo para a senha",
+                    contentDescription = "campo para o e-mail",
                     tint = Color(PrimaryBlue.value)
                 )
             },

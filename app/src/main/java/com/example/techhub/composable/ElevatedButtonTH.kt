@@ -21,14 +21,15 @@ fun ElevatedButtonTH(
     onClick: () -> Unit,
     text: String,
     backgroundColor: Color,
-    textColor: Color = Color.White
+    textColor: Color = Color.White,
+    width: Int, height: Int
 ) {
     ElevatedButton(
         onClick = { onClick() },
         modifier = Modifier
             .padding(10.dp)
-            .width(350.dp)
-            .height(60.dp),
+            .width(width.dp)
+            .height(height.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = backgroundColor,
             contentColor = textColor,

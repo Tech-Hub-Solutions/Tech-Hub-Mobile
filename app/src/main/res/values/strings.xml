@@ -2,5 +2,6 @@
     <string name="app_name">Tech Hub</string>
     <string name="description_image_index">imagem de pessoas se cumprimentando</string>
     <string name="description_image_login">imagem de duas pessoas com computadores</string>
+    <string name="description_image_login_auth">imagem de um cadeaco branco com fundo azul</string>
     <string name="description_image_logo">logo da Tech Hub</string>
 </resources>
