@@ -1,5 +1,6 @@
 package com.example.techhub.view
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -27,6 +29,7 @@ import com.example.techhub.utils.Screen
 
 @Composable
 fun CadastroView(navController: NavController) {
+
     Scaffold(
         topBar = {
             TopBar(navController = navController, title = "Cadastro", route = Screen.CadastroScreen.route)
@@ -35,7 +38,6 @@ fun CadastroView(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White)
                 .padding(
                     top = innerPadding.calculateTopPadding(),
                     bottom = 24.dp,
@@ -44,6 +46,7 @@ fun CadastroView(navController: NavController) {
                 ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             Spacer(modifier = Modifier.padding(40.dp))
             
             ImageSection()
@@ -55,6 +58,7 @@ fun CadastroView(navController: NavController) {
 
 
 }
+
 
 @Composable
 fun ImageSection(){
@@ -104,5 +108,15 @@ fun ButtonSection(){
         backgroundColor = Color(PrimaryBlue.value),
         width = 311,
         height = 48
+    )
+}
+
+@Composable
+fun BackgroundImage(){
+    Image(painter = painterResource(
+        id = R.mipmap.fundo_azul),
+        contentDescription = "Background azul",
+        modifier = Modifier.fillMaxSize(),
+        alignment = Alignment.TopStart
     )
 }
