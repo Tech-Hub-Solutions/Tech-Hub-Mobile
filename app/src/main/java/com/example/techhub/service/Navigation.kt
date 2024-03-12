@@ -8,12 +8,13 @@ import com.example.techhub.utils.Screen
 import com.example.techhub.view.IndexView
 import com.example.techhub.view.LoginAuth
 import com.example.techhub.view.LoginView
+import com.example.techhub.view.PerfilView
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-
-    NavHost(navController = navController, startDestination = Screen.IndexScreen.route) {
+    // TODO - TROCAR A INICIALIZAÇÃO DA CONTROLLER P/ IndexView
+    NavHost(navController = navController, startDestination = Screen.PerfilViewScreen.route) {
         composable(route = Screen.IndexScreen.route) {
             IndexView(navController = navController)
         }
@@ -25,6 +26,9 @@ fun Navigation() {
         }
         composable(route = Screen.CadastroScreen.route) {
             // CadastroView()
+        }
+        composable(route = Screen.PerfilViewScreen.route) {
+            PerfilView()
         }
     }
 }

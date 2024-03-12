@@ -7,4 +7,5 @@ sealed class Screen(
     data object CadastroScreen : Screen("cadastro_screen")
     data object LoginScreen : Screen("login_screen")
     data object LoginAuthScreen : Screen("login_auth_screen")
+    data object PerfilViewScreen : Screen("perfil_view_screen")
 }
