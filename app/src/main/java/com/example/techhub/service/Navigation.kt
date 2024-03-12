@@ -13,8 +13,7 @@ import com.example.techhub.view.PerfilView
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    // TODO - TROCAR A INICIALIZAÇÃO DA CONTROLLER P/ IndexView
-    NavHost(navController = navController, startDestination = Screen.PerfilViewScreen.route) {
+    NavHost(navController = navController, startDestination = Screen.IndexScreen.route) {
         composable(route = Screen.IndexScreen.route) {
             IndexView(navController = navController)
         }
