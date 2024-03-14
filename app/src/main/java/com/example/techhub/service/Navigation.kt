@@ -5,6 +5,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.techhub.utils.Screen
+import com.example.techhub.view.CadastroEmpresaView
+import com.example.techhub.view.CadastroFreelancerView
 import com.example.techhub.view.IndexView
 import com.example.techhub.view.LoginAuth
 import com.example.techhub.view.LoginView
@@ -28,10 +30,10 @@ fun Navigation() {
            CadastroView(navController = navController)
         }
         composable(route = Screen.CadastroFreelancerScreen.route) {
-            // rota cadastro freelancer
+            CadastroFreelancerView(navController = navController)
         }
         composable(route = Screen.CadastroEmpresaScreen.route) {
-            // rota cadastro freelancer
+            CadastroEmpresaView(navController = navController)
         }
     }
 }

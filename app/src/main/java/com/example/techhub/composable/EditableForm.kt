@@ -2,6 +2,7 @@ package com.example.techhub
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
@@ -20,12 +21,14 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun EditableForm(height: Double, width: Double, backcroundColor: Color,
-                 imagePath: Int, contentDescription: String, text: String, textColor : Color) {
+                 imagePath: Int, contentDescription: String, text: String, textColor: Color,
+                 onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .height(height.dp)
             .width(width.dp)
-            .background(backcroundColor, shape = MaterialTheme.shapes.extraSmall),
+            .background(backcroundColor, shape = MaterialTheme.shapes.extraSmall)
+            .clickable { onClick() },
         contentAlignment = Alignment.TopCenter
 
     ) {

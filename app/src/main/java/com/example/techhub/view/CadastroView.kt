@@ -1,5 +1,6 @@
 package com.example.techhub.view
 
+import android.widget.Button
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -7,9 +8,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,12 +33,14 @@ import com.example.techhub.utils.Screen
 
 @Composable
 fun CadastroView(navController: NavController) {
+    val userType = remember { mutableStateOf(0) }
 
     Scaffold(
         topBar = {
-            TopBar(navController = navController, title = "Cadastro", route = Screen.CadastroScreen.route)
+            TopBar(navController = navController, title = "Primeiros Passos", route = Screen.IndexScreen.route)
         },
     ) { innerPadding ->
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -47,12 +53,61 @@ fun CadastroView(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Spacer(modifier = Modifier.padding(40.dp))
-            
-            ImageSection()
+            Spacer(modifier = Modifier.padding(20.dp))
 
-            Spacer(modifier = Modifier.padding(194.dp))
-            ButtonSection()
+            Text(
+                text = "Como deseja começar?",
+                style = TextStyle(
+                    color = Color(SecondaryBlue.value),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp
+                )
+            )
+
+            Spacer(modifier = Modifier.padding(16.dp))
+
+            Row(){
+                EditableForm(
+                    height = 148.0,
+                    width = 148.0,
+                    backcroundColor = Color.White,
+                    imagePath = R.mipmap.freelancer_image,
+                    contentDescription = "Imagem freelancer",
+                    text = "Freelancer",
+                    textColor = Color(PrimaryBlue.value),
+                    onClick = {userType.value = 1}
+                )
+
+                Spacer(modifier = Modifier.padding(16.dp))
+
+                EditableForm(
+                    height = 148.0,
+                    width = 148.0,
+                    backcroundColor = Color.White,
+                    imagePath = R.mipmap.empresa_image,
+                    contentDescription = "Imagem Emppresa",
+                    text = "Empresa",
+                    textColor = Color(PrimaryBlue.value),
+                    onClick = {userType.value = 2}
+                )
+            }
+
+            Spacer(modifier = Modifier.padding(120.dp))
+
+            ElevatedButtonTH(
+                onClick = {
+                    if (userType.value == 1){
+                        navController.navigate(Screen.CadastroFreelancerScreen.route)
+                    } else if (userType.value == 2){
+                        navController.navigate(Screen.CadastroEmpresaScreen.route)
+                    }
+                      },
+                text = "Avançar",
+                backgroundColor = Color(PrimaryBlue.value),
+                width = (350),
+                height = (60)
+            )
+
         }
     }
 
@@ -61,54 +116,13 @@ fun CadastroView(navController: NavController) {
 
 
 @Composable
-fun ImageSection(){
-    Text(
-        text = "Como deseja começar?",
-        style = TextStyle(
-            color = Color(SecondaryBlue.value),
-            fontWeight = FontWeight.Bold,
-            fontSize = 24.sp
-        )
+fun ImageSection(navController: NavController, userType: Int){
 
-    )
-
-    Spacer(modifier = Modifier.padding(16.dp))
-
-    Row(){
-        EditableForm(
-            height = 148.0,
-            width = 148.0,
-            backcroundColor = Color.White,
-            imagePath = R.mipmap.freelancer_image,
-            contentDescription = "Imagem freelancer",
-            text = "Freelancer",
-            textColor = Color(PrimaryBlue.value)
-        )
-
-        Spacer(modifier = Modifier.padding(16.dp))
-
-        EditableForm(
-            height = 148.0,
-            width = 148.0,
-            backcroundColor = Color.White,
-            imagePath = R.mipmap.empresa_image,
-            contentDescription = "Imagem freelancer",
-            text = "Freelancer",
-            textColor = Color(PrimaryBlue.value)
-        )
-    }
 }
 
 @Composable
 fun ButtonSection(){
 
-    ElevatedButtonTH(
-        onClick = { /*TODO*/ },
-        text = "Avançar",
-        backgroundColor = Color(PrimaryBlue.value),
-        width = 311,
-        height = 48
-    )
 }
 
 @Composable
