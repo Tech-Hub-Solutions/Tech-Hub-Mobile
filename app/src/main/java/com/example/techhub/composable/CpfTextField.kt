@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AssignmentInd
 import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
@@ -25,13 +26,10 @@ import com.example.techhub.ui.theme.PrimaryBlue
 @Composable
 fun CpfTextField(){
     var filledText by remember { mutableStateOf("") }
-    var isCpfValid by remember { mutableStateOf(true) }
+    var isCpfValid by remember { mutableStateOf(false) }
 
 
     Column {
-        LaunchedEffect(filledText) {
-            isCpfValid = isCpfTemp(filledText)
-        }
 
         androidx.compose.material3.OutlinedTextField(
             value = filledText,
@@ -55,7 +53,7 @@ fun CpfTextField(){
             ),
             leadingIcon = {
                 Icon(
-                    imageVector = Icons.Filled.Mail,
+                    imageVector = Icons.Filled.AssignmentInd,
                     contentDescription = "campo para CPF",
                     tint = Color(PrimaryBlue.value)
                 )
@@ -65,7 +63,7 @@ fun CpfTextField(){
             singleLine = true,
             isError = isCpfValid,
             supportingText = {
-                if (isCpfValid && filledText.isNotBlank()) Text("CPF inválido")
+                if (isCpfValid) Text("CPF inválido")
             },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,

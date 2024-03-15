@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Mail
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
@@ -25,12 +26,9 @@ import com.example.techhub.ui.theme.PrimaryBlue
 @Composable
 fun NameTextField(){
     var filledText by remember { mutableStateOf("") }
-    var isNameValid by remember { mutableStateOf(true) }
+    var isNameValid by remember { mutableStateOf(false) }
 
     Column {
-        LaunchedEffect(filledText) {
-            isNameValid = filledText.isBlank()
-        }
 
         androidx.compose.material3.OutlinedTextField(
             value = filledText,
@@ -54,7 +52,7 @@ fun NameTextField(){
             ),
             leadingIcon = {
                 Icon(
-                    imageVector = Icons.Filled.Mail,
+                    imageVector = Icons.Filled.Person,
                     contentDescription = "campo para o nome",
                     tint = Color(PrimaryBlue.value)
                 )
@@ -64,7 +62,7 @@ fun NameTextField(){
             singleLine = true,
             isError = isNameValid,
             supportingText = {
-                if (filledText.isBlank()) Text("É necessário preencher o nome")
+                if (filledText.isBlank() && isNameValid) Text("É necessário preencher o nome")
             },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,

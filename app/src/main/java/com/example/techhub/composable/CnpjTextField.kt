@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AssignmentInd
 import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
@@ -25,19 +26,15 @@ import com.example.techhub.ui.theme.PrimaryBlue
 @Composable
 fun CnpjTextField(){
     var filledText by remember { mutableStateOf("") }
-    var isCnpjValid by remember { mutableStateOf(true) }
-
+    var isCnpjValid by remember { mutableStateOf(false) }
 
     Column {
-        LaunchedEffect(filledText) {
-            isCnpjValid = isCNPJ(filledText)
-        }
 
         androidx.compose.material3.OutlinedTextField(
             value = filledText,
             onValueChange = {
                 filledText = it
-                isCnpjValid = isCNPJ(filledText)
+                isCnpjValid = isCnpjValidTemp(filledText)
             },
             label = { Text("CNPJ") },
             placeholder = { Text("Digite seu CNPJ") },
@@ -55,7 +52,7 @@ fun CnpjTextField(){
             ),
             leadingIcon = {
                 Icon(
-                    imageVector = Icons.Filled.Mail,
+                    imageVector = Icons.Filled.AssignmentInd,
                     contentDescription = "campo para o CNPJ",
                     tint = Color(PrimaryBlue.value)
                 )
@@ -65,7 +62,7 @@ fun CnpjTextField(){
             singleLine = true,
             isError = isCnpjValid,
             supportingText = {
-                if (isCnpjValid && filledText.isNotBlank()) Text("CNPJ inválido")
+                if (isCnpjValid) Text("CNPJ inválido")
             },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,
@@ -76,7 +73,7 @@ fun CnpjTextField(){
 }
 
 
-fun isCnpjValid(cnpj: String) : Boolean{
+fun isCnpjValidTemp(cnpj: String) : Boolean{
     return cnpj.length != 14
 }
 

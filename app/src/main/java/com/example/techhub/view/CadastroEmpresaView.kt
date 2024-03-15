@@ -1,5 +1,6 @@
 package com.example.techhub.view
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -43,6 +44,7 @@ fun CadastroEmpresaView(navController: NavController){
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(color = Color.White)
                 .padding(
                     top = innerPadding.calculateTopPadding(),
                     bottom = 24.dp,
@@ -58,7 +60,7 @@ fun CadastroEmpresaView(navController: NavController){
                 style = TextStyle(
                     color = Color(PrimaryBlue.value),
                     fontWeight = FontWeight.Bold,
-                    fontSize = 30.sp
+                    fontSize = 32.sp
                 )
             )
 
@@ -70,23 +72,26 @@ fun CadastroEmpresaView(navController: NavController){
                 fontWeight = FontWeight.Thin,
                 fontSize = 14.sp
             )
-            Spacer(modifier = Modifier.padding(12.dp))
+            Column(modifier = Modifier.padding(horizontal = 10.dp)) {
+                Spacer(modifier = Modifier.padding(12.dp))
 
-            NameTextField()
+                NameTextField()
 
-            Spacer(modifier = Modifier.padding(12.dp))
+                Spacer(modifier = Modifier.padding(12.dp))
 
-            CnpjTextField()
+                CnpjTextField()
 
-            Spacer(modifier = Modifier.padding(12.dp))
+                Spacer(modifier = Modifier.padding(12.dp))
 
-            EmailTextField()
+                EmailTextField()
 
-            Spacer(modifier = Modifier.padding(12.dp))
+                Spacer(modifier = Modifier.padding(12.dp))
 
-            PasswordTextField()
+                PasswordTextField()
 
-            Spacer(modifier = Modifier.padding(12.dp))
+                Spacer(modifier = Modifier.padding(12.dp))
+            }
+
 
             ElevatedButtonTH(
                 onClick = {
@@ -95,7 +100,7 @@ fun CadastroEmpresaView(navController: NavController){
                 text = "Cadastrar",
                 backgroundColor = Color.White,
                 textColor = Color(PrimaryBlue.value),
-                width = (350),
+                width = (360),
                 height = (60)
             )
 
