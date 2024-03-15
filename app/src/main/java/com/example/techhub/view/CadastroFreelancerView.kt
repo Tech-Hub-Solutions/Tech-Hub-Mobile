@@ -61,43 +61,45 @@ fun CadastroFreelancerView(navController: NavController){
                 )
             )
 
-            Spacer(modifier = Modifier.padding(8.dp))
+            Column(modifier = Modifier.padding(horizontal = 10.dp)) {
 
-            Text(
-                text = "Faça o cadastro para ter acesso aos nossos serviços!",
-                color = Color(GrayText.value),
-                fontWeight = FontWeight.Thin,
-                fontSize = 14.sp
-            )
-            Spacer(modifier = Modifier.padding(12.dp))
+                Spacer(modifier = Modifier.padding(8.dp))
 
-            NameTextField()
+                Text(
+                    text = "Faça o cadastro para ter acesso aos nossos serviços!",
+                    color = Color(GrayText.value),
+                    fontWeight = FontWeight.Thin,
+                    fontSize = 14.sp
+                )
+                Spacer(modifier = Modifier.padding(12.dp))
 
-            Spacer(modifier = Modifier.padding(12.dp))
+                NameTextField()
 
-            CpfTextField()
+                Spacer(modifier = Modifier.padding(12.dp))
 
-            Spacer(modifier = Modifier.padding(12.dp))
+                CpfTextField()
 
-            EmailTextField()
+                Spacer(modifier = Modifier.padding(12.dp))
 
-            Spacer(modifier = Modifier.padding(12.dp))
+                EmailTextField()
 
-            PasswordTextField()
+                Spacer(modifier = Modifier.padding(12.dp))
 
-            Spacer(modifier = Modifier.padding(12.dp))
+                PasswordTextField()
 
-            ElevatedButtonTH(
-                onClick = {
+                Spacer(modifier = Modifier.padding(12.dp))
 
-                },
-                text = "Cadastrar",
-                backgroundColor = Color.White,
-                textColor = Color(PrimaryBlue.value),
-                width = (350),
-                height = (60)
-            )
+                ElevatedButtonTH(
+                    onClick = {
 
+                    },
+                    text = "Cadastrar",
+                    backgroundColor = Color.White,
+                    textColor = Color(PrimaryBlue.value),
+                    width = (350),
+                    height = (60)
+                )
+            }
         }
     }
 }

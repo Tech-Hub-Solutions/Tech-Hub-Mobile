@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.techhub.EditableForm
 import com.example.techhub.R
+import com.example.techhub.composable.AlertDialogSample
 import com.example.techhub.composable.ElevatedButtonTH
 import com.example.techhub.composable.TopBar
 import com.example.techhub.ui.theme.PrimaryBlue
@@ -38,6 +39,7 @@ import com.example.techhub.utils.Screen
 @Composable
 fun CadastroView(navController: NavController) {
     val userType = remember { mutableStateOf(0) }
+    val isAlerted = remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -111,6 +113,8 @@ fun CadastroView(navController: NavController) {
                             navController.navigate(Screen.CadastroFreelancerScreen.route)
                         } else if (userType.value == 2) {
                             navController.navigate(Screen.CadastroEmpresaScreen.route)
+                        } else {
+                            isAlerted.value = true
                         }
                     },
                     text = "Avançar",
@@ -118,6 +122,12 @@ fun CadastroView(navController: NavController) {
                     width = (350),
                     height = (60)
                 )
+
+                if (isAlerted.value) {
+                    AlertDialogSample(title = "Tipo de usuário não escolhido!!",
+                        text = "Escolha um tipo de usuário para continuar")
+                    isAlerted.value = false
+                }
 
             }
         }
