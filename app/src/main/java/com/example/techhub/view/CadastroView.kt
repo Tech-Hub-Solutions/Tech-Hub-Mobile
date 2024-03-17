@@ -43,11 +43,20 @@ fun CadastroView(navController: NavController) {
 
     Scaffold(
         topBar = {
-            TopBar(navController = navController, title = "Primeiros Passos", route = Screen.IndexScreen.route)
+            TopBar(
+                navController = navController,
+                title = "Primeiros Passos",
+                route = Screen.IndexScreen.route
+            )
         },
     ) { innerPadding ->
-        Box (modifier = Modifier.fillMaxWidth()) {
-            Image(painter = painterResource(id = R.mipmap.fundo_azul),
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color.White)
+        ) {
+            Image(
+                painter = painterResource(id = R.mipmap.fundo_azul),
                 contentDescription = "Fundo com tons de azul",
                 contentScale = ContentScale.FillWidth,
                 modifier = Modifier.matchParentSize(),
@@ -124,34 +133,14 @@ fun CadastroView(navController: NavController) {
                 )
 
                 if (isAlerted.value) {
-                    AlertDialogSample(title = "Tipo de usuário não escolhido!!",
-                        text = "Escolha um tipo de usuário para continuar")
+                    AlertDialogSample(
+                        title = "Tipo de usuário não escolhido!!",
+                        text = "Escolha um tipo de usuário para continuar"
+                    )
                     isAlerted.value = false
                 }
 
             }
         }
     }
-
-}
-
-
-@Composable
-fun ImageSection(navController: NavController, userType: Int){
-
-}
-
-@Composable
-fun ButtonSection(){
-
-}
-
-@Composable
-fun BackgroundImage(){
-    Image(painter = painterResource(
-        id = R.mipmap.fundo_azul),
-        contentDescription = "Background azul",
-        modifier = Modifier.fillMaxSize(),
-        alignment = Alignment.TopStart
-    )
 }
