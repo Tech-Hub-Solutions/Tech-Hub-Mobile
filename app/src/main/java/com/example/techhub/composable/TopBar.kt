@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBackIos
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -23,7 +25,7 @@ import com.example.techhub.utils.Screen
 fun TopBar(navController: NavController, title: String, route: String) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.White,
+            containerColor = Color.Transparent,
             titleContentColor = MaterialTheme.colorScheme.primary,
         ),
         modifier = Modifier.padding(bottom = 8.dp),
@@ -32,13 +34,13 @@ fun TopBar(navController: NavController, title: String, route: String) {
                 text = title,
                 style = MaterialTheme.typography.titleLarge,
                 color = Color.Black,
-                modifier = Modifier.background(Color.White)
+                modifier = Modifier.background(Color.Transparent),
             )
         },
         navigationIcon = {
             IconButton(onClick = { navController.navigate(route) }) {
                 Icon(
-                    imageVector = Icons.Filled.ArrowBack,
+                    imageVector = Icons.Filled.ArrowBackIos,
                     contentDescription = "botão de retornar ao início",
                     tint = Color.Black
                 )
