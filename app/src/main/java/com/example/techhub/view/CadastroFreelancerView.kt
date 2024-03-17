@@ -1,5 +1,6 @@
 package com.example.techhub.view
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,20 +29,25 @@ import com.example.techhub.ui.theme.PrimaryBlue
 import com.example.techhub.utils.Screen
 
 @Composable
-fun CadastroFreelancerView(navController: NavController){
-    val nomeFreelancer = remember{ mutableStateOf("") }
-    val cpfFreelancer = remember{ mutableStateOf("") }
-    val emailFreelancer = remember{ mutableStateOf("") }
-    val senhaFreelancer = remember{ mutableStateOf("") }
+fun CadastroFreelancerView(navController: NavController) {
+    val nomeFreelancer = remember { mutableStateOf("") }
+    val cpfFreelancer = remember { mutableStateOf("") }
+    val emailFreelancer = remember { mutableStateOf("") }
+    val senhaFreelancer = remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
-            TopBar(navController = navController, title = "Cadastro", route = Screen.CadastroScreen.route)
+            TopBar(
+                navController = navController,
+                title = "Cadastro",
+                route = Screen.CadastroScreen.route
+            )
         },
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(Color.White)
                 .padding(
                     top = innerPadding.calculateTopPadding(),
                     bottom = 24.dp,
