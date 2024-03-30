@@ -32,7 +32,7 @@ import com.example.techhub.ui.theme.PrimaryBlue
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordTextField() {
+fun PasswordTextField(onValueChanged: (String) -> Unit) {
     var filledText by remember { mutableStateOf("") }
     var isPasswordValid by remember { mutableStateOf(true) }
     var isPasswordVisible by remember { mutableStateOf(false) }
@@ -47,6 +47,7 @@ fun PasswordTextField() {
             onValueChange = {
                 filledText = it
                 isPasswordValid = validatePassword(filledText)
+                onValueChanged(filledText)
             },
             label = { Text("Senha") },
             placeholder = { Text("Digite sua senha") },

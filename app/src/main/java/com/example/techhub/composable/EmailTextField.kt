@@ -27,7 +27,7 @@ import com.example.techhub.ui.theme.PrimaryBlue
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun EmailTextField() {
+fun EmailTextField(onValueChanged: (String) -> Unit) {
     var filledText by remember { mutableStateOf("") }
     var isEmailValid by remember { mutableStateOf(true) }
 
@@ -41,6 +41,7 @@ fun EmailTextField() {
             onValueChange = {
                 filledText = it
                 isEmailValid = validateEmail(filledText)
+                onValueChanged(filledText)
             },
             label = { Text("E-mail") },
             placeholder = { Text("Digite seu e-mail") },

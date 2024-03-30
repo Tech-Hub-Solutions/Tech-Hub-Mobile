@@ -29,15 +29,19 @@ import com.example.techhub.ui.theme.PrimaryBlue
 import com.example.techhub.utils.Screen
 
 @Composable
-fun CadastroEmpresaView(navController: NavController){
-    val nomeEmpresa = remember{ mutableStateOf("") }
-    val cnpjEmpresa = remember{ mutableStateOf("") }
-    val emailEmpresa = remember{ mutableStateOf("") }
-    val senhaEmpresa = remember{ mutableStateOf("") }
+fun CadastroEmpresaView(navController: NavController) {
+    val nomeEmpresa = remember { mutableStateOf("") }
+    val cnpjEmpresa = remember { mutableStateOf("") }
+    val emailEmpresa = remember { mutableStateOf("") }
+    val senhaEmpresa = remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
-            TopBar(navController = navController, title = "Cadastro", route = Screen.CadastroScreen.route)
+            TopBar(
+                navController = navController,
+                title = "Cadastro",
+                route = Screen.CadastroScreen.route
+            )
         },
     ) { innerPadding ->
         Column(
@@ -82,11 +86,11 @@ fun CadastroEmpresaView(navController: NavController){
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                EmailTextField()
+                EmailTextField { emailEmpresa.value = it }
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                PasswordTextField()
+                PasswordTextField { senhaEmpresa.value = it }
 
                 Spacer(modifier = Modifier.padding(12.dp))
             }

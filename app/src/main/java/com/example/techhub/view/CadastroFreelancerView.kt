@@ -87,11 +87,11 @@ fun CadastroFreelancerView(navController: NavController) {
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                EmailTextField()
+                EmailTextField { emailFreelancer.value = it }
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                PasswordTextField()
+                PasswordTextField { senhaFreelancer.value = it }
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
