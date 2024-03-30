@@ -51,6 +51,8 @@ android {
 
 dependencies {
     val nav_version = "2.7.6"
+    val retrofit2_version = "2.9.0"
+    val logging_interceptor_version = "4.11.0"
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
@@ -65,6 +67,10 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
     implementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation("com.google.code.gson:gson:$retrofit2_version")
+    implementation("com.squareup.retrofit2:retrofit:$retrofit2_version")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofit2_version")
+    implementation("com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
