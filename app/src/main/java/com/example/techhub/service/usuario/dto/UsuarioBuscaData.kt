@@ -1,8 +1,8 @@
 package com.example.techhub.service.usuario.dto
 
-@JvmRecord
+
 data class UsuarioBuscaData(
-    val id: Integer? = null,
+    val id: Int? = null,
     val nome: String? = null,
     val descricao: String? = null,
     val qtdEstrela: Double? = null,

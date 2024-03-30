@@ -2,9 +2,9 @@ package com.example.techhub.service.perfil.dto
 
 import com.example.techhub.service.flag.dto.FlagData
 
-@JvmRecord
+
 data class PerfilDetalhadoData(
-    val id: Integer? = null,
+    val id: Int? = null,
     val sobreMim: String? = null,
     val experiencia: String? = null,
     val descricao: String? = null,

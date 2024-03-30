@@ -2,7 +2,7 @@ package com.example.techhub.service.usuario.dto
 
 import com.example.techhub.utils.enums.UsuarioFuncao
 
-@JvmRecord
+
 data class UsuarioDetalhadoData(
     val nome: String? = null,
     val email: String? = null,

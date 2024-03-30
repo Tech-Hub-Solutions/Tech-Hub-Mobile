@@ -3,10 +3,10 @@ package com.example.techhub.service.perfil.dto
 import com.example.techhub.service.flag.dto.FlagData
 import com.example.techhub.utils.enums.UsuarioFuncao
 
-@JvmRecord
+
 data class PerfilGeralDetalhadoData(
-    val idUsuario: Integer? = null,
-    val idPerfil: Integer? = null,
+    val idUsuario: Int? = null,
+    val idPerfil: Int? = null,
     val urlFotoPerfil: String? = null,
     val urlFotoWallpaper: String? = null,
     val urlCurriculo: String? = null,

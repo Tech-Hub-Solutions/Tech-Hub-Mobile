@@ -1,6 +1,6 @@
 package com.example.techhub.service.perfil.dto
 
-@JvmRecord
+
 data class PerfilCadastroData(
     val sobreMim: String? = null,
     val experiencia: String? = null,
@@ -9,5 +9,5 @@ data class PerfilCadastroData(
     val nomeGithub: String? = null,
     val linkGithub: String? = null,
     val linkLinkedin: String? = null,
-    val flagsId: List<Integer>? = null,
+    val flagsId: List<Int>? = null,
 )
