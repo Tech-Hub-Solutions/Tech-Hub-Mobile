@@ -1,6 +1,9 @@
 package com.example.techhub.view
 
-import android.widget.Button
+import android.content.Context
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -10,9 +13,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -27,26 +30,51 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.techhub.EditableForm
+import com.example.techhub.IndexActivity
 import com.example.techhub.R
 import com.example.techhub.composable.AlertDialogSample
 import com.example.techhub.composable.ElevatedButtonTH
+import com.example.techhub.composable.SetBarColor
 import com.example.techhub.composable.TopBar
 import com.example.techhub.ui.theme.PrimaryBlue
 import com.example.techhub.ui.theme.SecondaryBlue
+import com.example.techhub.ui.theme.TechHubTheme
 import com.example.techhub.utils.Screen
 
+class CadastroActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContent {
+            TechHubTheme {
+                SetBarColor(color = Color.White)
+
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    val navContoller = rememberNavController()
+                    CadastroContent(navController = navContoller, context = this)
+                }
+            }
+        }
+    }
+}
+
 @Composable
-fun CadastroView(navController: NavController) {
+fun CadastroContent(navController: NavController, context: Context) {
     val userType = remember { mutableStateOf(0) }
     val isAlerted = remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
             TopBar(
-                navController = navController,
+                willRedirectToActivity = true,
+                activity = IndexActivity::class.java,
+                context = context,
                 title = "Primeiros Passos",
-                route = Screen.IndexScreen.route
             )
         },
     ) { innerPadding ->
@@ -118,6 +146,7 @@ fun CadastroView(navController: NavController) {
 
                 ElevatedButtonTH(
                     onClick = {
+                        // TODO - Alterar lógica de navigate
                         if (userType.value == 1) {
                             navController.navigate(Screen.CadastroFreelancerScreen.route)
                         } else if (userType.value == 2) {

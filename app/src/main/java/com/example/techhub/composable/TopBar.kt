@@ -1,5 +1,6 @@
 package com.example.techhub.composable
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -22,7 +23,14 @@ import com.example.techhub.utils.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(navController: NavController, title: String, route: String) {
+fun TopBar(
+    willRedirectToActivity: Boolean,
+    activity: Class<*>? = null,
+    context: Context? = null,
+    navController: NavController? = null,
+    route: String? = null,
+    title: String
+) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.Transparent,
@@ -38,7 +46,14 @@ fun TopBar(navController: NavController, title: String, route: String) {
             )
         },
         navigationIcon = {
-            IconButton(onClick = { navController.navigate(route) }) {
+            IconButton(onClick = {
+                if (willRedirectToActivity) {
+                    StartNewActivity(context!!, activity!!)
+                } else {
+                    navController!!.navigate(route!!)
+                }
+
+            }) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBackIos,
                     contentDescription = "botão de retornar ao início",

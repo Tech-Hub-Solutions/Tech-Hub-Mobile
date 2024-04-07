@@ -46,7 +46,13 @@ fun LoginAuth(navController: NavController) {
 
     Scaffold(
         topBar = {
-            TopBar(navController = navController, title = "Login", route = Screen.LoginScreen.route)
+            TopBar(
+                willRedirectToActivity = true,
+                // TODO - Inserir lógica para retornar ao LoginActivity
+                navController = navController,
+                title = "Login",
+                route = Screen.LoginScreen.route
+            )
         },
     ) { innerPadding ->
         Column(

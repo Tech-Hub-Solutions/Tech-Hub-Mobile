@@ -17,7 +17,7 @@
         android:theme="@style/Theme.TechHub"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".IndexActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.TechHub">
@@ -27,6 +27,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".view.LoginActivity"
+            android:theme="@style/Theme.TechHub" />
+
+        <activity
+            android:name=".view.CadastroActivity"
+            android:theme="@style/Theme.TechHub" />
+
     </application>
 
 </manifest>

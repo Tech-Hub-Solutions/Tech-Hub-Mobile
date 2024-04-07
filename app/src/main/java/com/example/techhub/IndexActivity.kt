@@ -1,5 +1,10 @@
-package com.example.techhub.view
+package com.example.techhub
 
+import android.content.Context
+import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -7,13 +12,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -21,16 +27,54 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.techhub.composable.CenteredImageSection
-import com.example.techhub.R
-import com.example.techhub.utils.Screen
 import com.example.techhub.composable.ElevatedButtonTH
+import com.example.techhub.composable.SetBarColor
+import com.example.techhub.composable.StartNewActivity
+import com.example.techhub.service.Navigation
 import com.example.techhub.ui.theme.GrayText
 import com.example.techhub.ui.theme.PrimaryBlue
+import com.example.techhub.ui.theme.TechHubTheme
+import com.example.techhub.view.CadastroActivity
+import com.example.techhub.view.LoginActivity
+
+var wasToastShowed: Boolean = false
+
+class IndexActivity : ComponentActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            TechHubTheme {
+                SetBarColor(color = Color.White)
+
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    Navigation()
+                }
+            }
+            showToast(context = this)
+
+            IndexContent()
+        }
+    }
+}
+
+fun showToast(context: Context) {
+    if (!wasToastShowed) {
+        val toast: Toast = Toast.makeText(context, "Seja bem-vindo(a)!", Toast.LENGTH_SHORT)
+        toast.show()
+
+        wasToastShowed = true
+    }
+}
 
 @Composable
-fun IndexView(navController: NavController) {
+fun IndexContent() {
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -57,7 +101,7 @@ fun IndexView(navController: NavController) {
 
         CustomTextSection()
 
-        ButtonsSection(navController)
+        ButtonsSection(context = context)
     }
 }
 
@@ -114,10 +158,10 @@ fun CustomTextSection() {
 }
 
 @Composable
-fun ButtonsSection(navController: NavController) {
+fun ButtonsSection(context: Context) {
     Column {
         ElevatedButtonTH(
-            onClick = { navController.navigate(Screen.LoginScreen.route) },
+            onClick = { StartNewActivity(context = context, LoginActivity::class.java) },
             text = "Entrar",
             backgroundColor = Color(PrimaryBlue.value),
             width = (350),
@@ -125,7 +169,7 @@ fun ButtonsSection(navController: NavController) {
         )
 
         ElevatedButtonTH(
-            onClick = { navController.navigate(Screen.CadastroScreen.route) },
+            onClick = { StartNewActivity(context = context, CadastroActivity::class.java) },
             text = "Cadastrar",
             backgroundColor = Color(Color.White.value),
             textColor = Color(PrimaryBlue.value),
@@ -134,3 +178,4 @@ fun ButtonsSection(navController: NavController) {
         )
     }
 }
+

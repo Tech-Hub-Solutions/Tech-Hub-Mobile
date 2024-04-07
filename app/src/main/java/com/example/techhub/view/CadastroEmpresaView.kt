@@ -38,6 +38,8 @@ fun CadastroEmpresaView(navController: NavController) {
     Scaffold(
         topBar = {
             TopBar(
+                willRedirectToActivity = true,
+                // TODO - Inserir lógica para retornar ao TravaTelaCadastroActivity
                 navController = navController,
                 title = "Cadastro",
                 route = Screen.CadastroScreen.route

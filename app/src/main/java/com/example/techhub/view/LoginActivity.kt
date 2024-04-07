@@ -1,6 +1,10 @@
 package com.example.techhub.view
 
+import android.content.Context
+import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,7 +14,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -25,24 +31,49 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.techhub.IndexActivity
 import com.example.techhub.composable.CenteredImageSection
 import com.example.techhub.R
 import com.example.techhub.composable.ElevatedButtonTH
 import com.example.techhub.composable.EmailTextField
 import com.example.techhub.composable.PasswordTextField
+import com.example.techhub.composable.SetBarColor
+import com.example.techhub.composable.StartNewActivity
 import com.example.techhub.composable.TopBar
 import com.example.techhub.service.RetrofitService
 import com.example.techhub.service.usuario.dto.UsuarioLoginData
 import com.example.techhub.service.usuario.dto.UsuarioTokenData
 import com.example.techhub.ui.theme.GrayText
 import com.example.techhub.ui.theme.PrimaryBlue
+import com.example.techhub.ui.theme.TechHubTheme
 import com.example.techhub.utils.Screen
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+class LoginActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContent {
+            TechHubTheme {
+                SetBarColor(color = Color.White)
+
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    val navController = rememberNavController()
+                    LoginContent(navController = navController, context = this)
+                }
+            }
+        }
+    }
+}
+
 @Composable
-fun LoginView(navController: NavController) {
+fun LoginContent(navController: NavController, context: Context) {
     var email = remember { mutableStateOf("") }
     var senha = remember { mutableStateOf("") }
 
@@ -91,7 +122,12 @@ fun LoginView(navController: NavController) {
 
     Scaffold(
         topBar = {
-            TopBar(navController = navController, title = "Login", route = Screen.IndexScreen.route)
+            TopBar(
+                willRedirectToActivity = true,
+                activity = IndexActivity::class.java,
+                context = context,
+                title = "Login",
+            )
         },
     ) { innerPadding ->
         Column(
@@ -166,7 +202,12 @@ fun LoginView(navController: NavController) {
                     fontSize = 14.sp
                 )
 
-                TextButton(onClick = { navController.navigate(Screen.CadastroScreen.route) }) {
+                TextButton(onClick = {
+                    StartNewActivity(
+                        context = context,
+                        CadastroActivity::class.java
+                    )
+                }) {
                     Text(
                         text = "Cadastre-se.",
                         color = Color(PrimaryBlue.value),
