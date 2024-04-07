@@ -1,5 +1,6 @@
 package com.example.techhub.view
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -43,15 +45,15 @@ import com.example.techhub.utils.Screen
 @Composable
 fun LoginAuth(navController: NavController) {
     var filledText by remember { mutableStateOf("") }
+    val context: Context = LocalContext.current
 
     Scaffold(
         topBar = {
             TopBar(
                 willRedirectToActivity = true,
-                // TODO - Inserir lógica para retornar ao LoginActivity
-                navController = navController,
                 title = "Login",
-                route = Screen.LoginScreen.route
+                activity = LoginActivity::class.java,
+                context = context
             )
         },
     ) { innerPadding ->
