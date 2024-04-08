@@ -1,8 +1,5 @@
-package com.example.techhub.presentation.cadastro
+package com.example.techhub.presentation.cadastro.composables
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -12,9 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,50 +26,18 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
-import com.example.techhub.common.composable.CardTravaTelaCadastro
 import com.example.techhub.R
 import com.example.techhub.common.Constants
-import com.example.techhub.composable.SetBarColor
-import com.example.techhub.domain.navigation.nav_graph.cadastroGraph
+import com.example.techhub.common.composable.CardTravaTelaCadastro
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.TopBar
+import com.example.techhub.common.utils.showToastError
+import com.example.techhub.presentation.IndexActivity
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import com.example.techhub.presentation.ui.theme.SecondaryBlue
-import com.example.techhub.common.Screen
-import com.example.techhub.common.utils.showToastError
-import com.example.techhub.presentation.ui.theme.TechHubTheme
-import com.example.techhub.presentation.IndexActivity
 
-class CadastroActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setContent {
-            TechHubTheme {
-                SetBarColor(color = Color.White)
-
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    val navController = rememberNavController()
-                    NavHost(
-                        navController = navController,
-                        startDestination = Screen.CadastroGraph.route
-                    ) {
-                        cadastroGraph(navController)
-                    }
-                }
-            }
-        }
-    }
-}
-
-// TODO - Exportar para um arquivo separado
 @Composable
-fun TravaTelaCadastroContent(onUserOptionSelected: (String) -> Unit) {
+fun TravaTelaCadastroView(onUserOptionSelected: (String) -> Unit) {
     var userType: String by remember { mutableStateOf("") }
     val context = LocalContext.current
 

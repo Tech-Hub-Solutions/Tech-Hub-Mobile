@@ -7,8 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.techhub.common.Screen
-import com.example.techhub.presentation.cadastro.CadastroFormView
-import com.example.techhub.presentation.cadastro.TravaTelaCadastroContent
+import com.example.techhub.presentation.cadastro.composables.CadastroFormView
+import com.example.techhub.presentation.cadastro.composables.TravaTelaCadastroView
 
 fun NavGraphBuilder.cadastroGraph(navController: NavController) {
     navigation(
@@ -16,7 +16,7 @@ fun NavGraphBuilder.cadastroGraph(navController: NavController) {
         route = Screen.CadastroGraph.route
     ) {
         composable(route = Screen.TravaTelaCadastroScreen.route) {
-            TravaTelaCadastroContent(
+            TravaTelaCadastroView(
                 onUserOptionSelected = { userType ->
                     navController.navigate(Screen.CadastroFormScreen.route + "/$userType")
                 }

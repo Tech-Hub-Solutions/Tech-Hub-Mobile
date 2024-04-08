@@ -1,4 +1,4 @@
-package com.example.techhub.presentation.cadastro
+package com.example.techhub.presentation.cadastro.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
