@@ -33,7 +33,7 @@
             android:theme="@style/Theme.TechHub" />
 
         <activity
-            android:name=".view.TravaTelaCadastroActivity"
+            android:name=".view.CadastroActivity"
             android:theme="@style/Theme.TechHub" />
 
     </application>

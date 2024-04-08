@@ -11,7 +11,7 @@ import com.example.techhub.view.LoginContent
 fun NavGraphBuilder.loginGraph(navController: NavController) {
     navigation(
         startDestination = Screen.LoginContent.route,
-        route = Screen.LoginScreen.route
+        route = Screen.LoginGraph.route
     ) {
         composable(route = Screen.LoginContent.route) {
             LoginContent(

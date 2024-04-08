@@ -38,11 +38,10 @@ fun CadastroFreelancerView(navController: NavController) {
     Scaffold(
         topBar = {
             TopBar(
-                willRedirectToActivity = true,
-                // TODO - Inserir lógica para retornar ao TravaTelaCadastroActivity
+                willRedirectToActivity = false,
                 navController = navController,
                 title = "Cadastro",
-                route = Screen.CadastroScreen.route
+                route = Screen.TravaTelaCadastroScreen.route
             )
         },
     ) { innerPadding ->

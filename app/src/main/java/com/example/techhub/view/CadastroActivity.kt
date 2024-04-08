@@ -1,6 +1,5 @@
 package com.example.techhub.view
 
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -24,26 +23,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.example.techhub.EditableForm
 import com.example.techhub.IndexActivity
 import com.example.techhub.R
-import com.example.techhub.composable.AlertDialogSample
 import com.example.techhub.composable.ElevatedButtonTH
 import com.example.techhub.composable.SetBarColor
 import com.example.techhub.composable.TopBar
+import com.example.techhub.service.cadastroGraph
 import com.example.techhub.ui.theme.PrimaryBlue
 import com.example.techhub.ui.theme.SecondaryBlue
 import com.example.techhub.ui.theme.TechHubTheme
 import com.example.techhub.utils.Screen
 
-class TravaTelaCadastroActivity : ComponentActivity() {
+class CadastroActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -55,18 +56,28 @@ class TravaTelaCadastroActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val navContoller = rememberNavController()
-                    TravaTelaCadastroContent(navController = navContoller, context = this)
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination = Screen.CadastroGraph.route
+                    ) {
+                        cadastroGraph(navController)
+                    }
                 }
             }
         }
     }
 }
 
+// TODO - Exportar para um arquivo separado
 @Composable
-fun TravaTelaCadastroContent(navController: NavController, context: Context) {
+fun TravaTelaCadastroContent(
+    navController: NavController,
+    onUserOptionSelected: () -> Unit
+) {
     val userType = remember { mutableStateOf(0) }
-    val isAlerted = remember { mutableStateOf(false) }
+    var isAlerted = true
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -125,7 +136,9 @@ fun TravaTelaCadastroContent(navController: NavController, context: Context) {
                         contentDescription = "Imagem freelancer",
                         text = "Freelancer",
                         textColor = Color(PrimaryBlue.value),
-                        onClick = { userType.value = 1 }
+                        onClick = {
+                            userType.value = 1; isAlerted = false
+                        }
                     )
 
                     Spacer(modifier = Modifier.padding(16.dp))
@@ -138,7 +151,7 @@ fun TravaTelaCadastroContent(navController: NavController, context: Context) {
                         contentDescription = "Imagem Emppresa",
                         text = "Empresa",
                         textColor = Color(PrimaryBlue.value),
-                        onClick = { userType.value = 2 }
+                        onClick = { userType.value = 2; isAlerted = false }
                     )
                 }
 
@@ -146,29 +159,27 @@ fun TravaTelaCadastroContent(navController: NavController, context: Context) {
 
                 ElevatedButtonTH(
                     onClick = {
-                        // TODO - Alterar lógica de navigate
-                        if (userType.value == 1) {
-                            navController.navigate(Screen.CadastroFreelancerScreen.route)
-                        } else if (userType.value == 2) {
-                            navController.navigate(Screen.CadastroEmpresaScreen.route)
+                        if (isAlerted) {
+                            val toastErrorMessage = "Selecione uma opção para continuar"
+                            showToastError(context = context, message = toastErrorMessage)
                         } else {
-                            isAlerted.value = true
+                            if (userType.value == 1) {
+                                onUserOptionSelected()
+                                // TODO - Retirar lógica de Cadastros Freelancer/Empresa
+                                navController.navigate(Screen.CadastroFreelancerScreen.route)
+                            } else if (userType.value == 2) {
+                                onUserOptionSelected()
+                                // TODO - Retirar lógica de Cadastros Freelancer/Empresa
+                                navController.navigate(Screen.CadastroEmpresaScreen.route)
+                            }
                         }
+
                     },
                     text = "Avançar",
                     backgroundColor = Color(PrimaryBlue.value),
                     width = (350),
                     height = (60)
                 )
-
-                if (isAlerted.value) {
-                    AlertDialogSample(
-                        title = "Tipo de usuário não escolhido!!",
-                        text = "Escolha um tipo de usuário para continuar"
-                    )
-                    isAlerted.value = false
-                }
-
             }
         }
     }

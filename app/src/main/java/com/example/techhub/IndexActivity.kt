@@ -38,7 +38,7 @@ import com.example.techhub.ui.theme.GrayText
 import com.example.techhub.ui.theme.PrimaryBlue
 import com.example.techhub.ui.theme.TechHubTheme
 import com.example.techhub.utils.Screen
-import com.example.techhub.view.TravaTelaCadastroActivity
+import com.example.techhub.view.CadastroActivity
 import com.example.techhub.view.LoginActivity
 
 var wasToastShowed: Boolean = false
@@ -184,7 +184,7 @@ fun ButtonsSection(context: Context) {
             onClick = {
                 startNewActivity(
                     context = context,
-                    TravaTelaCadastroActivity::class.java
+                    CadastroActivity::class.java
                 )
             },
             text = "Cadastrar",

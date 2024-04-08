@@ -69,7 +69,7 @@ class LoginActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
-                        startDestination = Screen.LoginScreen.route
+                        startDestination = Screen.LoginGraph.route
                     ) {
                         loginGraph(navController)
                     }
@@ -85,6 +85,7 @@ class LoginActivity : ComponentActivity() {
 fun LoginContent(onLoginAuth: () -> Unit) {
     var email = remember { mutableStateOf("") }
     var senha = remember { mutableStateOf("") }
+    val toastErrorMessage = "Ops! Algo deu errado.\n Tente novamente."
     val context = LocalContext.current
 
     fun loginUser() {
@@ -107,7 +108,7 @@ fun LoginContent(onLoginAuth: () -> Unit) {
                     // val token = response.body()!!.token
                     response.body()?.token?.let {
                         onLoginAuth()
-                    } ?: showError(context)
+                    } ?: showToastError(context = context, message = toastErrorMessage)
                 } else {
                     Toast.makeText(
                         context,
@@ -121,7 +122,7 @@ fun LoginContent(onLoginAuth: () -> Unit) {
             }
 
             override fun onFailure(call: Call<UsuarioTokenData>, t: Throwable) {
-                showError(context)
+                showToastError(context = context, message = toastErrorMessage)
                 // TODO - Retirar print
                 println("Erro ao logar: ${t.message}")
             }
@@ -214,7 +215,7 @@ fun LoginContent(onLoginAuth: () -> Unit) {
                 TextButton(onClick = {
                     startNewActivity(
                         context = context,
-                        TravaTelaCadastroActivity::class.java
+                        CadastroActivity::class.java
                     )
                 }) {
                     Text(
@@ -230,10 +231,11 @@ fun LoginContent(onLoginAuth: () -> Unit) {
     }
 }
 
-fun showError(context: Context) {
+// TODO - Exportar para um arquivo separado de UTILS
+fun showToastError(context: Context, message: String) {
     Toast.makeText(
         context,
-        "Ops! Algo deu errado.\n Tente novamente.",
+        message,
         Toast.LENGTH_SHORT
     ).show()
 }
