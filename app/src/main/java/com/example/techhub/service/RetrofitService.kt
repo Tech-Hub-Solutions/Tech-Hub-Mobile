@@ -14,7 +14,7 @@ object RetrofitService {
     * Depois, alterar para o endereço do microserviço no servidor.
     * */
 
-    // ⚠️ sempre trocar o IP para o IP da sua máquina que aparece quando executa "ipconfig" no terminal
+    // ⚠️ sempre trocar o IP para o IPv4 da sua máquina que aparece quando executa "ipconfig" no terminal
     private const val IP = "192.168.15.60"
     private val BASE_URL = "http://${IP}:8080/api/"
 

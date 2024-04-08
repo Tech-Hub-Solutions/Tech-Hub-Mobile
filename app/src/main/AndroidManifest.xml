@@ -33,10 +33,6 @@
             android:theme="@style/Theme.TechHub" />
 
         <activity
-            android:name=".view.LoginAuthActivity"
-            android:theme="@style/Theme.TechHub" />
-
-        <activity
             android:name=".view.TravaTelaCadastroActivity"
             android:theme="@style/Theme.TechHub" />
 

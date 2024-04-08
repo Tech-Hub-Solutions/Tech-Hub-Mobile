@@ -27,14 +27,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.techhub.composable.CenteredImageSection
 import com.example.techhub.composable.ElevatedButtonTH
 import com.example.techhub.composable.SetBarColor
 import com.example.techhub.composable.startNewActivity
-import com.example.techhub.service.Navigation
 import com.example.techhub.ui.theme.GrayText
 import com.example.techhub.ui.theme.PrimaryBlue
 import com.example.techhub.ui.theme.TechHubTheme
+import com.example.techhub.utils.Screen
 import com.example.techhub.view.TravaTelaCadastroActivity
 import com.example.techhub.view.LoginActivity
 
@@ -52,12 +55,20 @@ class IndexActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Navigation()
+                    val navController = rememberNavController()
+
+                    NavHost(
+                        navController = navController,
+                        startDestination = Screen.IndexScreen.route,
+                        route = "root_route"
+                    ) {
+                        composable(route = Screen.IndexScreen.route) {
+                            IndexContent()
+                        }
+                    }
                 }
             }
             showToast(context = this)
-
-            IndexContent()
         }
     }
 }
@@ -71,6 +82,7 @@ fun showToast(context: Context) {
     }
 }
 
+// TODO - Exportar para um arquivo separado
 @Composable
 fun IndexContent() {
     val context = LocalContext.current
@@ -169,7 +181,12 @@ fun ButtonsSection(context: Context) {
         )
 
         ElevatedButtonTH(
-            onClick = { startNewActivity(context = context, TravaTelaCadastroActivity::class.java) },
+            onClick = {
+                startNewActivity(
+                    context = context,
+                    TravaTelaCadastroActivity::class.java
+                )
+            },
             text = "Cadastrar",
             backgroundColor = Color(Color.White.value),
             textColor = Color(PrimaryBlue.value),

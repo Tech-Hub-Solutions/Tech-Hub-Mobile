@@ -1,9 +1,5 @@
 package com.example.techhub.view
 
-import android.content.Context
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,10 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
@@ -31,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -40,34 +35,15 @@ import androidx.compose.ui.unit.sp
 import com.example.techhub.R
 import com.example.techhub.composable.CenteredImageSection
 import com.example.techhub.composable.ElevatedButtonTH
-import com.example.techhub.composable.SetBarColor
 import com.example.techhub.composable.startNewActivity
 import com.example.techhub.composable.TopBar
 import com.example.techhub.ui.theme.GrayButtonText
 import com.example.techhub.ui.theme.PrimaryBlue
-import com.example.techhub.ui.theme.TechHubTheme
-
-class LoginAuthActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            TechHubTheme {
-                SetBarColor(color = Color.White)
-
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    LoginAuthContent(context = this)
-                }
-            }
-        }
-    }
-}
 
 @Composable
-fun LoginAuthContent(context: Context) {
+fun LoginAuthContent() {
     var filledText by remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {

@@ -26,11 +26,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import com.example.techhub.IndexActivity
 import com.example.techhub.composable.CenteredImageSection
 import com.example.techhub.R
@@ -41,11 +44,13 @@ import com.example.techhub.composable.SetBarColor
 import com.example.techhub.composable.startNewActivity
 import com.example.techhub.composable.TopBar
 import com.example.techhub.service.RetrofitService
+import com.example.techhub.service.loginGraph
 import com.example.techhub.service.usuario.dto.UsuarioLoginData
 import com.example.techhub.service.usuario.dto.UsuarioTokenData
 import com.example.techhub.ui.theme.GrayText
 import com.example.techhub.ui.theme.PrimaryBlue
 import com.example.techhub.ui.theme.TechHubTheme
+import com.example.techhub.utils.Screen
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -53,7 +58,6 @@ import retrofit2.Response
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
             TechHubTheme {
                 SetBarColor(color = Color.White)
@@ -62,17 +66,26 @@ class LoginActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LoginContent(context = this)
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination = Screen.LoginScreen.route
+                    ) {
+                        loginGraph(navController)
+                    }
                 }
             }
         }
     }
 }
 
+
+// TODO - Exportar para um arquivo separado
 @Composable
-fun LoginContent(context: Context) {
+fun LoginContent(onLoginAuth: () -> Unit) {
     var email = remember { mutableStateOf("") }
     var senha = remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     fun loginUser() {
         val user = UsuarioLoginData(
@@ -90,11 +103,11 @@ fun LoginContent(context: Context) {
 
                 Log.d("LoginActivity => ", "Response: $responseBody")
                 if (responseBody != null) {
-                    response.body()?.token?.let {
-                        startNewActivity(context, LoginAuthActivity::class.java)
-                    } ?: showError(context)
                     // TODO - encontrar forma de usar DataStore p/ storeData(token)
                     // val token = response.body()!!.token
+                    response.body()?.token?.let {
+                        onLoginAuth()
+                    } ?: showError(context)
                 } else {
                     Toast.makeText(
                         context,
