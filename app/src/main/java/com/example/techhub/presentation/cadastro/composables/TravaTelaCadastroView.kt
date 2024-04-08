@@ -32,7 +32,7 @@ import com.example.techhub.common.composable.CardTravaTelaCadastro
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.TopBar
 import com.example.techhub.common.utils.showToastError
-import com.example.techhub.presentation.IndexActivity
+import com.example.techhub.presentation.index.IndexActivity
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import com.example.techhub.presentation.ui.theme.SecondaryBlue
 

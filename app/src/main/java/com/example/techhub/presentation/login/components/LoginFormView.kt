@@ -29,7 +29,7 @@ import com.example.techhub.common.composable.TopBar
 import com.example.techhub.domain.RetrofitService
 import com.example.techhub.domain.model.usuario.UsuarioLoginData
 import com.example.techhub.domain.model.usuario.UsuarioTokenData
-import com.example.techhub.presentation.IndexActivity
+import com.example.techhub.presentation.index.IndexActivity
 import com.example.techhub.common.utils.showToastError
 import retrofit2.Call
 import com.example.techhub.R
