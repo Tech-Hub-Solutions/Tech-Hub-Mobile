@@ -8,7 +8,6 @@ import com.example.techhub.IndexContent
 import com.example.techhub.utils.Screen
 import com.example.techhub.view.CadastroEmpresaView
 import com.example.techhub.view.CadastroFreelancerView
-import com.example.techhub.view.LoginAuth
 
 @Composable
 fun Navigation() {
@@ -17,9 +16,6 @@ fun Navigation() {
     NavHost(navController = navController, startDestination = Screen.IndexScreen.route) {
         composable(route = Screen.IndexScreen.route) {
             IndexContent()
-        }
-        composable(route = Screen.LoginAuthScreen.route) {
-            LoginAuth(navController = navController)
         }
         composable(route = Screen.CadastroFreelancerScreen.route) {
             CadastroFreelancerView(navController = navController)

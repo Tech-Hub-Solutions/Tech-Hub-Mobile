@@ -1,6 +1,9 @@
 package com.example.techhub.view
 
 import android.content.Context
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,8 +16,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
@@ -34,18 +39,39 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.techhub.R
 import com.example.techhub.composable.CenteredImageSection
 import com.example.techhub.composable.ElevatedButtonTH
+import com.example.techhub.composable.SetBarColor
+import com.example.techhub.composable.StartNewActivity
 import com.example.techhub.composable.TopBar
 import com.example.techhub.ui.theme.GrayButtonText
 import com.example.techhub.ui.theme.PrimaryBlue
+import com.example.techhub.ui.theme.TechHubTheme
 import com.example.techhub.utils.Screen
 
+class LoginAuthActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            TechHubTheme {
+                SetBarColor(color = Color.White)
+
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    LoginAuthContent(context = this)
+                }
+            }
+        }
+    }
+}
+
 @Composable
-fun LoginAuth(navController: NavController) {
+fun LoginAuthContent(context: Context) {
     var filledText by remember { mutableStateOf("") }
-    val context: Context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -139,7 +165,12 @@ fun LoginAuth(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 TextButton(
-                    onClick = { navController.navigate(Screen.LoginScreen.route) },
+                    onClick = {
+                        StartNewActivity(
+                            context = context,
+                            activity = LoginActivity::class.java
+                        )
+                    },
                     modifier = Modifier
                         .width(130.dp)
                         .height(52.dp)

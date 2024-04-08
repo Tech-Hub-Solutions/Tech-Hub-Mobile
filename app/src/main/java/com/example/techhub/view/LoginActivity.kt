@@ -2,6 +2,7 @@ package com.example.techhub.view
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -30,8 +31,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.techhub.IndexActivity
 import com.example.techhub.composable.CenteredImageSection
 import com.example.techhub.R
@@ -47,7 +46,6 @@ import com.example.techhub.service.usuario.dto.UsuarioTokenData
 import com.example.techhub.ui.theme.GrayText
 import com.example.techhub.ui.theme.PrimaryBlue
 import com.example.techhub.ui.theme.TechHubTheme
-import com.example.techhub.utils.Screen
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -64,8 +62,7 @@ class LoginActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val navController = rememberNavController()
-                    LoginContent(navController = navController, context = this)
+                    LoginContent(context = this)
                 }
             }
         }
@@ -73,7 +70,7 @@ class LoginActivity : ComponentActivity() {
 }
 
 @Composable
-fun LoginContent(navController: NavController, context: Context) {
+fun LoginContent(context: Context) {
     var email = remember { mutableStateOf("") }
     var senha = remember { mutableStateOf("") }
 
@@ -82,26 +79,25 @@ fun LoginContent(navController: NavController, context: Context) {
             email = email.value,
             senha = senha.value
         )
-        val call = RetrofitService.loginUser().loginUser(user)
+        val usuarioService = RetrofitService.getUsuarioService()
 
-        call.enqueue(object : Callback<UsuarioTokenData> {
+        usuarioService.loginUser(user).enqueue(object : Callback<UsuarioTokenData> {
             override fun onResponse(
                 call: Call<UsuarioTokenData>,
                 response: Response<UsuarioTokenData>
             ) {
                 val responseBody = response.body()
 
+                Log.d("LoginActivity => ", "Response: $responseBody")
                 if (responseBody != null) {
-                    val token = response.body()!!.token
-
-                    // TODO - encontrar forma de usar DataStore p/ storeData(token)
                     response.body()?.token?.let {
-                        navController.navigate(Screen.LoginAuthScreen.route)
-                    } ?: showError(navController)
-
+                        StartNewActivity(context, LoginAuthActivity::class.java)
+                    } ?: showError(context)
+                    // TODO - encontrar forma de usar DataStore p/ storeData(token)
+                    // val token = response.body()!!.token
                 } else {
                     Toast.makeText(
-                        navController.context,
+                        context,
                         "Ops! Algo deu errado." +
                                 "\n Tente novamente.",
                         Toast.LENGTH_SHORT
@@ -112,7 +108,7 @@ fun LoginContent(navController: NavController, context: Context) {
             }
 
             override fun onFailure(call: Call<UsuarioTokenData>, t: Throwable) {
-                showError(navController)
+                showError(context)
                 // TODO - Retirar print
                 println("Erro ao logar: ${t.message}")
             }
@@ -221,9 +217,9 @@ fun LoginContent(navController: NavController, context: Context) {
     }
 }
 
-fun showError(navController: NavController) {
+fun showError(context: Context) {
     Toast.makeText(
-        navController.context,
+        context,
         "Ops! Algo deu errado.\n Tente novamente.",
         Toast.LENGTH_SHORT
     ).show()
