@@ -5,8 +5,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.techhub.common.Screen
-import com.example.techhub.presentation.login.LoginAuthContent
-import com.example.techhub.presentation.login.LoginFormView
+import com.example.techhub.presentation.login.components.LoginAuthContent
+import com.example.techhub.presentation.login.components.LoginFormView
 
 fun NavGraphBuilder.loginGraph(navController: NavController) {
     navigation(

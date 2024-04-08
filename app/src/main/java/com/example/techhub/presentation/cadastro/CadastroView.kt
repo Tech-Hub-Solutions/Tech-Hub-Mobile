@@ -43,7 +43,7 @@ import com.example.techhub.common.composable.TopBar
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import com.example.techhub.presentation.ui.theme.SecondaryBlue
 import com.example.techhub.common.Screen
-import com.example.techhub.presentation.login.showToastError
+import com.example.techhub.common.utils.showToastError
 import com.example.techhub.presentation.ui.theme.TechHubTheme
 import com.example.techhub.presentation.IndexActivity
 

@@ -1,4 +1,4 @@
-package com.example.techhub.presentation.login
+package com.example.techhub.presentation.login.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -36,7 +36,8 @@ import com.example.techhub.R
 import com.example.techhub.common.composable.CenteredImageSection
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.TopBar
-import com.example.techhub.composable.startNewActivity
+import com.example.techhub.common.utils.startNewActivity
+import com.example.techhub.presentation.login.LoginActivity
 import com.example.techhub.presentation.ui.theme.GrayButtonText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 

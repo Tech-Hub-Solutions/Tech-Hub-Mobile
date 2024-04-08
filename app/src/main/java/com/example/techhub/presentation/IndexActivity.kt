@@ -35,7 +35,7 @@ import com.example.techhub.common.Screen
 import com.example.techhub.common.composable.CenteredImageSection
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.composable.SetBarColor
-import com.example.techhub.composable.startNewActivity
+import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.presentation.cadastro.CadastroActivity
 import com.example.techhub.presentation.login.LoginActivity
 import com.example.techhub.presentation.ui.theme.GrayText
