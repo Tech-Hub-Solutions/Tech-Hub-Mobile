@@ -35,7 +35,7 @@ import com.example.techhub.service.Navigation
 import com.example.techhub.ui.theme.GrayText
 import com.example.techhub.ui.theme.PrimaryBlue
 import com.example.techhub.ui.theme.TechHubTheme
-import com.example.techhub.view.CadastroActivity
+import com.example.techhub.view.TravaTelaCadastroActivity
 import com.example.techhub.view.LoginActivity
 
 var wasToastShowed: Boolean = false
@@ -169,7 +169,7 @@ fun ButtonsSection(context: Context) {
         )
 
         ElevatedButtonTH(
-            onClick = { startNewActivity(context = context, CadastroActivity::class.java) },
+            onClick = { startNewActivity(context = context, TravaTelaCadastroActivity::class.java) },
             text = "Cadastrar",
             backgroundColor = Color(Color.White.value),
             textColor = Color(PrimaryBlue.value),

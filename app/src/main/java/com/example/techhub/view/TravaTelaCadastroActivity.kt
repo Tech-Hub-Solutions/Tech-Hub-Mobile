@@ -43,7 +43,7 @@ import com.example.techhub.ui.theme.SecondaryBlue
 import com.example.techhub.ui.theme.TechHubTheme
 import com.example.techhub.utils.Screen
 
-class CadastroActivity : ComponentActivity() {
+class TravaTelaCadastroActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

@@ -201,7 +201,7 @@ fun LoginContent(context: Context) {
                 TextButton(onClick = {
                     startNewActivity(
                         context = context,
-                        CadastroActivity::class.java
+                        TravaTelaCadastroActivity::class.java
                     )
                 }) {
                     Text(
