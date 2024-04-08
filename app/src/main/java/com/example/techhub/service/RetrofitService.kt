@@ -13,7 +13,10 @@ object RetrofitService {
     * estamos utilizando o microserviço localmente.
     * Depois, alterar para o endereço do microserviço no servidor.
     * */
-    private val BASE_URL = "http://127.0.0.1:8080/api/"
+
+    // ⚠️ sempre trocar o IP para o IPv4 da sua máquina que aparece quando executa "ipconfig" no terminal
+    private const val IP = "192.168.15.60"
+    private val BASE_URL = "http://${IP}:8080/api/"
 
     private val client = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
@@ -28,15 +31,11 @@ object RetrofitService {
         }
         .build()
 
-    private fun getRetrofitInstance(): Retrofit {
+    fun getUsuarioService(): IUsuario {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    fun loginUser(): IUsuario {
-        return getRetrofitInstance().create(IUsuario::class.java)
+            .build().create(IUsuario::class.java)
     }
 }

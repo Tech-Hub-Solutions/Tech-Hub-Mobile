@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.techhub.composable.CnpjTextField
 import com.example.techhub.composable.CpfTextField
 import com.example.techhub.composable.ElevatedButtonTH
 import com.example.techhub.composable.EmailTextField
@@ -29,18 +30,19 @@ import com.example.techhub.ui.theme.PrimaryBlue
 import com.example.techhub.utils.Screen
 
 @Composable
-fun CadastroFreelancerView(navController: NavController) {
-    val nomeFreelancer = remember { mutableStateOf("") }
-    val cpfFreelancer = remember { mutableStateOf("") }
-    val emailFreelancer = remember { mutableStateOf("") }
-    val senhaFreelancer = remember { mutableStateOf("") }
+fun CadastroFormView(navController: NavController, userType: String) {
+    val name = remember { mutableStateOf("") }
+    val userDocument = remember { mutableStateOf("") }
+    val email = remember { mutableStateOf("") }
+    val password = remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
             TopBar(
+                willRedirectToActivity = false,
                 navController = navController,
                 title = "Cadastro",
-                route = Screen.CadastroScreen.route
+                route = Screen.TravaTelaCadastroScreen.route
             )
         },
     ) { innerPadding ->
@@ -59,7 +61,7 @@ fun CadastroFreelancerView(navController: NavController) {
             Spacer(modifier = Modifier.padding(20.dp))
 
             Text(
-                text = "Quero ser um freelancer",
+                text = if (userType == "freelancer") "Quero ser um freelancer" else "Quero explorar talentos",
                 style = TextStyle(
                     color = Color(PrimaryBlue.value),
                     fontWeight = FontWeight.Bold,
@@ -83,21 +85,25 @@ fun CadastroFreelancerView(navController: NavController) {
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                CpfTextField()
+                if (userType == "freelancer") {
+                    CpfTextField()
+                } else if (userType == "empresa") {
+                    CnpjTextField()
+                }
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                EmailTextField { emailFreelancer.value = it }
+                EmailTextField { email.value = it }
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                PasswordTextField { senhaFreelancer.value = it }
+                PasswordTextField { password.value = it }
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
                 ElevatedButtonTH(
                     onClick = {
-
+                        // TODO - Add lógica p/ cadastro/validação de usuário
                     },
                     text = "Cadastrar",
                     backgroundColor = Color.White,

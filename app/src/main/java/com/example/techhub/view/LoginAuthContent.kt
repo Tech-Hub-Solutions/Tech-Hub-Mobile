@@ -25,28 +25,34 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.techhub.R
 import com.example.techhub.composable.CenteredImageSection
 import com.example.techhub.composable.ElevatedButtonTH
+import com.example.techhub.composable.startNewActivity
 import com.example.techhub.composable.TopBar
 import com.example.techhub.ui.theme.GrayButtonText
 import com.example.techhub.ui.theme.PrimaryBlue
-import com.example.techhub.utils.Screen
 
 @Composable
-fun LoginAuth(navController: NavController) {
+fun LoginAuthContent() {
     var filledText by remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
-            TopBar(navController = navController, title = "Login", route = Screen.LoginScreen.route)
+            TopBar(
+                willRedirectToActivity = true,
+                title = "Login",
+                activity = LoginActivity::class.java,
+                context = context
+            )
         },
     ) { innerPadding ->
         Column(
@@ -131,7 +137,12 @@ fun LoginAuth(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 TextButton(
-                    onClick = { navController.navigate(Screen.LoginScreen.route) },
+                    onClick = {
+                        startNewActivity(
+                            context = context,
+                            activity = LoginActivity::class.java
+                        )
+                    },
                     modifier = Modifier
                         .width(130.dp)
                         .height(52.dp)
