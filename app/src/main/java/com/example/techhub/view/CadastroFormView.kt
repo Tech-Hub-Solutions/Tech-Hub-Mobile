@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.techhub.composable.CnpjTextField
+import com.example.techhub.composable.CpfTextField
 import com.example.techhub.composable.ElevatedButtonTH
 import com.example.techhub.composable.EmailTextField
 import com.example.techhub.composable.NameTextField
@@ -29,26 +30,26 @@ import com.example.techhub.ui.theme.PrimaryBlue
 import com.example.techhub.utils.Screen
 
 @Composable
-fun CadastroEmpresaView(navController: NavController) {
-    val nomeEmpresa = remember { mutableStateOf("") }
-    val cnpjEmpresa = remember { mutableStateOf("") }
-    val emailEmpresa = remember { mutableStateOf("") }
-    val senhaEmpresa = remember { mutableStateOf("") }
+fun CadastroFormView(navController: NavController, userType: String) {
+    val name = remember { mutableStateOf("") }
+    val userDocument = remember { mutableStateOf("") }
+    val email = remember { mutableStateOf("") }
+    val password = remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
             TopBar(
                 willRedirectToActivity = false,
                 navController = navController,
-                route = Screen.TravaTelaCadastroScreen.route,
                 title = "Cadastro",
+                route = Screen.TravaTelaCadastroScreen.route
             )
         },
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = Color.White)
+                .background(Color.White)
                 .padding(
                     top = innerPadding.calculateTopPadding(),
                     bottom = 24.dp,
@@ -60,54 +61,57 @@ fun CadastroEmpresaView(navController: NavController) {
             Spacer(modifier = Modifier.padding(20.dp))
 
             Text(
-                text = "Quero explorar talentos",
+                text = if (userType == "freelancer") "Quero ser um freelancer" else "Quero explorar talentos",
                 style = TextStyle(
                     color = Color(PrimaryBlue.value),
                     fontWeight = FontWeight.Bold,
-                    fontSize = 32.sp
+                    fontSize = 30.sp
                 )
             )
 
-            Spacer(modifier = Modifier.padding(8.dp))
-
-            Text(
-                text = "Faça o cadastro para ter acesso aos nossos serviços!",
-                color = Color(GrayText.value),
-                fontWeight = FontWeight.Thin,
-                fontSize = 14.sp
-            )
             Column(modifier = Modifier.padding(horizontal = 10.dp)) {
+
+                Spacer(modifier = Modifier.padding(8.dp))
+
+                Text(
+                    text = "Faça o cadastro para ter acesso aos nossos serviços!",
+                    color = Color(GrayText.value),
+                    fontWeight = FontWeight.Thin,
+                    fontSize = 14.sp
+                )
                 Spacer(modifier = Modifier.padding(12.dp))
 
                 NameTextField()
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                CnpjTextField()
+                if (userType == "freelancer") {
+                    CpfTextField()
+                } else if (userType == "empresa") {
+                    CnpjTextField()
+                }
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                EmailTextField { emailEmpresa.value = it }
+                EmailTextField { email.value = it }
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                PasswordTextField { senhaEmpresa.value = it }
+                PasswordTextField { password.value = it }
 
                 Spacer(modifier = Modifier.padding(12.dp))
+
+                ElevatedButtonTH(
+                    onClick = {
+                        // TODO - Add lógica p/ cadastro/validação de usuário
+                    },
+                    text = "Cadastrar",
+                    backgroundColor = Color.White,
+                    textColor = Color(PrimaryBlue.value),
+                    width = (350),
+                    height = (60)
+                )
             }
-
-
-            ElevatedButtonTH(
-                onClick = {
-
-                },
-                text = "Cadastrar",
-                backgroundColor = Color.White,
-                textColor = Color(PrimaryBlue.value),
-                width = (360),
-                height = (60)
-            )
-
         }
     }
 }

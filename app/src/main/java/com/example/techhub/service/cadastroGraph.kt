@@ -2,11 +2,12 @@ package com.example.techhub.service
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.techhub.utils.Screen
-import com.example.techhub.view.CadastroEmpresaView
-import com.example.techhub.view.CadastroFreelancerView
+import com.example.techhub.view.CadastroFormView
 import com.example.techhub.view.TravaTelaCadastroContent
 
 fun NavGraphBuilder.cadastroGraph(navController: NavController) {
@@ -16,20 +17,19 @@ fun NavGraphBuilder.cadastroGraph(navController: NavController) {
     ) {
         composable(route = Screen.TravaTelaCadastroScreen.route) {
             TravaTelaCadastroContent(
-                navController = navController,
-                onUserOptionSelected = {
-                    // TODO - Add lógica p/ redirecionamento Cadastro único sem Freelancer/Empresa
-                    navController.navigate(Screen.CadastroFreelancerScreen.route)
+                onUserOptionSelected = { userType ->
+                    navController.navigate(Screen.CadastroFormScreen.route + "/$userType")
                 }
             )
         }
 
-        composable(route = Screen.CadastroFreelancerScreen.route) {
-            CadastroFreelancerView(navController = navController)
-        }
-
-        composable(route = Screen.CadastroEmpresaScreen.route) {
-            CadastroEmpresaView(navController = navController)
+        composable(
+            route = "${Screen.CadastroFormScreen.route}/{userType}", arguments = listOf(
+                navArgument("userType") { type = NavType.StringType }
+            )
+        ) { navBackStackEntry ->
+            val userType = navBackStackEntry.arguments?.getString("userType")
+            CadastroFormView(navController = navController, userType = userType!!)
         }
 
     }

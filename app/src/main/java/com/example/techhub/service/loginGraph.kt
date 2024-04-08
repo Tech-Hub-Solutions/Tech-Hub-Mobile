@@ -6,15 +6,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.techhub.utils.Screen
 import com.example.techhub.view.LoginAuthContent
-import com.example.techhub.view.LoginContent
+import com.example.techhub.view.LoginFormView
 
 fun NavGraphBuilder.loginGraph(navController: NavController) {
     navigation(
-        startDestination = Screen.LoginContent.route,
+        startDestination = Screen.LoginFormScreen.route,
         route = Screen.LoginGraph.route
     ) {
-        composable(route = Screen.LoginContent.route) {
-            LoginContent(
+        composable(route = Screen.LoginFormScreen.route) {
+            LoginFormView(
                 onLoginAuth = {
                     navController.navigate(Screen.LoginAuthScreen.route)
                 }

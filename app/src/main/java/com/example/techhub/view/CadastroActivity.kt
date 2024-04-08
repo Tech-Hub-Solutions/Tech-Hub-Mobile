@@ -71,10 +71,7 @@ class CadastroActivity : ComponentActivity() {
 
 // TODO - Exportar para um arquivo separado
 @Composable
-fun TravaTelaCadastroContent(
-    navController: NavController,
-    onUserOptionSelected: () -> Unit
-) {
+fun TravaTelaCadastroContent(onUserOptionSelected: (String) -> Unit) {
     val userType = remember { mutableStateOf(0) }
     var isAlerted = true
     val context = LocalContext.current
@@ -163,17 +160,9 @@ fun TravaTelaCadastroContent(
                             val toastErrorMessage = "Selecione uma opção para continuar"
                             showToastError(context = context, message = toastErrorMessage)
                         } else {
-                            if (userType.value == 1) {
-                                onUserOptionSelected()
-                                // TODO - Retirar lógica de Cadastros Freelancer/Empresa
-                                navController.navigate(Screen.CadastroFreelancerScreen.route)
-                            } else if (userType.value == 2) {
-                                onUserOptionSelected()
-                                // TODO - Retirar lógica de Cadastros Freelancer/Empresa
-                                navController.navigate(Screen.CadastroEmpresaScreen.route)
-                            }
+                            val userType = if (userType.value == 1) "freelancer" else "empresa"
+                            onUserOptionSelected(userType)
                         }
-
                     },
                     text = "Avançar",
                     backgroundColor = Color(PrimaryBlue.value),

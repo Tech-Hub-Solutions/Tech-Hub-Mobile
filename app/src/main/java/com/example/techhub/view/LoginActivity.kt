@@ -82,7 +82,7 @@ class LoginActivity : ComponentActivity() {
 
 // TODO - Exportar para um arquivo separado
 @Composable
-fun LoginContent(onLoginAuth: () -> Unit) {
+fun LoginFormView(onLoginAuth: () -> Unit) {
     var email = remember { mutableStateOf("") }
     var senha = remember { mutableStateOf("") }
     val toastErrorMessage = "Ops! Algo deu errado.\n Tente novamente."
