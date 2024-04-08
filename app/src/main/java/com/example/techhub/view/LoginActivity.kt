@@ -38,7 +38,7 @@ import com.example.techhub.composable.ElevatedButtonTH
 import com.example.techhub.composable.EmailTextField
 import com.example.techhub.composable.PasswordTextField
 import com.example.techhub.composable.SetBarColor
-import com.example.techhub.composable.StartNewActivity
+import com.example.techhub.composable.startNewActivity
 import com.example.techhub.composable.TopBar
 import com.example.techhub.service.RetrofitService
 import com.example.techhub.service.usuario.dto.UsuarioLoginData
@@ -91,7 +91,7 @@ fun LoginContent(context: Context) {
                 Log.d("LoginActivity => ", "Response: $responseBody")
                 if (responseBody != null) {
                     response.body()?.token?.let {
-                        StartNewActivity(context, LoginAuthActivity::class.java)
+                        startNewActivity(context, LoginAuthActivity::class.java)
                     } ?: showError(context)
                     // TODO - encontrar forma de usar DataStore p/ storeData(token)
                     // val token = response.body()!!.token
@@ -199,7 +199,7 @@ fun LoginContent(context: Context) {
                 )
 
                 TextButton(onClick = {
-                    StartNewActivity(
+                    startNewActivity(
                         context = context,
                         CadastroActivity::class.java
                     )

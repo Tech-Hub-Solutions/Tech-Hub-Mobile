@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.sp
 import com.example.techhub.composable.CenteredImageSection
 import com.example.techhub.composable.ElevatedButtonTH
 import com.example.techhub.composable.SetBarColor
-import com.example.techhub.composable.StartNewActivity
+import com.example.techhub.composable.startNewActivity
 import com.example.techhub.service.Navigation
 import com.example.techhub.ui.theme.GrayText
 import com.example.techhub.ui.theme.PrimaryBlue
@@ -161,7 +161,7 @@ fun CustomTextSection() {
 fun ButtonsSection(context: Context) {
     Column {
         ElevatedButtonTH(
-            onClick = { StartNewActivity(context = context, LoginActivity::class.java) },
+            onClick = { startNewActivity(context = context, LoginActivity::class.java) },
             text = "Entrar",
             backgroundColor = Color(PrimaryBlue.value),
             width = (350),
@@ -169,7 +169,7 @@ fun ButtonsSection(context: Context) {
         )
 
         ElevatedButtonTH(
-            onClick = { StartNewActivity(context = context, CadastroActivity::class.java) },
+            onClick = { startNewActivity(context = context, CadastroActivity::class.java) },
             text = "Cadastrar",
             backgroundColor = Color(Color.White.value),
             textColor = Color(PrimaryBlue.value),

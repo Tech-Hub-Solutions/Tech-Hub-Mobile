@@ -4,9 +4,7 @@ import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBackIos
-import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -19,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.techhub.utils.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,7 +45,7 @@ fun TopBar(
         navigationIcon = {
             IconButton(onClick = {
                 if (willRedirectToActivity) {
-                    StartNewActivity(context!!, activity!!)
+                    startNewActivity(context!!, activity!!)
                 } else {
                     navController!!.navigate(route!!)
                 }
