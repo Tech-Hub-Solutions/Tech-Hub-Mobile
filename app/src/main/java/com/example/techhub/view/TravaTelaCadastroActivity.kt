@@ -56,7 +56,7 @@ class TravaTelaCadastroActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navContoller = rememberNavController()
-                    CadastroContent(navController = navContoller, context = this)
+                    TravaTelaCadastroContent(navController = navContoller, context = this)
                 }
             }
         }
@@ -64,7 +64,7 @@ class TravaTelaCadastroActivity : ComponentActivity() {
 }
 
 @Composable
-fun CadastroContent(navController: NavController, context: Context) {
+fun TravaTelaCadastroContent(navController: NavController, context: Context) {
     val userType = remember { mutableStateOf(0) }
     val isAlerted = remember { mutableStateOf(false) }
 
