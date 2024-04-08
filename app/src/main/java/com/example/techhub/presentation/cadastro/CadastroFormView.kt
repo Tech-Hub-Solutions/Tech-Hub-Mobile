@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.techhub.common.Constants
 import com.example.techhub.common.composable.CpfTextField
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.EmailTextField
@@ -61,7 +62,7 @@ fun CadastroFormView(navController: NavController, userType: String) {
             Spacer(modifier = Modifier.padding(20.dp))
 
             Text(
-                text = if (userType == "freelancer") "Quero ser um freelancer" else "Quero explorar talentos",
+                text = if (userType == Constants.FREELANCER) "Quero ser um freelancer" else "Quero explorar talentos",
                 style = TextStyle(
                     color = Color(PrimaryBlue.value),
                     fontWeight = FontWeight.Bold,
@@ -85,9 +86,9 @@ fun CadastroFormView(navController: NavController, userType: String) {
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                if (userType == "freelancer") {
+                if (userType == Constants.FREELANCER) {
                     CpfTextField()
-                } else if (userType == "empresa") {
+                } else if (userType == Constants.EMPRESA) {
                     CnpjTextField()
                 }
 

@@ -1,4 +1,4 @@
-package com.example.techhub
+package com.example.techhub.common.composable
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,27 +17,35 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 
 @Composable
-fun EditableForm(height: Double, width: Double, backcroundColor: Color,
-                 imagePath: Int, contentDescription: String, text: String, textColor: Color,
-                 onClick: () -> Unit) {
+fun CardTravaTelaCadastro(
+    imagePath: Int,
+    contentDescription: String,
+    text: String,
+    onClick: () -> Unit,
+    isSelected: Boolean
+) {
+    var backgroundColor = if (isSelected) Color(0xFFADD8E6) else Color.White
+
     Box(
         modifier = Modifier
-            .height(height.dp)
-            .width(width.dp)
-            .background(backcroundColor, shape = MaterialTheme.shapes.extraSmall)
+            .height(148.dp)
+            .width(148.dp)
+            .background(backgroundColor, shape = MaterialTheme.shapes.extraSmall)
             .clickable { onClick() },
         contentAlignment = Alignment.TopCenter
-
     ) {
         Column(
         ) {
             Image(
                 painter = painterResource(id = imagePath),
                 contentDescription = contentDescription,
-                modifier = Modifier.height(116.dp).width(106.dp)
+                modifier = Modifier
+                    .height(116.dp)
+                    .width(106.dp)
             )
             Text(
                 text = text,
@@ -45,9 +53,8 @@ fun EditableForm(height: Double, width: Double, backcroundColor: Color,
                     .align(Alignment.CenterHorizontally),
                 fontFamily = FontFamily.SansSerif,
                 fontWeight = FontWeight.Bold,
-                color = textColor
+                color = Color(PrimaryBlue.value)
             )
-
         }
     }
 }

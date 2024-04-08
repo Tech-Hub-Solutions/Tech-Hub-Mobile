@@ -23,18 +23,50 @@ import com.example.techhub.composable.startNewActivity
 @Composable
 fun TopBar(
     willRedirectToActivity: Boolean,
+    title: String,
     activity: Class<*>? = null,
     context: Context? = null,
     navController: NavController? = null,
-    route: String? = null,
-    title: String
+    route: String? = null
 ) {
+    val topAppBarColors = TopAppBarDefaults.topAppBarColors(
+        containerColor = Color.Transparent,
+        titleContentColor = MaterialTheme.colorScheme.primary,
+    )
+    val modifier = Modifier.padding(bottom = 8.dp)
+    val navigationIcon: @Composable (() -> Unit)
+
+    if (willRedirectToActivity) {
+        requireNotNull(activity) { "Activity must not be null when willRedirectToActivity is true" }
+        requireNotNull(context) { "Context must not be null when willRedirectToActivity is true" }
+
+        navigationIcon = {
+            IconButton(onClick = { startNewActivity(context!!, activity!!) }) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBackIos,
+                    contentDescription = "botão de retornar ao início",
+                    tint = Color.Black
+                )
+            }
+        }
+    } else {
+        requireNotNull(navController) { "NavController must not be null when willRedirectToActivity is false" }
+        requireNotNull(route) { "Route must not be null when willRedirectToActivity is false" }
+
+        navigationIcon = {
+            IconButton(onClick = { navController.navigate(route) }) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBackIos,
+                    contentDescription = "botão de retornar ao início",
+                    tint = Color.Black
+                )
+            }
+        }
+    }
+
     TopAppBar(
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.Transparent,
-            titleContentColor = MaterialTheme.colorScheme.primary,
-        ),
-        modifier = Modifier.padding(bottom = 8.dp),
+        colors = topAppBarColors,
+        modifier = modifier,
         title = {
             Text(
                 text = title,
@@ -43,21 +75,6 @@ fun TopBar(
                 modifier = Modifier.background(Color.Transparent),
             )
         },
-        navigationIcon = {
-            IconButton(onClick = {
-                if (willRedirectToActivity) {
-                    startNewActivity(context!!, activity!!)
-                } else {
-                    navController!!.navigate(route!!)
-                }
-
-            }) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBackIos,
-                    contentDescription = "botão de retornar ao início",
-                    tint = Color.Black
-                )
-            }
-        }
+        navigationIcon = navigationIcon
     )
 }

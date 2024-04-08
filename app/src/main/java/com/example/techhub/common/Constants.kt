@@ -1,11 +1,14 @@
 package com.example.techhub.common
 
+import com.example.techhub.domain.RetrofitService
+
 object Constants {
     /* TODO - Alterar o endereço de IP para o endereço do servidor
-    * Estaremos utilizando o endereço de IP, pois
-    * estamos utilizando o microserviço localmente.
-    * Depois, alterar para o endereço do microserviço no servidor.
-    * */
-    const val BASE_URL = "http://127.0.0.1:8080/api/"
+    * ⚠️ sempre trocar o IP para o IPv4 da sua máquina que aparece quando executa "ipconfig" no terminal
+    */
+    private const val IP = "192.168.15.102"
+    const val BASE_URL = "http://${IP}:8080/api/"
     const val PARAM_TOKEN = "token"
+    const val EMPRESA = "empresa"
+    const val FREELANCER = "freelancer"
 }

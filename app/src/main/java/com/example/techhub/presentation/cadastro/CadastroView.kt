@@ -17,8 +17,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,8 +33,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.example.techhub.EditableForm
+import com.example.techhub.common.composable.CardTravaTelaCadastro
 import com.example.techhub.R
+import com.example.techhub.common.Constants
 import com.example.techhub.composable.SetBarColor
 import com.example.techhub.domain.navigation.nav_graph.cadastroGraph
 import com.example.techhub.common.composable.ElevatedButtonTH
@@ -72,9 +75,12 @@ class CadastroActivity : ComponentActivity() {
 // TODO - Exportar para um arquivo separado
 @Composable
 fun TravaTelaCadastroContent(onUserOptionSelected: (String) -> Unit) {
-    val userType = remember { mutableStateOf(0) }
-    var isAlerted = true
+    var userType: String by remember { mutableStateOf("") }
     val context = LocalContext.current
+
+    fun selectUserType(userSelected: String) {
+        userType = userSelected
+    }
 
     Scaffold(
         topBar = {
@@ -124,31 +130,27 @@ fun TravaTelaCadastroContent(onUserOptionSelected: (String) -> Unit) {
 
                 Spacer(modifier = Modifier.padding(16.dp))
 
-                Row() {
-                    EditableForm(
-                        height = 148.0,
-                        width = 148.0,
-                        backcroundColor = Color.White,
+                Row {
+                    CardTravaTelaCadastro(
                         imagePath = R.mipmap.freelancer_image,
                         contentDescription = "Imagem freelancer",
                         text = "Freelancer",
-                        textColor = Color(PrimaryBlue.value),
                         onClick = {
-                            userType.value = 1; isAlerted = false
-                        }
+                            selectUserType(userSelected = Constants.FREELANCER)
+                        },
+                        isSelected = userType == Constants.FREELANCER
                     )
 
                     Spacer(modifier = Modifier.padding(16.dp))
 
-                    EditableForm(
-                        height = 148.0,
-                        width = 148.0,
-                        backcroundColor = Color.White,
+                    CardTravaTelaCadastro(
                         imagePath = R.mipmap.empresa_image,
                         contentDescription = "Imagem Emppresa",
                         text = "Empresa",
-                        textColor = Color(PrimaryBlue.value),
-                        onClick = { userType.value = 2; isAlerted = false }
+                        onClick = {
+                            selectUserType(userSelected = Constants.EMPRESA)
+                        },
+                        isSelected = userType == Constants.EMPRESA
                     )
                 }
 
@@ -156,12 +158,11 @@ fun TravaTelaCadastroContent(onUserOptionSelected: (String) -> Unit) {
 
                 ElevatedButtonTH(
                     onClick = {
-                        if (isAlerted) {
+                        if (userType.isEmpty() || userType.isBlank()) {
                             val toastErrorMessage = "Selecione uma opção para continuar"
                             showToastError(context = context, message = toastErrorMessage)
                         } else {
-                            val userTypeSelected = if (userType.value == 1) "freelancer" else "empresa"
-                            onUserOptionSelected(userTypeSelected)
+                            onUserOptionSelected(userType)
                         }
                     },
                     text = "Avançar",
