@@ -17,7 +17,7 @@ import com.example.techhub.R
 import com.example.techhub.common.composable.CenteredImageSection
 
 @Composable
-fun IndexContent() {
+fun IndexView() {
     val context = LocalContext.current
 
     Column(

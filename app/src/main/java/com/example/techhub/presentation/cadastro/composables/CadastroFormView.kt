@@ -43,7 +43,7 @@ fun CadastroFormView(navController: NavController, userType: String) {
                 willRedirectToActivity = false,
                 navController = navController,
                 title = "Cadastro",
-                route = Screen.TravaTelaCadastroScreen.route
+                route = Screen.TravaTelaCadastroView.route
             )
         },
     ) { innerPadding ->
