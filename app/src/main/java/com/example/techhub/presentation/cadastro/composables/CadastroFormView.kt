@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -15,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -29,6 +31,9 @@ import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import com.example.techhub.common.Screen
 import com.example.techhub.common.composable.CnpjTextField
+import com.example.techhub.common.composable.Switch2FA
+import com.example.techhub.common.enums.UsuarioFuncao
+import com.example.techhub.domain.model.usuario.UsuarioCriacaoData
 
 @Composable
 fun CadastroFormView(navController: NavController, userType: String) {
@@ -36,6 +41,20 @@ fun CadastroFormView(navController: NavController, userType: String) {
     val userDocument = remember { mutableStateOf("") }
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
+    val isUsing2FA = remember { mutableStateOf(false) }
+
+    val user = UsuarioCriacaoData(
+        nome = name.value,
+        email = email.value,
+        senha = password.value,
+        numeroCadastroPessoa = userDocument.value,
+        funcao = if (userType == Constants.FREELANCER) UsuarioFuncao.FREELANCER else UsuarioFuncao.EMPRESA,
+        isUsing2FA = isUsing2FA.value
+    )
+
+    fun cadastrarUsuario() {
+        // TODO - Adicionar lógica para cadastro de usuário
+    }
 
     Scaffold(
         topBar = {
@@ -65,8 +84,8 @@ fun CadastroFormView(navController: NavController, userType: String) {
                 text = if (userType == Constants.FREELANCER) "Quero ser um freelancer" else "Quero explorar talentos",
                 style = TextStyle(
                     color = Color(PrimaryBlue.value),
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 30.sp
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 32.sp,
                 )
             )
 
@@ -77,8 +96,11 @@ fun CadastroFormView(navController: NavController, userType: String) {
                 Text(
                     text = "Faça o cadastro para ter acesso aos nossos serviços!",
                     color = Color(GrayText.value),
+                    fontSize = 17.sp,
                     fontWeight = FontWeight.Thin,
-                    fontSize = 14.sp
+                    textAlign = TextAlign.Justify,
+                    modifier = Modifier
+                        .fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.padding(12.dp))
 
@@ -99,6 +121,8 @@ fun CadastroFormView(navController: NavController, userType: String) {
                 Spacer(modifier = Modifier.padding(12.dp))
 
                 PasswordTextField { password.value = it }
+
+                Switch2FA { isUsing2FA.value = it }
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
