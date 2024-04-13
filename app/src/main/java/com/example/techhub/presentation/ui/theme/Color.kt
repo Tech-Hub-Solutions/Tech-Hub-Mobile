@@ -9,6 +9,8 @@ val PrimaryBlue = Color(0xFF0F9EEA)
 val SecondaryBlue = Color(0xFF143F71)
 val GrayText = Color(0xFF505050)
 val GrayButtonText = Color(0xFF727272)
+val GrayStar = Color(0xFFC9C9C9)
+val GrayTinyButton = Color(0xFFF4F4F4)
 
 val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
