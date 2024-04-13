@@ -12,10 +12,12 @@ import kotlinx.coroutines.launch
 class FavoritosViewModel {
     val favoritos = MutableLiveData(SnapshotStateList<UsuarioFavoritoData>())
     val erroApi = MutableLiveData("")
+
     val token =
-        "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYXRhaW5ub3ZhdGVAaG90bWFpbC5jb20iLCJpYXQiOjE3MTMwMzY4MzYsImV4cCI6MTcxNjYzNjgzNn0.tHy7jAvuVnkmus3M9aFDa2yzNNz9rYj0Zg8JSYEMkTbhVlfxLOg6kgZyjtuFrhUgsEERErtrxoIdloZaU2CCRg"
+        "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYXRhaW5ub3ZhdGVAaG90bWFpbC5jb20iLCJpYXQiOjE3MTMwNDU4NDgsImV4cCI6MTcxNjY0NTg0OH0.ZT2BsmYWQ9pTr9iraY1h1SJgvNle9RYHZKad-ASpZpcCPVoS1BYjPjGYntMfhToHmhHkfNiu6E2WRCnGbKMlpA"
 
     private val usuarioApi = RetrofitService.getUsuarioService()
+    private val perfilApi = RetrofitService.getPerfilService()
 
     init {
         getFavoriteUsers(0, 10, "", "avaliacao,desc")
@@ -43,6 +45,22 @@ class FavoritosViewModel {
                 }
             } catch (e: Exception) {
                 Log.e("api", "Ocorreu um erro no get ${e.message}")
+            }
+        }
+    }
+
+    fun favoritarUsuario(id: Int?) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = perfilApi.favoritarTerceiro(token, id)
+
+                if (response.isSuccessful) {
+                    Log.d("API PERFIL", "Favoritado com sucesso")
+                } else {
+                    erroApi.postValue(response.errorBody()?.toString())
+                }
+            } catch (e: Exception) {
+                Log.e("api", "Ocorreu um erro no favoritar ${e.message}")
             }
         }
     }

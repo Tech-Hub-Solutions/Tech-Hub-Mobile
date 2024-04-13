@@ -33,35 +33,69 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
+import com.example.techhub.presentation.favoritos.FavoritosViewModel
 import com.example.techhub.presentation.ui.theme.GrayStar
 
 @Composable
-    fun UserCard(
+fun UserCard(
     userProfile: UsuarioFavoritoData, userList: SnapshotStateList<UsuarioFavoritoData>,
 ) {
-        val isFavorito = remember{ mutableStateOf(true) }
+    val isFavorito = remember { mutableStateOf(true) }
 
-        ElevatedCard(
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 6.dp
-            ),
-            modifier = Modifier
-                .size(width = 200.dp, height = 204.dp),
-            shape = RectangleShape
+    ElevatedCard(
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 6.dp
+        ),
+        modifier = Modifier
+            .size(width = 200.dp, height = 204.dp),
+        shape = RectangleShape
+    ) {
+        AsyncImage(
+            model = userProfile.urlFotoPerfil,
+            contentDescription = "Foto do freelancer",
+            modifier = Modifier.size(148.dp, 98.dp),
+            alignment = Alignment.TopCenter
+        )
+
+        Column(
+            Modifier
+                .fillMaxSize()
+                .background(Color.White)
+                .padding(6.dp)
         ) {
-            AsyncImage(model = userProfile.urlFotoPerfil,
-                contentDescription = "Foto do freelancer",
-                modifier = Modifier.size(148.dp,98.dp),
-                alignment = Alignment.TopCenter)
+            Text(
+                text = userProfile.nome.toString(),
+                style = TextStyle(
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp
+                )
+            )
 
-            Column (
-                Modifier
-                    .fillMaxSize()
-                    .background(Color.White)
-                    .padding(6.dp)
-            ) {
+            Spacer(modifier = Modifier.padding(2.dp))
+
+            Text(
+                text = userProfile.descricao.toString(),
+                style = TextStyle(
+                    color = Color.Black,
+                    fontWeight = FontWeight.Light,
+                    fontSize = 12.sp
+                ),
+                modifier = Modifier.height(30.dp)
+            )
+
+            Spacer(modifier = Modifier.padding(2.dp))
+
+            StarRatingBar(
+                maxStars = 5,
+                rating = userProfile.qtdEstrela ?: 0.0
+            )
+
+            Spacer(modifier = Modifier.padding(2.dp))
+
+            Row {
                 Text(
-                    text = userProfile.nome.toString(),
+                    text = "R$ ${"%.2f".format(userProfile.precoMedio)}",
                     style = TextStyle(
                         color = Color.Black,
                         fontWeight = FontWeight.Bold,
@@ -69,60 +103,32 @@ import com.example.techhub.presentation.ui.theme.GrayStar
                     )
                 )
 
-                Spacer(modifier = Modifier.padding(2.dp))
+                Spacer(modifier = Modifier.padding(horizontal = 24.dp))
 
-                Text(
-                    text = userProfile.descricao.toString(),
-                    style = TextStyle(
-                        color = Color.Black,
-                        fontWeight = FontWeight.Light,
-                        fontSize = 12.sp
-                    ),
-                    modifier = Modifier.height(30.dp))
+                Icon(
+                    imageVector = Icons.Filled.Favorite,
+                    contentDescription = "Botão para favoritar",
+                    modifier = Modifier
+                        .size(20.dp)
+                        .clickable {
+                            val viewModel = FavoritosViewModel()
 
-                Spacer(modifier = Modifier.padding(2.dp))
-
-                StarRatingBar(
-                    maxStars = 5,
-                    rating = userProfile.qtdEstrela ?: 0.0
+                            viewModel.favoritarUsuario(userProfile.id)
+                            isFavorito.value = !isFavorito.value
+                        },
+                    tint = if (isFavorito.value) Color.Red else Color(GrayStar.value),
                 )
-
-                Spacer(modifier = Modifier.padding(2.dp))
-
-                Row {
-                    Text(
-                    text = "R$ ${"%.2f".format(userProfile.precoMedio)}",
-                        style = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 14.sp
-                        )
-                    )
-
-                    Spacer(modifier = Modifier.padding(horizontal = 24.dp))
-
-                    Icon(
-                        imageVector = Icons.Filled.Favorite,
-                        contentDescription = "Botão para favoritar",
-                        modifier = Modifier
-                            .size(20.dp)
-                            .clickable {
-                                /*unFavorite(userProfile, userList)*/
-                                userList.removeAt(userList.indexOf(userProfile))
-                            },
-                        tint = if (isFavorito.value) Color.Red else Color(GrayStar.value),
-                    )
-                }
             }
-
         }
+
     }
+}
 
 
 @Composable
 fun StarRatingBar(
     maxStars: Int = 5,
-    rating: Double
+    rating: Double,
 ) {
     val density = LocalDensity.current.density
     val starSize = (5 * density).dp
@@ -151,29 +157,5 @@ fun StarRatingBar(
         }
     }
 }
-
-/*fun unFavorite(
-    userProfile: UsuarioFavoritoData,
-    userList: SnapshotStateList<UsuarioFavoritoData>
-){
-    val call = RetrofitService.favoritarTerceiro().favoritarTerceiro(userProfile.id)
-
-    call.enqueue(object : Callback<ReferenciaDetalhadoData> {
-        override fun onResponse(
-            call: Call<ReferenciaDetalhadoData>,
-            response: Response<ReferenciaDetalhadoData>
-        ) {
-            if (response.isSuccessful) {
-                val responseBody = response.body()
-                println(responseBody)
-            }
-        }
-
-        override fun onFailure(call: Call<ReferenciaDetalhadoData>, t: Throwable) {
-            println("Erro ao desfavoritar ${t.message}")
-        }
-    })
-}*/
-
 
 
