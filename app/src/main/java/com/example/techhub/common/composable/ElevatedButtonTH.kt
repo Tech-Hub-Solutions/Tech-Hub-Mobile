@@ -1,17 +1,20 @@
 package com.example.techhub.common.composable
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
@@ -22,14 +25,14 @@ fun ElevatedButtonTH(
     text: String,
     backgroundColor: Color,
     textColor: Color = Color.White,
-    width: Int, height: Int
+    width: Dp,
+    height: Dp
 ) {
     ElevatedButton(
         onClick = { onClick() },
         modifier = Modifier
-            .padding(10.dp)
-            .width(width.dp)
-            .height(height.dp),
+            .width(width)
+            .height(height),
         colors = ButtonDefaults.buttonColors(
             containerColor = backgroundColor,
             contentColor = textColor,
@@ -39,6 +42,10 @@ fun ElevatedButtonTH(
         ),
         shape = RoundedCornerShape(10.dp),
     ) {
-        Text(text = text, fontSize = 16.sp, fontWeight = FontWeight(300))
+        Text(
+            text = text,
+            fontSize = MaterialTheme.typography.titleMedium.fontSize,
+            fontWeight = MaterialTheme.typography.titleMedium.fontWeight,
+        )
     }
 }

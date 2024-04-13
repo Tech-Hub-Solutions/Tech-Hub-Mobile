@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,6 +36,7 @@ import com.example.techhub.common.utils.showToastError
 import com.example.techhub.presentation.index.IndexActivity
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import com.example.techhub.presentation.ui.theme.SecondaryBlue
+import com.example.techhub.presentation.ui.theme.dimensions
 
 @Composable
 fun TravaTelaCadastroView(onUserOptionSelected: (String) -> Unit) {
@@ -130,8 +132,8 @@ fun TravaTelaCadastroView(onUserOptionSelected: (String) -> Unit) {
                     },
                     text = "Avançar",
                     backgroundColor = Color(PrimaryBlue.value),
-                    width = (350),
-                    height = (60)
+                    width = (MaterialTheme.dimensions.buttonWidth),
+                    height = (MaterialTheme.dimensions.buttonHeight)
                 )
             }
         }

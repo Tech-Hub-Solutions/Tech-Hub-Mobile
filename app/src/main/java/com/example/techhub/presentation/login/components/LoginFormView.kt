@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -41,6 +42,7 @@ import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.presentation.cadastro.CadastroActivity
 import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
+import com.example.techhub.presentation.ui.theme.dimensions
 import retrofit2.Callback
 import retrofit2.Response
 
@@ -109,8 +111,8 @@ fun LoginFormView(onLoginAuth: () -> Unit) {
             CenteredImageSection(
                 imagePath = R.mipmap.login_image,
                 contentDescription = "@string/description_image_login",
-                width = 252,
-                height = 300,
+                width = MaterialTheme.dimensions.centeredImageWidthLarge,
+                height = MaterialTheme.dimensions.centeredImageHeightLarge,
             )
 
             Spacer(modifier = Modifier.padding(24.dp))
@@ -146,8 +148,8 @@ fun LoginFormView(onLoginAuth: () -> Unit) {
                 onClick = { loginUser() },
                 text = "Entrar",
                 backgroundColor = Color(PrimaryBlue.value),
-                width = (350),
-                height = (60),
+                width = MaterialTheme.dimensions.buttonWidth,
+                height = MaterialTheme.dimensions.buttonHeight,
             )
 
             Spacer(modifier = Modifier.padding(8.dp))

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -40,6 +41,7 @@ import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.presentation.login.LoginActivity
 import com.example.techhub.presentation.ui.theme.GrayButtonText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
+import com.example.techhub.presentation.ui.theme.dimensions
 
 @Composable
 fun LoginAuthView() {
@@ -73,8 +75,8 @@ fun LoginAuthView() {
             CenteredImageSection(
                 imagePath = R.mipmap.login_auth_lock_image,
                 contentDescription = "@string/description_image_login_auth",
-                width = 252,
-                height = 300,
+                width = MaterialTheme.dimensions.centeredImageWidthLarge,
+                height = MaterialTheme.dimensions.centeredImageHeightLarge,
             )
 
             Spacer(modifier = Modifier.padding(10.dp))
@@ -161,8 +163,8 @@ fun LoginAuthView() {
                     text = "Continuar",
                     backgroundColor = Color(PrimaryBlue.value),
                     textColor = Color.White,
-                    width = 130,
-                    height = 52,
+                    width = MaterialTheme.dimensions.buttonWidth,
+                    height = MaterialTheme.dimensions.buttonHeight,
                 )
             }
         }

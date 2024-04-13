@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +30,7 @@ import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import com.example.techhub.common.Screen
 import com.example.techhub.common.composable.CnpjTextField
+import com.example.techhub.presentation.ui.theme.dimensions
 
 @Composable
 fun CadastroFormView(navController: NavController, userType: String) {
@@ -109,8 +111,8 @@ fun CadastroFormView(navController: NavController, userType: String) {
                     text = "Cadastrar",
                     backgroundColor = Color.White,
                     textColor = Color(PrimaryBlue.value),
-                    width = (350),
-                    height = (60)
+                    width = (MaterialTheme.dimensions.buttonWidth),
+                    height = (MaterialTheme.dimensions.buttonHeight)
                 )
             }
         }

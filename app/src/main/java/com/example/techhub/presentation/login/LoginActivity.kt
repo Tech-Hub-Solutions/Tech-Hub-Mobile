@@ -19,22 +19,25 @@ class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            TechHubTheme {
-                SetBarColor(color = Color.White)
+            TechHubTheme(
+                activity = this,
+                content = {
+                    SetBarColor(color = Color.White)
 
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    val navController = rememberNavController()
-                    NavHost(
-                        navController = navController,
-                        startDestination = Screen.LoginGraph.route
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background
                     ) {
-                        loginGraph(navController)
+                        val navController = rememberNavController()
+                        NavHost(
+                            navController = navController,
+                            startDestination = Screen.LoginGraph.route
+                        ) {
+                            loginGraph(navController)
+                        }
                     }
                 }
-            }
+            )
         }
     }
 }

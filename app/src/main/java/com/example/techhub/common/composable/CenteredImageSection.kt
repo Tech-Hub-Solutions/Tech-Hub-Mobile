@@ -11,10 +11,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CenteredImageSection(imagePath: Int, contentDescription: String, width: Int, height: Int) {
+fun CenteredImageSection(
+    imagePath: Int,
+    contentDescription: String,
+    width: Dp,
+    height: Dp
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
@@ -25,8 +31,8 @@ fun CenteredImageSection(imagePath: Int, contentDescription: String, width: Int,
             contentDescription = contentDescription,
             contentScale = ContentScale.FillWidth,
             modifier = Modifier
-                .width(width.dp)
-                .height(height.dp)
+                .width(width)
+                .height(height)
                 .fillMaxHeight()
                 .fillMaxWidth()
         )
