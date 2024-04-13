@@ -13,7 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.techhub.common.Screen
 import com.example.techhub.composable.SetBarColor
-import com.example.techhub.presentation.index.composables.IndexContent
+import com.example.techhub.presentation.index.composables.IndexView
 import com.example.techhub.presentation.index.utils.showWelcomeToast
 import com.example.techhub.presentation.ui.theme.TechHubTheme
 
@@ -34,11 +34,11 @@ class IndexActivity : ComponentActivity() {
 
                     NavHost(
                         navController = navController,
-                        startDestination = Screen.IndexScreen.route,
+                        startDestination = Screen.IndexView.route,
                         route = "root_route"
                     ) {
-                        composable(route = Screen.IndexScreen.route) {
-                            IndexContent()
+                        composable(route = Screen.IndexView.route) {
+                            IndexView()
                         }
                     }
                 }

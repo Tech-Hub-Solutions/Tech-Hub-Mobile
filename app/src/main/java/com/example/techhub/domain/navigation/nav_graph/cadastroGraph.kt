@@ -12,19 +12,19 @@ import com.example.techhub.presentation.cadastro.composables.TravaTelaCadastroVi
 
 fun NavGraphBuilder.cadastroGraph(navController: NavController) {
     navigation(
-        startDestination = Screen.TravaTelaCadastroScreen.route,
+        startDestination = Screen.TravaTelaCadastroView.route,
         route = Screen.CadastroGraph.route
     ) {
-        composable(route = Screen.TravaTelaCadastroScreen.route) {
+        composable(route = Screen.TravaTelaCadastroView.route) {
             TravaTelaCadastroView(
                 onUserOptionSelected = { userType ->
-                    navController.navigate(Screen.CadastroFormScreen.route + "/$userType")
+                    navController.navigate(Screen.CadastroFormView.route + "/$userType")
                 }
             )
         }
 
         composable(
-            route = "${Screen.CadastroFormScreen.route}/{userType}", arguments = listOf(
+            route = "${Screen.CadastroFormView.route}/{userType}", arguments = listOf(
                 navArgument("userType") { type = NavType.StringType }
             )
         ) { navBackStackEntry ->

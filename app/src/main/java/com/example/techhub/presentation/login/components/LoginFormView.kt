@@ -1,5 +1,6 @@
 package com.example.techhub.presentation.login.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -63,10 +64,9 @@ fun LoginFormView(onLoginAuth: () -> Unit) {
                 response: Response<UsuarioTokenData>
             ) {
                 val responseBody = response.body()
+                Log.d("ZE DA MANGA", responseBody.toString())
 
                 if (responseBody != null) {
-                    // TODO - encontrar forma de usar DataStore p/ storeData(token)
-                    // val token = response.body()!!.token
                     response.body()?.token?.let {
                         onLoginAuth()
                     } ?: showToastError(context = context, message = toastErrorMessage)

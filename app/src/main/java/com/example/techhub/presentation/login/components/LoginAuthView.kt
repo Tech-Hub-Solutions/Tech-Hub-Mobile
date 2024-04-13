@@ -42,7 +42,7 @@ import com.example.techhub.presentation.ui.theme.GrayButtonText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun LoginAuthContent() {
+fun LoginAuthView() {
     var filledText by remember { mutableStateOf("") }
     val context = LocalContext.current
 

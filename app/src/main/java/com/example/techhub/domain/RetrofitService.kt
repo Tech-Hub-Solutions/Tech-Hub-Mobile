@@ -24,11 +24,16 @@ object RetrofitService {
         }
         .build()
 
-    fun getUsuarioService(): UsuarioApi {
+    private fun getRetrofitInstance() : Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
-            .build().create(UsuarioApi::class.java)
+            .build()
     }
+
+    fun getUsuarioService(): UsuarioApi {
+        return getRetrofitInstance().create(UsuarioApi::class.java)
+    }
+
 }
