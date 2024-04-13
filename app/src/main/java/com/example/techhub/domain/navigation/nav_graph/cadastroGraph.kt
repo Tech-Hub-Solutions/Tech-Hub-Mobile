@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.techhub.common.Screen
+import com.example.techhub.presentation.cadastro.composables.CadastroAuthView
 import com.example.techhub.presentation.cadastro.composables.CadastroFormView
 import com.example.techhub.presentation.cadastro.composables.TravaTelaCadastroView
 
@@ -32,5 +33,8 @@ fun NavGraphBuilder.cadastroGraph(navController: NavController) {
             CadastroFormView(navController = navController, userType = userType!!)
         }
 
+        composable(route = Screen.CadastroAuthView.route) {
+            CadastroAuthView(navController = navController)
+        }
     }
 }

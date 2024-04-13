@@ -66,7 +66,7 @@ fun CustomTextSection() {
             text = "Unindo talento e necessidade.",
             color = Color(GrayText.value),
             fontWeight = FontWeight.Thin,
-            fontSize = 16.sp
+            fontSize = 17.sp
         )
     }
 }
