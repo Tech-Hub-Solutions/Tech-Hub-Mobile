@@ -64,7 +64,6 @@ fun LoginFormView(onLoginAuth: () -> Unit) {
                 response: Response<UsuarioTokenData>
             ) {
                 val responseBody = response.body()
-                Log.d("ZE DA MANGA", responseBody.toString())
 
                 if (responseBody != null) {
                     response.body()?.token?.let {

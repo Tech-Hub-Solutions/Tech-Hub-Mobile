@@ -1,5 +1,6 @@
 package com.example.techhub.presentation.cadastro.composables
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -33,7 +35,13 @@ import com.example.techhub.common.Screen
 import com.example.techhub.common.composable.CnpjTextField
 import com.example.techhub.common.composable.Switch2FA
 import com.example.techhub.common.enums.UsuarioFuncao
+import com.example.techhub.common.utils.showToastError
+import com.example.techhub.domain.RetrofitService
 import com.example.techhub.domain.model.usuario.UsuarioCriacaoData
+import com.example.techhub.domain.model.usuario.UsuarioTokenData
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @Composable
 fun CadastroFormView(navController: NavController, userType: String) {
@@ -42,18 +50,37 @@ fun CadastroFormView(navController: NavController, userType: String) {
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
     val isUsing2FA = remember { mutableStateOf(false) }
-
-    val user = UsuarioCriacaoData(
-        nome = name.value,
-        email = email.value,
-        senha = password.value,
-        numeroCadastroPessoa = userDocument.value,
-        funcao = if (userType == Constants.FREELANCER) UsuarioFuncao.FREELANCER else UsuarioFuncao.EMPRESA,
-        isUsing2FA = isUsing2FA.value
-    )
+    val context = LocalContext.current
+    val toastErrorMessage = "Ops! Algo deu errado.\n Tente novamente."
 
     fun cadastrarUsuario() {
-        // TODO - Adicionar lógica para cadastro de usuário
+        val user = UsuarioCriacaoData(
+            nome = name.value,
+            email = email.value,
+            senha = password.value,
+            numeroCadastroPessoa = userDocument.value,
+            funcao = if (userType == Constants.FREELANCER) UsuarioFuncao.FREELANCER else UsuarioFuncao.EMPRESA,
+            isUsing2FA = isUsing2FA.value
+        )
+
+        val usuarioService = RetrofitService.getUsuarioService()
+
+        usuarioService.cadastrarUsuario(user).enqueue(object : Callback<UsuarioTokenData> {
+            override fun onResponse(
+                call: Call<UsuarioTokenData>,
+                response: Response<UsuarioTokenData>
+            ) {
+                if (response.isSuccessful) {
+                    // TODO: Redirect to the next screen
+                } else {
+                    showToastError(context = context, message = toastErrorMessage)
+                }
+            }
+
+            override fun onFailure(call: Call<UsuarioTokenData>, t: Throwable) {
+                showToastError(context = context, message = toastErrorMessage)
+            }
+        })
     }
 
     Scaffold(
@@ -104,14 +131,14 @@ fun CadastroFormView(navController: NavController, userType: String) {
                 )
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                NameTextField()
+                NameTextField { name.value = it }
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
                 if (userType == Constants.FREELANCER) {
-                    CpfTextField()
+                    CpfTextField { userDocument.value = it }
                 } else if (userType == Constants.EMPRESA) {
-                    CnpjTextField()
+                    CnpjTextField { userDocument.value = it }
                 }
 
                 Spacer(modifier = Modifier.padding(12.dp))
@@ -128,7 +155,7 @@ fun CadastroFormView(navController: NavController, userType: String) {
 
                 ElevatedButtonTH(
                     onClick = {
-                        // TODO - Add lógica p/ cadastro/validação de usuário
+                        cadastrarUsuario()
                     },
                     text = "Cadastrar",
                     backgroundColor = Color.White,
