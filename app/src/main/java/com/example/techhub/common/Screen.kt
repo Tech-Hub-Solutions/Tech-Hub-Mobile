@@ -10,4 +10,5 @@ sealed class Screen(
     data object LoginGraph : Screen("login_graph")
     data object LoginFormView : Screen("login_form_view")
     data object LoginAuthView : Screen("login_auth_view")
+    data object FavoritosView : Screen("favoritos_view")
 }

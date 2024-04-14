@@ -1,6 +1,7 @@
 package com.example.techhub.domain
 
 import com.example.techhub.common.Constants
+import com.example.techhub.data.remote.PerfilApi
 import com.example.techhub.data.remote.UsuarioApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -34,6 +35,10 @@ object RetrofitService {
 
     fun getUsuarioService(): UsuarioApi {
         return getRetrofitInstance().create(UsuarioApi::class.java)
+    }
+
+    fun getPerfilService(): PerfilApi {
+        return getRetrofitInstance().create(PerfilApi::class.java)
     }
 
 }
