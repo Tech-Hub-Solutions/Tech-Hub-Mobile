@@ -2,53 +2,43 @@ package com.example.techhub.presentation.comparar.composables
 
 val sampleData = listOf(
     AccordionModel(
-        header = "AAPL",
+        area = "AAPL",
         rows = listOf(
-            AccordionModel.Row("AAPL", "$328.89"),
-            AccordionModel.Row("AAPL", "$328.89"),
-            AccordionModel.Row("AAPL", "$328.89"),
-            AccordionModel.Row("AAPL", "$328.89"),
-            AccordionModel.Row("AAPL", "$328.89"),
+            AccordionModel.Row("AAPL", true, false),
+            AccordionModel.Row("AAPL", false, true),
+            AccordionModel.Row("AAPL", true, false),
+            AccordionModel.Row("AAPL", false, true),
+            AccordionModel.Row("AAPL", true, false),
         )
     ),
     AccordionModel(
-        header = "AAPL",
+        area = "GOOGL",
         rows = listOf(
-            AccordionModel.Row("AAPL", "$328.89"),
-            AccordionModel.Row("AAPL", "$328.89"),
-            AccordionModel.Row("AAPL", "$328.89"),
-            AccordionModel.Row("AAPL", "$328.89"),
-            AccordionModel.Row("AAPL", "$328.89"),
+            AccordionModel.Row("GOOGL", true, false),
+            AccordionModel.Row("GOOGL", false, true),
+            AccordionModel.Row("GOOGL", true, false),
+            AccordionModel.Row("GOOGL", false, true),
+            AccordionModel.Row("GOOGL", true, false),
         )
     ),
     AccordionModel(
-        header = "AAPL",
+        area = "GOOGL",
         rows = listOf(
-            AccordionModel.Row("AAPL", "$328.89"),
-            AccordionModel.Row("AAPL", "$328.89"),
-            AccordionModel.Row("AAPL", "$328.89"),
-            AccordionModel.Row("AAPL", "$328.89"),
-            AccordionModel.Row("AAPL", "$328.89"),
+            AccordionModel.Row("GOOGL", true, false),
+            AccordionModel.Row("GOOGL", false, true),
+            AccordionModel.Row("GOOGL", true, false),
+            AccordionModel.Row("GOOGL", false, true),
+            AccordionModel.Row("GOOGL", true, false),
         )
     ),
     AccordionModel(
-        header = "AAPL",
+        area = "GOOGL",
         rows = listOf(
-            AccordionModel.Row("AAPL", "$328.89"),
-            AccordionModel.Row("AAPL", "$328.89"),
-            AccordionModel.Row("AAPL", "$328.89"),
-            AccordionModel.Row("AAPL", "$328.89"),
-            AccordionModel.Row("AAPL", "$328.89"),
-        )
-    ),
-    AccordionModel(
-        header = "AAPL",
-        rows = listOf(
-            AccordionModel.Row("AAPL", "$328.89"),
-            AccordionModel.Row("AAPL", "$328.89"),
-            AccordionModel.Row("AAPL", "$328.89"),
-            AccordionModel.Row("AAPL", "$328.89"),
-            AccordionModel.Row("AAPL", "$328.89"),
+            AccordionModel.Row("GOOGL", true, false),
+            AccordionModel.Row("GOOGL", false, true),
+            AccordionModel.Row("GOOGL", true, false),
+            AccordionModel.Row("GOOGL", false, true),
+            AccordionModel.Row("GOOGL", true, false),
         )
     ),
 )

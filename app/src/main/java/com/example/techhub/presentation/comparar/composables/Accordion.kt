@@ -35,7 +35,7 @@ fun Accordion(model: AccordionModel) {
     Column(
         Modifier
             .padding(horizontal = 16.dp, vertical = 8.dp)) {
-        AccordionHeader(title = model.header, isExpanded = expanded) {
+        AccordionHeader(title = model.area, isExpanded = expanded) {
             expanded = !expanded
         }
         AnimatedVisibility(visible = expanded) {

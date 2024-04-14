@@ -96,7 +96,6 @@ class TesteCompararTalentosActivity : ComponentActivity() {
     }
 }
 
-
 @Composable
 fun FavoritosView() {
     Text(text = "Resende é viado")
