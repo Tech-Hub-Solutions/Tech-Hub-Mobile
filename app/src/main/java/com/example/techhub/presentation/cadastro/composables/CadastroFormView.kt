@@ -1,6 +1,5 @@
 package com.example.techhub.presentation.cadastro.composables
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -39,6 +38,7 @@ import com.example.techhub.common.composable.Switch2FA
 import com.example.techhub.common.enums.UsuarioFuncao
 import com.example.techhub.common.utils.base64Images.encodeBase64
 import com.example.techhub.common.utils.showToastError
+import com.example.techhub.common.utils.showWelcomeToastWithName
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.RetrofitService
 import com.example.techhub.domain.model.usuario.UsuarioCriacaoData
@@ -95,20 +95,15 @@ fun CadastroFormView(
 
                         onSuccess(usuarioSimpleVerifyData)
                     } else {
-                        val fullName = response.body()?.nome
-                        val firstName = fullName?.split(" ")?.firstOrNull()
-
-                        val toast: Toast = Toast.makeText(
-                            context,
-                            "Bem vindo(a), ${firstName}!",
-                            Toast.LENGTH_SHORT
+                        showWelcomeToastWithName(
+                            context = context,
+                            fullName = response.body()?.nome!!,
                         )
-                        toast.show()
 
                         startNewActivity(
                             context = context,
                             // TODO - Inserir redirecionamento para Activity de Perfil
-                            // TODO - Passar no parâmetro do pefil e seu token/ salvar no Data Store
+                            // TODO - No parâmetro, passar o pefil e seu token p/ salvar no Data Store
                             activity = LoginActivity::class.java,
                         )
                     }
