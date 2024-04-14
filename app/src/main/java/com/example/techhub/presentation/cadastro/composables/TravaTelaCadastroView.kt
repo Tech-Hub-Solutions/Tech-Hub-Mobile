@@ -86,8 +86,8 @@ fun TravaTelaCadastroView(onUserOptionSelected: (String) -> Unit) {
                     text = "Como deseja começar?",
                     style = TextStyle(
                         color = Color(SecondaryBlue.value),
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 30.sp
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 32.sp,
                     )
                 )
 

@@ -64,7 +64,6 @@ fun LoginFormView(onLoginAuth: () -> Unit) {
                 response: Response<UsuarioTokenData>
             ) {
                 val responseBody = response.body()
-                Log.d("ZE DA MANGA", responseBody.toString())
 
                 if (responseBody != null) {
                     response.body()?.token?.let {
@@ -117,14 +116,14 @@ fun LoginFormView(onLoginAuth: () -> Unit) {
 
             Row {
                 Text(
-                    text = "Entre com sua conta para uma \n" +
+                    text = "Entre com sua conta para uma " +
                             "experiência melhor!",
                     color = Color(GrayText.value),
                     fontSize = 17.sp,
                     fontWeight = FontWeight.Thin,
-                    textAlign = TextAlign.Start,
+                    textAlign = TextAlign.Justify,
                     modifier = Modifier
-                        .padding(start = 25.dp)
+                        .padding(horizontal = 25.dp)
                         .fillMaxWidth()
                 )
             }
