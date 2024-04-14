@@ -83,12 +83,14 @@ fun CadastroFormView(
                 if (response.isSuccessful) {
                     if (isUsing2FA) {
                         val secretQrCodeUrl = response.body()?.secretQrCodeUrl.toString()
+                        val secretKey = response.body()?.secret.toString()
                         val encodeUrl = encodeBase64(secretQrCodeUrl)
 
                         val usuarioSimpleVerifyData = UsuarioSimpleVerifyData(
                             email = email,
                             senha = password,
-                            encodedUrl = encodeUrl
+                            encodedUrl = encodeUrl,
+                            secretKey = secretKey
                         )
 
                         onSuccess(usuarioSimpleVerifyData)

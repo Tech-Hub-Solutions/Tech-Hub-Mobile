@@ -2,6 +2,7 @@ package com.example.techhub.presentation.cadastro.composables
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -42,6 +42,7 @@ import androidx.navigation.NavController
 import com.example.techhub.common.Screen
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.TopBar
+import com.example.techhub.common.utils.copyToClipBoard
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.RetrofitService
@@ -166,46 +167,58 @@ fun CadastroAuthView(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = buildAnnotatedString {
-                        withStyle(
-                            style = SpanStyle(
-                                color = Color.Black,
-                                fontWeight = FontWeight.Thin,
-                                fontSize = 17.sp
-                            )
-                        ) {
-                            append("Impossibilitado de escanear o QR Code? Você pode usar a ")
-                        }
-                        withStyle(
-                            style = SpanStyle(
-                                color = Color(PrimaryBlue.value),
-                                fontWeight = FontWeight.Thin,
-                                textDecoration = TextDecoration.Underline,
-                                fontSize = 17.sp
-                            )
-                        ) {
-                            append("chave de configuração")
-                        }
-                        withStyle(
-                            style = SpanStyle(
-                                color = Color.Black,
-                                fontWeight = FontWeight.Thin,
-                                fontSize = 17.sp
-                            )
-                        ) {
-                            append(" para configurar manualmente o aplicativo de autenticação.")
-                        }
-                    },
-                    style = MaterialTheme.typography.titleLarge,
-                    textAlign = TextAlign.Justify,
-                    modifier = Modifier.padding(bottom = 10.dp)
-                )
+            val annotatedString = buildAnnotatedString {
+                withStyle(
+                    style = SpanStyle(
+                        color = Color.Black,
+                        fontWeight = FontWeight.Thin,
+                        fontSize = 17.sp
+                    )
+                ) {
+                    append("Impossibilitado de escanear o QR Code? Você pode usar a ")
+                }
+
+                withStyle(
+                    style = SpanStyle(
+                        color = Color(PrimaryBlue.value),
+                        fontWeight = FontWeight.Thin,
+                        textDecoration = TextDecoration.Underline,
+                        fontSize = 17.sp,
+                    )
+                ) {
+                    append("chave de configuração")
+                    addStringAnnotation(
+                        tag = "Clickable",
+                        annotation = "secretKey",
+                        start = length - "chave de configuração".length,
+                        end = length
+                    )
+                }
+
+                withStyle(
+                    style = SpanStyle(
+                        color = Color.Black,
+                        fontWeight = FontWeight.Thin,
+                        fontSize = 17.sp
+                    )
+                ) {
+                    append(" para configurar manualmente o aplicativo de autenticação.")
+                }
             }
+
+            Text(
+                text = annotatedString,
+                modifier = Modifier.clickable(
+                    onClick = {
+                        copyToClipBoard(
+                            context = context,
+                            text = usuarioSimpleVerifyData.secretKey
+                        )
+                    }
+                ),
+                textAlign = TextAlign.Justify
+            )
+
 
             Spacer(modifier = Modifier.height(16.dp))
 
