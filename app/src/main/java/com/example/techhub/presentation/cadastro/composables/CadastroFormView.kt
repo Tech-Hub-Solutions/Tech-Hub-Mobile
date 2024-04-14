@@ -1,6 +1,5 @@
 package com.example.techhub.presentation.cadastro.composables
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -38,13 +37,12 @@ import com.example.techhub.common.composable.CnpjTextField
 import com.example.techhub.common.composable.Switch2FA
 import com.example.techhub.common.enums.UsuarioFuncao
 import com.example.techhub.common.utils.base64Images.encodeBase64
+import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.showToastError
-import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.RetrofitService
 import com.example.techhub.domain.model.usuario.UsuarioCriacaoData
 import com.example.techhub.domain.model.usuario.UsuarioSimpleVerifyData
 import com.example.techhub.domain.model.usuario.UsuarioTokenData
-import com.example.techhub.presentation.login.LoginActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -53,7 +51,7 @@ import retrofit2.Response
 fun CadastroFormView(
     navController: NavController,
     userType: String,
-    onSuccess: (UsuarioSimpleVerifyData) -> Unit
+    onAuthSuccess: (UsuarioSimpleVerifyData) -> Unit
 ) {
     var name by remember { mutableStateOf("") }
     var userDocument by remember { mutableStateOf("") }
@@ -93,23 +91,11 @@ fun CadastroFormView(
                             secretKey = secretKey
                         )
 
-                        onSuccess(usuarioSimpleVerifyData)
+                        onAuthSuccess(usuarioSimpleVerifyData)
                     } else {
-                        val fullName = response.body()?.nome
-                        val firstName = fullName?.split(" ")?.firstOrNull()
-
-                        val toast: Toast = Toast.makeText(
-                            context,
-                            "Bem vindo(a), ${firstName}!",
-                            Toast.LENGTH_SHORT
-                        )
-                        toast.show()
-
-                        startNewActivity(
+                        redirectToPerfilUsuario(
                             context = context,
-                            // TODO - Inserir redirecionamento para Activity de Perfil
-                            // TODO - Passar no parâmetro do pefil e seu token/ salvar no Data Store
-                            activity = LoginActivity::class.java,
+                            fullName = response.body()?.nome!!
                         )
                     }
                 } else {

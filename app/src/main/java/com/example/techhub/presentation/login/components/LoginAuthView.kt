@@ -37,14 +37,20 @@ import com.example.techhub.common.composable.CenteredImageSection
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.TopBar
 import com.example.techhub.common.utils.startNewActivity
+import com.example.techhub.domain.model.usuario.UsuarioLoginData
+import com.example.techhub.domain.model.usuario.UsuarioVerifyData
+import com.example.techhub.domain.verifyUser
 import com.example.techhub.presentation.login.LoginActivity
 import com.example.techhub.presentation.ui.theme.GrayButtonText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun LoginAuthView() {
-    var filledText by remember { mutableStateOf("") }
+fun LoginAuthView(
+    usuarioVerifyData: UsuarioLoginData
+) {
+    var authCode by remember { mutableStateOf("") }
     val context = LocalContext.current
+    val toastErrorMessage = "Erro ao verificar usuário"
 
     Scaffold(
         topBar = {
@@ -99,9 +105,9 @@ fun LoginAuthView() {
             Spacer(modifier = Modifier.padding(16.dp))
 
             OutlinedTextField(
-                value = filledText,
+                value = authCode,
                 onValueChange = {
-                    filledText = it
+                    authCode = it
                 },
                 label = { Text("Código de verificação") },
                 placeholder = { Text("Digite o código") },
@@ -157,7 +163,17 @@ fun LoginAuthView() {
                 }
 
                 ElevatedButtonTH(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        verifyUser(
+                            userData = UsuarioVerifyData(
+                                email = usuarioVerifyData.email,
+                                senha = usuarioVerifyData.senha,
+                                code = authCode
+                            ),
+                            context = context,
+                            toastErrorMessage = toastErrorMessage
+                        )
+                    },
                     text = "Continuar",
                     backgroundColor = Color(PrimaryBlue.value),
                     textColor = Color.White,
