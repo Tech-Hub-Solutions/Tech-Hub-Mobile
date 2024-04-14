@@ -45,7 +45,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 @Composable
-fun LoginFormView(onLoginAuth: () -> Unit) {
+fun LoginFormView(onAuthSucess: (UsuarioLoginData) -> Unit) {
     var email = remember { mutableStateOf("") }
     var senha = remember { mutableStateOf("") }
     val toastErrorMessage = "Ops! Algo deu errado.\n Tente novamente."
@@ -67,7 +67,7 @@ fun LoginFormView(onLoginAuth: () -> Unit) {
 
                 if (response.isSuccessful) {
                     if (responseBody?.isUsing2FA!!) {
-                        onLoginAuth()
+                        onAuthSucess(user)
                     } else {
                         showWelcomeToastWithName(
                             context = context,

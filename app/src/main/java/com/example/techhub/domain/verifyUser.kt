@@ -12,18 +12,13 @@ import retrofit2.Callback
 import retrofit2.Response
 
 fun verifyUser(
-    usuarioSimpleVerifyData: UsuarioVerifyData,
+    userData: UsuarioVerifyData,
     context: Context,
     toastErrorMessage: String,
 ) {
-    val userVerifyData = UsuarioVerifyData(
-        email = usuarioSimpleVerifyData.email,
-        senha = usuarioSimpleVerifyData.senha,
-        code = usuarioSimpleVerifyData.code
-    )
     val usuarioService = RetrofitService.getUsuarioService()
 
-    usuarioService.verifyUser(userVerifyData).enqueue(object : Callback<UsuarioTokenData> {
+    usuarioService.verifyUser(userData).enqueue(object : Callback<UsuarioTokenData> {
         override fun onResponse(
             call: Call<UsuarioTokenData>,
             response: Response<UsuarioTokenData>

@@ -250,7 +250,7 @@ fun CadastroAuthView(
                 ElevatedButtonTH(
                     onClick = {
                         verifyUser(
-                            usuarioSimpleVerifyData = UsuarioVerifyData(
+                            userData = UsuarioVerifyData(
                                 email = usuarioSimpleVerifyData.email,
                                 senha = usuarioSimpleVerifyData.senha,
                                 code = authCode
