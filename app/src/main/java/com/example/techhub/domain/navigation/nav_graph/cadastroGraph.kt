@@ -7,12 +7,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.techhub.common.Screen
-import com.example.techhub.common.utils.base64Images.base64ToSafeSecretUrlDecoded
+import com.example.techhub.domain.model.usuario.UsuarioSimpleVerifyData
 import com.example.techhub.presentation.cadastro.composables.CadastroAuthView
 import com.example.techhub.presentation.cadastro.composables.CadastroFormView
 import com.example.techhub.presentation.cadastro.composables.TravaTelaCadastroView
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 
 fun NavGraphBuilder.cadastroGraph(navController: NavController) {
+    val gson: Gson = GsonBuilder().create()
+
     navigation(
         startDestination = Screen.TravaTelaCadastroView.route,
         route = Screen.CadastroGraph.route
@@ -35,20 +39,27 @@ fun NavGraphBuilder.cadastroGraph(navController: NavController) {
             CadastroFormView(
                 navController = navController,
                 userType = userType!!,
-                onSuccess = { secretQrCodeUrl ->
-                    navController.navigate(Screen.CadastroAuthView.route + "/$secretQrCodeUrl")
-                })
+                onSuccess = { usuarioData ->
+                    val userJson = gson.toJson(usuarioData)
+                    navController.navigate(Screen.CadastroAuthView.route + "/$userJson")
+                }
+            )
         }
+
         composable(
-            route = "${Screen.CadastroAuthView.route}/{secretQrCodeUrl}",
+            route = "${Screen.CadastroAuthView.route}/{userJson}",
             arguments = listOf(
-                navArgument("secretQrCodeUrl") { type = NavType.StringType }
+                navArgument("userJson") { type = NavType.StringType },
             )
         ) { navBackStackEntry ->
-            val secretQrCodeUrl = navBackStackEntry.arguments?.getString("secretQrCodeUrl")
-            val base64Image = base64ToSafeSecretUrlDecoded(secretQrCodeUrl!!)
+            val userJson = navBackStackEntry.arguments?.getString("userJson")
+            val usuarioSimpleVerifyData =
+                gson.fromJson(userJson, UsuarioSimpleVerifyData::class.java)
 
-            CadastroAuthView(navController = navController, secretQrCodeUrl = base64Image)
+            CadastroAuthView(
+                navController = navController,
+                usuarioSimpleVerifyData = usuarioSimpleVerifyData
+            )
         }
     }
 }

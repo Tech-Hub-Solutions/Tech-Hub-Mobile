@@ -42,14 +42,19 @@ import com.example.techhub.common.utils.showToastError
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.RetrofitService
 import com.example.techhub.domain.model.usuario.UsuarioCriacaoData
+import com.example.techhub.domain.model.usuario.UsuarioSimpleVerifyData
 import com.example.techhub.domain.model.usuario.UsuarioTokenData
-import com.example.techhub.presentation.index.IndexActivity
+import com.example.techhub.presentation.login.LoginActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 @Composable
-fun CadastroFormView(navController: NavController, userType: String, onSuccess: (String) -> Unit) {
+fun CadastroFormView(
+    navController: NavController,
+    userType: String,
+    onSuccess: (UsuarioSimpleVerifyData) -> Unit
+) {
     var name by remember { mutableStateOf("") }
     var userDocument by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -80,7 +85,13 @@ fun CadastroFormView(navController: NavController, userType: String, onSuccess: 
                         val secretQrCodeUrl = response.body()?.secretQrCodeUrl.toString()
                         val encodeUrl = encodeBase64(secretQrCodeUrl)
 
-                        onSuccess(encodeUrl)
+                        val usuarioSimpleVerifyData = UsuarioSimpleVerifyData(
+                            email = email,
+                            senha = password,
+                            encodedUrl = encodeUrl
+                        )
+
+                        onSuccess(usuarioSimpleVerifyData)
                     } else {
                         val fullName = response.body()?.nome
                         val firstName = fullName?.split(" ")?.firstOrNull()
@@ -96,7 +107,7 @@ fun CadastroFormView(navController: NavController, userType: String, onSuccess: 
                             context = context,
                             // TODO - Inserir redirecionamento para Activity de Perfil
                             // TODO - Passar no parâmetro do pefil e seu token/ salvar no Data Store
-                            activity = IndexActivity::class.java,
+                            activity = LoginActivity::class.java,
                         )
                     }
                 } else {
