@@ -37,6 +37,7 @@ import com.example.techhub.common.Screen
 import com.example.techhub.common.composable.CnpjTextField
 import com.example.techhub.common.composable.Switch2FA
 import com.example.techhub.common.enums.UsuarioFuncao
+import com.example.techhub.common.utils.base64Images.encodeBase64
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.RetrofitService
@@ -46,7 +47,6 @@ import com.example.techhub.presentation.index.IndexActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.net.URLEncoder
 
 @Composable
 fun CadastroFormView(navController: NavController, userType: String, onSuccess: (String) -> Unit) {
@@ -78,7 +78,7 @@ fun CadastroFormView(navController: NavController, userType: String, onSuccess: 
                 if (response.isSuccessful) {
                     if (isUsing2FA) {
                         val secretQrCodeUrl = response.body()?.secretQrCodeUrl.toString()
-                        val encodeUrl = URLEncoder.encode(secretQrCodeUrl, "UTF-8")
+                        val encodeUrl = encodeBase64(secretQrCodeUrl)
 
                         onSuccess(encodeUrl)
                     } else {
