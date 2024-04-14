@@ -42,19 +42,13 @@ import com.example.techhub.common.Screen
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.TopBar
 import com.example.techhub.common.utils.copyToClipBoard
-import com.example.techhub.common.utils.showToastError
-import com.example.techhub.common.utils.showWelcomeToastWithName
 import com.example.techhub.common.utils.startNewActivity
-import com.example.techhub.domain.RetrofitService
 import com.example.techhub.domain.model.usuario.UsuarioSimpleVerifyData
-import com.example.techhub.domain.model.usuario.UsuarioTokenData
 import com.example.techhub.domain.model.usuario.UsuarioVerifyData
+import com.example.techhub.domain.verifyUser
 import com.example.techhub.presentation.login.LoginActivity
 import com.example.techhub.presentation.ui.theme.GrayButtonText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 @Composable
 fun CadastroAuthView(
@@ -65,43 +59,6 @@ fun CadastroAuthView(
     val context = LocalContext.current
     val secretQrCodeUrl = usuarioSimpleVerifyData.encodedUrl
     val toastErrorMessage = "Erro ao verificar usuário"
-
-    fun verifyUser() {
-        val userVerifyData = UsuarioVerifyData(
-            email = usuarioSimpleVerifyData.email,
-            senha = usuarioSimpleVerifyData.senha,
-            code = authCode
-        )
-        val usuarioService = RetrofitService.getUsuarioService()
-
-        usuarioService.verifyUser(userVerifyData).enqueue(object : Callback<UsuarioTokenData> {
-            override fun onResponse(
-                call: Call<UsuarioTokenData>,
-                response: Response<UsuarioTokenData>
-            ) {
-                if (response.isSuccessful) {
-                    showWelcomeToastWithName(
-                        context = context,
-                        fullName = response.body()?.nome!!,
-                    )
-
-                    val token = response.body()?.token
-                    // TODO - Salvar token e email do usuário no Data Store
-                    // TODO - Fazer redirect para a tela de perfil do usuário
-                    startNewActivity(
-                        activity = LoginActivity::class.java,
-                        context = context
-                    )
-                } else {
-                    showToastError(context, toastErrorMessage)
-                }
-            }
-
-            override fun onFailure(call: Call<UsuarioTokenData>, t: Throwable) {
-                showToastError(context, toastErrorMessage)
-            }
-        })
-    }
 
     Scaffold(
         topBar = {
@@ -291,7 +248,17 @@ fun CadastroAuthView(
                 }
 
                 ElevatedButtonTH(
-                    onClick = { verifyUser() },
+                    onClick = {
+                        verifyUser(
+                            usuarioSimpleVerifyData = UsuarioVerifyData(
+                                email = usuarioSimpleVerifyData.email,
+                                senha = usuarioSimpleVerifyData.senha,
+                                code = authCode
+                            ),
+                            context = context,
+                            toastErrorMessage = toastErrorMessage
+                        )
+                    },
                     text = "Continuar",
                     backgroundColor = Color(PrimaryBlue.value),
                     textColor = Color.White,
