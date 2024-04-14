@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.techhub.common.composable.BottomBar
 import com.example.techhub.common.composable.TopBar
@@ -118,7 +119,8 @@ fun getFavoriteUsers(
             .verticalScroll(
                 rememberScrollState()
             )
-            .height(920.dp)
+            .height(920.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         val subLists = favoritos.chunked(2)
 
@@ -127,7 +129,7 @@ fun getFavoriteUsers(
                 modifier = Modifier
                     .padding(8.dp)
                     .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start)
             ) {
                 for (item in subLista) {
                     UserCard(item, favoritos)
@@ -135,4 +137,8 @@ fun getFavoriteUsers(
             }
         }
     }
+}
+
+fun  spacedBy(space: Dp, alignment: Alignment.Horizontal): Arrangement.Horizontal{
+    return Arrangement.spacedBy(space, alignment)
 }

@@ -2,11 +2,13 @@ package com.example.techhub.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -29,6 +31,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -44,10 +47,11 @@ fun UserCard(
 
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
+            defaultElevation = 4.dp,
         ),
         modifier = Modifier
-            .size(width = 200.dp, height = 204.dp),
+            .width(230.dp)
+            .heightIn(204.dp, 250.dp),
         shape = RectangleShape
     ) {
         AsyncImage(
@@ -59,9 +63,9 @@ fun UserCard(
 
         Column(
             Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .background(Color.White)
-                .padding(6.dp)
+                .padding(12.dp)
         ) {
             Text(
                 text = userProfile.nome.toString(),
@@ -81,7 +85,9 @@ fun UserCard(
                     fontWeight = FontWeight.Light,
                     fontSize = 12.sp
                 ),
-                modifier = Modifier.height(30.dp)
+                modifier = Modifier.height(30.dp),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
 
             Spacer(modifier = Modifier.padding(2.dp))
@@ -93,7 +99,10 @@ fun UserCard(
 
             Spacer(modifier = Modifier.padding(2.dp))
 
-            Row {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
                 Text(
                     text = "R$ ${"%.2f".format(userProfile.precoMedio)}",
                     style = TextStyle(
@@ -103,7 +112,6 @@ fun UserCard(
                     )
                 )
 
-                Spacer(modifier = Modifier.padding(horizontal = 24.dp))
 
                 Icon(
                     imageVector = Icons.Filled.Favorite,
