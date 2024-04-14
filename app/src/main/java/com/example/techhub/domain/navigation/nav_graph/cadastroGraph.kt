@@ -39,7 +39,7 @@ fun NavGraphBuilder.cadastroGraph(navController: NavController) {
             CadastroFormView(
                 navController = navController,
                 userType = userType!!,
-                onSuccess = { userData ->
+                onAuthSuccess = { userData ->
                     val userJson = gson.toJson(userData)
                     navController.navigate(Screen.CadastroAuthView.route + "/$userJson")
                 }

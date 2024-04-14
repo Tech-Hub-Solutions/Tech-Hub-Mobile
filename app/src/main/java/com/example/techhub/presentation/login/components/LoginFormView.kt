@@ -36,7 +36,7 @@ import com.example.techhub.R
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.EmailTextField
 import com.example.techhub.common.composable.PasswordTextField
-import com.example.techhub.common.utils.showWelcomeToastWithName
+import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.presentation.cadastro.CadastroActivity
 import com.example.techhub.presentation.ui.theme.GrayText
@@ -69,16 +69,9 @@ fun LoginFormView(onAuthSucess: (UsuarioLoginData) -> Unit) {
                     if (responseBody?.isUsing2FA!!) {
                         onAuthSucess(user)
                     } else {
-                        showWelcomeToastWithName(
+                        redirectToPerfilUsuario(
                             context = context,
-                            fullName = response.body()?.nome!!,
-                        )
-
-                        startNewActivity(
-                            context = context,
-                            // TODO - Inserir redirecionamento para Activity de Perfil
-                            // TODO - No parâmetro, passar o pefil e seu token p/ salvar no Data Store
-                            IndexActivity::class.java
+                            fullName = response.body()?.nome!!
                         )
                     }
                 } else {
@@ -91,7 +84,6 @@ fun LoginFormView(onAuthSucess: (UsuarioLoginData) -> Unit) {
             }
         })
     }
-
 
     Scaffold(
         topBar = {
