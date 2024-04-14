@@ -38,9 +38,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.techhub.R
 import com.example.techhub.common.Screen
-import com.example.techhub.common.composable.CenteredImageSection
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.TopBar
 import com.example.techhub.common.utils.startNewActivity
@@ -49,7 +47,7 @@ import com.example.techhub.presentation.ui.theme.GrayButtonText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun CadastroAuthView(navController: NavController) {
+fun CadastroAuthView(navController: NavController, secretQrCodeUrl: String) {
     var authCode by remember { mutableStateOf("") }
     val context = LocalContext.current
 
@@ -96,12 +94,9 @@ fun CadastroAuthView(navController: NavController) {
 
             Spacer(modifier = Modifier.padding(16.dp))
 
-            // TODO - Inserir os paths de imagens do QR Code
-            CenteredImageSection(
-                imagePath = R.mipmap.login_auth_lock_image,
-                contentDescription = "@string/description_image_login_auth",
-                width = 200,
-                height = 200,
+            QrCodeBase64AsyncImage(
+                base64Image = secretQrCodeUrl,
+                contentDescription = "QR Code para autenticação",
             )
 
             Spacer(modifier = Modifier.padding(16.dp))

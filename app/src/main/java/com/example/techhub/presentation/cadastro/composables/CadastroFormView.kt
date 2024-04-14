@@ -1,6 +1,6 @@
 package com.example.techhub.presentation.cadastro.composables
 
-import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,31 +38,34 @@ import com.example.techhub.common.composable.CnpjTextField
 import com.example.techhub.common.composable.Switch2FA
 import com.example.techhub.common.enums.UsuarioFuncao
 import com.example.techhub.common.utils.showToastError
+import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.RetrofitService
 import com.example.techhub.domain.model.usuario.UsuarioCriacaoData
 import com.example.techhub.domain.model.usuario.UsuarioTokenData
+import com.example.techhub.presentation.index.IndexActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.net.URLEncoder
 
 @Composable
-fun CadastroFormView(navController: NavController, userType: String) {
-    val name = remember { mutableStateOf("") }
-    val userDocument = remember { mutableStateOf("") }
-    val email = remember { mutableStateOf("") }
-    val password = remember { mutableStateOf("") }
-    val isUsing2FA = remember { mutableStateOf(false) }
+fun CadastroFormView(navController: NavController, userType: String, onSuccess: (String) -> Unit) {
+    var name by remember { mutableStateOf("") }
+    var userDocument by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var isUsing2FA by remember { mutableStateOf(false) }
     val context = LocalContext.current
     val toastErrorMessage = "Ops! Algo deu errado.\n Tente novamente."
 
     fun cadastrarUsuario() {
         val user = UsuarioCriacaoData(
-            nome = name.value,
-            email = email.value,
-            senha = password.value,
-            numeroCadastroPessoa = userDocument.value,
+            nome = name,
+            email = email,
+            senha = password,
+            numeroCadastroPessoa = userDocument,
             funcao = if (userType == Constants.FREELANCER) UsuarioFuncao.FREELANCER else UsuarioFuncao.EMPRESA,
-            isUsing2FA = isUsing2FA.value
+            isUsing2FA = isUsing2FA
         )
 
         val usuarioService = RetrofitService.getUsuarioService()
@@ -71,7 +76,29 @@ fun CadastroFormView(navController: NavController, userType: String) {
                 response: Response<UsuarioTokenData>
             ) {
                 if (response.isSuccessful) {
-                    // TODO: Redirect to the next screen
+                    if (isUsing2FA) {
+                        val secretQrCodeUrl = response.body()?.secretQrCodeUrl.toString()
+                        val encodeUrl = URLEncoder.encode(secretQrCodeUrl, "UTF-8")
+
+                        onSuccess(encodeUrl)
+                    } else {
+                        val fullName = response.body()?.nome
+                        val firstName = fullName?.split(" ")?.firstOrNull()
+
+                        val toast: Toast = Toast.makeText(
+                            context,
+                            "Bem vindo(a), ${firstName}!",
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
+
+                        startNewActivity(
+                            context = context,
+                            // TODO - Inserir redirecionamento para Activity de Perfil
+                            // TODO - Passar no parâmetro do pefil e seu token/ salvar no Data Store
+                            activity = IndexActivity::class.java,
+                        )
+                    }
                 } else {
                     showToastError(context = context, message = toastErrorMessage)
                 }
@@ -131,25 +158,25 @@ fun CadastroFormView(navController: NavController, userType: String) {
                 )
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                NameTextField { name.value = it }
+                NameTextField { name = it }
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
                 if (userType == Constants.FREELANCER) {
-                    CpfTextField { userDocument.value = it }
+                    CpfTextField { userDocument = it }
                 } else if (userType == Constants.EMPRESA) {
-                    CnpjTextField { userDocument.value = it }
+                    CnpjTextField { userDocument = it }
                 }
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                EmailTextField { email.value = it }
+                EmailTextField { email = it }
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                PasswordTextField { password.value = it }
+                PasswordTextField { password = it }
 
-                Switch2FA { isUsing2FA.value = it }
+                Switch2FA { isUsing2FA = it }
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
