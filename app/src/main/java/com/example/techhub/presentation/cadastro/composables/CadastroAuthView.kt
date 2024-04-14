@@ -212,7 +212,8 @@ fun CadastroAuthView(
                     onClick = {
                         copyToClipBoard(
                             context = context,
-                            text = usuarioSimpleVerifyData.secretKey
+                            copyText = usuarioSimpleVerifyData.secretKey,
+                            toastText = "Código copiado"
                         )
                     }
                 ),
