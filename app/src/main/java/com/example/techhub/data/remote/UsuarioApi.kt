@@ -2,6 +2,7 @@ package com.example.techhub.data.remote
 
 import com.example.techhub.domain.model.usuario.Page
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
+import com.example.techhub.domain.model.usuario.UsuarioCriacaoData
 import com.example.techhub.domain.model.usuario.UsuarioLoginData
 import com.example.techhub.domain.model.usuario.UsuarioTokenData
 import com.example.techhub.domain.model.usuario.UsuarioVerifyData
@@ -28,4 +29,6 @@ interface UsuarioApi {
         @Query("sort") sort: String?,
         @Query("ordem") ordem: String
     ) : Response<Page<UsuarioFavoritoData>>
+  
+    fun cadastrarUsuario(@Body usuario: UsuarioCriacaoData): Call<UsuarioTokenData>
 }

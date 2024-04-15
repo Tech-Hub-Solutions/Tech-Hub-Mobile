@@ -1,6 +1,5 @@
 package com.example.techhub.presentation.login.components
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,6 +36,7 @@ import com.example.techhub.R
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.EmailTextField
 import com.example.techhub.common.composable.PasswordTextField
+import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.presentation.cadastro.CadastroActivity
 import com.example.techhub.presentation.ui.theme.GrayText
@@ -45,7 +45,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 @Composable
-fun LoginFormView(onLoginAuth: () -> Unit) {
+fun LoginFormView(onAuthSucess: (UsuarioLoginData) -> Unit) {
     var email = remember { mutableStateOf("") }
     var senha = remember { mutableStateOf("") }
     val toastErrorMessage = "Ops! Algo deu errado.\n Tente novamente."
@@ -64,12 +64,16 @@ fun LoginFormView(onLoginAuth: () -> Unit) {
                 response: Response<UsuarioTokenData>
             ) {
                 val responseBody = response.body()
-                Log.d("ZE DA MANGA", responseBody.toString())
 
-                if (responseBody != null) {
-                    response.body()?.token?.let {
-                        onLoginAuth()
-                    } ?: showToastError(context = context, message = toastErrorMessage)
+                if (response.isSuccessful) {
+                    if (responseBody?.isUsing2FA!!) {
+                        onAuthSucess(user)
+                    } else {
+                        redirectToPerfilUsuario(
+                            context = context,
+                            fullName = response.body()?.nome!!
+                        )
+                    }
                 } else {
                     showToastError(context = context, message = toastErrorMessage)
                 }
@@ -80,7 +84,6 @@ fun LoginFormView(onLoginAuth: () -> Unit) {
             }
         })
     }
-
 
     Scaffold(
         topBar = {
@@ -117,14 +120,14 @@ fun LoginFormView(onLoginAuth: () -> Unit) {
 
             Row {
                 Text(
-                    text = "Entre com sua conta para uma \n" +
+                    text = "Entre com sua conta para uma " +
                             "experiência melhor!",
                     color = Color(GrayText.value),
                     fontSize = 17.sp,
                     fontWeight = FontWeight.Thin,
-                    textAlign = TextAlign.Start,
+                    textAlign = TextAlign.Justify,
                     modifier = Modifier
-                        .padding(start = 25.dp)
+                        .padding(horizontal = 25.dp)
                         .fillMaxWidth()
                 )
             }

@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun CnpjTextField(){
+fun CnpjTextField(onValueChanged: (String) -> Unit) {
     var filledText by remember { mutableStateOf("") }
     var isCnpjValid by remember { mutableStateOf(false) }
 
@@ -35,6 +35,7 @@ fun CnpjTextField(){
             onValueChange = {
                 filledText = it
                 isCnpjValid = isCnpjValidTemp(filledText)
+                onValueChanged(filledText)
             },
             label = { Text("CNPJ") },
             placeholder = { Text("Digite seu CNPJ") },
@@ -73,11 +74,11 @@ fun CnpjTextField(){
 }
 
 
-fun isCnpjValidTemp(cnpj: String) : Boolean{
+fun isCnpjValidTemp(cnpj: String): Boolean {
     return cnpj.length != 14
 }
 
-fun isValid(cnpj :String): Boolean {
+fun isValid(cnpj: String): Boolean {
     return validateCNPJLength(cnpj) && validateCNPJRepeatedNumbers(cnpj)
             && validateCNPJVerificationDigit(true, cnpj)
             && validateCNPJVerificationDigit(false, cnpj)
@@ -130,13 +131,13 @@ fun isCNPJ(document: String): Boolean {
     if (numbers.all { it == numbers[0] }) return false
 
     //digito 1
-    val dv1  =  11 - (arrayOf(5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2).mapIndexed { index, i ->
+    val dv1 = 11 - (arrayOf(5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2).mapIndexed { index, i ->
         i * numbers[index]
     }).sum().rem(11)
     numbers.add(dv1)
 
     //digito 2
-    val dv2  =  11 - (arrayOf(6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2).mapIndexed { index, i ->
+    val dv2 = 11 - (arrayOf(6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2).mapIndexed { index, i ->
         i * numbers[index]
     }).sum().rem(11)
 
