@@ -1,6 +1,7 @@
 package com.example.techhub.composable
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,12 +40,17 @@ import coil.compose.AsyncImage
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
 import com.example.techhub.presentation.favoritos.FavoritosViewModel
 import com.example.techhub.presentation.ui.theme.GrayStar
+import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserCard(
     userProfile: UsuarioFavoritoData, userList: SnapshotStateList<UsuarioFavoritoData>,
-) {
+    selectedUsers: MutableList<UsuarioFavoritoData>,
+    ) {
     val isFavorito = remember { mutableStateOf(true) }
+    val isSelected = remember { mutableStateOf(false) }
 
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
@@ -51,8 +58,24 @@ fun UserCard(
         ),
         modifier = Modifier
             .width(230.dp)
-            .heightIn(204.dp, 250.dp),
-        shape = RectangleShape
+            .heightIn(204.dp, 250.dp)
+            .border(2.dp, if (isSelected.value) Color(PrimaryBlue.value) else Color.Transparent),
+        shape = RectangleShape,
+        onClick = {
+            if (selectedUsers.size < 2){
+                if (selectedUsers.contains(userProfile)) {
+                    isSelected.value = !isSelected.value
+                    selectedUsers.remove(userProfile)
+                } else {
+                    isSelected.value = !isSelected.value
+                    selectedUsers.add(userProfile)
+                }
+            } else if (selectedUsers.size == 2 && selectedUsers.contains(userProfile)) {
+                    isSelected.value = !isSelected.value
+                    selectedUsers.remove(userProfile)
+            }
+
+        }
     ) {
         AsyncImage(
             model = userProfile.urlFotoPerfil,
@@ -111,8 +134,6 @@ fun UserCard(
                         fontSize = 14.sp
                     )
                 )
-
-
                 Icon(
                     imageVector = Icons.Filled.Favorite,
                     contentDescription = "Botão para favoritar",
