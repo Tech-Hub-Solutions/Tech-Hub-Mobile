@@ -59,9 +59,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun FavoritosView() {
     val selectedUsers = remember { SnapshotStateList<UsuarioFavoritoData>() }
-
-    var expanded by remember { mutableStateOf(false) }
     var ordem = remember { mutableStateOf("avaliacao,desc") }
+    var expanded by remember { mutableStateOf(false) }
     var erroApi = remember { mutableStateOf("") }
     val context = LocalContext.current
 
@@ -206,7 +205,7 @@ fun getFavoriteUsers(
                 horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start)
             ) {
                 for (item in subLista) {
-                    UserCard(item, favoritos, selectedUsers)
+                    UserCard(item, favoritos, selectedUsers, false)
                 }
             }
         }

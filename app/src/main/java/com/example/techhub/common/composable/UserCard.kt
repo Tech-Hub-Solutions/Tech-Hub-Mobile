@@ -46,11 +46,14 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserCard(
-    userProfile: UsuarioFavoritoData, userList: SnapshotStateList<UsuarioFavoritoData>,
+    userProfile: UsuarioFavoritoData, userList: SnapshotStateList<UsuarioFavoritoData>? = null,
     selectedUsers: MutableList<UsuarioFavoritoData>,
-    ) {
+    isComparing: Boolean
+) {
     val isFavorito = remember { mutableStateOf(true) }
     val isSelected = remember { mutableStateOf(false) }
+    val isEmpresa = remember{ mutableStateOf(false) }
+    val isComparing = remember { mutableStateOf(isComparing) }
 
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
@@ -62,19 +65,15 @@ fun UserCard(
             .border(2.dp, if (isSelected.value) Color(PrimaryBlue.value) else Color.Transparent),
         shape = RectangleShape,
         onClick = {
-            if (selectedUsers.size < 2){
-                if (selectedUsers.contains(userProfile)) {
-                    isSelected.value = !isSelected.value
-                    selectedUsers.remove(userProfile)
-                } else {
-                    isSelected.value = !isSelected.value
-                    selectedUsers.add(userProfile)
-                }
-            } else if (selectedUsers.size == 2 && selectedUsers.contains(userProfile)) {
-                    isSelected.value = !isSelected.value
-                    selectedUsers.remove(userProfile)
-            }
+            if (selectedUsers.size < 2 || selectedUsers.contains(userProfile)) {
+                isSelected.value = !isSelected.value;
 
+                if (selectedUsers.contains(userProfile)) {
+                    selectedUsers.remove(userProfile);
+                } else {
+                    selectedUsers.add(userProfile);
+                }
+            }
         }
     ) {
         AsyncImage(
@@ -134,19 +133,22 @@ fun UserCard(
                         fontSize = 14.sp
                     )
                 )
-                Icon(
-                    imageVector = Icons.Filled.Favorite,
-                    contentDescription = "Botão para favoritar",
-                    modifier = Modifier
-                        .size(20.dp)
-                        .clickable {
-                            val viewModel = FavoritosViewModel()
 
-                            viewModel.favoritarUsuario(userProfile.id)
-                            isFavorito.value = !isFavorito.value
-                        },
-                    tint = if (isFavorito.value) Color.Red else Color(GrayStar.value),
-                )
+                if (!isComparing.value) {
+                    Icon(
+                        imageVector = Icons.Filled.Favorite,
+                        contentDescription = "Botão para favoritar",
+                        modifier = Modifier
+                            .size(20.dp)
+                            .clickable {
+                                val viewModel = FavoritosViewModel()
+
+                                viewModel.favoritarUsuario(userProfile.id)
+                                isFavorito.value = !isFavorito.value
+                            },
+                        tint = if (isFavorito.value) Color.Red else Color(GrayStar.value),
+                    )
+                }
             }
         }
 

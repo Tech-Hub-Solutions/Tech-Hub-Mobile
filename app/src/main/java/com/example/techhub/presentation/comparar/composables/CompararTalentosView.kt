@@ -15,13 +15,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.techhub.composable.UserCard
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun CompararTalentosView(
     scope: CoroutineScope,
-    selectedUsers: SnapshotStateList<UsuarioFavoritoData>
+    selectedUsers: SnapshotStateList<UsuarioFavoritoData>,
 ) {
 
 
@@ -59,8 +60,18 @@ fun CompararTalentosView(
                 .padding(horizontal = 20.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            CardUsuarioComparacao()
-            CardUsuarioComparacao()
+            UserCard(
+                userProfile = selectedUsers.get(0),
+                userList = null,
+                selectedUsers = selectedUsers,
+                isComparing = true
+            )
+            UserCard(
+                userProfile = selectedUsers.get(1),
+                userList = null,
+                selectedUsers = selectedUsers,
+                isComparing = true
+            )
         }
         Spacer(modifier = Modifier.padding(top = 32.dp))
 
