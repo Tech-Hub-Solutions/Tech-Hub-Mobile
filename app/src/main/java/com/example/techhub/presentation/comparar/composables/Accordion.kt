@@ -46,8 +46,8 @@ fun Accordion(model: AccordionModel) {
                     .shadow(1.dp)
                     .border(BorderStroke(1.dp, Color.Gray), shape = RoundedCornerShape(8.dp))
             ) {
-                LazyColumn {
-                    items(model.rows) { row ->
+                Column {
+                    model.rows.forEach { row ->
                         AccordionRow(row)
                         Divider(color = Color.Gray, thickness = 1.dp)
                     }

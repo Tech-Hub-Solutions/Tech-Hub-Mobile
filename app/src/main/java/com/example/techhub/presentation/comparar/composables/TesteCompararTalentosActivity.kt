@@ -41,56 +41,7 @@ class TesteCompararTalentosActivity : ComponentActivity() {
         setContent {
             TechHubTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    var scaffoldState = rememberBottomSheetScaffoldState()
-                    val scope = rememberCoroutineScope()
 
-                    BottomSheetScaffold(
-                        modifier = Modifier
-                            .fillMaxHeight(.98f)
-                            .verticalScroll(rememberScrollState()),
-                        scaffoldState = scaffoldState,
-                        sheetContent = {
-                            CompararTalentosView(scaffoldState, scope)
-                        },
-                        sheetPeekHeight = 70.dp,
-                        sheetDragHandle = {
-                            TextButton(
-                                onClick = {
-                                    scope.launch {
-                                        scaffoldState.bottomSheetState.expand()
-                                    }
-                                }, modifier = Modifier
-                                    .fillMaxWidth()
-                                    .heightIn(70.dp)
-                                    .background(color = Color(0xFF0F9EEA))
-                            ) {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(0.8f),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    Text(
-                                        text = "Comparar Selecionados", color = Color.White,
-                                        fontSize = 24.sp
-                                    )
-                                    Icon(
-                                        imageVector = Icons.Filled.CompareArrows,
-                                        contentDescription = null,
-                                        tint = Color.White,
-                                        modifier = Modifier.size(40.dp)
-                                    )
-                                }
-                            }
-                        },
-                        sheetShape = MaterialTheme.shapes.extraSmall
-                    ) {
-                        FavoritosView()
-                    }
-                }
             }
         }
     }
