@@ -47,12 +47,12 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 @Composable
 fun UserCard(
     userProfile: UsuarioFavoritoData, userList: SnapshotStateList<UsuarioFavoritoData>? = null,
-    selectedUsers: MutableList<UsuarioFavoritoData>,
-    isComparing: Boolean
+    selectedUsers: MutableList<UsuarioFavoritoData>? = null,
+    isComparing: Boolean,
 ) {
     val isFavorito = remember { mutableStateOf(true) }
     val isSelected = remember { mutableStateOf(false) }
-    val isEmpresa = remember{ mutableStateOf(false) }
+    //TODO val isEmpresa = remember{ mutableStateOf(false) }
     val isComparing = remember { mutableStateOf(isComparing) }
 
     ElevatedCard(
@@ -65,7 +65,9 @@ fun UserCard(
             .border(2.dp, if (isSelected.value) Color(PrimaryBlue.value) else Color.Transparent),
         shape = RectangleShape,
         onClick = {
-            if (selectedUsers.size < 2 || selectedUsers.contains(userProfile)) {
+            if (selectedUsers != null && selectedUsers.size < 2 ||
+                selectedUsers != null && selectedUsers.contains(userProfile)
+            ) {
                 isSelected.value = !isSelected.value;
 
                 if (selectedUsers.contains(userProfile)) {
@@ -74,6 +76,7 @@ fun UserCard(
                     selectedUsers.add(userProfile);
                 }
             }
+
         }
     ) {
         AsyncImage(
