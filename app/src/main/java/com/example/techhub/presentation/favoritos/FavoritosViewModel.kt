@@ -14,7 +14,7 @@ class FavoritosViewModel {
     val erroApi = MutableLiveData("")
 
     val token =
-        "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYXRhaW5ub3ZhdGVAaG90bWFpbC5jb20iLCJpYXQiOjE3MTMxMjI0ODMsImV4cCI6MTcxNjcyMjQ4M30.nm31xlh2EDizWA0_RGXaNObHjEmnY5tjIOL_3dBQnc7Cm2gh_7lUnoK27LYsMjbnt9M9ncvB9_oDqkgzguAzMg"
+        "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYXRhaW5ub3ZhdGVAaG90bWFpbC5jb20iLCJpYXQiOjE3MTMyOTA4NzUsImV4cCI6MTcxNjg5MDg3NX0.dLE-ba9nQ3cpHPa503nDPgtNXn6KPH3GUrRU-AU3vWjN_4L-wYw7Y8b7KANT7KWDjJaQVpUE4WSlbqmqOdO2bw"
 
     private val usuarioApi = RetrofitService.getUsuarioService()
     private val perfilApi = RetrofitService.getPerfilService()

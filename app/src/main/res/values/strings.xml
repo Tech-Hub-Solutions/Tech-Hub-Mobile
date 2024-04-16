@@ -4,4 +4,6 @@
     <string name="description_image_login">imagem de duas pessoas com computadores</string>
     <string name="description_image_login_auth">imagem de um cadeaco branco com fundo azul</string>
     <string name="description_image_logo">logo da Tech Hub</string>
+    <string name="title_activity_teste_comparar_talentos">TesteCompararTalentosActivity</string>
+    <string name="title_activity_favoritos">FavoritosActivity</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.techhub.composable
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,12 +40,20 @@ import coil.compose.AsyncImage
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
 import com.example.techhub.presentation.favoritos.FavoritosViewModel
 import com.example.techhub.presentation.ui.theme.GrayStar
+import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserCard(
-    userProfile: UsuarioFavoritoData, userList: SnapshotStateList<UsuarioFavoritoData>,
+    userProfile: UsuarioFavoritoData, userList: SnapshotStateList<UsuarioFavoritoData>? = null,
+    selectedUsers: MutableList<UsuarioFavoritoData>? = null,
+    isComparing: Boolean,
 ) {
     val isFavorito = remember { mutableStateOf(true) }
+    val isSelected = remember { mutableStateOf(false) }
+    //TODO val isEmpresa = remember{ mutableStateOf(false) }
+    val isComparing = remember { mutableStateOf(isComparing) }
 
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
@@ -51,8 +61,23 @@ fun UserCard(
         ),
         modifier = Modifier
             .width(230.dp)
-            .heightIn(204.dp, 250.dp),
-        shape = RectangleShape
+            .heightIn(204.dp, 250.dp)
+            .border(2.dp, if (isSelected.value) Color(PrimaryBlue.value) else Color.Transparent),
+        shape = RectangleShape,
+        onClick = {
+            if (selectedUsers != null && selectedUsers.size < 2 ||
+                selectedUsers != null && selectedUsers.contains(userProfile)
+            ) {
+                isSelected.value = !isSelected.value;
+
+                if (selectedUsers.contains(userProfile)) {
+                    selectedUsers.remove(userProfile);
+                } else {
+                    selectedUsers.add(userProfile);
+                }
+            }
+
+        }
     ) {
         AsyncImage(
             model = userProfile.urlFotoPerfil,
@@ -112,20 +137,21 @@ fun UserCard(
                     )
                 )
 
+                if (!isComparing.value) {
+                    Icon(
+                        imageVector = Icons.Filled.Favorite,
+                        contentDescription = "Botão para favoritar",
+                        modifier = Modifier
+                            .size(20.dp)
+                            .clickable {
+                                val viewModel = FavoritosViewModel()
 
-                Icon(
-                    imageVector = Icons.Filled.Favorite,
-                    contentDescription = "Botão para favoritar",
-                    modifier = Modifier
-                        .size(20.dp)
-                        .clickable {
-                            val viewModel = FavoritosViewModel()
-
-                            viewModel.favoritarUsuario(userProfile.id)
-                            isFavorito.value = !isFavorito.value
-                        },
-                    tint = if (isFavorito.value) Color.Red else Color(GrayStar.value),
-                )
+                                viewModel.favoritarUsuario(userProfile.id)
+                                isFavorito.value = !isFavorito.value
+                            },
+                        tint = if (isFavorito.value) Color.Red else Color(GrayStar.value),
+                    )
+                }
             }
         }
 
