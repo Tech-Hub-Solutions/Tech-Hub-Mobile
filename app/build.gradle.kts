@@ -58,6 +58,9 @@ dependencies {
     val arrow_version = "1.2.1"
     val coil_version = "2.5.0"
     val dagger_hilt_version = "2.49"
+    val data_store_version = "1.1.0"
+    val coroutines_version = "1.7.3"
+    val livedata_version = "1.6.5"
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
@@ -81,6 +84,11 @@ dependencies {
     implementation("io.coil-kt:coil-compose:$coil_version")
     implementation("com.google.dagger:hilt-android:$dagger_hilt_version")
     kapt("com.google.dagger:hilt-android-compiler:$dagger_hilt_version")
+    implementation("androidx.datastore:datastore-preferences:$data_store_version")
+    implementation("androidx.datastore:datastore-core:$data_store_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
+    implementation("androidx.compose.runtime:runtime-livedata:$livedata_version")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
