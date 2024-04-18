@@ -3,7 +3,6 @@ package com.example.techhub.presentation.login
 import android.app.Activity
 import android.content.Context
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.showToastError
@@ -14,7 +13,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
-    private val erroApi = MutableLiveData("")
     private val toastErrorMessage = "Ops! Algo deu errado.\n Tente novamente."
 
     private val apiUsuario = RetrofitService.getUsuarioService()
@@ -30,8 +28,6 @@ class LoginViewModel : ViewModel() {
 
                 if (response.isSuccessful) {
                     if (response.body()?.isUsing2FA!!) {
-                        erroApi.postValue("")
-
                         onAuthSucess(user)
                     } else {
                         redirectToPerfilUsuario(
@@ -40,15 +36,12 @@ class LoginViewModel : ViewModel() {
                         )
                     }
                 } else {
-                    erroApi.postValue("Erro ao fazer login")
-
                     (context as Activity).runOnUiThread {
                         showToastError(context = context, message = toastErrorMessage)
                     }
                 }
             } catch (error: Exception) {
                 Log.e("LOGIN_VIEW_MODEL", "ERROR: ${error.message}")
-                erroApi.postValue(error.message)
 
                 (context as Activity).runOnUiThread {
                     showToastError(context = context, message = toastErrorMessage)

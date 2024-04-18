@@ -1,13 +1,14 @@
 package com.example.techhub.domain
 
+import android.app.Activity
 import android.content.Context
+import android.util.Log
 import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.showToastError
-import com.example.techhub.domain.model.usuario.UsuarioTokenData
 import com.example.techhub.domain.model.usuario.UsuarioVerifyData
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 fun verifyUser(
     userData: UsuarioVerifyData,
@@ -16,25 +17,27 @@ fun verifyUser(
 ) {
     val usuarioService = RetrofitService.getUsuarioService()
 
-    usuarioService.verifyUser(userData).enqueue(object : Callback<UsuarioTokenData> {
-        override fun onResponse(
-            call: Call<UsuarioTokenData>,
-            response: Response<UsuarioTokenData>
-        ) {
+    CoroutineScope(Dispatchers.Main).launch {
+        try {
+            val response = usuarioService.verifyUser(userData)
+
             if (response.isSuccessful) {
                 redirectToPerfilUsuario(
                     context = context,
                     fullName = response.body()?.nome!!
                 )
             } else {
+                (context as Activity).runOnUiThread {
+                    showToastError(context, toastErrorMessage)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("VERIFY_USER", "ERROR: ${e.message}")
+            (context as Activity).runOnUiThread {
                 showToastError(context, toastErrorMessage)
             }
         }
-
-        override fun onFailure(call: Call<UsuarioTokenData>, t: Throwable) {
-            showToastError(context, toastErrorMessage)
-        }
-    })
+    }
 }
 /*
 * @Inject

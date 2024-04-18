@@ -14,7 +14,7 @@ interface UsuarioApi {
     suspend fun loginUser(@Body user: UsuarioLoginData): Response<UsuarioTokenData>
 
     @POST("usuarios/verify")
-    fun verifyUser(@Body usuario: UsuarioVerifyData): Call<UsuarioTokenData>
+    suspend fun verifyUser(@Body usuario: UsuarioVerifyData): Response<UsuarioTokenData>
 
     @POST("usuarios")
     fun cadastrarUsuario(@Body usuario: UsuarioCriacaoData): Call<UsuarioTokenData>

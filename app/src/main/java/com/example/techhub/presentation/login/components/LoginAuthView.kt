@@ -46,7 +46,7 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
 fun LoginAuthView(
-    usuarioVerifyData: UsuarioLoginData
+    usuarioVerifyData: UsuarioLoginData,
 ) {
     var authCode by remember { mutableStateOf("") }
     val context = LocalContext.current
