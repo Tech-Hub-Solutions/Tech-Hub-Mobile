@@ -5,6 +5,8 @@ import android.content.Context
 import android.util.Log
 import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.showToastError
+import com.example.techhub.data.prefdatastore.DataStoreManager
+import com.example.techhub.domain.model.datastore.DataStore
 import com.example.techhub.domain.model.usuario.UsuarioVerifyData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,6 +17,8 @@ fun verifyUser(
     context: Context,
     toastErrorMessage: String,
 ) {
+    var dataStoreManager = DataStoreManager(context)
+
     val usuarioService = RetrofitService.getUsuarioService()
 
     CoroutineScope(Dispatchers.Main).launch {
@@ -22,6 +26,15 @@ fun verifyUser(
             val response = usuarioService.verifyUser(userData)
 
             if (response.isSuccessful) {
+                val token = response.body()?.token
+
+                dataStoreManager.saveToDataStore(
+                    DataStore(
+                        userTokenJwt = token!!,
+                        userProfile = response.body()!!
+                    )
+                )
+
                 redirectToPerfilUsuario(
                     context = context,
                     fullName = response.body()?.nome!!
@@ -39,45 +52,3 @@ fun verifyUser(
         }
     }
 }
-/*
-* @Inject
-lateinit var dataStoreManager: DataStoreManager
-suspend fun verifyUser(
-    userData: UsuarioVerifyData,
-    context: Context,
-    toastErrorMessage: String,
-) {
-    val usuarioService = RetrofitService.getUsuarioService()
-
-    try {
-        val response = usuarioService.verifyUser(userData)
-
-        if (response.isSuccessful) {
-            val token = response.body()?.token
-
-            dataStoreManager.saveToDataStore(
-                DataStoreManager.USER_TOKEN_JWT,
-                UsuarioTokenData(token)
-            )
-            redirectToPerfilUsuario(
-                context = context,
-                fullName = response.body()?.nome!!
-            )
-        } else {
-            showToastError(context, toastErrorMessage)
-        }
-    } catch (e: Exception) {
-        showToastError(context, toastErrorMessage)
-    }
-}
-
-fun verifyUserWithCoroutine(
-    userData: UsuarioVerifyData,
-    context: Context,
-    toastErrorMessage: String,
-) {
-    CoroutineScope(Dispatchers.IO).launch {
-        verifyUser(userData, context, toastErrorMessage)
-    }
-}
-* */
