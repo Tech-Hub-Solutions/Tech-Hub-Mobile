@@ -1,5 +1,6 @@
 package com.example.techhub.presentation.login.components
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,63 +27,28 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.techhub.common.composable.CenteredImageSection
 import com.example.techhub.common.composable.TopBar
-import com.example.techhub.domain.RetrofitService
 import com.example.techhub.domain.model.usuario.UsuarioLoginData
-import com.example.techhub.domain.model.usuario.UsuarioTokenData
 import com.example.techhub.presentation.index.IndexActivity
-import com.example.techhub.common.utils.showToastError
-import retrofit2.Call
 import com.example.techhub.R
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.EmailTextField
 import com.example.techhub.common.composable.PasswordTextField
-import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.presentation.cadastro.CadastroActivity
+import com.example.techhub.presentation.login.LoginViewModel
 import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
-import retrofit2.Callback
-import retrofit2.Response
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun LoginFormView(onAuthSucess: (UsuarioLoginData) -> Unit) {
-    var email = remember { mutableStateOf("") }
-    var senha = remember { mutableStateOf("") }
-    val toastErrorMessage = "Ops! Algo deu errado.\n Tente novamente."
+fun LoginFormView(
+    viewModel: LoginViewModel = LoginViewModel(),
+    onAuthSucess: (UsuarioLoginData) -> Unit
+) {
     val context = LocalContext.current
 
-    fun loginUser() {
-        val user = UsuarioLoginData(
-            email = email.value,
-            senha = senha.value
-        )
-        val usuarioService = RetrofitService.getUsuarioService()
-
-        usuarioService.loginUser(user).enqueue(object : Callback<UsuarioTokenData> {
-            override fun onResponse(
-                call: Call<UsuarioTokenData>,
-                response: Response<UsuarioTokenData>
-            ) {
-                val responseBody = response.body()
-
-                if (response.isSuccessful) {
-                    if (responseBody?.isUsing2FA!!) {
-                        onAuthSucess(user)
-                    } else {
-                        redirectToPerfilUsuario(
-                            context = context,
-                            fullName = response.body()?.nome!!
-                        )
-                    }
-                } else {
-                    showToastError(context = context, message = toastErrorMessage)
-                }
-            }
-
-            override fun onFailure(call: Call<UsuarioTokenData>, t: Throwable) {
-                showToastError(context = context, message = toastErrorMessage)
-            }
-        })
+    val (user, userSetter) = remember {
+        mutableStateOf(UsuarioLoginData())
     }
 
     Scaffold(
@@ -138,15 +104,19 @@ fun LoginFormView(onAuthSucess: (UsuarioLoginData) -> Unit) {
                 modifier = Modifier
                     .width(350.dp)
             ) {
-                EmailTextField { email.value = it }
+                EmailTextField {
+                    userSetter(user.copy(email = it))
+                }
 
-                PasswordTextField { senha.value = it }
+                PasswordTextField {
+                    userSetter(user.copy(senha = it))
+                }
             }
 
             Spacer(modifier = Modifier.padding(12.dp))
 
             ElevatedButtonTH(
-                onClick = { loginUser() },
+                onClick = { viewModel.loginUser(user, context, onAuthSucess) },
                 text = "Entrar",
                 backgroundColor = Color(PrimaryBlue.value),
                 width = (350),
