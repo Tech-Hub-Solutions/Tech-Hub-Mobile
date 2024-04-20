@@ -1,8 +1,8 @@
 package com.example.techhub.data.remote
 
 
-import com.example.techhub.domain.model.usuario.UsuarioCriacaoData
 import com.example.techhub.domain.model.usuario.Page
+import com.example.techhub.domain.model.usuario.UsuarioCriacaoData
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
 import com.example.techhub.domain.model.usuario.UsuarioLoginData
 import com.example.techhub.domain.model.usuario.UsuarioTokenData
@@ -20,13 +20,11 @@ interface UsuarioApi {
     suspend fun loginUser(@Body user: UsuarioLoginData): Response<UsuarioTokenData>
 
     @POST("usuarios/verify")
-
     suspend fun verifyUser(@Body usuario: UsuarioVerifyData): Response<UsuarioTokenData>
 
     @POST("usuarios")
     fun cadastrarUsuario(@Body usuario: UsuarioCriacaoData): Call<UsuarioTokenData>
 
-    fun verifyUser(@Body usuario: UsuarioVerifyData): Call<UsuarioTokenData>
 
     @GET("usuarios/favoritos")
     suspend fun getFavoriteUsers(

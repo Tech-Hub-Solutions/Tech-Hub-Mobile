@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -60,6 +61,7 @@ dependencies {
     val data_store_version = "1.1.0"
     val coroutines_version = "1.7.3"
     val livedata_version = "1.6.5"
+    val dagger_hilt_version = "2.40.1"
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
