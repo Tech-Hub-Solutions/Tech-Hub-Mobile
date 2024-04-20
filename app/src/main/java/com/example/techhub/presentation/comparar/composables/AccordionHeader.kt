@@ -20,6 +20,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Preview
 @Composable
@@ -32,9 +33,7 @@ fun AccordionHeader(
 
     Surface(
         color = Color.White,
-        shape = RoundedCornerShape(8.dp),
-        border = BorderStroke(1.dp, Color.Gray),
-        shadowElevation = 8.dp,
+        shadowElevation = 2.dp,
     ) {
         Row(
             modifier = Modifier
@@ -42,8 +41,13 @@ fun AccordionHeader(
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(title, Modifier.weight(1f), style = TextStyle(fontWeight = FontWeight.Bold), color = Color.Gray)
-            Surface(shape = CircleShape, color = Color.Blue.copy(alpha = 0.6f)) {
+            Text(
+                title,
+                Modifier.weight(1f),
+                style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp),
+                color = Color(0xFF0F9EEA)
+            )
+            Surface(shape = CircleShape, color = Color(0xFF0F9EEA)) {
                 Icon(
                     Icons.Outlined.ArrowDropDown,
                     contentDescription = "arrow-down",

@@ -2,20 +2,24 @@ package com.example.techhub.presentation.comparar.composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -24,28 +28,47 @@ fun AccordionRow(
     model: AccordionModel.Row
 ) {
     Row(
-        modifier = Modifier.padding(8.dp),
-        horizontalArrangement = Arrangement.SpaceEvenly
+        modifier = Modifier
+            .padding(horizontal = 32.dp, vertical = 8.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Surface(color = Color.Green, shape = RoundedCornerShape(8.dp), shadowElevation = 2.dp) {
+        if (model.user1) {
             Icon(
-                imageVector = if (model.user1) Icons.Default.Verified else Icons.Default.Close,
+                imageVector = Icons.Default.Check,
                 contentDescription = null,
-                tint = Color.White,
+                tint = Color(0xff47AF64),
+                modifier = Modifier.size(40.dp)
+            )
+        } else {
+            Icon(
+                imageVector = Icons.Default.Close,
+                contentDescription = null,
+                tint = Color(0xffFF7474),
                 modifier = Modifier.size(40.dp)
             )
         }
-        Text(
-            model.tecnologia,
-            Modifier.weight(1f),
-            style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Bold),
-            color = Color.Gray
-        )
-        Surface(color = Color.Green, shape = RoundedCornerShape(8.dp), shadowElevation = 2.dp) {
+        Surface {
+            Text(
+                model.tecnologia,
+                Modifier.weight(1f),
+                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold),
+                color = Color(0xffA0A0A0)
+            )
+        }
+        if (model.user2) {
             Icon(
-                imageVector = if (model.user2) Icons.Default.Verified else Icons.Default.Close,
+                imageVector = Icons.Default.Check,
                 contentDescription = null,
-                tint = Color.White,
+                tint = Color(0xff47AF64),
+                modifier = Modifier.size(40.dp)
+            )
+        } else {
+            Icon(
+                imageVector = Icons.Default.Close,
+                contentDescription = null,
+                tint = Color(0xffFF7474),
                 modifier = Modifier.size(40.dp)
             )
         }
