@@ -155,16 +155,19 @@ fun getFavoriteUsers(
     ordem: MutableState<String>,
     selectedUsers: SnapshotStateList<UsuarioFavoritoData>,
 ) {
-
     val favoritos = viewModel.favoritos.observeAsState().value!!
     val erroApi = viewModel.erroApi.observeAsState().value!!
+    val isLastPage = viewModel.isLastPage.observeAsState().value!!
+
+    val page = remember{ mutableStateOf(0)}
 
     if (erroApi.isNotEmpty()) {
         showToastError(context = context, message = erroApi)
     }
 
     LaunchedEffect(ordem.value) {
-        viewModel.getFavoriteUsers(0, 10, "", ordem.value)
+        page.value = 0
+        viewModel.getFavoriteUsers(page.value, 10, "", ordem.value)
     }
 
     Row(
@@ -180,6 +183,10 @@ fun getFavoriteUsers(
     }
 
     Spacer(modifier = Modifier.padding(vertical = 8.dp))
+    
+    if (favoritos.isEmpty()) {
+        Text(text = "Nenhum favorito selecionado")
+    }
 
     LazyColumn(
         modifier = Modifier
@@ -204,22 +211,24 @@ fun getFavoriteUsers(
             }
         }
     }
-
-    CustomizedElevatedButton(
-        onClick = { /*TODO*/ },
-        horizontalPadding = 16,
-        verticalPadding = 8,
-        defaultElevation = 0,
-        pressedElevation = 0,
-        containerColor = Color(GrayLoadButton.value),
-        contentColor = Color(0xFF505050),
-        shape = RoundedCornerShape(50),
-        horizontalArrangement = spacedBy(8.dp, Alignment.CenterHorizontally),
-        text = "Carregar mais talentos",
-        fontSize = 16,
-        fontWeight = FontWeight.Medium,
-        contentDescription = "Botão para carregar mais talentos"
-    )
+    if (!isLastPage && favoritos.isNotEmpty()) {
+        CustomizedElevatedButton(
+            onClick = {  page.value += 1
+                        viewModel.getFavoriteUsers(page.value, 3, "", ordem.value)},
+            horizontalPadding = 16,
+            verticalPadding = 8,
+            defaultElevation = 0,
+            pressedElevation = 0,
+            containerColor = Color(GrayLoadButton.value),
+            contentColor = Color(0xFF505050),
+            shape = RoundedCornerShape(50),
+            horizontalArrangement = spacedBy(8.dp, Alignment.CenterHorizontally),
+            text = "Carregar mais talentos",
+            fontSize = 16,
+            fontWeight = FontWeight.Medium,
+            contentDescription = "Botão para carregar mais talentos"
+        )
+    }
 }
 
 fun spacedBy(space: Dp, alignment: Alignment.Horizontal): Arrangement.Horizontal {

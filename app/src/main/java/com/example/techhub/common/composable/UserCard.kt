@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -61,7 +62,7 @@ fun UserCard(
         ),
         modifier = Modifier
             .width(230.dp)
-            .heightIn(204.dp, 250.dp)
+            .heightIn(204.dp, 300.dp)
             .border(2.dp, if (isSelected.value) Color(PrimaryBlue.value) else Color.Transparent),
         shape = RectangleShape,
         onClick = {
@@ -82,8 +83,9 @@ fun UserCard(
         AsyncImage(
             model = userProfile.urlFotoPerfil,
             contentDescription = "Foto do freelancer",
-            modifier = Modifier.size(148.dp, 98.dp),
-            alignment = Alignment.TopCenter
+            modifier = Modifier.size(148.dp, 148.dp),
+            alignment = Alignment.TopCenter,
+            contentScale = ContentScale.FillBounds
         )
 
         Column(
