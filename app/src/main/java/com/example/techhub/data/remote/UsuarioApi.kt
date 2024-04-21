@@ -1,6 +1,7 @@
 package com.example.techhub.data.remote
 
 import com.example.techhub.domain.model.usuario.Page
+import com.example.techhub.domain.model.usuario.UsuarioCriacaoData
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
 import com.example.techhub.domain.model.usuario.UsuarioLoginData
 import com.example.techhub.domain.model.usuario.UsuarioTokenData
@@ -15,10 +16,14 @@ import retrofit2.http.Query
 
 interface UsuarioApi {
     @POST("usuarios/login")
-    fun loginUser(@Body usuario: UsuarioLoginData): Call<UsuarioTokenData>
+    suspend fun loginUser(@Body user: UsuarioLoginData): Response<UsuarioTokenData>
 
     @POST("usuarios/verify")
-    fun verifyUser(@Body usuario: UsuarioVerifyData): Call<UsuarioTokenData>
+    suspend fun verifyUser(@Body usuario: UsuarioVerifyData): Response<UsuarioTokenData>
+
+    @POST("usuarios")
+    fun cadastrarUsuario(@Body usuario: UsuarioCriacaoData): Call<UsuarioTokenData>
+
 
     @GET("usuarios/favoritos")
     suspend fun getFavoriteUsers(
@@ -28,6 +33,7 @@ interface UsuarioApi {
         @Query("sort") sort: String?,
         @Query("ordem") ordem: String
     ) : Response<Page<UsuarioFavoritoData>>
+
 
     @GET("usuarios/explorarTalentos")
     suspend fun getTalentos(

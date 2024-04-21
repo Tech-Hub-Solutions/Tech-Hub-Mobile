@@ -39,10 +39,9 @@ fun CompararTalentosView(
             val area = it.area;
             val nome = it.nome;
 
-            // area = backend
             if (tecnologias.containsKey(area)) {
                 val list = tecnologias[area];
-                list?.add(nome!!);
+                if (tecnologias[area]?.contains(nome!!) == false) list?.add(nome!!)
             } else {
                 tecnologias[area!!] = mutableListOf(nome!!);
             }
