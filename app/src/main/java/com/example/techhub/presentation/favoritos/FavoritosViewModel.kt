@@ -12,9 +12,10 @@ import kotlinx.coroutines.launch
 class FavoritosViewModel {
     val favoritos = MutableLiveData(SnapshotStateList<UsuarioFavoritoData>())
     val erroApi = MutableLiveData("")
+    val isLastPage = MutableLiveData(false)
 
     val token =
-        "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYXRhaW5ub3ZhdGVAaG90bWFpbC5jb20iLCJpYXQiOjE3MTM2MzQ1NzEsImV4cCI6MTcxNzIzNDU3MX0.dE9EvilDfnUvND-jIlAcfkl5tb6asdmP1r8AoS-VJYBCuh02t_Lq_ADmZL958r2bW_7bevvUBzPQ_BRDfFKYOg"
+        "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtdXJpbG9kc2JfMjAxOUBob3RtYWlsLmNvbSIsImlhdCI6MTcxMzY0MDMwNiwiZXhwIjoxNzE3MjQwMzA2fQ.uR4r0DLqgX1y12DOvh4yQohOfPFLw9wKiy4NIRpTiktoPR_bXCIkr86Q28O_2lNnynMTM6nrZldS0yfJeWlMNw"
 
     private val usuarioApi = RetrofitService.getUsuarioService()
     private val perfilApi = RetrofitService.getPerfilService()
@@ -23,7 +24,7 @@ class FavoritosViewModel {
         getFavoriteUsers(0, 10, "", "avaliacao,desc")
     }
 
-     fun getFavoriteUsers(page: Int, size: Int, sort: String, ordem: String) {
+    fun getFavoriteUsers(page: Int, size: Int, sort: String, ordem: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = usuarioApi.getFavoriteUsers(token, page, size, sort, ordem)
@@ -34,10 +35,13 @@ class FavoritosViewModel {
                     val page = response.body()
                     val list = page?.content ?: emptyList()
 
-                    favoritos.postValue(SnapshotStateList<UsuarioFavoritoData>().apply {
-                        clear()
-                        addAll(list)
-                    })
+                    isLastPage.postValue(page?.last ?: false)
+
+                    if (page?.first == true) {
+                        favoritos.value!!.clear()
+                    }
+
+                    favoritos.value!!.addAll(list)
 
                     erroApi.value = ""
                 } else {
