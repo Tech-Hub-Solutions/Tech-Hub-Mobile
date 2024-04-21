@@ -159,7 +159,7 @@ fun getFavoriteUsers(
     val erroApi = viewModel.erroApi.observeAsState().value!!
     val isLastPage = viewModel.isLastPage.observeAsState().value!!
 
-    val page = remember{ mutableStateOf(0)}
+    val page = remember { mutableStateOf(0) }
 
     if (erroApi.isNotEmpty()) {
         showToastError(context = context, message = erroApi)
@@ -183,7 +183,7 @@ fun getFavoriteUsers(
     }
 
     Spacer(modifier = Modifier.padding(vertical = 8.dp))
-    
+
     if (favoritos.isEmpty()) {
         Text(text = "Nenhum favorito selecionado")
     }
@@ -206,15 +206,22 @@ fun getFavoriteUsers(
                 horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start)
             ) {
                 for (item in subLista) {
-                    UserCard(item, favoritos, selectedUsers, false)
+                    UserCard(
+                        item,
+                        selectedUsers,
+                        true,
+                        modifier = Modifier.weight(0.5f, false)
+                    )
                 }
             }
         }
     }
     if (!isLastPage && favoritos.isNotEmpty()) {
         CustomizedElevatedButton(
-            onClick = {  page.value += 1
-                        viewModel.getFavoriteUsers(page.value, 3, "", ordem.value)},
+            onClick = {
+                page.value += 1
+                viewModel.getFavoriteUsers(page.value, 3, "", ordem.value)
+            },
             horizontalPadding = 16,
             verticalPadding = 8,
             defaultElevation = 0,

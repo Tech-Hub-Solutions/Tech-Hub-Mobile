@@ -1,4 +1,4 @@
-package com.example.techhub.presentation.index
+package com.example.techhub.presentation.explorarTalentos
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -15,14 +15,12 @@ import com.example.techhub.common.Screen
 import com.example.techhub.composable.SetBarColor
 import com.example.techhub.presentation.explorarTalentos.composable.ExplorarTalentosView
 import com.example.techhub.presentation.favoritos.composables.FavoritosView
-import com.example.techhub.presentation.index.utils.showWelcomeToast
-import com.example.techhub.presentation.ui.theme.TechHubTheme
+import com.example.techhub.ui.theme.TechHubTheme
 
-private var wasToastShowed: Boolean? = false
-
-class IndexActivity : ComponentActivity() {
+class ExplorarTalentosActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             TechHubTheme {
                 SetBarColor(color = Color.White)
@@ -32,22 +30,22 @@ class IndexActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-
                     NavHost(
                         navController = navController,
                         startDestination = Screen.ExplorarTalentosView.route,
-                        route = "root_route"
+                        route = Screen.ExplorarTalentosView.route
                     ) {
                         composable(route = Screen.ExplorarTalentosView.route) {
-                           //TODO: IndexView()
-                            ExplorarTalentosView()
+                            Surface(
+                                modifier = Modifier.fillMaxSize(),
+                                color = MaterialTheme.colorScheme.background
+                            ) {
+                                ExplorarTalentosView()
+                            }
                         }
                     }
                 }
             }
-
-            wasToastShowed =
-                wasToastShowed?.let { showWelcomeToast(context = this, wasToastShowed = it) }
         }
     }
 }

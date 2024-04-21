@@ -40,19 +40,26 @@ fun OrderDropDownMenu(ordem: MutableState<String>) {
         IconButton(
             onClick = { expanded = true },
             modifier = Modifier
-                .size(86.dp,25.dp)
+                .size(86.dp, 25.dp)
                 .background(Color(GrayTinyButton.value))
                 .padding(0.dp),
         ) {
-            Row (modifier = Modifier
-                .padding(0.dp)
-                .fillMaxWidth(),
+            Row(
+                modifier = Modifier
+                    .padding(0.dp)
+                    .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround){
-                Text(text = "Ordenar",
-                    fontSize = 12.sp)
-                Icon(Icons.Filled.DensitySmall,
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                Text(
+                    text = "Ordenar",
+                    fontSize = 14.sp,
+                    color = Color.Black
+                )
+                Icon(
+                    Icons.Filled.DensitySmall,
                     contentDescription = "Localized description",
+                    tint = Color.Black,
                     modifier = Modifier.size(15.dp)
                 )
             }
