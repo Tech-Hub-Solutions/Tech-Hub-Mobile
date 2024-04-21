@@ -28,4 +28,13 @@ interface UsuarioApi {
         @Query("sort") sort: String?,
         @Query("ordem") ordem: String
     ) : Response<Page<UsuarioFavoritoData>>
+
+    @GET("usuarios/explorarTalentos")
+    suspend fun getTalentos(
+        @Header("Authorization") authorization: String,
+        @Query("page") page: Int?,
+        @Query("size") size: Int?,
+        @Query("sort") sort: String?,
+        @Query("ordem") ordem: String
+    ) : Response<Page<UsuarioFavoritoData>>
 }
