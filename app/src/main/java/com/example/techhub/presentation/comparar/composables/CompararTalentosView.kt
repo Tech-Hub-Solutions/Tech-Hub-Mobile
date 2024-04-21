@@ -61,15 +61,15 @@ fun CompararTalentosView(
         ) {
             UserCard(
                 userProfile = selectedUsers.get(0),
-                userList = null,
                 selectedUsers = selectedUsers,
-                isComparing = true
+                isComparing = true,
+                modifier = Modifier.weight(0.5f)
             )
             UserCard(
                 userProfile = selectedUsers.get(1),
-                userList = null,
                 selectedUsers = selectedUsers,
-                isComparing = true
+                isComparing = true,
+                modifier = Modifier.weight(0.5f)
             )
         }
         Spacer(modifier = Modifier.padding(top = 32.dp))

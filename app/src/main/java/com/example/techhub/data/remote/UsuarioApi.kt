@@ -3,6 +3,7 @@ package com.example.techhub.data.remote
 import com.example.techhub.domain.model.usuario.Page
 import com.example.techhub.domain.model.usuario.UsuarioCriacaoData
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
+import com.example.techhub.domain.model.usuario.UsuarioFiltroData
 import com.example.techhub.domain.model.usuario.UsuarioLoginData
 import com.example.techhub.domain.model.usuario.UsuarioTokenData
 import com.example.techhub.domain.model.usuario.UsuarioVerifyData
@@ -34,13 +35,12 @@ interface UsuarioApi {
         @Query("ordem") ordem: String
     ) : Response<Page<UsuarioFavoritoData>>
 
-
-    @GET("usuarios/explorarTalentos")
+    @POST("usuarios/filtro")
     suspend fun getTalentos(
         @Header("Authorization") authorization: String,
         @Query("page") page: Int?,
         @Query("size") size: Int?,
-        @Query("sort") sort: String?,
-        @Query("ordem") ordem: String
+        @Query("ordem") ordem: String,
+        @Body filtroData: UsuarioFiltroData
     ) : Response<Page<UsuarioFavoritoData>>
 }
