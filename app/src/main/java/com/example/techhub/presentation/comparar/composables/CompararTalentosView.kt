@@ -74,6 +74,9 @@ fun CompararTalentosView(
         }
         Spacer(modifier = Modifier.padding(top = 32.dp))
 
+        val tecnologiasDoUsuario1 = selectedUsers[0].flags?.map { flag -> flag.nome }
+        val tecnologiasDoUsuario2 = selectedUsers[1].flags?.map { flag -> flag.nome }
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
@@ -86,8 +89,6 @@ fun CompararTalentosView(
 
                 if (area.equals("")) return@items
 
-                val tecnologiasDoUsuario1 = selectedUsers[0].flags?.map { flag -> flag.nome }
-                val tecnologiasDoUsuario2 = selectedUsers[1].flags?.map { flag -> flag.nome }
 
                 Accordion(AccordionModel(
                     area = area,
