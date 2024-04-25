@@ -1,5 +1,6 @@
 package com.example.techhub.common.composable
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -23,11 +24,13 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 fun BottomBar(isEmpresa: Boolean) {
     BottomAppBar(
         modifier = Modifier.fillMaxWidth(),
+        tonalElevation = 5.dp,
         actions = {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = androidx.compose.foundation.layout.Arrangement.SpaceEvenly,
+
             ) {
                 IconButton(onClick = { /* TODO - redirecionar para a página de busca talentos */ }) {
                     Icon(
@@ -50,16 +53,6 @@ fun BottomBar(isEmpresa: Boolean) {
                                 .height(28.dp)
                         )
                     }
-                }
-                IconButton(onClick = { /* TODO - redirecionar para o chat */ }) {
-                    Icon(
-                        Icons.Outlined.Sms,
-                        contentDescription = "@string/btn_description_chat",
-                        tint = Color(PrimaryBlue.value),
-                        modifier = Modifier
-                            .width(28.dp)
-                            .height(28.dp)
-                    )
                 }
                 IconButton(onClick = { /* TODO - inserir a foto de perfil da pessoa + abrir o pop de editar perfil */ }) {
                     Icon(
