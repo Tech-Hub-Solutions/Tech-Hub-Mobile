@@ -13,7 +13,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedButton
@@ -36,19 +38,25 @@ fun PerfilView() {
     /* TODO - inserir lógica para transferir estado de se é empresa ou freelancer */
     /* TODO - pensar sobre lógica de wrap elementos responsivo. Quando o texto
         (nome, descrição) é muito grande, quebra os outros que estão na mesma Row */
-    val isEmpresa = true
+    val isEmpresa = false
 
     Scaffold(
         bottomBar = {
             BottomBar(isEmpresa = true)
         },
-        containerColor = Color.White
+        containerColor = Color.White,
+        modifier = Modifier
+            .fillMaxSize()
     ) { innerPadding ->
         Column(
-            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.Top
+            verticalArrangement = Arrangement.Top,
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .fillMaxSize()
+                .padding(bottom = 60.dp)
         ) {
+            // Banner e imagem de perfil
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -120,6 +128,7 @@ fun PerfilView() {
                 }
             }
 
+            // Nome e Infos
             Column(
                 modifier = Modifier
                     .padding(horizontal = 24.dp, vertical = 8.dp)
@@ -184,6 +193,7 @@ fun PerfilView() {
                     )
                 }
             }
+
             Divider(
                 color = Color.LightGray.copy(alpha = 0.4f),
                 thickness = 1.dp,
@@ -218,6 +228,44 @@ fun PerfilView() {
                             "ansioso para enfrentar desafios complexos e comprometido " +
                             "em alcançar a excelência, você é a pessoa que estamos procurando."
                 )
+            }
+
+            if (!isEmpresa) {
+                TagsSection(title = "Soft Skills")
+
+                Divider(
+                    color = Color.LightGray.copy(alpha = 0.4f),
+                    thickness = 1.dp,
+                    modifier = Modifier.padding(vertical = 12.dp)
+                )
+
+                TagsSection(title = "Hard Skills")
+            } else {
+                TagsSection(title = "Valores")
+            }
+
+            Divider(
+                color = Color.LightGray.copy(alpha = 0.4f),
+                thickness = 1.dp,
+                modifier = Modifier.padding(vertical = 12.dp)
+            )
+
+            if (!isEmpresa) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 24.dp, vertical = 58.dp)
+                ) {
+                    Text(
+                        text = "Projetos desenvolvidos",
+                        fontSize = 18.sp,
+                        color = Color.Black,
+                        fontWeight = FontWeight(500),
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    GitHubProjectCard()
+                }
             }
         }
 
