@@ -27,10 +27,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.techhub.presentation.ui.theme.GrayTinyButton
+import com.example.techhub.presentation.ui.theme.PrimaryBlue
+
+private data class Item(
+    val texto:String,
+    val valor:String
+)
 
 @Composable
 fun OrderDropDownMenu(ordem: MutableState<String>) {
     var expanded by remember { mutableStateOf(false) }
+    val items = listOf(
+        Item("Mais avaliado", "avaliacao,desc"),
+        Item("Menos avaliado", "avaliacao,asc"),
+        Item("Maior preço", "preco,desc"),
+        Item("Menor preço", "preco,asc")
+    )
 
     Box(
         modifier = Modifier
@@ -69,22 +81,17 @@ fun OrderDropDownMenu(ordem: MutableState<String>) {
             expanded = expanded,
             onDismissRequest = { expanded = false },
         ) {
-            DropdownMenuItem(
-                text = { Text("Mais avaliado") },
-                onClick = { ordem.value = "avaliacao,desc"; expanded = false }
-            )
-            DropdownMenuItem(
-                text = { Text("Menos avaliado") },
-                onClick = { ordem.value = "avaliacao,asc"; expanded = false }
-            )
-            DropdownMenuItem(
-                text = { Text("Maior preço") },
-                onClick = { ordem.value = "preco,desc"; expanded = false }
-            )
-            DropdownMenuItem(
-                text = { Text("Menor preço") },
-                onClick = { ordem.value = "preco,asc"; expanded = false }
-            )
+            items.forEach { item ->
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            item.texto,
+                            color = if (ordem.value == item.valor) PrimaryBlue else Color.Black
+                        )
+                    },
+                    onClick = { ordem.value = item.valor; expanded = false }
+                )
+            }
         }
     }
 }
