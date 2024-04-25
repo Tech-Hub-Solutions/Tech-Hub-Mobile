@@ -79,6 +79,7 @@ dependencies {
     implementation("io.arrow-kt:arrow-core:$arrow_version")
     implementation("io.arrow-kt:arrow-fx-coroutines:$arrow_version")
     implementation("io.coil-kt:coil-compose:$coil_version")
+    implementation("io.coil-kt:coil-svg:$coil_version")
     implementation("com.google.dagger:hilt-android:$dagger_hilt_version")
     kapt("com.google.dagger:hilt-android-compiler:$dagger_hilt_version")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
