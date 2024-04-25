@@ -39,10 +39,9 @@ fun CompararTalentosView(
             val area = it.area;
             val nome = it.nome;
 
-            // area = backend
             if (tecnologias.containsKey(area)) {
                 val list = tecnologias[area];
-                list?.add(nome!!);
+                if (tecnologias[area]?.contains(nome!!) == false) list?.add(nome!!)
             } else {
                 tecnologias[area!!] = mutableListOf(nome!!);
             }
@@ -62,18 +61,21 @@ fun CompararTalentosView(
         ) {
             UserCard(
                 userProfile = selectedUsers.get(0),
-                userList = null,
                 selectedUsers = selectedUsers,
-                isComparing = true
+                isComparing = true,
+                modifier = Modifier.weight(0.5f)
             )
             UserCard(
                 userProfile = selectedUsers.get(1),
-                userList = null,
                 selectedUsers = selectedUsers,
-                isComparing = true
+                isComparing = true,
+                modifier = Modifier.weight(0.5f)
             )
         }
         Spacer(modifier = Modifier.padding(top = 32.dp))
+
+        val tecnologiasDoUsuario1 = selectedUsers[0].flags?.map { flag -> flag.nome }
+        val tecnologiasDoUsuario2 = selectedUsers[1].flags?.map { flag -> flag.nome }
 
         LazyColumn(
             modifier = Modifier
@@ -87,8 +89,6 @@ fun CompararTalentosView(
 
                 if (area.equals("")) return@items
 
-                val tecnologiasDoUsuario1 = selectedUsers[0].flags?.map { flag -> flag.nome }
-                val tecnologiasDoUsuario2 = selectedUsers[1].flags?.map { flag -> flag.nome }
 
                 Accordion(AccordionModel(
                     area = area,

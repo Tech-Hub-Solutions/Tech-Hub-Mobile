@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun CpfTextField(){
+fun CpfTextField(onValueChanged: (String) -> Unit){
     var filledText by remember { mutableStateOf("") }
     var isCpfValid by remember { mutableStateOf(false) }
 
@@ -36,6 +36,7 @@ fun CpfTextField(){
             onValueChange = {
                 filledText = it
                 isCpfValid = isCpfTemp(filledText)
+                onValueChanged(filledText)
             },
             label = { Text("CPF") },
             placeholder = { Text("Digite seu CPF") },

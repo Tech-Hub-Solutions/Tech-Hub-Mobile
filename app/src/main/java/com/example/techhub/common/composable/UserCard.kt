@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -30,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -46,34 +48,39 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserCard(
-    userProfile: UsuarioFavoritoData, userList: SnapshotStateList<UsuarioFavoritoData>? = null,
+    userProfile: UsuarioFavoritoData,
     selectedUsers: MutableList<UsuarioFavoritoData>? = null,
     isComparing: Boolean,
+    modifier: Modifier = Modifier
 ) {
     val isFavorito = remember { mutableStateOf(true) }
     val isSelected = remember { mutableStateOf(false) }
     //TODO val isEmpresa = remember{ mutableStateOf(false) }
-    val isComparing = remember { mutableStateOf(isComparing) }
 
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 4.dp,
         ),
         modifier = Modifier
-            .width(230.dp)
-            .heightIn(204.dp, 250.dp)
-            .border(2.dp, if (isSelected.value) Color(PrimaryBlue.value) else Color.Transparent),
+            .heightIn(204.dp, 300.dp)
+            .border(
+                2.dp,
+                if (isSelected.value) Color(PrimaryBlue.value) else Color.Transparent
+            )
+            .then(modifier),
         shape = RectangleShape,
         onClick = {
-            if (selectedUsers != null && selectedUsers.size < 2 ||
-                selectedUsers != null && selectedUsers.contains(userProfile)
-            ) {
-                isSelected.value = !isSelected.value;
+            if (isComparing) {
+                if (selectedUsers != null && selectedUsers.size < 2 ||
+                    selectedUsers != null && selectedUsers.contains(userProfile)
+                ) {
+                    isSelected.value = !isSelected.value;
 
-                if (selectedUsers.contains(userProfile)) {
-                    selectedUsers.remove(userProfile);
-                } else {
-                    selectedUsers.add(userProfile);
+                    if (selectedUsers.contains(userProfile)) {
+                        selectedUsers.remove(userProfile);
+                    } else {
+                        selectedUsers.add(userProfile);
+                    }
                 }
             }
 
@@ -82,8 +89,9 @@ fun UserCard(
         AsyncImage(
             model = userProfile.urlFotoPerfil,
             contentDescription = "Foto do freelancer",
-            modifier = Modifier.size(148.dp, 98.dp),
-            alignment = Alignment.TopCenter
+            modifier = Modifier.fillMaxHeight(0.4f),
+            alignment = Alignment.TopCenter,
+            contentScale = ContentScale.Crop
         )
 
         Column(
@@ -137,7 +145,7 @@ fun UserCard(
                     )
                 )
 
-                if (!isComparing.value) {
+                if (isComparing) {
                     Icon(
                         imageVector = Icons.Filled.Favorite,
                         contentDescription = "Botão para favoritar",

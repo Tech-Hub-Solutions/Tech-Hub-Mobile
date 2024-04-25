@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CompareArrows
@@ -41,18 +42,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.techhub.common.composable.BottomBar
-import com.example.techhub.common.composable.TopBar
+import com.example.techhub.common.composable.CustomizedElevatedButton
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.composable.OrderDropDownMenu
 import com.example.techhub.composable.UserCard
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
 import com.example.techhub.presentation.comparar.composables.CompararTalentosView
 import com.example.techhub.presentation.favoritos.FavoritosViewModel
-import com.example.techhub.presentation.index.IndexActivity
+import com.example.techhub.presentation.ui.theme.GrayLoadButton
 import kotlinx.coroutines.launch
 
 
@@ -65,24 +67,15 @@ fun FavoritosView() {
     val context = LocalContext.current
 
     Scaffold(
-        topBar = {
-            TopBar(
-                willRedirectToActivity = true,
-                activity = IndexActivity::class.java,
-                context = context,
-                title = "Favoritos",
-            )
-        },
         bottomBar = { BottomBar(isEmpresa = true) }
     ) { innerPadding ->
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.White)
                 .padding(
-                    top = innerPadding.calculateTopPadding(),
-                    bottom = 24.dp,
+                    top = 24.dp,
+                    bottom = innerPadding.calculateBottomPadding(),
                     start = 16.dp,
                     end = 16.dp
                 ),
@@ -110,7 +103,8 @@ fun createBottomSheet(selectedUsers: SnapshotStateList<UsuarioFavoritoData>) {
         BottomSheetScaffold(
             modifier = Modifier
                 .fillMaxHeight(.98f)
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = 56.dp),
             scaffoldState = scaffoldState,
             sheetContent = {
                 CompararTalentosView(scope, selectedUsers)
@@ -161,16 +155,19 @@ fun getFavoriteUsers(
     ordem: MutableState<String>,
     selectedUsers: SnapshotStateList<UsuarioFavoritoData>,
 ) {
-
     val favoritos = viewModel.favoritos.observeAsState().value!!
     val erroApi = viewModel.erroApi.observeAsState().value!!
+    val isLastPage = viewModel.isLastPage.observeAsState().value!!
+
+    val page = remember { mutableStateOf(0) }
 
     if (erroApi.isNotEmpty()) {
         showToastError(context = context, message = erroApi)
     }
 
     LaunchedEffect(ordem.value) {
-        viewModel.getFavoriteUsers(0, 10, "", ordem.value)
+        page.value = 0
+        viewModel.getFavoriteUsers(page.value, 10, "", ordem.value)
     }
 
     Row(
@@ -186,6 +183,10 @@ fun getFavoriteUsers(
     }
 
     Spacer(modifier = Modifier.padding(vertical = 8.dp))
+
+    if (favoritos.isEmpty()) {
+        Text(text = "Nenhum favorito selecionado")
+    }
 
     LazyColumn(
         modifier = Modifier
@@ -205,10 +206,39 @@ fun getFavoriteUsers(
                 horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start)
             ) {
                 for (item in subLista) {
-                    UserCard(item, favoritos, selectedUsers, false)
+                    UserCard(
+                        item,
+                        selectedUsers,
+                        true,
+                        modifier = Modifier.weight(1f, false)
+                    )
+
+                    if (index == subLista.size - 1 && subLista.size % 2 != 0) {
+                        Spacer(modifier = Modifier.weight(1f))
+                    }
                 }
             }
         }
+    }
+    if (!isLastPage && favoritos.isNotEmpty()) {
+        CustomizedElevatedButton(
+            onClick = {
+                page.value += 1
+                viewModel.getFavoriteUsers(page.value, 3, "", ordem.value)
+            },
+            horizontalPadding = 16,
+            verticalPadding = 8,
+            defaultElevation = 0,
+            pressedElevation = 0,
+            containerColor = Color(GrayLoadButton.value),
+            contentColor = Color(0xFF505050),
+            shape = RoundedCornerShape(50),
+            horizontalArrangement = spacedBy(8.dp, Alignment.CenterHorizontally),
+            text = "Carregar mais talentos",
+            fontSize = 16,
+            fontWeight = FontWeight.Medium,
+            contentDescription = "Botão para carregar mais talentos"
+        )
     }
 }
 

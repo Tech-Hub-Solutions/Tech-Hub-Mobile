@@ -34,7 +34,7 @@ fun Accordion(model: AccordionModel) {
 
     Column(
         Modifier
-            .padding(horizontal = 16.dp, vertical = 8.dp)) {
+            .padding(horizontal = 0.dp, vertical = 1.dp)) {
         AccordionHeader(title = model.area, isExpanded = expanded) {
             expanded = !expanded
         }
@@ -43,13 +43,11 @@ fun Accordion(model: AccordionModel) {
                 modifier = Modifier
                     .padding(top = 8.dp)
                     .background(Color.White)
-                    .shadow(1.dp)
-                    .border(BorderStroke(1.dp, Color.Gray), shape = RoundedCornerShape(8.dp))
             ) {
                 Column {
                     model.rows.forEach { row ->
                         AccordionRow(row)
-                        Divider(color = Color.Gray, thickness = 1.dp)
+                        Divider(color = Color(0xFFDDDDDD), thickness = 1.dp)
                     }
                 }
             }

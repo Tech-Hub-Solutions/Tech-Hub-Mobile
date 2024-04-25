@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun NameTextField(){
+fun NameTextField(onValueChanged: (String) -> Unit) {
     var filledText by remember { mutableStateOf("") }
     var isNameValid by remember { mutableStateOf(false) }
 
@@ -35,6 +35,7 @@ fun NameTextField(){
             onValueChange = {
                 filledText = it
                 isNameValid = filledText.isBlank()
+                onValueChanged(filledText)
             },
             label = { Text("Nome") },
             placeholder = { Text("Digite seu nome") },

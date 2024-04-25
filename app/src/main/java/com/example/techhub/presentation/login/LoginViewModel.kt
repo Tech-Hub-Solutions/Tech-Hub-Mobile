@@ -1,46 +1,50 @@
 package com.example.techhub.presentation.login
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.SavedStateHandle
+import android.app.Activity
+import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.techhub.common.Constants
-import com.example.techhub.common.Resource
+import com.example.techhub.common.utils.redirectToPerfilUsuario
+import com.example.techhub.common.utils.showToastError
+import com.example.techhub.domain.RetrofitService
 import com.example.techhub.domain.model.usuario.UsuarioLoginData
-import com.example.techhub.domain.model.usuario.UsuarioTokenData
-import com.example.techhub.domain.use_case.login.LoginUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-@HiltViewModel
-class LoginViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase,
-    savedStateHandle: SavedStateHandle
-) : ViewModel() {
-    private val _state = mutableStateOf(LoginState())
-    val state: State<LoginState> = _state
+class LoginViewModel : ViewModel() {
+    private val toastErrorMessage = "Ops! Algo deu errado.\n Tente novamente."
 
-    init {
-        savedStateHandle.get<UsuarioTokenData>(Constants.PARAM_TOKEN)?.let { token ->
-            _state.value = LoginState()
-        }
-    }
+    private val apiUsuario = RetrofitService.getUsuarioService()
 
-    suspend fun login(usuario: UsuarioLoginData) {
-        loginUseCase(usuario).collect { result ->
-            when (result) {
-                is Resource.Success<UsuarioTokenData> -> {
-                    _state.value = LoginState(usuarioToken = result.data)
+    fun loginUser(
+        user: UsuarioLoginData,
+        context: Context,
+        onAuthSucess: (UsuarioLoginData) -> Unit
+    ) {
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val response = apiUsuario.loginUser(user)
+
+                if (response.isSuccessful) {
+                    if (response.body()?.isUsing2FA!!) {
+                        onAuthSucess(user)
+                    } else {
+                        redirectToPerfilUsuario(
+                            context = context,
+                            fullName = response.body()?.nome!!
+                        )
+                    }
+                } else {
+                    (context as Activity).runOnUiThread {
+                        showToastError(context = context, message = toastErrorMessage)
+                    }
                 }
+            } catch (error: Exception) {
+                Log.e("LOGIN_VIEW_MODEL", "ERROR: ${error.message}")
 
-                is Resource.Error<UsuarioTokenData> -> {
-                    _state.value = LoginState(
-                        error = result.message ?: "Ocorreu um erro inesperado"
-                    )
-                }
-
-                is Resource.Loading<UsuarioTokenData> -> {
-                    _state.value = LoginState(isLoading = true)
+                (context as Activity).runOnUiThread {
+                    showToastError(context = context, message = toastErrorMessage)
                 }
             }
         }
