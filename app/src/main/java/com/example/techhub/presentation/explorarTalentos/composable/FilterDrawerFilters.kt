@@ -202,6 +202,12 @@ fun FiltroPorPreco(
                         floatValue = 0f
                     }
 
+                    setNewFiltro(
+                        newFiltro.copy(
+                            precoMin = floatValue
+                        )
+                    )
+
                     sliderPosition = floatValue..sliderPosition.endInclusive
                 },
                 colors = TextFieldDefaults.colors(
@@ -234,6 +240,12 @@ fun FiltroPorPreco(
                     if (floatValue > 10_000.00f) {
                         floatValue = 10_000.00f
                     }
+
+                    setNewFiltro(
+                        newFiltro.copy(
+                            precoMax = floatValue
+                        )
+                    )
 
                     sliderPosition = sliderPosition.start..floatValue
                 },

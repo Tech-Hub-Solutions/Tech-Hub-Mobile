@@ -17,6 +17,7 @@ class ExplorarTalentosViewModel : ViewModel() {
 
     val talentos = MutableLiveData(SnapshotStateList<UsuarioFavoritoData>())
     val erroApi = MutableLiveData("")
+    val totalElements = MutableLiveData(0)
     val isLoading = MutableLiveData(false)
     val token = Constants.PARAM_TOKEN
     val isLastPage = MutableLiveData(false)
@@ -26,28 +27,24 @@ class ExplorarTalentosViewModel : ViewModel() {
     private val usuarioApi = RetrofitService.getUsuarioService()
     private val flagsApi = RetrofitService.getFlagService()
 
-    init {
-        getFlags()
-    }
-
     fun getTalentos(page: Int, size: Int, ordem: String, usuarioFiltroData: UsuarioFiltroData) {
-        isLoading.postValue(true)
+        if (page == 0) isLoading.postValue(true)
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = usuarioApi.getTalentos(token, page, size, ordem, usuarioFiltroData)
 
                 if (response.isSuccessful) {
-                    val page = response.body()
-                    val list = page?.content ?: emptyList()
+                    val responsePage = response.body()
+                    val list = responsePage?.content ?: emptyList()
 
-                    talentos.postValue(SnapshotStateList<UsuarioFavoritoData>().apply {
-                        if (page?.number == 0) {
-                            clear()
-                        }
-                        addAll(list)
-                    })
+                    if (responsePage!!.first) {
+                        talentos.value!!.clear()
+                    }
+                    talentos.value!!.addAll(list)
 
-                    isLastPage.postValue(page?.last ?: true)
+                    isLastPage.postValue(responsePage.last)
+                    totalElements.postValue(responsePage.totalElements.toInt())
+
 
                     erroApi.postValue("")
                 } else {

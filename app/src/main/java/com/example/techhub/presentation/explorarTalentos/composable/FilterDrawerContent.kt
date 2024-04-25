@@ -1,5 +1,6 @@
 package com.example.techhub.presentation.explorarTalentos.composable
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -14,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -116,6 +118,42 @@ fun FilterDrawerContent(
             Text(
                 text = "Aplicar Filtro",
                 color = Color.White,
+                fontSize = 16.sp
+            )
+        }
+
+        // Limpar
+        OutlinedButton(
+            onClick = {
+                setNewFiltro(
+                    newFiltro.copy(
+                        tecnologiasIds = mutableListOf(),
+                        precoMin = 0f,
+                        precoMax = null,
+                    )
+                )
+                setFiltro(
+                    UsuarioFiltroData(
+                        tecnologiasIds = mutableListOf(),
+                        precoMin = null,
+                        precoMax = null,
+                    )
+                )
+                scope.launch {
+                    drawerState.apply {
+                        if (isOpen) close()
+                    }
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color.White),
+            shape = Shapes().extraLarge,
+            border = BorderStroke(1.dp, PrimaryBlue)
+        ) {
+            Text(
+                text = "Limpar Filtro",
+                color = PrimaryBlue,
                 fontSize = 16.sp
             )
         }
