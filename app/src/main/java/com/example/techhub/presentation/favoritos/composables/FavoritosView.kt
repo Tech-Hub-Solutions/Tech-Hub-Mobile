@@ -210,8 +210,12 @@ fun getFavoriteUsers(
                         item,
                         selectedUsers,
                         true,
-                        modifier = Modifier.weight(0.5f, false)
+                        modifier = Modifier.weight(1f, false)
                     )
+
+                    if (index == subLista.size - 1 && subLista.size % 2 != 0) {
+                        Spacer(modifier = Modifier.weight(1f))
+                    }
                 }
             }
         }

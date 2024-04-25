@@ -6,16 +6,18 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RangeSlider
-import androidx.compose.material3.SliderColors
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -30,6 +32,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -39,6 +43,48 @@ import com.example.techhub.domain.model.usuario.UsuarioFiltroData
 import com.example.techhub.presentation.explorarTalentos.ExplorarTalentosViewModel
 import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
+import androidx.transition.R
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun FiltroPorNome(newFiltro: UsuarioFiltroData, setNewFiltro: (UsuarioFiltroData) -> Unit) {
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Subtitulo(texto = "Nome")
+        OutlinedTextField(
+            value = newFiltro.nome ?: "",
+            onValueChange = {
+                setNewFiltro(newFiltro.copy(nome = it))
+            },
+            trailingIcon = {
+               Icon(
+                   Icons.Outlined.Search,
+                   tint = PrimaryBlue,
+                   contentDescription = "Pesquisar por nome"
+               )
+            },
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color.Transparent,
+                unfocusedContainerColor = Color.Transparent,
+                focusedIndicatorColor = PrimaryBlue,
+            ),
+            textStyle = LocalTextStyle.current.copy(
+                color = GrayText,
+                fontSize = 14.sp
+            ),
+            keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.Words
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp)
+        )
+
+
+    }
+}
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -125,7 +171,12 @@ fun FiltroPorAreaETecnologia(
                     DropdownMenuItem(
                         text = { Text(text = it) },
                         onClick = {
-                            setNewFiltro(newFiltro.copy(area = it, tecnologiasIds = mutableListOf()))
+                            setNewFiltro(
+                                newFiltro.copy(
+                                    area = it,
+                                    tecnologiasIds = mutableListOf()
+                                )
+                            )
                             expanded = false
                         }
                     )

@@ -235,7 +235,7 @@ fun GetTalentos(
             modifier = Modifier
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
-                .heightIn(max = 1000.dp),
+                .heightIn(max = 1000.dp)
         ) {
             LazyColumn(
                 modifier = Modifier

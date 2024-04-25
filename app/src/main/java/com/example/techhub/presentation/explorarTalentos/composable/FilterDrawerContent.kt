@@ -83,6 +83,15 @@ fun FilterDrawerContent(
                 .height(1.dp)
         )
 
+        FiltroPorNome(newFiltro, setNewFiltro)
+
+        Spacer(
+            modifier = Modifier
+                .background(Color(0xFFE0E0E0))
+                .fillMaxWidth()
+                .height(1.dp)
+        )
+
         FiltroPorAreaETecnologia(newFiltro, setNewFiltro, viewModel)
 
         Spacer(
