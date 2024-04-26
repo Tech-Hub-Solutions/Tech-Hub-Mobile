@@ -16,6 +16,13 @@
         android:theme="@style/Theme.TechHub"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <activity
+            android:name=".presentation.favoritos.FavoritosActivity"
+            android:exported="true"
+            android:label="@string/title_activity_favoritos"
+            android:theme="@style/Theme.TechHub">
+        </activity>
         <activity
             android:name=".presentation.index.IndexActivity"
             android:exported="true"
@@ -27,11 +34,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".presentation.login.LoginActivity"
             android:theme="@style/Theme.TechHub" />
-
         <activity
             android:name=".presentation.cadastro.CadastroActivity"
             android:theme="@style/Theme.TechHub" />

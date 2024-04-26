@@ -36,6 +36,7 @@ fun NavGraphBuilder.loginGraph(navController: NavController) {
             val userJson = navBackStackEntry.arguments?.getString("userJson")
             val usuarioVerifyData =
                 gson.fromJson(userJson, UsuarioLoginData::class.java)
+
             LoginAuthView(
                 usuarioVerifyData = usuarioVerifyData
             )
