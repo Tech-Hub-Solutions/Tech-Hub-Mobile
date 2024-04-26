@@ -1,5 +1,6 @@
 package com.example.techhub.common.composable
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -41,6 +42,7 @@ fun BottomBar(
                     .fillMaxSize(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = androidx.compose.foundation.layout.Arrangement.SpaceEvenly,
+
             ) {
                 IconButton(onClick = { /* TODO - redirecionar para a página de busca talentos */ }) {
                     Icon(

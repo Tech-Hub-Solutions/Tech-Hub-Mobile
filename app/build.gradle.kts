@@ -83,6 +83,7 @@ dependencies {
     implementation("io.arrow-kt:arrow-core:$arrow_version")
     implementation("io.arrow-kt:arrow-fx-coroutines:$arrow_version")
     implementation("io.coil-kt:coil-compose:$coil_version")
+    implementation("io.coil-kt:coil-svg:$coil_version")
     implementation("androidx.datastore:datastore-preferences:$data_store_version")
     implementation("androidx.datastore:datastore-core:$data_store_version")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
