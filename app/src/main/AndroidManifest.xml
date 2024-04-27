@@ -16,7 +16,6 @@
         android:theme="@style/Theme.TechHub"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
         <activity
             android:name=".presentation.index.IndexActivity"
             android:exported="true"
@@ -43,5 +42,9 @@
         <activity
             android:name=".presentation.explorarTalentos.ExplorarTalentosActivity"
             android:theme="@style/Theme.TechHub" />
+        <activity
+            android:name=".presentation.configUsuario.ConfiguracoesUsuarioActivity"
+            android:theme="@style/Theme.TechHub" />
     </application>
+
 </manifest>

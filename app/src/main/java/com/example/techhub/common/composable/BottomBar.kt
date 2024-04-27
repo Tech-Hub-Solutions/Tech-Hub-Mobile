@@ -79,18 +79,19 @@ fun BottomBar(
                     }
                 }
 
-                IconButton(onClick = {
-                    startNewActivity(context, PerfilActivity::class.java)
-                }) {
-                    Icon(
-                        Icons.Filled.Person,
-                        contentDescription = "@string/btn_description_profile",
-                        tint = Color(PrimaryBlue.value),
-                        modifier = Modifier
-                            .width(28.dp)
-                            .height(28.dp)
-                    )
-                }
+                ConfigDropDownMenu()
+//                IconButton(onClick = {
+//                    startNewActivity(context, PerfilActivity::class.java)
+//                }) {
+//                    Icon(
+//                        Icons.Filled.Person,
+//                        contentDescription = "@string/btn_description_profile",
+//                        tint = Color(PrimaryBlue.value),
+//                        modifier = Modifier
+//                            .width(28.dp)
+//                            .height(28.dp)
+//                    )
+//                }
             }
         },
 
