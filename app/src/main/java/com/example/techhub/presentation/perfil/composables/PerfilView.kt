@@ -202,79 +202,90 @@ fun PerfilView() {
                 modifier = Modifier.padding(vertical = 20.dp)
             )
 
-            /* TODO - inserir lógica para coletar informações de perfil */
-            if (!isEmpresa) {
+            // Column das informações pós header/banner
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+            ) {
+                /* TODO - inserir lógica para coletar informações de perfil */
+                if (!isEmpresa) {
+                    TextContainer(
+                        title = "Experiência",
+                        description = "Na minha jornada, liderei projetos desafiadores, " +
+                                "desde aplicativos móveis para grandes marcas até sistemas" +
+                                "de gerenciamento robustos, sempre buscando a excelência " +
+                                "técnica e funcional."
+                    )
+                }
+
                 TextContainer(
-                    title = "Experiência",
-                    description = "Na minha jornada, liderei projetos desafiadores, " +
-                            "desde aplicativos móveis para grandes marcas até sistemas" +
-                            "de gerenciamento robustos, sempre buscando a excelência " +
-                            "técnica e funcional."
+                    title = if (isEmpresa) "Sobre nós" else "Sobre mim",
+                    description = "Sou um entusiasta da tecnologia dedicado, apaixonado " +
+                            "por resolver problemas complexos de maneira criativa. " +
+                            "Minha busca incessante por aprendizado impulsiona meu " +
+                            "constante crescimento na área de desenvolvimento."
                 )
-            }
 
-            TextContainer(
-                title = if (isEmpresa) "Sobre nós" else "Sobre mim",
-                description = "Sou um entusiasta da tecnologia dedicado, apaixonado " +
-                        "por resolver problemas complexos de maneira criativa. " +
-                        "Minha busca incessante por aprendizado impulsiona meu " +
-                        "constante crescimento na área de desenvolvimento."
-            )
+                if (isEmpresa) {
+                    TextContainer(
+                        title = "Quem procuramos",
+                        description = "Valorizamos a diversidade de perspectivas e " +
+                                "experiências, acreditando que é isso que impulsiona a " +
+                                "nossa criatividade e sucesso. Se você é um pensador ágil, " +
+                                "ansioso para enfrentar desafios complexos e comprometido " +
+                                "em alcançar a excelência, você é a pessoa que estamos procurando."
+                    )
+                }
 
-            if (isEmpresa) {
-                TextContainer(
-                    title = "Quem procuramos",
-                    description = "Valorizamos a diversidade de perspectivas e " +
-                            "experiências, acreditando que é isso que impulsiona a " +
-                            "nossa criatividade e sucesso. Se você é um pensador ágil, " +
-                            "ansioso para enfrentar desafios complexos e comprometido " +
-                            "em alcançar a excelência, você é a pessoa que estamos procurando."
-                )
-            }
+                if (!isEmpresa) {
+                    TagsSection(title = "Soft Skills")
 
-            if (!isEmpresa) {
-                TagsSection(title = "Soft Skills")
+                    Divider(
+                        color = Color.LightGray.copy(alpha = 0.4f),
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(vertical = 12.dp)
+                    )
+
+                    TagsSection(title = "Hard Skills")
+                } else {
+                    TagsSection(title = "Valores")
+                }
 
                 Divider(
                     color = Color.LightGray.copy(alpha = 0.4f),
                     thickness = 1.dp,
-                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp)
+                    modifier = Modifier.padding(vertical = 12.dp)
                 )
 
-                TagsSection(title = "Hard Skills")
-            } else {
-                TagsSection(title = "Valores")
-            }
+                if (!isEmpresa) {
+                    Column(modifier = Modifier.fillMaxSize()) {
+                        Text(
+                            text = "Projetos desenvolvidos",
+                            fontSize = 18.sp,
+                            color = Color.Black,
+                            fontWeight = FontWeight(500),
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
 
-            Divider(
-                color = Color.LightGray.copy(alpha = 0.4f),
-                thickness = 1.dp,
-                modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp)
-            )
-
-            if (!isEmpresa) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 24.dp)
-                        .padding(bottom = 24.dp)
-                ) {
-                    Text(
-                        text = "Projetos desenvolvidos",
-                        fontSize = 18.sp,
-                        color = Color.Black,
-                        fontWeight = FontWeight(500),
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    FlowRow(
-                        modifier = Modifier.horizontalScroll(rememberScrollState())
-                    ) {
-                        GitHubProjectCard()
-                        GitHubProjectCard()
-                        GitHubProjectCard()
+                        FlowRow(
+                            modifier = Modifier.horizontalScroll(rememberScrollState())
+                        ) {
+                            GitHubProjectCard()
+                            GitHubProjectCard()
+                            GitHubProjectCard()
+                        }
                     }
                 }
+
+                Divider(
+                    color = Color.LightGray.copy(alpha = 0.4f),
+                    thickness = 1.dp,
+                    modifier = Modifier.padding(vertical = 12.dp)
+                )
+
+                // Seção de avaliações
+                AvaliacaoSection()
             }
         }
 
