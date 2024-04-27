@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 fun TagsSection(title: String) {
     Column(
         modifier = Modifier
-            .padding(horizontal = 24.dp, vertical = 8.dp)
+            .padding(horizontal = 24.dp)
     ) {
         Text(
             text = title,

@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.sp
 fun TextContainer(title: String, description: String) {
     Column(
         modifier = Modifier
-            .padding(horizontal = 24.dp, vertical = 8.dp)
+            .padding(horizontal = 24.dp)
     ) {
         Text(
             text = title,
@@ -36,6 +36,7 @@ fun TextContainer(title: String, description: String) {
             fontWeight = FontWeight(200),
             textAlign = TextAlign.Justify,
         )
+
         Divider(
             color = Color.LightGray.copy(alpha = 0.4f),
             thickness = 1.dp,
