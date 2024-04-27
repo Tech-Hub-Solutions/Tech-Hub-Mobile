@@ -17,8 +17,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.techhub.common.utils.shadowCustom
+import com.example.techhub.common.utils.startNewActivity
+import com.example.techhub.presentation.explorarTalentos.ExplorarTalentosActivity
+import com.example.techhub.presentation.favoritos.FavoritosActivity
+import com.example.techhub.presentation.perfil.PerfilActivity
 
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
@@ -26,6 +31,8 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 fun BottomBar(
     isEmpresa: Boolean
 ) {
+    val context = LocalContext.current
+
     BottomAppBar(
         modifier = Modifier
             .fillMaxWidth()
@@ -43,8 +50,10 @@ fun BottomBar(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = androidx.compose.foundation.layout.Arrangement.SpaceEvenly,
 
-            ) {
-                IconButton(onClick = { /* TODO - redirecionar para a página de busca talentos */ }) {
+                ) {
+                IconButton(onClick = {
+                    startNewActivity(context, ExplorarTalentosActivity::class.java)
+                }) {
                     Icon(
                         Icons.Outlined.TravelExplore,
                         contentDescription = "@string/btn_description_search_talents",
@@ -54,8 +63,11 @@ fun BottomBar(
                             .height(28.dp)
                     )
                 }
+
                 if (isEmpresa) {
-                    IconButton(onClick = { /* TODO - redirecionar para os favoritos */ }) {
+                    IconButton(onClick = {
+                        startNewActivity(context, FavoritosActivity::class.java)
+                    }) {
                         Icon(
                             Icons.Filled.FavoriteBorder,
                             contentDescription = "@string/btn_description_favorites",
@@ -66,7 +78,10 @@ fun BottomBar(
                         )
                     }
                 }
-                IconButton(onClick = { /* TODO - inserir a foto de perfil da pessoa + abrir o pop de editar perfil */ }) {
+
+                IconButton(onClick = {
+                    startNewActivity(context, PerfilActivity::class.java)
+                }) {
                     Icon(
                         Icons.Filled.Person,
                         contentDescription = "@string/btn_description_profile",
@@ -78,6 +93,7 @@ fun BottomBar(
                 }
             }
         },
+
         containerColor = Color.White,
     )
 }
