@@ -15,7 +15,7 @@ class FavoritosViewModel {
     val isLastPage = MutableLiveData(false)
 
     val token =
-        "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtdXJpbG9kc2JfMjAxOUBob3RtYWlsLmNvbSIsImlhdCI6MTcxMzY3NzExMiwiZXhwIjoxNzE3Mjc3MTEyfQ.30e9TtPQlrgbH1sUXRXY_AefRoMn-s5h5CVSQEItJZBUNRorZNCiqDkPx_5gT8iGFktF4e2oTN9xQrskgZ4f_g"
+        "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYXRhaW5ub3ZhdGVAaG90bWFpbC5jb20iLCJpYXQiOjE3MTQyMjU4OTksImV4cCI6MTcxNzgyNTg5OX0._OZO_JCjVUIBdUSHaWGAtIh9op66itWlUKj6oO7r9B8RAZhwb04aV-VBWuYAmNN2IwF4J1u7_LQ5SxoaBe0LMA"
 
     private val usuarioApi = RetrofitService.getUsuarioService()
     private val perfilApi = RetrofitService.getPerfilService()

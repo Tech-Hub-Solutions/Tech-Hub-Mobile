@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.techhub.common.composable.BottomBar
+import com.example.techhub.common.composable.CompareSwitch
 import com.example.techhub.common.composable.CustomizedElevatedButton
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.composable.OrderDropDownMenu
@@ -64,6 +65,7 @@ import kotlinx.coroutines.launch
 fun FavoritosView() {
     val selectedUsers = remember { SnapshotStateList<UsuarioFavoritoData>() }
     var ordem = remember { mutableStateOf("avaliacao,desc") }
+    val isAbleToCompare = remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
     var erroApi = remember { mutableStateOf("") }
     val context = LocalContext.current
@@ -96,64 +98,69 @@ fun FavoritosView() {
                 viewModel = FavoritosViewModel(),
                 context = context,
                 ordem = ordem,
-                selectedUsers = selectedUsers
+                selectedUsers = selectedUsers,
+                isAbleToCompare = isAbleToCompare
             )
         }
     }
-    createBottomSheet(selectedUsers = selectedUsers)
+    createBottomSheet(selectedUsers = selectedUsers, isAbleToCompare)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun createBottomSheet(selectedUsers: SnapshotStateList<UsuarioFavoritoData>) {
+fun createBottomSheet(selectedUsers: SnapshotStateList<UsuarioFavoritoData>, isAbleToCompare: MutableState<Boolean>) {
     var scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
 
-    if (selectedUsers.size == 2) {
-        BottomSheetScaffold(
-            modifier = Modifier
-                .fillMaxHeight(.98f)
-                .verticalScroll(rememberScrollState())
-                .padding(bottom = 56.dp),
-            scaffoldState = scaffoldState,
-            sheetContainerColor = Color.White,
-            sheetContent = {
-                CompararTalentosView(selectedUsers)
-            },
-            sheetPeekHeight = 70.dp,
-            sheetDragHandle = {
-                TextButton(
-                    onClick = {
-                        scope.launch {
-                            scaffoldState.bottomSheetState.expand()
-                        }
-                    }, modifier = Modifier
-                        .fillMaxWidth()
-                        .heightIn(70.dp)
-                        .background(color = Color(0xFF0F9EEA))
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(0.8f),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
+    if (isAbleToCompare.value == false && selectedUsers.isNotEmpty()) {
+        selectedUsers.clear()
+    } else {
+        if (selectedUsers.size == 2) {
+            BottomSheetScaffold(
+                modifier = Modifier
+                    .fillMaxHeight(.98f)
+                    .verticalScroll(rememberScrollState())
+                    .padding(bottom = 56.dp),
+                scaffoldState = scaffoldState,
+                sheetContainerColor = Color.White,
+                sheetContent = {
+                    CompararTalentosView(selectedUsers)
+                },
+                sheetPeekHeight = 70.dp,
+                sheetDragHandle = {
+                    TextButton(
+                        onClick = {
+                            scope.launch {
+                                scaffoldState.bottomSheetState.expand()
+                            }
+                        }, modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(70.dp)
+                            .background(color = Color(0xFF0F9EEA))
                     ) {
-                        Text(
-                            text = "Comparar Selecionados",
-                            color = Color.White,
-                            fontSize = 24.sp
-                        )
-                        Icon(
-                            imageVector = Icons.Filled.CompareArrows,
-                            contentDescription = null,
-                            tint = Color.White,
-                            modifier = Modifier.size(40.dp)
-                        )
+                        Row(
+                            modifier = Modifier.fillMaxWidth(0.8f),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "Comparar Selecionados",
+                                color = Color.White,
+                                fontSize = 24.sp
+                            )
+                            Icon(
+                                imageVector = Icons.Filled.CompareArrows,
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier.size(40.dp)
+                            )
+                        }
                     }
-                }
-            },
-            sheetShape = MaterialTheme.shapes.extraSmall
-        ) {
+                },
+                sheetShape = MaterialTheme.shapes.extraSmall
+            ) {
 
+            }
         }
     }
 
@@ -165,6 +172,7 @@ fun getFavoriteUsers(
     context: Context,
     ordem: MutableState<String>,
     selectedUsers: SnapshotStateList<UsuarioFavoritoData>,
+    isAbleToCompare: MutableState<Boolean>
 ) {
     val favoritos = viewModel.favoritos.observeAsState().value!!
     val erroApi = viewModel.erroApi.observeAsState().value!!
@@ -188,9 +196,11 @@ fun getFavoriteUsers(
     ) {
         Text(text = "${favoritos.size} profissionais encontrados", color = GrayText)
 
-        Spacer(modifier = Modifier.padding(horizontal = 25.dp))
-
         OrderDropDownMenu(ordem)
+    }
+
+    CompareSwitch {
+        isAbleToCompare.value = it
     }
 
     Spacer(modifier = Modifier.padding(vertical = 8.dp))
@@ -221,7 +231,8 @@ fun getFavoriteUsers(
                         item,
                         selectedUsers,
                         true,
-                        modifier = Modifier.weight(1f, false)
+                        modifier = Modifier.weight(1f, false),
+                        isAbleToCompare
                     )
 
                     if (index == subLista.size - 1 && subLista.size % 2 != 0) {
