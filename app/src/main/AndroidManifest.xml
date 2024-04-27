@@ -36,6 +36,12 @@
             android:theme="@style/Theme.TechHub" />
         <activity
             android:name=".presentation.favoritos.FavoritosActivity"
-            android:theme="@style/Theme.TechHub"/>
+            android:theme="@style/Theme.TechHub" />
+        <activity
+            android:name=".presentation.perfil.PerfilActivity"
+            android:theme="@style/Theme.TechHub" />
+        <activity
+            android:name=".presentation.explorarTalentos.ExplorarTalentosActivity"
+            android:theme="@style/Theme.TechHub" />
     </application>
 </manifest>
