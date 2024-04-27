@@ -17,15 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.techhub.composable.UserCard
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
-import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun CompararTalentosView(
-    scope: CoroutineScope,
     selectedUsers: SnapshotStateList<UsuarioFavoritoData>,
 ) {
-
-
     val tecnologias = remember {
         mutableStateMapOf(Pair("", mutableListOf("")))
     }
@@ -72,6 +68,7 @@ fun CompararTalentosView(
                 modifier = Modifier.weight(0.5f)
             )
         }
+
         Spacer(modifier = Modifier.padding(top = 32.dp))
 
         val tecnologiasDoUsuario1 = selectedUsers[0].flags?.map { flag -> flag.nome }
@@ -89,7 +86,6 @@ fun CompararTalentosView(
 
                 if (area.equals("")) return@items
 
-
                 Accordion(AccordionModel(
                     area = area,
                     rows = tecnologias.map { tecnologia ->
@@ -100,7 +96,6 @@ fun CompararTalentosView(
                         )
                     }
                 ))
-
             }
         }
     }

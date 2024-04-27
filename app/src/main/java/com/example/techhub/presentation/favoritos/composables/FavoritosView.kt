@@ -55,6 +55,7 @@ import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
 import com.example.techhub.presentation.comparar.composables.CompararTalentosView
 import com.example.techhub.presentation.favoritos.FavoritosViewModel
 import com.example.techhub.presentation.ui.theme.GrayLoadButton
+import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import kotlinx.coroutines.launch
 
 
@@ -67,6 +68,14 @@ fun FavoritosView() {
     val context = LocalContext.current
 
     Scaffold(
+        topBar = {
+            Text(
+                text = "Favoritos",
+                style = MaterialTheme.typography.titleLarge,
+                color = PrimaryBlue,
+                modifier = Modifier.background(Color.Transparent),
+            )
+        },
         bottomBar = { BottomBar(isEmpresa = true) }
     ) { innerPadding ->
         Column(
@@ -106,8 +115,9 @@ fun createBottomSheet(selectedUsers: SnapshotStateList<UsuarioFavoritoData>) {
                 .verticalScroll(rememberScrollState())
                 .padding(bottom = 56.dp),
             scaffoldState = scaffoldState,
+            sheetContainerColor = Color.White,
             sheetContent = {
-                CompararTalentosView(scope, selectedUsers)
+                CompararTalentosView(selectedUsers)
             },
             sheetPeekHeight = 70.dp,
             sheetDragHandle = {

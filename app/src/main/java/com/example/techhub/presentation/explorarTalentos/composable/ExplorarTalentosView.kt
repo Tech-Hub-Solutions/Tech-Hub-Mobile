@@ -21,6 +21,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
@@ -47,14 +48,12 @@ import androidx.compose.ui.unit.sp
 import com.example.techhub.R
 import com.example.techhub.common.composable.BottomBar
 import com.example.techhub.common.composable.CustomizedElevatedButton
-import com.example.techhub.common.composable.TopBar
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.composable.OrderDropDownMenu
 import com.example.techhub.composable.UserCard
 import com.example.techhub.domain.model.usuario.UsuarioFiltroData
 import com.example.techhub.presentation.explorarTalentos.ExplorarTalentosViewModel
 import com.example.techhub.presentation.favoritos.composables.spacedBy
-import com.example.techhub.presentation.index.IndexActivity
 import com.example.techhub.presentation.ui.theme.GrayLoadButton
 import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.GrayTinyButton
@@ -86,11 +85,11 @@ fun ExplorarTalentosView(viewModel: ExplorarTalentosViewModel = ExplorarTalentos
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                 Scaffold(
                     topBar = {
-                        TopBar(
-                            willRedirectToActivity = true,
-                            activity = IndexActivity::class.java,
-                            context = context,
-                            title = "Procurar Talentos",
+                        Text(
+                            text = "Procurar Talentos",
+                            style = MaterialTheme.typography.titleLarge,
+                            color = PrimaryBlue,
+                            modifier = Modifier.background(Color.Transparent),
                         )
                     },
                     bottomBar = { BottomBar(isEmpresa = true) }
@@ -195,7 +194,8 @@ fun GetTalentos(
                     && filtro.area.isNullOrEmpty()
                     && filtro.nome.isNullOrEmpty()
                     && filtro.precoMax == null
-                    && filtro.precoMin == null) {
+                    && filtro.precoMin == null
+                ) {
                     GrayText
                 } else {
                     PrimaryBlue
