@@ -28,6 +28,8 @@ fun verifyUser(
             if (response.isSuccessful) {
                 val token = response.body()?.token
 
+                Log.d("TOKEN PRINT verify", "Token no verify " + token)
+
                 dataStoreManager.saveToDataStore(
                     DataStore(
                         userTokenJwt = token!!,

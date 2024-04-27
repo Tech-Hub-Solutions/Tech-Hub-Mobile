@@ -9,7 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.example.techhub.composable.SetBarColor
-import com.example.techhub.presentation.favoritos.composables.FavoritosView
+import com.example.techhub.presentation.index.composables.IndexView
 import com.example.techhub.presentation.index.utils.showWelcomeToast
 import com.example.techhub.presentation.ui.theme.TechHubTheme
 
@@ -27,8 +27,8 @@ class IndexActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    //IndexView()
-                    FavoritosView()
+                    IndexView()
+                    //FavoritosView()
                 }
             }
 
