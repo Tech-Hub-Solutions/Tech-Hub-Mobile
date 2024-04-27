@@ -18,10 +18,7 @@ import androidx.compose.ui.unit.sp
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun TagsSection(title: String) {
-    Column(
-        modifier = Modifier
-            .padding(horizontal = 24.dp)
-    ) {
+    Column {
         Text(
             text = title,
             fontSize = 18.sp,

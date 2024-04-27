@@ -16,10 +16,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun TextContainer(title: String, description: String) {
-    Column(
-        modifier = Modifier
-            .padding(horizontal = 24.dp)
-    ) {
+    Column {
         Text(
             text = title,
             fontSize = 18.sp,

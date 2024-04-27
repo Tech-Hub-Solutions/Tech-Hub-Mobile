@@ -50,11 +50,12 @@ import com.example.techhub.common.composable.BottomBar
 import com.example.techhub.common.composable.CustomizedElevatedButton
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.composable.OrderDropDownMenu
-import com.example.techhub.composable.UserCard
+import com.example.techhub.common.composable.UserCard
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
 import com.example.techhub.presentation.comparar.composables.CompararTalentosView
 import com.example.techhub.presentation.favoritos.FavoritosViewModel
 import com.example.techhub.presentation.ui.theme.GrayLoadButton
+import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import kotlinx.coroutines.launch
 
@@ -185,7 +186,7 @@ fun getFavoriteUsers(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.Top
     ) {
-        Text(text = "${favoritos.size} profissionais encontrados")
+        Text(text = "${favoritos.size} profissionais encontrados", color = GrayText)
 
         Spacer(modifier = Modifier.padding(horizontal = 25.dp))
 

@@ -50,7 +50,7 @@ import com.example.techhub.common.composable.BottomBar
 import com.example.techhub.common.composable.CustomizedElevatedButton
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.composable.OrderDropDownMenu
-import com.example.techhub.composable.UserCard
+import com.example.techhub.common.composable.UserCard
 import com.example.techhub.domain.model.usuario.UsuarioFiltroData
 import com.example.techhub.presentation.explorarTalentos.ExplorarTalentosViewModel
 import com.example.techhub.presentation.favoritos.composables.spacedBy
@@ -166,7 +166,8 @@ fun GetTalentos(
     ) {
         Text(
             text = "${totalElements} profissionais encontrados",
-            modifier = Modifier.fillMaxWidth(0.4f)
+            modifier = Modifier.fillMaxWidth(0.4f),
+            color = GrayText
         )
 
         IconButton(
