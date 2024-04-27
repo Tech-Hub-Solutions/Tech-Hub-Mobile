@@ -34,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.techhub.common.composable.BottomBar
+import com.example.techhub.presentation.perfil.composables.avaliacao.AvaliacaoSection
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -285,7 +286,13 @@ fun PerfilView() {
                 )
 
                 // Seção de avaliações
-                AvaliacaoSection()
+                AvaliacaoSection(totalRating = 4.0)
+
+                Divider(
+                    color = Color.LightGray.copy(alpha = 0.4f),
+                    thickness = 1.dp,
+                    modifier = Modifier.padding(vertical = 12.dp)
+                )
             }
         }
 
