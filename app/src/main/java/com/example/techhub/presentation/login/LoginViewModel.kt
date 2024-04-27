@@ -6,7 +6,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.showToastError
+import com.example.techhub.data.prefdatastore.DataStoreManager
 import com.example.techhub.domain.RetrofitService
+import com.example.techhub.domain.model.datastore.DataStore
 import com.example.techhub.domain.model.usuario.UsuarioLoginData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,6 +32,16 @@ class LoginViewModel : ViewModel() {
                     if (response.body()?.isUsing2FA!!) {
                         onAuthSucess(user)
                     } else {
+                        val dataStoreManager = DataStoreManager(context)
+                        val token = response.body()?.token
+
+                        dataStoreManager.saveToDataStore(
+                            DataStore(
+                                userTokenJwt = token!!,
+                                userProfile = response.body()!!
+                            )
+                        )
+
                         redirectToPerfilUsuario(
                             context = context,
                             fullName = response.body()?.nome!!
