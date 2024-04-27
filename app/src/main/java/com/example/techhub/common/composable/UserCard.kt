@@ -1,4 +1,4 @@
-package com.example.techhub.composable
+package com.example.techhub.common.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -13,11 +13,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,13 +23,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -43,7 +38,6 @@ import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
 import com.example.techhub.presentation.favoritos.FavoritosViewModel
 import com.example.techhub.presentation.ui.theme.GrayStar
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -125,9 +119,10 @@ fun UserCard(
 
             Spacer(modifier = Modifier.padding(2.dp))
 
-            StarRatingBar(
+            StarRatingBarFixed(
                 maxStars = 5,
-                rating = userProfile.qtdEstrela ?: 0.0
+                rating = userProfile.qtdEstrela ?: 0.0,
+                starSize = 5
             )
 
             Spacer(modifier = Modifier.padding(2.dp))
@@ -165,39 +160,3 @@ fun UserCard(
 
     }
 }
-
-
-@Composable
-fun StarRatingBar(
-    maxStars: Int = 5,
-    rating: Double,
-) {
-    val density = LocalDensity.current.density
-    val starSize = (5 * density).dp
-    val starSpacing = (0.5 * density).dp
-
-    Row(
-        modifier = Modifier.selectableGroup(),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        for (i in 1..maxStars) {
-            val isSelected = i <= rating
-            val icon = if (isSelected) Icons.Filled.Star else Icons.Default.Star
-            val iconTintColor = if (isSelected) Color(0xFFFFC700) else Color(GrayStar.value)
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = iconTintColor,
-                modifier = Modifier
-                    .width(starSize)
-                    .height(starSize)
-            )
-
-            if (i < maxStars) {
-                Spacer(modifier = Modifier.width(starSpacing))
-            }
-        }
-    }
-}
-
-
