@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -39,8 +40,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
 import com.example.techhub.presentation.favoritos.FavoritosViewModel
+import com.example.techhub.presentation.perfil.PerfilActivity
 import com.example.techhub.presentation.ui.theme.GrayStar
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
@@ -54,6 +57,7 @@ fun UserCard(
     modifier: Modifier = Modifier,
     isAbleToCompare: MutableState<Boolean>? = null,
 ) {
+    val context = LocalContext.current
     val isFavorito = remember { mutableStateOf(true) }
     val isSelected = remember { mutableStateOf(false) }
 
@@ -93,6 +97,8 @@ fun UserCard(
                         selectedUsers.add(userProfile);
                     }
                 }
+            } else {
+                startNewActivity(context, PerfilActivity::class.java)
             }
 
         }
