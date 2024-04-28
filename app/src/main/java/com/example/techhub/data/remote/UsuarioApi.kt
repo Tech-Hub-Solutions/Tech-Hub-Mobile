@@ -1,6 +1,7 @@
 package com.example.techhub.data.remote
 
 import com.example.techhub.domain.model.usuario.Page
+import com.example.techhub.domain.model.usuario.UsuarioAtualizacaoData
 import com.example.techhub.domain.model.usuario.UsuarioCriacaoData
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
 import com.example.techhub.domain.model.usuario.UsuarioFiltroData
@@ -13,6 +14,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface UsuarioApi {
@@ -34,14 +36,18 @@ interface UsuarioApi {
         @Query("page") page: Int?,
         @Query("size") size: Int?,
         @Query("sort") sort: String?,
-        @Query("ordem") ordem: String
-    ) : Response<Page<UsuarioFavoritoData>>
+        @Query("ordem") ordem: String,
+    ): Response<Page<UsuarioFavoritoData>>
 
     @POST("usuarios/filtro")
     suspend fun getTalentos(
         @Query("page") page: Int?,
         @Query("size") size: Int?,
         @Query("ordem") ordem: String,
-        @Body filtroData: UsuarioFiltroData
-    ) : Response<Page<UsuarioFavoritoData>>
+        @Body filtroData: UsuarioFiltroData,
+    ): Response<Page<UsuarioFavoritoData>>
+
+    @PUT("usuarios")
+    suspend fun atualizarConfigUsuario(@Body usuarioAtualizacaoData: UsuarioAtualizacaoData)
+            : Response<UsuarioTokenData>
 }

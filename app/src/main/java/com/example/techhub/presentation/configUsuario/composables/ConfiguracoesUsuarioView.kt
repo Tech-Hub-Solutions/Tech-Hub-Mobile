@@ -21,6 +21,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -42,22 +43,32 @@ import com.example.techhub.common.composable.Switch2FALeft
 import com.example.techhub.common.composable.TopBar
 import com.example.techhub.common.countryFlagsList
 import com.example.techhub.common.utils.startNewActivity
+import com.example.techhub.data.prefdatastore.DataStoreManager
+import com.example.techhub.domain.model.usuario.UsuarioAtualizacaoData
 import com.example.techhub.presentation.configUsuario.ConfiguracoesUsuarioActivity
+import com.example.techhub.presentation.configUsuario.ConfiguracoesUsuarioViewModel
+import com.example.techhub.presentation.login.LoginActivity
 import com.example.techhub.presentation.perfil.PerfilActivity
 import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ConfiguracoesUsuarioView() {
     val context = LocalContext.current
     val isEmpresa = false
+    var dataStoreManager = DataStoreManager(context)
 
     var name by remember { mutableStateOf("") }
     val nacionalidade = remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isUsing2FA by remember { mutableStateOf(false) }
+    val viewModel = ConfiguracoesUsuarioViewModel()
+    val errorApi = viewModel.errorApi.observeAsState().value!!
 
     Scaffold(
         topBar = {
@@ -120,7 +131,30 @@ fun ConfiguracoesUsuarioView() {
             }
 
             ElevatedButton(
-                onClick = {  },
+                onClick = {
+
+                        viewModel.atualizarConfigUsuario(
+                            UsuarioAtualizacaoData(
+                                name,
+                                email,
+                                nacionalidade.value,
+                                password,
+                                isUsing2FA
+                            ),
+                            context
+                        )
+
+                    if (errorApi.isNotBlank()) {
+                        Log.e("Error", "Erro ao atualizar")
+                    } else {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            dataStoreManager.clearDataStore()
+                            startNewActivity(context, LoginActivity::class.java)
+                        }
+                    }
+
+
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(60.dp),
