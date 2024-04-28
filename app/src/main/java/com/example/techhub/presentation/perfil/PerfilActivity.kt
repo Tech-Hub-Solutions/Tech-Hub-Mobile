@@ -9,7 +9,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.example.techhub.composable.SetBarColor
-import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.presentation.ui.theme.TechHubTheme
 import com.example.techhub.presentation.perfil.composables.PerfilView
 
@@ -18,7 +17,7 @@ class PerfilActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val extras = intent.extras
-        val id = extras?.getInt("id") ?: 0
+        val id = extras!!.getInt("id")
 
         setContent {
             TechHubTheme {

@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
                 } else {
                     updateCurrentUser(value)
                     val extras = Bundle()
-                    extras.putInt("id", CurrentUser.userProfile?.id!!)
+                    extras.putInt("id", value.userProfile?.id!!)
                     startNewActivity(context, PerfilActivity::class.java, extras)
                 }
             }
