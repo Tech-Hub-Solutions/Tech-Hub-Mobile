@@ -48,6 +48,7 @@ import androidx.compose.ui.unit.sp
 import com.example.techhub.R
 import com.example.techhub.common.composable.BottomBar
 import com.example.techhub.common.composable.CustomizedElevatedButton
+import com.example.techhub.common.composable.TopBarTitle
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.composable.OrderDropDownMenu
 import com.example.techhub.common.composable.UserCard
@@ -85,16 +86,12 @@ fun ExplorarTalentosView(viewModel: ExplorarTalentosViewModel = ExplorarTalentos
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                 Scaffold(
                     topBar = {
-                        Text(
-                            text = "Procurar Talentos",
-                            style = MaterialTheme.typography.titleLarge,
-                            color = PrimaryBlue,
-                            modifier = Modifier.background(Color.Transparent),
+                        TopBarTitle(
+                            title = "Explorar Talentos"
                         )
                     },
                     bottomBar = { BottomBar(isEmpresa = true) }
                 ) { innerPadding ->
-
                     Column(
                         modifier = Modifier
                             .fillMaxSize()

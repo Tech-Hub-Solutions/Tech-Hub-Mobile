@@ -49,6 +49,7 @@ import androidx.compose.ui.unit.sp
 import com.example.techhub.common.composable.BottomBar
 import com.example.techhub.common.composable.CompareSwitch
 import com.example.techhub.common.composable.CustomizedElevatedButton
+import com.example.techhub.common.composable.TopBarTitle
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.composable.OrderDropDownMenu
 import com.example.techhub.common.composable.UserCard
@@ -57,7 +58,6 @@ import com.example.techhub.presentation.comparar.composables.CompararTalentosVie
 import com.example.techhub.presentation.favoritos.FavoritosViewModel
 import com.example.techhub.presentation.ui.theme.GrayLoadButton
 import com.example.techhub.presentation.ui.theme.GrayText
-import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import kotlinx.coroutines.launch
 
 
@@ -72,11 +72,8 @@ fun FavoritosView() {
 
     Scaffold(
         topBar = {
-            Text(
-                text = "Favoritos",
-                style = MaterialTheme.typography.titleLarge,
-                color = PrimaryBlue,
-                modifier = Modifier.background(Color.Transparent),
+            TopBarTitle(
+                title = "Favoritos"
             )
         },
         bottomBar = { BottomBar(isEmpresa = true) }
@@ -86,7 +83,7 @@ fun FavoritosView() {
                 .fillMaxSize()
                 .background(Color.White)
                 .padding(
-                    top = 24.dp,
+                    top = innerPadding.calculateTopPadding(),
                     bottom = innerPadding.calculateBottomPadding(),
                     start = 16.dp,
                     end = 16.dp
@@ -108,7 +105,10 @@ fun FavoritosView() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun createBottomSheet(selectedUsers: SnapshotStateList<UsuarioFavoritoData>, isAbleToCompare: MutableState<Boolean>) {
+fun createBottomSheet(
+    selectedUsers: SnapshotStateList<UsuarioFavoritoData>,
+    isAbleToCompare: MutableState<Boolean>
+) {
     var scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
 
@@ -199,7 +199,7 @@ fun getFavoriteUsers(
         OrderDropDownMenu(ordem)
     }
 
-    CompareSwitch{
+    CompareSwitch {
         isAbleToCompare.value = it
     }
 
