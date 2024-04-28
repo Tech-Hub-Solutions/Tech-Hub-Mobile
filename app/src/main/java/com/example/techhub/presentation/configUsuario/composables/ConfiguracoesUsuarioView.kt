@@ -1,12 +1,22 @@
 package com.example.techhub.presentation.configUsuario.composables
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -16,19 +26,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.example.techhub.common.Constants
-import com.example.techhub.common.Screen
-import com.example.techhub.common.composable.BottomBar
-import com.example.techhub.common.composable.CnpjTextField
-import com.example.techhub.common.composable.CpfTextField
-import com.example.techhub.common.composable.ElevatedButtonTH
+import androidx.compose.ui.unit.sp
 import com.example.techhub.common.composable.EmailTextField
+import com.example.techhub.common.composable.FlagDropDownMenu
 import com.example.techhub.common.composable.NameTextField
 import com.example.techhub.common.composable.PasswordTextField
 import com.example.techhub.common.composable.Switch2FA
 import com.example.techhub.common.composable.TopBar
+import com.example.techhub.common.countryFlagsList
 import com.example.techhub.presentation.perfil.PerfilActivity
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
@@ -40,6 +48,7 @@ fun ConfiguracoesUsuarioView() {
 
     var name by remember { mutableStateOf("") }
     var nacionalidade by remember { mutableStateOf("") }
+    val mutableCountryList = countryFlagsList.toList()
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isUsing2FA by remember { mutableStateOf(false) }
@@ -64,54 +73,63 @@ fun ConfiguracoesUsuarioView() {
                     bottom = 24.dp,
                     start = 24.dp,
                     end = 24.dp
-                ),
-            horizontalAlignment = Alignment.CenterHorizontally
+                )
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Spacer(modifier = Modifier.padding(12.dp))
+            Column(modifier = Modifier
+                .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(24.dp)) {
+                Spacer(modifier = Modifier.padding(0.dp))
 
-            NameTextField { name = it }
+                NameTextField { name = it }
 
-            Spacer(modifier = Modifier.padding(12.dp))
+                FlagDropDownMenu()
 
-            if (isEmpresa) {
+                Spacer(modifier = Modifier.padding(0.dp))
 
-            } else {
+                EmailTextField { email = it }
 
+                PasswordTextField { password = it }
+
+                Switch2FA { isUsing2FA = it }
+
+                Spacer(modifier = Modifier.padding(0.dp))
+            }
+
+            ElevatedButton(
+                onClick = { },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(PrimaryBlue.value),
+                    contentColor = Color.White,
+                ),
+                shape = RoundedCornerShape(10.dp),
+            ) {
+                Text(text = "Salvar", fontSize = 16.sp, fontWeight = FontWeight(500))
             }
 
             Spacer(modifier = Modifier.padding(12.dp))
 
-            EmailTextField { email = it }
+            ElevatedButton(
+                onClick = { },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White,
+                    contentColor = Color(PrimaryBlue.value),
+                ),
+                border = BorderStroke(
+                    1.dp, Color(PrimaryBlue.value)
+                ),
+                shape = RoundedCornerShape(10.dp),
+            ) {
+                Text(text = "Cancelar", fontSize = 16.sp, fontWeight = FontWeight(500))
+            }
 
-            Spacer(modifier = Modifier.padding(12.dp))
-
-            PasswordTextField { password = it }
-
-            Switch2FA { isUsing2FA = it }
-
-            Spacer(modifier = Modifier.padding(12.dp))
-
-            ElevatedButtonTH(
-                onClick = {
-
-                },
-                text = "Salvar",
-                backgroundColor = Color(PrimaryBlue.value),
-                textColor = Color.White,
-                width = (350),
-                height = (60),
-            )
-
-            ElevatedButtonTH(
-                onClick = {
-
-                },
-                text = "Cancelar",
-                backgroundColor = Color.White,
-                textColor = Color(PrimaryBlue.value),
-                width = (350),
-                height = (60)
-            )
         }
     }
 }
