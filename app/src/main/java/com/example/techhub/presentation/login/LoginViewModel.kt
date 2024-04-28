@@ -2,6 +2,7 @@ package com.example.techhub.presentation.login
 
 import android.app.Activity
 import android.content.Context
+import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.techhub.common.utils.redirectToPerfilUsuario
@@ -26,6 +27,8 @@ class LoginViewModel : ViewModel() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val response = apiUsuario.loginUser(user)
+                val extras = Bundle()
+                extras.putInt("id", response.body()?.id!!)
 
                 if (response.isSuccessful) {
                     if (response.body()?.isUsing2FA!!) {
@@ -39,7 +42,8 @@ class LoginViewModel : ViewModel() {
 
                         redirectToPerfilUsuario(
                             context = context,
-                            fullName = response.body()?.nome!!
+                            fullName = response.body()?.nome!!,
+                            extras = extras
                         )
                     }
                 } else {
