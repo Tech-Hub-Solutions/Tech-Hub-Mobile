@@ -11,4 +11,5 @@
     <string name="btn_description_profile">botão com foto de perfil do usuário para abrir menu de configurações de perfil</string>
     <string name="title_activity_teste_comparar_talentos">TesteCompararTalentosActivity</string>
     <string name="title_activity_favoritos">FavoritosActivity</string>
+    <string name="title_activity_launch">LaunchActivity</string>
 </resources>

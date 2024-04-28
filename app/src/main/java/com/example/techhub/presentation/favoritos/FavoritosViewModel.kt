@@ -12,25 +12,23 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class FavoritosViewModel(context: Context?=null) {
-    var dataStoreManager = DataStoreManager(context!!)
     val favoritos = MutableLiveData(SnapshotStateList<UsuarioFavoritoData>())
     val erroApi = MutableLiveData("")
     val isLastPage = MutableLiveData(false)
 
-    private val token = MutableLiveData("")
+    private var token = "";
 
     private val usuarioApi = RetrofitService.getUsuarioService()
     private val perfilApi = RetrofitService.getPerfilService()
 
     init {
-        getTokenJWT()
         getFavoriteUsers(0, 10, "", "avaliacao,desc")
     }
 
     fun getFavoriteUsers(page: Int, size: Int, sort: String, ordem: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = usuarioApi.getFavoriteUsers(token.value.toString(), page, size, sort, ordem)
+                val response = usuarioApi.getFavoriteUsers(page, size, sort, ordem)
 
                 Log.d("GET USUARIOS/FAVORITOS", response.toString())
 
@@ -46,7 +44,7 @@ class FavoritosViewModel(context: Context?=null) {
 
                     favoritos.value!!.addAll(list)
 
-                    erroApi.value = ""
+                    erroApi.postValue("")
                 } else {
                     erroApi.postValue(response.errorBody()?.toString())
                 }
@@ -59,7 +57,7 @@ class FavoritosViewModel(context: Context?=null) {
     fun favoritarUsuario(id: Int?) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = perfilApi.favoritarTerceiro(token.value.toString(), id)
+                val response = perfilApi.favoritarTerceiro(token, id)
 
                 if (response.isSuccessful) {
                     Log.d("PUT USUARIOS/FAVORITOS", "Favoritado com sucesso")
@@ -68,15 +66,6 @@ class FavoritosViewModel(context: Context?=null) {
                 }
             } catch (e: Exception) {
                 Log.e("PUT USUARIOS/FAVORITOS", "Ocorreu um erro no favoritar ${e.message}")
-            }
-        }
-    }
-
-    fun getTokenJWT() {
-        CoroutineScope(Dispatchers.IO).launch {
-            dataStoreManager.getFromDataStore().collect{
-                token.postValue("Bearer " + it.userTokenJwt)
-                Log.d("TOKEN PRINT", it.userTokenJwt)
             }
         }
     }

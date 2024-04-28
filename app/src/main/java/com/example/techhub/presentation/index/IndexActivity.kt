@@ -28,7 +28,6 @@ class IndexActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     IndexView()
-                    //FavoritosView()
                 }
             }
 
