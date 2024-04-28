@@ -14,10 +14,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Flag
 import androidx.compose.material.icons.rounded.ArrowDropDown
@@ -27,7 +24,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -45,7 +41,6 @@ import androidx.compose.ui.unit.sp
 import com.example.techhub.common.countryFlagsList
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FlagDropDownMenu(flag: MutableState<String>) {
 
@@ -77,16 +72,10 @@ fun FlagDropDownMenu(flag: MutableState<String>) {
                     .fillMaxWidth()
                     .background(Color.White)
             ) {
-                TextField(
+                androidx.compose.material3.OutlinedTextField(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(64.dp)
-                        .background(Color(0xFFFFFFFF))
-                        .border(
-                            width = 1.dp,
-                            color = Color.Black,
-                            shape = RoundedCornerShape(4.dp),
-                        ),
+                        .background(Color(0xFFFFFFFF)),
                     value = flag.value,
                     onValueChange = {
                         flag.value = it
@@ -176,6 +165,7 @@ fun FlagItems(
     title: String,
     onSelect: (String) -> Unit
 ) {
+
     Column {
 
         Row(
@@ -193,104 +183,5 @@ fun FlagItems(
             color = Color.Gray.copy(alpha = 0.2f)
         )
     }
-
 }
-
-//@Composable
-//fun FlagDropDownMenu(
-//    suggestions: List<CountryFlags>,
-//    onItemSelected: (String) -> Unit
-//) {
-//    var text by remember { mutableStateOf("") }
-//    var isSuggestionsVisible by remember { mutableStateOf(false) }
-//    val filteredSuggestions by remember(suggestions, text) {
-//        derivedStateOf {
-//            suggestions.filter {
-//                it.name.contains(text, ignoreCase = true)
-//            }
-//        }
-//    }
-//
-//    if (isSuggestionsVisible && filteredSuggestions.isEmpty()) {
-//        isSuggestionsVisible = false
-//    }
-//
-//    Column {
-//
-//        TextField(
-//            value = text,
-//            onValueChange = {
-//                text = it
-//                isSuggestionsVisible = false
-//            },
-//            label = { Text("Digite para pesquisar") },
-//            placeholder = { Text("Digite o país") },
-//            textStyle = LocalTextStyle.current.copy(
-//                color = Color.Black,
-//                fontSize = 16.sp
-//            ),
-//            colors = TextFieldDefaults.colors(
-//                cursorColor = Color(PrimaryBlue.value),
-//                errorCursorColor = Color(PrimaryBlue.value),
-//                focusedContainerColor = Color.Transparent,
-//                unfocusedContainerColor = Color.Transparent,
-//                errorContainerColor = Color.Transparent,
-//                errorSupportingTextColor = Color.Red.copy(alpha = 0.6f),
-//            ),
-//            leadingIcon = {
-//                Icon(
-//                    imageVector = Icons.Filled.Flag,
-//                    contentDescription = "campo para o nome",
-//                    tint = Color(PrimaryBlue.value)
-//                )
-//            },
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .height(50.dp),
-//            singleLine = true,
-//        )
-//
-//        LaunchedEffect(text) {
-//            delay(500) // Adjust delay as needed (in milliseconds)
-//            if (text.isNotBlank()) {
-//                isSuggestionsVisible = true
-//                val filteredSuggestions =
-//                    suggestions.filter { it.name.contains(text, ignoreCase = true) }
-//                if (filteredSuggestions.isNotEmpty()) {
-//                    filteredSuggestions.forEach { suggestion ->
-//                        Log.d("Autocomplete", "Suggestion: $suggestion")
-//                    }
-//                } else {
-//                    Log.d("Autocomplete", "No suggestions found")
-//                }
-//            }
-//        }
-//
-//        if (isSuggestionsVisible && text.isNotEmpty()) {
-//            DropdownMenu(
-//                modifier = Modifier
-//                    .fillMaxWidth(0.9f)
-//                    .background(Color.White),
-//                expanded = true,
-//                onDismissRequest = { isSuggestionsVisible = false }
-//            ) {
-//                filteredSuggestions.take(5).forEach { suggestion ->
-//                    DropdownMenuItem(
-//                        text = {
-//                            Text(
-//                                text = suggestion.name,
-//                                maxLines = 1,
-//                            )
-//                        },
-//                        onClick = {
-//                            text = suggestion.name
-//                            onItemSelected(suggestion.name)
-//                            isSuggestionsVisible = false
-//                        }
-//                    )
-//                }
-//            }
-//        }
-//    }
-//}
 

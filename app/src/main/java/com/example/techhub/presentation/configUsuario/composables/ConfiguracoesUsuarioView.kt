@@ -21,7 +21,6 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -32,7 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,15 +38,12 @@ import com.example.techhub.common.composable.EmailTextField
 import com.example.techhub.common.composable.FlagDropDownMenu
 import com.example.techhub.common.composable.NameTextField
 import com.example.techhub.common.composable.PasswordTextField
-import com.example.techhub.common.composable.Switch2FA
 import com.example.techhub.common.composable.Switch2FALeft
 import com.example.techhub.common.composable.TopBar
-import com.example.techhub.common.countryFlagsList
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.data.prefdatastore.DataStoreManager
 import com.example.techhub.domain.model.usuario.UsuarioAtualizacaoData
-import com.example.techhub.presentation.configUsuario.ConfiguracoesUsuarioActivity
 import com.example.techhub.presentation.configUsuario.ConfiguracoesUsuarioViewModel
 import com.example.techhub.presentation.login.LoginActivity
 import com.example.techhub.presentation.perfil.PerfilActivity
