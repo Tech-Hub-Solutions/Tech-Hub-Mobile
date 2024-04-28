@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.techhub.common.composable.BottomBar
 import com.example.techhub.presentation.perfil.composables.avaliacao.AvaliacaoSection
+import com.example.techhub.presentation.perfil.composables.informacoesAdicionais.InformacoesAdicionaisSection
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -292,6 +293,12 @@ fun PerfilView() {
                     color = Color.LightGray.copy(alpha = 0.4f),
                     thickness = 1.dp,
                     modifier = Modifier.padding(vertical = 12.dp)
+                )
+
+                InformacoesAdicionaisSection(
+                    projetosFinalizados = 10,
+                    empresasInteressadas = 5,
+                    recomendacoes = 3
                 )
             }
         }
