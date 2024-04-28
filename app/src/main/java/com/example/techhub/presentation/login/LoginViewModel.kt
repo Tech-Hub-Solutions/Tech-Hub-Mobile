@@ -12,7 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class LoginViewModel() : ViewModel() {
+class LoginViewModel : ViewModel() {
     private val toastErrorMessage = "Ops! Algo deu errado.\n Tente novamente."
 
     private val apiUsuario = RetrofitService.getUsuarioService()
@@ -22,7 +22,6 @@ class LoginViewModel() : ViewModel() {
         context: Context,
         onAuthSucess: (UsuarioLoginData) -> Unit
     ) {
-
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val response = apiUsuario.loginUser(user)
