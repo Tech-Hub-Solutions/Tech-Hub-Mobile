@@ -17,15 +17,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.UploadFile
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,6 +36,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.techhub.common.composable.BottomBar
+import com.example.techhub.presentation.perfil.composables.avaliacao.AvaliacaoSection
+import com.example.techhub.presentation.perfil.composables.comentario.ComentariosSection
+import com.example.techhub.presentation.perfil.composables.informacoesAdicionais.InformacoesAdicionaisSection
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -41,6 +46,8 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 fun PerfilView() {
     /* TODO - inserir lógica para transferir estado de se é empresa ou freelancer */
     val isEmpresa = false
+    val scrollState = rememberScrollState()
+    val scope = rememberCoroutineScope()
 
     Scaffold(
         bottomBar = {
@@ -54,7 +61,7 @@ fun PerfilView() {
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top,
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(scrollState)
                 .fillMaxSize()
                 .padding(bottom = 60.dp)
         ) {
@@ -80,51 +87,30 @@ fun PerfilView() {
                         .padding(top = 132.dp, end = 24.dp),
                     contentAlignment = Alignment.BottomEnd,
                 ) {
-                    Row {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        // TODO - Add lógica de que se não for o perfil da pessoa, mostrar o icone de favoritos
+                        IconButton(onClick = { /*TODO*/ }) {
+                            Icon(
+                                imageVector = Icons.Outlined.FavoriteBorder,
+                                contentDescription = "Currículo",
+                                tint = PrimaryBlue,
+                                modifier = Modifier.size(34.dp)
+                            )
+                        }
+
+
                         if (!isEmpresa) {
-                            ElevatedButton(
-                                onClick = { },
-                                modifier = Modifier
-                                    .width(110.dp)
-                                    .height(45.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(PrimaryBlue.value),
-                                    contentColor = Color.White,
-                                ),
-                                border = BorderStroke(
-                                    1.dp, Color(PrimaryBlue.value)
-                                ),
-                                shape = RoundedCornerShape(10.dp),
-                            ) {
-                                Text(
-                                    text = "Currículo",
-                                    fontSize = 15.sp,
-                                    fontWeight = FontWeight(300)
+                            IconButton(onClick = { /*TODO*/ }) {
+                                Icon(
+                                    // TODO - Lógica para quando for seu perfil ser UploadFile, senão InsertDriveFile ou FilePresent
+                                    imageVector = Icons.Filled.UploadFile,
+                                    contentDescription = "Currículo",
+                                    tint = PrimaryBlue,
+                                    modifier = Modifier.size(34.dp)
                                 )
                             }
 
                             Spacer(modifier = Modifier.width(8.dp))
-                        }
-
-                        ElevatedButton(
-                            onClick = { },
-                            modifier = Modifier
-                                .width(130.dp)
-                                .height(45.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(PrimaryBlue.value),
-                                contentColor = Color.White,
-                            ),
-                            border = BorderStroke(
-                                1.dp, Color(PrimaryBlue.value)
-                            ),
-                            shape = RoundedCornerShape(10.dp),
-                        ) {
-                            Text(
-                                text = "Editar perfil",
-                                fontSize = 15.sp,
-                                fontWeight = FontWeight(300)
-                            )
                         }
                     }
                 }
@@ -202,79 +188,107 @@ fun PerfilView() {
                 modifier = Modifier.padding(vertical = 20.dp)
             )
 
-            /* TODO - inserir lógica para coletar informações de perfil */
-            if (!isEmpresa) {
+            // Column das informações pós header/banner
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+            ) {
+                /* TODO - inserir lógica para coletar informações de perfil */
+                if (!isEmpresa) {
+                    TextContainer(
+                        title = "Experiência",
+                        description = "Na minha jornada, liderei projetos desafiadores, " +
+                                "desde aplicativos móveis para grandes marcas até sistemas" +
+                                "de gerenciamento robustos, sempre buscando a excelência " +
+                                "técnica e funcional."
+                    )
+                }
+
                 TextContainer(
-                    title = "Experiência",
-                    description = "Na minha jornada, liderei projetos desafiadores, " +
-                            "desde aplicativos móveis para grandes marcas até sistemas" +
-                            "de gerenciamento robustos, sempre buscando a excelência " +
-                            "técnica e funcional."
+                    title = if (isEmpresa) "Sobre nós" else "Sobre mim",
+                    description = "Sou um entusiasta da tecnologia dedicado, apaixonado " +
+                            "por resolver problemas complexos de maneira criativa. " +
+                            "Minha busca incessante por aprendizado impulsiona meu " +
+                            "constante crescimento na área de desenvolvimento."
                 )
-            }
 
-            TextContainer(
-                title = if (isEmpresa) "Sobre nós" else "Sobre mim",
-                description = "Sou um entusiasta da tecnologia dedicado, apaixonado " +
-                        "por resolver problemas complexos de maneira criativa. " +
-                        "Minha busca incessante por aprendizado impulsiona meu " +
-                        "constante crescimento na área de desenvolvimento."
-            )
+                if (isEmpresa) {
+                    TextContainer(
+                        title = "Quem procuramos",
+                        description = "Valorizamos a diversidade de perspectivas e " +
+                                "experiências, acreditando que é isso que impulsiona a " +
+                                "nossa criatividade e sucesso. Se você é um pensador ágil, " +
+                                "ansioso para enfrentar desafios complexos e comprometido " +
+                                "em alcançar a excelência, você é a pessoa que estamos procurando."
+                    )
+                }
 
-            if (isEmpresa) {
-                TextContainer(
-                    title = "Quem procuramos",
-                    description = "Valorizamos a diversidade de perspectivas e " +
-                            "experiências, acreditando que é isso que impulsiona a " +
-                            "nossa criatividade e sucesso. Se você é um pensador ágil, " +
-                            "ansioso para enfrentar desafios complexos e comprometido " +
-                            "em alcançar a excelência, você é a pessoa que estamos procurando."
-                )
-            }
+                if (!isEmpresa) {
+                    TagsSection(title = "Soft Skills")
 
-            if (!isEmpresa) {
-                TagsSection(title = "Soft Skills")
+                    Divider(
+                        color = Color.LightGray.copy(alpha = 0.4f),
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(vertical = 12.dp)
+                    )
+
+                    TagsSection(title = "Hard Skills")
+                } else {
+                    TagsSection(title = "Valores")
+                }
 
                 Divider(
                     color = Color.LightGray.copy(alpha = 0.4f),
                     thickness = 1.dp,
-                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp)
+                    modifier = Modifier.padding(vertical = 12.dp)
                 )
 
-                TagsSection(title = "Hard Skills")
-            } else {
-                TagsSection(title = "Valores")
-            }
+                if (!isEmpresa) {
+                    Column(modifier = Modifier.fillMaxSize()) {
+                        SectionTitle(title = "Projetos desenvolvidos", isCentered = false)
 
-            Divider(
-                color = Color.LightGray.copy(alpha = 0.4f),
-                thickness = 1.dp,
-                modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp)
-            )
-
-            if (!isEmpresa) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 24.dp)
-                        .padding(bottom = 24.dp)
-                ) {
-                    Text(
-                        text = "Projetos desenvolvidos",
-                        fontSize = 18.sp,
-                        color = Color.Black,
-                        fontWeight = FontWeight(500),
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    FlowRow(
-                        modifier = Modifier.horizontalScroll(rememberScrollState())
-                    ) {
-                        GitHubProjectCard()
-                        GitHubProjectCard()
-                        GitHubProjectCard()
+                        FlowRow(
+                            modifier = Modifier.horizontalScroll(rememberScrollState())
+                        ) {
+                            GitHubProjectCard()
+                            GitHubProjectCard()
+                            GitHubProjectCard()
+                        }
                     }
+
+                    Divider(
+                        color = Color.LightGray.copy(alpha = 0.4f),
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(vertical = 12.dp)
+                    )
                 }
+
+
+                // Seção de Avaliações
+                AvaliacaoSection(totalRating = 4.0)
+
+                Divider(
+                    color = Color.LightGray.copy(alpha = 0.4f),
+                    thickness = 1.dp,
+                    modifier = Modifier.padding(vertical = 12.dp)
+                )
+
+                // Seção de Informações Adicionais
+                InformacoesAdicionaisSection(
+                    projetosFinalizados = 10,
+                    empresasInteressadas = 5,
+                    recomendacoes = 3
+                )
+
+                Divider(
+                    color = Color.LightGray.copy(alpha = 0.4f),
+                    thickness = 1.dp,
+                    modifier = Modifier.padding(vertical = 12.dp)
+                )
+
+                // Seção de Comentários
+                ComentariosSection()
             }
         }
 
@@ -284,7 +298,11 @@ fun PerfilView() {
                 .fillMaxSize(),
             contentAlignment = Alignment.BottomEnd,
         ) {
-            FloatingActionButtonScroll(isScrolled = true)
+            FloatingActionButtonScroll(
+                isScrolled = scrollState.value > 0,
+                scrollState = scrollState,
+                scope = scope
+            )
         }
     }
 }

@@ -15,7 +15,7 @@ class FavoritosViewModel(context: Context?=null) {
     val favoritos = MutableLiveData(SnapshotStateList<UsuarioFavoritoData>())
     val erroApi = MutableLiveData("")
     val isLastPage = MutableLiveData(false)
-
+    
     private var token = "";
 
     private val usuarioApi = RetrofitService.getUsuarioService()
