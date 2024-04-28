@@ -10,31 +10,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.techhub.common.composable.StarRatingBarFixed
+import com.example.techhub.presentation.perfil.composables.SectionTitle
 import com.example.techhub.presentation.ui.theme.GrayText
 
 @Composable
 fun AvaliacaoSection(totalRating: Double) {
+    SectionTitle(title = "Avaliações", isCentered = true)
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         Arrangement.spacedBy(12.dp)
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = "Avaliações",
-                fontSize = 18.sp,
-                color = Color.Black,
-                fontWeight = FontWeight(500),
-            )
-        }
-
         Row(
             modifier = Modifier
                 .padding(bottom = 12.dp)
