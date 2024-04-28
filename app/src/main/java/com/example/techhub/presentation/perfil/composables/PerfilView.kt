@@ -26,6 +26,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,6 +45,8 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 fun PerfilView() {
     /* TODO - inserir lógica para transferir estado de se é empresa ou freelancer */
     val isEmpresa = false
+    val scrollState = rememberScrollState()
+    val scope = rememberCoroutineScope()
 
     Scaffold(
         bottomBar = {
@@ -57,7 +60,7 @@ fun PerfilView() {
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top,
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(scrollState)
                 .fillMaxSize()
                 .padding(bottom = 60.dp)
         ) {
@@ -314,7 +317,11 @@ fun PerfilView() {
                 .fillMaxSize(),
             contentAlignment = Alignment.BottomEnd,
         ) {
-            FloatingActionButtonScroll(isScrolled = true)
+            FloatingActionButtonScroll(
+                isScrolled = scrollState.value > 0,
+                scrollState = scrollState,
+                scope = scope
+            )
         }
     }
 }
