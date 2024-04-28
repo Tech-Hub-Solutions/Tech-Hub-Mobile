@@ -1,10 +1,12 @@
 package com.example.techhub.presentation.configUsuario.composables
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.techhub.common.composable.EmailTextField
@@ -35,24 +38,26 @@ import com.example.techhub.common.composable.FlagDropDownMenu
 import com.example.techhub.common.composable.NameTextField
 import com.example.techhub.common.composable.PasswordTextField
 import com.example.techhub.common.composable.Switch2FA
+import com.example.techhub.common.composable.Switch2FALeft
 import com.example.techhub.common.composable.TopBar
 import com.example.techhub.common.countryFlagsList
+import com.example.techhub.common.utils.startNewActivity
+import com.example.techhub.presentation.configUsuario.ConfiguracoesUsuarioActivity
 import com.example.techhub.presentation.perfil.PerfilActivity
+import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ConfiguracoesUsuarioView() {
-
+    val context = LocalContext.current
     val isEmpresa = false
 
     var name by remember { mutableStateOf("") }
-    var nacionalidade by remember { mutableStateOf("") }
-    val mutableCountryList = countryFlagsList.toList()
+    val nacionalidade = remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isUsing2FA by remember { mutableStateOf(false) }
-    val toastErrorMessage = "Ops! Algo deu errado.\n Tente novamente."
 
     Scaffold(
         topBar = {
@@ -77,14 +82,30 @@ fun ConfiguracoesUsuarioView() {
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Column(modifier = Modifier
-                .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(24.dp)) {
+
+            Row {
+                Text(
+                    text = "Faça as alterações necessárias para atualizar os seus dados cadastrais.",
+                    color = Color(GrayText.value),
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.Thin,
+                    textAlign = TextAlign.Justify,
+                    modifier = Modifier
+                        .padding(bottom = 24.dp)
+                        .fillMaxWidth()
+                )
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(24.dp)
+            ) {
                 Spacer(modifier = Modifier.padding(0.dp))
 
                 NameTextField { name = it }
 
-                FlagDropDownMenu()
+                FlagDropDownMenu(nacionalidade)
 
                 Spacer(modifier = Modifier.padding(0.dp))
 
@@ -92,13 +113,14 @@ fun ConfiguracoesUsuarioView() {
 
                 PasswordTextField { password = it }
 
-                Switch2FA { isUsing2FA = it }
+                Switch2FALeft { isUsing2FA = it }
 
                 Spacer(modifier = Modifier.padding(0.dp))
+
             }
 
             ElevatedButton(
-                onClick = { },
+                onClick = {  },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(60.dp),
@@ -114,7 +136,7 @@ fun ConfiguracoesUsuarioView() {
             Spacer(modifier = Modifier.padding(12.dp))
 
             ElevatedButton(
-                onClick = { },
+                onClick = { startNewActivity(context, PerfilActivity::class.java) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(60.dp),
@@ -129,7 +151,6 @@ fun ConfiguracoesUsuarioView() {
             ) {
                 Text(text = "Cancelar", fontSize = 16.sp, fontWeight = FontWeight(500))
             }
-
         }
     }
 }
