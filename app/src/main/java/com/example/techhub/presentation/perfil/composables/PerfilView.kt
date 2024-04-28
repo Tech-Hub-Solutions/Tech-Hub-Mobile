@@ -17,11 +17,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.UploadFile
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -86,51 +87,30 @@ fun PerfilView() {
                         .padding(top = 132.dp, end = 24.dp),
                     contentAlignment = Alignment.BottomEnd,
                 ) {
-                    Row {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        // TODO - Add lógica de que se não for o perfil da pessoa, mostrar o icone de favoritos
+                        IconButton(onClick = { /*TODO*/ }) {
+                            Icon(
+                                imageVector = Icons.Outlined.FavoriteBorder,
+                                contentDescription = "Currículo",
+                                tint = PrimaryBlue,
+                                modifier = Modifier.size(34.dp)
+                            )
+                        }
+
+
                         if (!isEmpresa) {
-                            ElevatedButton(
-                                onClick = { },
-                                modifier = Modifier
-                                    .width(110.dp)
-                                    .height(45.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(PrimaryBlue.value),
-                                    contentColor = Color.White,
-                                ),
-                                border = BorderStroke(
-                                    1.dp, Color(PrimaryBlue.value)
-                                ),
-                                shape = RoundedCornerShape(10.dp),
-                            ) {
-                                Text(
-                                    text = "Currículo",
-                                    fontSize = 15.sp,
-                                    fontWeight = FontWeight(300)
+                            IconButton(onClick = { /*TODO*/ }) {
+                                Icon(
+                                    // TODO - Lógica para quando for seu perfil ser UploadFile, senão InsertDriveFile ou FilePresent
+                                    imageVector = Icons.Filled.UploadFile,
+                                    contentDescription = "Currículo",
+                                    tint = PrimaryBlue,
+                                    modifier = Modifier.size(34.dp)
                                 )
                             }
 
                             Spacer(modifier = Modifier.width(8.dp))
-                        }
-
-                        ElevatedButton(
-                            onClick = { },
-                            modifier = Modifier
-                                .width(130.dp)
-                                .height(45.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(PrimaryBlue.value),
-                                contentColor = Color.White,
-                            ),
-                            border = BorderStroke(
-                                1.dp, Color(PrimaryBlue.value)
-                            ),
-                            shape = RoundedCornerShape(10.dp),
-                        ) {
-                            Text(
-                                text = "Editar perfil",
-                                fontSize = 15.sp,
-                                fontWeight = FontWeight(300)
-                            )
                         }
                     }
                 }
