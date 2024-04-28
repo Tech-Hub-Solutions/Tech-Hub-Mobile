@@ -1,6 +1,5 @@
 package com.example.techhub.presentation.perfil.composables
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -31,11 +30,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.techhub.common.composable.BottomBar
+import com.example.techhub.domain.RetrofitService
 import com.example.techhub.presentation.perfil.composables.avaliacao.AvaliacaoSection
 import com.example.techhub.presentation.perfil.composables.comentario.ComentariosSection
 import com.example.techhub.presentation.perfil.composables.informacoesAdicionais.InformacoesAdicionaisSection
@@ -45,13 +46,15 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 @Composable
 fun PerfilView() {
     /* TODO - inserir lógica para transferir estado de se é empresa ou freelancer */
-    val isEmpresa = false
     val scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
+    val retrofirService = RetrofitService
+    val context = LocalContext.current
+    val isEmpresa = retrofirService.getIsUserEmpresa(context)
 
     Scaffold(
         bottomBar = {
-            BottomBar(isEmpresa = isEmpresa)
+            BottomBar()
         },
         containerColor = Color.White,
         modifier = Modifier

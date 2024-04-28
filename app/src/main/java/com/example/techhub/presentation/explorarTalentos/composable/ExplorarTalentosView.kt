@@ -89,7 +89,7 @@ fun ExplorarTalentosView(viewModel: ExplorarTalentosViewModel = ExplorarTalentos
                             title = "Explorar Talentos"
                         )
                     },
-                    bottomBar = { BottomBar(isEmpresa = true) }
+                    bottomBar = { BottomBar() }
                 ) { innerPadding ->
                     Column(
                         modifier = Modifier

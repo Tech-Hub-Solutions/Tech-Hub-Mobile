@@ -1,8 +1,15 @@
 package com.example.techhub.domain
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import com.example.techhub.common.Constants
+import com.example.techhub.common.enums.UsuarioFuncao
 import com.example.techhub.data.prefdatastore.DataStoreManager
 import com.example.techhub.data.remote.FlagApi
 import com.example.techhub.data.remote.PerfilApi
@@ -29,11 +36,27 @@ object RetrofitService {
             dataStoreManager.saveToDataStore(
                 DataStoreData(
                     userTokenJwt = usuarioTokenData.token!!,
-                    userProfile = usuarioTokenData
+                    userProfile = usuarioTokenData,
+                    userFuncao = usuarioTokenData.funcao == UsuarioFuncao.EMPRESA
                 )
             )
             token = usuarioTokenData.token
         }
+    }
+
+    @SuppressLint("CoroutineCreationDuringComposition")
+    @Composable
+    fun getIsUserEmpresa(context: Context): Boolean {
+        val dataStoreManager = DataStoreManager(context)
+        var isEmpresa by remember { mutableStateOf(false) }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            dataStoreManager.getFromDataStore().collect { value ->
+                isEmpresa = value.userFuncao
+            }
+        }
+
+        return isEmpresa
     }
 
     fun updateTokenJwt(token: String) {

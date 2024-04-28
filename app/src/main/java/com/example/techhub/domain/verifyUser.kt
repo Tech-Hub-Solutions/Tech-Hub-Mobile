@@ -3,6 +3,7 @@ package com.example.techhub.domain
 import android.app.Activity
 import android.content.Context
 import android.util.Log
+import com.example.techhub.common.enums.UsuarioFuncao
 import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.data.prefdatastore.DataStoreManager
@@ -17,7 +18,7 @@ fun verifyUser(
     context: Context,
     toastErrorMessage: String,
 ) {
-    var dataStoreManager = DataStoreManager(context)
+    val dataStoreManager = DataStoreManager(context)
 
     val usuarioService = RetrofitService.getUsuarioService()
 
@@ -27,11 +28,13 @@ fun verifyUser(
 
             if (response.isSuccessful) {
                 val token = response.body()?.token
+                Log.d("RESPONSE_BODY ==> ", response.body().toString())
 
                 dataStoreManager.saveToDataStore(
                     DataStoreData(
                         userTokenJwt = token!!,
-                        userProfile = response.body()!!
+                        userProfile = response.body()!!,
+                        userFuncao = response.body()!!.funcao == UsuarioFuncao.EMPRESA
                     )
                 )
 

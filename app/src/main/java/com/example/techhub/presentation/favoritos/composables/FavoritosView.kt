@@ -36,7 +36,7 @@ fun FavoritosView() {
                 title = "Favoritos"
             )
         },
-        bottomBar = { BottomBar(isEmpresa = true) }
+        bottomBar = { BottomBar() }
     ) { innerPadding ->
         Column(
             modifier = Modifier
