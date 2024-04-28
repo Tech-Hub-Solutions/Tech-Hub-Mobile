@@ -2,9 +2,12 @@ package com.example.techhub.presentation.perfil.composables
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,16 +36,15 @@ import androidx.compose.ui.unit.sp
 import com.example.techhub.common.composable.BottomBar
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun PerfilView() {
     /* TODO - inserir lógica para transferir estado de se é empresa ou freelancer */
-    /* TODO - pensar sobre lógica de wrap elementos responsivo. Quando o texto
-        (nome, descrição) é muito grande, quebra os outros que estão na mesma Row */
     val isEmpresa = false
 
     Scaffold(
         bottomBar = {
-            BottomBar(isEmpresa = true)
+            BottomBar(isEmpresa = isEmpresa)
         },
         containerColor = Color.White,
         modifier = Modifier
@@ -197,7 +199,7 @@ fun PerfilView() {
             Divider(
                 color = Color.LightGray.copy(alpha = 0.4f),
                 thickness = 1.dp,
-                modifier = Modifier.padding(top = 32.dp, bottom = 20.dp)
+                modifier = Modifier.padding(vertical = 20.dp)
             )
 
             /* TODO - inserir lógica para coletar informações de perfil */
@@ -236,7 +238,7 @@ fun PerfilView() {
                 Divider(
                     color = Color.LightGray.copy(alpha = 0.4f),
                     thickness = 1.dp,
-                    modifier = Modifier.padding(vertical = 12.dp)
+                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp)
                 )
 
                 TagsSection(title = "Hard Skills")
@@ -247,14 +249,15 @@ fun PerfilView() {
             Divider(
                 color = Color.LightGray.copy(alpha = 0.4f),
                 thickness = 1.dp,
-                modifier = Modifier.padding(vertical = 12.dp)
+                modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp)
             )
 
             if (!isEmpresa) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(horizontal = 24.dp, vertical = 58.dp)
+                        .padding(horizontal = 24.dp)
+                        .padding(bottom = 24.dp)
                 ) {
                     Text(
                         text = "Projetos desenvolvidos",
@@ -264,7 +267,13 @@ fun PerfilView() {
                     )
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    GitHubProjectCard()
+                    FlowRow(
+                        modifier = Modifier.horizontalScroll(rememberScrollState())
+                    ) {
+                        GitHubProjectCard()
+                        GitHubProjectCard()
+                        GitHubProjectCard()
+                    }
                 }
             }
         }
