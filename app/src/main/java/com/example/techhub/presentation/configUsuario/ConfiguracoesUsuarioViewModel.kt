@@ -17,30 +17,23 @@ class ConfiguracoesUsuarioViewModel {
     private val usuarioApi = RetrofitService.getUsuarioService()
 
 
-    fun atualizarConfigUsuario(usuarioAtualizacaoData: UsuarioAtualizacaoData, context: Context){
-        try{
-            if (usuarioAtualizacaoData.nome.isNullOrBlank() || usuarioAtualizacaoData.email.isNullOrBlank() ||
-                usuarioAtualizacaoData.pais.isNullOrBlank() || usuarioAtualizacaoData.senha.isNullOrBlank()) {
-                (context as Activity).runOnUiThread {
-                    showToastError(context, "Todos os itens devem ser preenchidos!!")
-                }
-            } else {
-
-                CoroutineScope(Dispatchers.IO).launch {
-                    val response = usuarioApi.atualizarConfigUsuario(usuarioAtualizacaoData)
-                    if (response.isSuccessful) {
-                        Log.d("PUT - AtualizarConfigUsuario - OK", response.body().toString())
-                        (context as Activity).runOnUiThread {
-                            showToastError(context, "Suas informações foram atualizadas com sucesso")
-                        }
-                        errorApi.postValue("")
-                    } else {
-                        errorApi.postValue(response.errorBody().toString())
+    fun atualizarConfigUsuario(usuarioAtualizacaoData: UsuarioAtualizacaoData, context: Context) {
+        try {
+            CoroutineScope(Dispatchers.IO).launch {
+                val response = usuarioApi.atualizarConfigUsuario(usuarioAtualizacaoData)
+                if (response.isSuccessful) {
+                    Log.d("PUT - AtualizarConfigUsuario - OK", response.body().toString())
+                    (context as Activity).runOnUiThread {
+                        showToastError(context, "Suas informações foram atualizadas com sucesso")
                     }
+                    errorApi.postValue("")
+                } else {
+                    errorApi.postValue(response.errorBody().toString())
                 }
             }
-        }catch(e:Exception) {
-            Log.e("PUT - AtualizarConfigUsuario - Error" , e.message.toString())
+
+        } catch (e: Exception) {
+            Log.e("PUT - AtualizarConfigUsuario - Error", e.message.toString())
         }
     }
 }

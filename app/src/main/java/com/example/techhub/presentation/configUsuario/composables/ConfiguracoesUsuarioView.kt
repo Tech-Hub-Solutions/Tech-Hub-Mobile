@@ -1,6 +1,7 @@
 package com.example.techhub.presentation.configUsuario.composables
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -20,6 +21,7 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -42,6 +44,7 @@ import com.example.techhub.common.composable.Switch2FA
 import com.example.techhub.common.composable.Switch2FALeft
 import com.example.techhub.common.composable.TopBar
 import com.example.techhub.common.countryFlagsList
+import com.example.techhub.common.utils.showToastError
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.data.prefdatastore.DataStoreManager
 import com.example.techhub.domain.model.usuario.UsuarioAtualizacaoData
@@ -53,6 +56,7 @@ import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -132,28 +136,42 @@ fun ConfiguracoesUsuarioView() {
 
             ElevatedButton(
                 onClick = {
+                    val usuarioAtualizacaoData =
+                        UsuarioAtualizacaoData(
+                            name,
+                            email,
+                            nacionalidade.value,
+                            password,
+                            isUsing2FA
+                        )
 
+
+                    if (usuarioAtualizacaoData.nome.isNullOrBlank() || usuarioAtualizacaoData.email.isNullOrBlank() ||
+                        usuarioAtualizacaoData.pais.isNullOrBlank() || usuarioAtualizacaoData.senha.isNullOrBlank()
+                    ) {
+                        (context as Activity).runOnUiThread {
+                            showToastError(context, "Todos os itens devem ser preenchidos!!")
+                        }
+                    } else {
                         viewModel.atualizarConfigUsuario(
-                            UsuarioAtualizacaoData(
-                                name,
-                                email,
-                                nacionalidade.value,
-                                password,
-                                isUsing2FA
-                            ),
+                            usuarioAtualizacaoData,
                             context
                         )
 
-                    if (errorApi.isNotBlank()) {
-                        Log.e("Error", "Erro ao atualizar")
-                    } else {
-                        CoroutineScope(Dispatchers.IO).launch {
-                            dataStoreManager.clearDataStore()
-                            startNewActivity(context, LoginActivity::class.java)
+                        if (errorApi.isNotBlank()) {
+                            Log.e("Error", "Erro ao atualizar")
+                        } else {
+                            CoroutineScope(Dispatchers.IO).launch {
+                                delay(1000L)
+                                (context as Activity).runOnUiThread {
+                                    showToastError(context, "Você será redirecionado para refazer o login!")
+                                }
+                                delay(3000L)
+                                dataStoreManager.clearDataStore()
+                                startNewActivity(context, LoginActivity::class.java)
+                            }
                         }
                     }
-
-
                 },
                 modifier = Modifier
                     .fillMaxWidth()
