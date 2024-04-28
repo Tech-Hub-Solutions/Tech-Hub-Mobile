@@ -11,24 +11,26 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.Header
+import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface UsuarioApi {
     @POST("usuarios/login")
+    @Headers("Authorization: ")
     suspend fun loginUser(@Body user: UsuarioLoginData): Response<UsuarioTokenData>
 
     @POST("usuarios/verify")
+    @Headers("Authorization: ")
     suspend fun verifyUser(@Body usuario: UsuarioVerifyData): Response<UsuarioTokenData>
 
     @POST("usuarios")
+    @Headers("Authorization: ")
     fun cadastrarUsuario(@Body usuario: UsuarioCriacaoData): Call<UsuarioTokenData>
 
 
     @GET("usuarios/favoritos")
     suspend fun getFavoriteUsers(
-        @Header("Authorization") authorization: String,
         @Query("page") page: Int?,
         @Query("size") size: Int?,
         @Query("sort") sort: String?,
@@ -37,7 +39,6 @@ interface UsuarioApi {
 
     @POST("usuarios/filtro")
     suspend fun getTalentos(
-        @Header("Authorization") authorization: String,
         @Query("page") page: Int?,
         @Query("size") size: Int?,
         @Query("ordem") ordem: String,

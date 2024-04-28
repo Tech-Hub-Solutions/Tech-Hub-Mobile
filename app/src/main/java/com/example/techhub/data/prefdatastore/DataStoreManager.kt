@@ -9,6 +9,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.example.techhub.domain.model.usuario.UsuarioTokenData
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.map
+import com.example.techhub.domain.model.datastore.DataStoreData
 
 private val Context.dataStore: DataStore<Preferences>
         by preferencesDataStore(Any::class.java.simpleName)
@@ -22,19 +23,19 @@ class DataStoreManager(val context: Context) {
         val USER_PROFILE = stringPreferencesKey("user_profile")
     }
 
-    suspend fun saveToDataStore(dataStore: com.example.techhub.domain.model.datastore.DataStore) {
+    suspend fun saveToDataStore(dataStoreData: DataStoreData) {
         context.dataStore.edit {
-            it[USER_TOKEN_JWT] = dataStore.userTokenJwt
-            it[URL_PROFILE_IMAGE] = dataStore.urlProfileImage
-            it[USER_PROFILE] =  gson.toJson(dataStore.userProfile)
+            it[USER_TOKEN_JWT] = dataStoreData.userTokenJwt
+            it[URL_PROFILE_IMAGE] = dataStoreData.urlProfileImage
+            it[USER_PROFILE] = gson.toJson(dataStoreData.userProfile)
         }
     }
 
     fun getFromDataStore() = context.dataStore.data.map {
-        com.example.techhub.domain.model.datastore.DataStore(
+        DataStoreData(
             userTokenJwt = it[USER_TOKEN_JWT] ?: "",
             urlProfileImage = it[URL_PROFILE_IMAGE] ?: "",
-            userProfile = it[USER_PROFILE] ?.let { gson.fromJson(it, UsuarioTokenData::class.java) }
+            userProfile = it[USER_PROFILE]?.let { gson.fromJson(it, UsuarioTokenData::class.java) }
         )
     }
 

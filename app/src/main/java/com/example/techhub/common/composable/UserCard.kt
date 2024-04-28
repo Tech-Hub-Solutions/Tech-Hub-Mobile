@@ -24,14 +24,15 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -39,8 +40,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
 import com.example.techhub.presentation.favoritos.FavoritosViewModel
+import com.example.techhub.presentation.perfil.PerfilActivity
 import com.example.techhub.presentation.ui.theme.GrayStar
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
@@ -51,11 +54,23 @@ fun UserCard(
     userProfile: UsuarioFavoritoData,
     selectedUsers: MutableList<UsuarioFavoritoData>? = null,
     isComparing: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isAbleToCompare: MutableState<Boolean>? = null,
 ) {
+    val context = LocalContext.current
     val isFavorito = remember { mutableStateOf(true) }
     val isSelected = remember { mutableStateOf(false) }
+
+    val borderColor =
+        if (isSelected.value && isAbleToCompare!!.value) {
+            Color(PrimaryBlue.value)
+        } else {
+            isSelected.value = false
+            Color.Transparent
+        }
+
     //TODO val isEmpresa = remember{ mutableStateOf(false) }
+
 
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
@@ -65,12 +80,12 @@ fun UserCard(
             .heightIn(204.dp, 300.dp)
             .border(
                 2.dp,
-                if (isSelected.value) Color(PrimaryBlue.value) else Color.Transparent
+                borderColor
             )
             .then(modifier),
         shape = RectangleShape,
         onClick = {
-            if (isComparing) {
+            if (isComparing && isAbleToCompare!!.value) {
                 if (selectedUsers != null && selectedUsers.size < 2 ||
                     selectedUsers != null && selectedUsers.contains(userProfile)
                 ) {
@@ -82,10 +97,13 @@ fun UserCard(
                         selectedUsers.add(userProfile);
                     }
                 }
+            } else {
+                startNewActivity(context, PerfilActivity::class.java)
             }
 
         }
     ) {
+
         AsyncImage(
             model = userProfile.urlFotoPerfil,
             contentDescription = "Foto do freelancer",
