@@ -124,8 +124,8 @@ fun CadastroFormView(
     ) { innerPadding ->
         Column(
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .background(Color.White)
                 .padding(
                     top = innerPadding.calculateTopPadding(),
