@@ -1,6 +1,5 @@
 package com.example.techhub.common.composable
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.TravelExplore
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
@@ -23,7 +21,6 @@ import com.example.techhub.common.utils.shadowCustom
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.presentation.explorarTalentos.ExplorarTalentosActivity
 import com.example.techhub.presentation.favoritos.FavoritosActivity
-import com.example.techhub.presentation.perfil.PerfilActivity
 
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
@@ -80,18 +77,6 @@ fun BottomBar(
                 }
 
                 ConfigDropDownMenu()
-//                IconButton(onClick = {
-//                    startNewActivity(context, PerfilActivity::class.java)
-//                }) {
-//                    Icon(
-//                        Icons.Filled.Person,
-//                        contentDescription = "@string/btn_description_profile",
-//                        tint = Color(PrimaryBlue.value),
-//                        modifier = Modifier
-//                            .width(28.dp)
-//                            .height(28.dp)
-//                    )
-//                }
             }
         },
 

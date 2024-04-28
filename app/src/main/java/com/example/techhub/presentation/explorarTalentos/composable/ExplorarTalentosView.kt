@@ -54,7 +54,6 @@ import com.example.techhub.composable.OrderDropDownMenu
 import com.example.techhub.common.composable.UserCard
 import com.example.techhub.domain.model.usuario.UsuarioFiltroData
 import com.example.techhub.presentation.explorarTalentos.ExplorarTalentosViewModel
-import com.example.techhub.presentation.favoritos.composables.spacedBy
 import com.example.techhub.presentation.ui.theme.GrayLoadButton
 import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.GrayTinyButton
@@ -278,7 +277,7 @@ fun GetTalentos(
                                 containerColor = Color(GrayLoadButton.value),
                                 contentColor = Color(0xFF505050),
                                 shape = RoundedCornerShape(50),
-                                horizontalArrangement = spacedBy(
+                                horizontalArrangement = Arrangement.spacedBy(
                                     8.dp,
                                     Alignment.CenterHorizontally
                                 ),

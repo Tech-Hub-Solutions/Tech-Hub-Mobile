@@ -35,61 +35,64 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 fun ComentarioForm() {
     var filledText by remember { mutableStateOf("") }
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth(),
-    ) {
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data("https://angular.io/assets/images/logos/angular/angular.svg")
-                .decoderFactory(SvgDecoder.Factory())
-                .build(),
-            contentDescription = "Angular Icon",
+    Column(modifier = Modifier
+        .padding(16.dp)) {
+        Row(
             modifier = Modifier
-                .padding(end = 8.dp)
-                .size(45.dp)
-        )
-
-        Column(modifier = Modifier) {
-            Text(
-                text = "Você",
-                color = Color.Black,
-                fontSize = 18.sp,
-                modifier = Modifier.padding(0.dp),
+                .fillMaxWidth()
+        ) {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data("https://angular.io/assets/images/logos/angular/angular.svg")
+                    .decoderFactory(SvgDecoder.Factory())
+                    .build(),
+                contentDescription = "Angular Icon",
+                modifier = Modifier
+                    .padding(end = 8.dp)
+                    .size(45.dp)
             )
 
-            StarRatingBarFixed(rating = 3.0, starSize = 8)
-        }
-    }
+            Column(modifier = Modifier) {
+                Text(
+                    text = "Você",
+                    color = Color.Black,
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(0.dp),
+                )
 
-    OutlinedTextField(
-        value = filledText,
-        onValueChange = {
-            filledText = it
-        },
-        label = { Text("Comentário") },
-        placeholder = { Text("adicionar comentário") },
-        textStyle = LocalTextStyle.current.copy(
-            color = Color.Black,
-            fontSize = 16.sp
-        ),
-        singleLine = false,
-        minLines = 1,
-        maxLines = 6,
-        colors = TextFieldDefaults.colors(
-            cursorColor = Color(PrimaryBlue.value),
-            errorCursorColor = Color(PrimaryBlue.value),
-            focusedContainerColor = Color.Transparent,
-            unfocusedContainerColor = Color.Transparent,
-            errorContainerColor = Color.Transparent,
-            errorSupportingTextColor = Color.Red.copy(alpha = 0.6f),
-        ),
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(150.dp),
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Email,
-            imeAction = ImeAction.Go
-        ),
-    )
+                StarRatingBarFixed(rating = 3.0, starSize = 8)
+            }
+        }
+
+        OutlinedTextField(
+            value = filledText,
+            onValueChange = {
+                filledText = it
+            },
+            label = { Text("Comentário") },
+            placeholder = { Text("adicionar comentário") },
+            textStyle = LocalTextStyle.current.copy(
+                color = Color.Black,
+                fontSize = 16.sp
+            ),
+            singleLine = false,
+            minLines = 1,
+            maxLines = 6,
+            colors = TextFieldDefaults.colors(
+                cursorColor = Color(PrimaryBlue.value),
+                errorCursorColor = Color(PrimaryBlue.value),
+                focusedContainerColor = Color.Transparent,
+                unfocusedContainerColor = Color.Transparent,
+                errorContainerColor = Color.Transparent,
+                errorSupportingTextColor = Color.Red.copy(alpha = 0.6f),
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(150.dp),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Go
+            ),
+        )
+    }
 }

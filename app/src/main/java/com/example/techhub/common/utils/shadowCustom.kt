@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-
 fun Modifier.shadowCustom(
     color: Color = Color.Black,
     offsetX: Dp = 0.dp,
