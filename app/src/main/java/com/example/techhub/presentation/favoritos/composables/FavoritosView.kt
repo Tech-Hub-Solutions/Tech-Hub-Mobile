@@ -26,8 +26,6 @@ fun FavoritosView() {
     val selectedUsers = remember { SnapshotStateList<UsuarioFavoritoData>() }
     var ordem = remember { mutableStateOf("avaliacao,desc") }
     val isAbleToCompare = remember { mutableStateOf(false) }
-    var expanded by remember { mutableStateOf(false) }
-    var erroApi = remember { mutableStateOf("") }
     val context = LocalContext.current
 
     Scaffold(

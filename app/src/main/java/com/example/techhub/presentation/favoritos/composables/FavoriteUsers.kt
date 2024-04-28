@@ -2,16 +2,20 @@ package com.example.techhub.presentation.favoritos.composables
 
 import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -44,6 +48,7 @@ fun FavoriteUsers(
 ) {
     val favoritos = viewModel.favoritos.observeAsState().value!!
     val erroApi = viewModel.erroApi.observeAsState().value!!
+    val isLoading = viewModel.isLoading.observeAsState().value!!
     val isLastPage = viewModel.isLastPage.observeAsState().value!!
 
     val page = remember { mutableStateOf(0) }
@@ -53,77 +58,88 @@ fun FavoriteUsers(
         viewModel.getFavoriteUsers(page.value, 10, "", ordem.value, context)
     }
 
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.Top
-    ) {
-        Text(text = "${favoritos.size} profissionais encontrados", color = GrayText)
+    if (isLoading) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            CircularProgressIndicator(modifier = Modifier.size(50.dp))
+        }
+    } else {
 
-        OrderDropDownMenu(ordem)
-    }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.Top
+        ) {
+            Text(text = "${favoritos.size} profissionais encontrados", color = GrayText)
 
-    CompareSwitch {
-        isAbleToCompare.value = it
-    }
+            OrderDropDownMenu(ordem)
+        }
 
-    Spacer(modifier = Modifier.padding(vertical = 8.dp))
+        CompareSwitch {
+            isAbleToCompare.value = it
+        }
 
-    if (favoritos.isEmpty()) {
-        Text(text = "Nenhum favorito selecionado")
-    }
+        Spacer(modifier = Modifier.padding(vertical = 8.dp))
 
-    LazyColumn(
-        modifier = Modifier
-            .verticalScroll(
-                rememberScrollState()
-            )
-            .height(920.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        val subLists = favoritos.chunked(2)
+        if (favoritos.isEmpty()) {
+            Text(text = "Nenhum favorito selecionado")
+        }
 
-        itemsIndexed(subLists) { index, subLista ->
-            Row(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start)
-            ) {
-                for (item in subLista) {
-                    UserCard(
-                        item,
-                        selectedUsers,
-                        true,
-                        modifier = Modifier.weight(1f, false),
-                        isAbleToCompare
-                    )
+        LazyColumn(
+            modifier = Modifier
+                .verticalScroll(
+                    rememberScrollState()
+                )
+                .height(920.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            val subLists = favoritos.chunked(2)
 
-                    if (index == subLista.size - 1 && subLista.size % 2 != 0) {
-                        Spacer(modifier = Modifier.weight(1f))
+            itemsIndexed(subLists) { index, subLista ->
+                Row(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start)
+                ) {
+                    for (item in subLista) {
+                        UserCard(
+                            item,
+                            selectedUsers,
+                            true,
+                            modifier = Modifier.weight(1f, false),
+                            isAbleToCompare
+                        )
+
+                        if (index == subLista.size - 1 && subLista.size % 2 != 0) {
+                            Spacer(modifier = Modifier.weight(1f))
+                        }
                     }
                 }
             }
         }
-    }
-    if (!isLastPage && favoritos.isNotEmpty()) {
-        CustomizedElevatedButton(
-            onClick = {
-                page.value += 1
-                viewModel.getFavoriteUsers(page.value, 3, "", ordem.value, context)
-            },
-            horizontalPadding = 16,
-            verticalPadding = 8,
-            defaultElevation = 0,
-            pressedElevation = 0,
-            containerColor = Color(GrayLoadButton.value),
-            contentColor = Color(0xFF505050),
-            shape = RoundedCornerShape(50),
-            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
-            text = "Carregar mais talentos",
-            fontSize = 16,
-            fontWeight = FontWeight.Medium,
-            contentDescription = "Botão para carregar mais talentos"
-        )
+        if (!isLastPage && favoritos.isNotEmpty()) {
+            CustomizedElevatedButton(
+                onClick = {
+                    page.value += 1
+                    viewModel.getFavoriteUsers(page.value, 3, "", ordem.value, context)
+                },
+                horizontalPadding = 16,
+                verticalPadding = 8,
+                defaultElevation = 0,
+                pressedElevation = 0,
+                containerColor = Color(GrayLoadButton.value),
+                contentColor = Color(0xFF505050),
+                shape = RoundedCornerShape(50),
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+                text = "Carregar mais talentos",
+                fontSize = 16,
+                fontWeight = FontWeight.Medium,
+                contentDescription = "Botão para carregar mais talentos"
+            )
+        }
     }
 }

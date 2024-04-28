@@ -16,6 +16,7 @@ class FavoritosViewModel(context: Context? = null) {
     val favoritos = MutableLiveData(SnapshotStateList<UsuarioFavoritoData>())
     val erroApi = MutableLiveData("")
     val isLastPage = MutableLiveData(false)
+    val isLoading = MutableLiveData(true)
     private val toastErrorMessage = "Ops! Algo deu errado ao buscar favoritos."
 
     private var token = "";
@@ -28,6 +29,7 @@ class FavoritosViewModel(context: Context? = null) {
     }
 
     fun getFavoriteUsers(page: Int, size: Int, sort: String, ordem: String, context: Context) {
+        isLoading.postValue(true)
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = usuarioApi.getFavoriteUsers(page, size, sort, ordem)
@@ -58,6 +60,8 @@ class FavoritosViewModel(context: Context? = null) {
                     showToastError(context = context, message = toastErrorMessage)
                 }
                 Log.e("GET USUARIOS/FAVORITOS", "Ocorreu um erro no get ${e.message}")
+            } finally {
+                isLoading.postValue(false)
             }
         }
     }

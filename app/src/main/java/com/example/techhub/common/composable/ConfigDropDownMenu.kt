@@ -1,6 +1,7 @@
 package com.example.techhub.common.composable
 
 import android.os.Bundle
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -34,6 +35,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.techhub.common.utils.shadowCustom
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.data.prefdatastore.DataStoreManager
 import com.example.techhub.domain.model.CurrentUser
@@ -49,8 +51,13 @@ import kotlinx.coroutines.launch
 @Composable
 fun ConfigDropDownMenu() {
     val context = LocalContext.current
+    val actualActivity = context.javaClass.simpleName
     val dataStoreManager = DataStoreManager(context = context)
     var expanded by remember { mutableStateOf(false) }
+    val dropDownPages = listOf(
+        "PerfilActivity",
+        "ConfiguracoesUsuarioActivity",
+    )
 
     Box(
         modifier = Modifier
@@ -64,7 +71,11 @@ fun ConfigDropDownMenu() {
                 Icon(
                     Icons.Filled.Person,
                     contentDescription = "@string/btn_description_profile",
-                    tint = Color(PrimaryBlue.value),
+                    tint = if (dropDownPages.contains(actualActivity)) {
+                        PrimaryBlue
+                    } else {
+                        Color.Gray
+                    },
                     modifier = Modifier
                         .width(28.dp)
                         .height(28.dp)
@@ -76,6 +87,15 @@ fun ConfigDropDownMenu() {
                     modifier = Modifier
                         .width(28.dp)
                         .height(28.dp)
+                        .border(
+                            2.dp,
+                            if (dropDownPages.contains(actualActivity)) {
+                                PrimaryBlue
+                            } else {
+                                Color.Gray
+                            },
+                            CircleShape
+                        )
                         .clip(CircleShape)
                         .border(2.dp, Color.White.copy(alpha = 0.5f), CircleShape)
                 )
@@ -88,14 +108,28 @@ fun ConfigDropDownMenu() {
             onDismissRequest = { expanded = false },
         ) {
             DropdownMenuItem(
-                { DropDownMenuRow(icon = Icons.Filled.Settings, text = "Configurações") },
+                {
+                    DropDownMenuRow(
+                        icon = Icons.Filled.Settings,
+                        text = "Configurações",
+                        actualActivity,
+                        "ConfiguracoesUsuarioActivity"
+                    )
+                },
                 onClick = {
                     expanded = false;
                     startNewActivity(context, ConfiguracoesUsuarioActivity::class.java)
                 }
             )
             DropdownMenuItem(
-                { DropDownMenuRow(icon = Icons.Filled.Person, text = "Perfil") },
+                {
+                    DropDownMenuRow(
+                        icon = Icons.Filled.Person,
+                        text = "Perfil",
+                        actualActivity,
+                        "PerfilActivity"
+                    )
+                },
                 onClick = {
                     expanded = false;
                     val extras = Bundle()
@@ -123,17 +157,27 @@ fun ConfigDropDownMenu() {
 }
 
 @Composable
-fun DropDownMenuRow(icon: ImageVector, text: String) {
+fun DropDownMenuRow(
+    icon: ImageVector,
+    text: String,
+    actualActivity: String? = null,
+    activityName: String? = null
+) {
     Row(verticalAlignment = Alignment.CenterVertically) {
+        val color = if (!activityName.isNullOrEmpty() && actualActivity == activityName) {
+            PrimaryBlue
+        } else {
+            Color(0xFF858585)
+        }
         Icon(
             icon,
             contentDescription = "@string/btn_description_profile",
-            tint = Color(0xFF858585),
+            tint = color,
             modifier = Modifier
                 .width(28.dp)
                 .height(28.dp)
                 .padding(end = 8.dp)
         )
-        Text(text = text, color = Color(0xFF858585))
+        Text(text = text, color = color)
     }
 }

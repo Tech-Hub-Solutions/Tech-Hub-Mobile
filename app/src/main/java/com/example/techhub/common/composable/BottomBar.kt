@@ -1,6 +1,7 @@
 package com.example.techhub.common.composable
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,6 +31,8 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 @Composable
 fun BottomBar() {
     val context = LocalContext.current
+    val actualActivity = context.javaClass.simpleName
+    Log.d("BottomBar", "actualActivity: $actualActivity")
     val isUserEmpresa = CurrentUser.isEmpresa
 
     BottomAppBar(
@@ -56,7 +59,11 @@ fun BottomBar() {
                     Icon(
                         Icons.Outlined.TravelExplore,
                         contentDescription = "@string/btn_description_search_talents",
-                        tint = Color(PrimaryBlue.value),
+                        tint = if (actualActivity == "ExplorarTalentosActivity") {
+                            PrimaryBlue
+                        } else {
+                            Color.Gray
+                        },
                         modifier = Modifier
                             .width(28.dp)
                             .height(28.dp)
@@ -70,7 +77,11 @@ fun BottomBar() {
                         Icon(
                             Icons.Filled.FavoriteBorder,
                             contentDescription = "@string/btn_description_favorites",
-                            tint = Color(PrimaryBlue.value),
+                            tint = if (actualActivity == "FavoritosActivity") {
+                                PrimaryBlue
+                            } else {
+                                Color.Gray
+                            },
                             modifier = Modifier
                                 .width(28.dp)
                                 .height(28.dp)
@@ -85,3 +96,4 @@ fun BottomBar() {
         containerColor = Color.White,
     )
 }
+
