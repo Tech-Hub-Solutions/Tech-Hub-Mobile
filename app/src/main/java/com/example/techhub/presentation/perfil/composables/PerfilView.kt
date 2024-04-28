@@ -276,13 +276,14 @@ fun PerfilView() {
                             GitHubProjectCard()
                         }
                     }
+
+                    Divider(
+                        color = Color.LightGray.copy(alpha = 0.4f),
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(vertical = 12.dp)
+                    )
                 }
 
-                Divider(
-                    color = Color.LightGray.copy(alpha = 0.4f),
-                    thickness = 1.dp,
-                    modifier = Modifier.padding(vertical = 12.dp)
-                )
 
                 // Seção de Avaliações
                 AvaliacaoSection(totalRating = 4.0)

@@ -17,9 +17,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.techhub.common.composable.CustomizedElevatedButton
+import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.presentation.favoritos.composables.spacedBy
 import com.example.techhub.presentation.perfil.composables.SectionTitle
 import com.example.techhub.presentation.ui.theme.GrayLoadButton
+import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
 fun ComentariosSection() {
@@ -68,4 +70,12 @@ fun ComentariosSection() {
     ComentarioForm()
 
     Spacer(modifier = Modifier.height(16.dp))
+
+    ElevatedButtonTH(
+        onClick = { /* TODO - Publicar comentário */ },
+        text = "Comentar",
+        backgroundColor = PrimaryBlue,
+        width = 160,
+        height = 40,
+    )
 }
