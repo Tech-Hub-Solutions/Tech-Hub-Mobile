@@ -7,11 +7,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun AvaliacaoCountRow(
     titleNumber: String,
-    qtdEstrela: String,
+    qtdEstrela: Int,
     totalProgress: Float
 ) {
     Row(
@@ -21,7 +22,8 @@ fun AvaliacaoCountRow(
     ) {
         Text(
             text = "$titleNumber " + if (titleNumber == "1") "estrela " else "estrelas",
-            color = Color.Black
+            color = Color.Black,
+            fontSize = 14.sp,
         )
 
         AvaliacaoProgressIndicator(totalProgress = totalProgress)

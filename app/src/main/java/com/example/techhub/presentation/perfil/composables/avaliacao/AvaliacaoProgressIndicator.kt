@@ -14,6 +14,7 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
 fun AvaliacaoProgressIndicator(totalProgress: Float) {
+    // TODO - Caso o Text do AvaliacaoCountRow tiver dois digitos, ele desalinha o LinearProgressIndicator
     LinearProgressIndicator(
         progress = totalProgress,
         color = PrimaryBlue,

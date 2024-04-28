@@ -10,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -60,27 +59,27 @@ fun AvaliacaoSection(totalRating: Double) {
             AvaliacaoCountRow(
                 titleNumber = "5",
                 totalProgress = 0.7f,
-                qtdEstrela = "50"
+                qtdEstrela = 50
             )
             AvaliacaoCountRow(
                 titleNumber = "4",
                 totalProgress = 0.5f,
-                qtdEstrela = "05"
+                qtdEstrela = 5
             )
             AvaliacaoCountRow(
                 titleNumber = "3",
                 totalProgress = 0.2f,
-                qtdEstrela = "02"
+                qtdEstrela = 2
             )
             AvaliacaoCountRow(
                 titleNumber = "2",
                 totalProgress = 0.0f,
-                qtdEstrela = "00"
+                qtdEstrela = 0
             )
             AvaliacaoCountRow(
                 titleNumber = "1",
                 totalProgress = 0.1f,
-                qtdEstrela = "01"
+                qtdEstrela = 1
             )
         }
     }
