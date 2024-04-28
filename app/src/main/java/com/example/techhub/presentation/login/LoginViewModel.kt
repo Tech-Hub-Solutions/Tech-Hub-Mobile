@@ -30,6 +30,13 @@ class LoginViewModel : ViewModel() {
                     if (response.body()?.isUsing2FA!!) {
                         onAuthSucess(user)
                     } else {
+
+
+                        RetrofitService.updateTokenJwt(
+                            context = context,
+                            usuarioTokenData = response.body()!!
+                        )
+
                         redirectToPerfilUsuario(
                             context = context,
                             fullName = response.body()?.nome!!

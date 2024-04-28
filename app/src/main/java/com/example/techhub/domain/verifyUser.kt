@@ -6,7 +6,7 @@ import android.util.Log
 import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.data.prefdatastore.DataStoreManager
-import com.example.techhub.domain.model.datastore.DataStore
+import com.example.techhub.domain.model.datastore.DataStoreData
 import com.example.techhub.domain.model.usuario.UsuarioVerifyData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,10 +29,15 @@ fun verifyUser(
                 val token = response.body()?.token
 
                 dataStoreManager.saveToDataStore(
-                    DataStore(
+                    DataStoreData(
                         userTokenJwt = token!!,
                         userProfile = response.body()!!
                     )
+                )
+
+                RetrofitService.updateTokenJwt(
+                    context = context,
+                    usuarioTokenData = response.body()!!
                 )
 
                 redirectToPerfilUsuario(

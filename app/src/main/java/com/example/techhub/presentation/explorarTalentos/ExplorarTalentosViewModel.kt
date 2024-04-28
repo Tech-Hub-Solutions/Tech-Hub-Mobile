@@ -19,7 +19,6 @@ class ExplorarTalentosViewModel : ViewModel() {
     val erroApi = MutableLiveData("")
     val totalElements = MutableLiveData(0)
     val isLoading = MutableLiveData(false)
-    val token = Constants.PARAM_TOKEN
     val isLastPage = MutableLiveData(false)
 
     val flags = MutableLiveData(SnapshotStateList<FlagData>())
@@ -31,7 +30,7 @@ class ExplorarTalentosViewModel : ViewModel() {
         if (page == 0) isLoading.postValue(true)
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = usuarioApi.getTalentos(token, page, size, ordem, usuarioFiltroData)
+                val response = usuarioApi.getTalentos(page, size, ordem, usuarioFiltroData)
 
                 if (response.isSuccessful) {
                     val responsePage = response.body()
@@ -61,7 +60,7 @@ class ExplorarTalentosViewModel : ViewModel() {
     fun getFlags() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = flagsApi.getFlags(token)
+                val response = flagsApi.getFlags()
 
                 if (response.isSuccessful) {
                     val list = response.body() ?: emptyList()
