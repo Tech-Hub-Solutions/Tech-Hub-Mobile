@@ -8,6 +8,7 @@ import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.data.prefdatastore.DataStoreManager
 import com.example.techhub.domain.model.datastore.DataStoreData
+import com.example.techhub.domain.model.updateCurrentUser
 import com.example.techhub.domain.model.usuario.UsuarioVerifyData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,7 +39,7 @@ fun verifyUser(
                     )
                 )
 
-                RetrofitService.updateTokenJwt(
+                updateCurrentUser(
                     context = context,
                     usuarioTokenData = response.body()!!
                 )

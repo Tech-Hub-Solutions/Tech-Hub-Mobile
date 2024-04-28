@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.domain.RetrofitService
+import com.example.techhub.domain.model.updateCurrentUser
 import com.example.techhub.domain.model.usuario.UsuarioLoginData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,8 +32,7 @@ class LoginViewModel : ViewModel() {
                         onAuthSucess(user)
                     } else {
 
-
-                        RetrofitService.updateTokenJwt(
+                        updateCurrentUser(
                             context = context,
                             usuarioTokenData = response.body()!!
                         )

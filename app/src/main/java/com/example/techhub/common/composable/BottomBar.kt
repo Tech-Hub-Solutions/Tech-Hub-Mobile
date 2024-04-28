@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.example.techhub.common.utils.shadowCustom
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.RetrofitService
+import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.presentation.explorarTalentos.ExplorarTalentosActivity
 import com.example.techhub.presentation.favoritos.FavoritosActivity
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
@@ -29,8 +30,7 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 @Composable
 fun BottomBar() {
     val context = LocalContext.current
-    val retrofirService = RetrofitService
-    val isUserEmpresa = retrofirService.getIsUserEmpresa(context)
+    val isUserEmpresa = CurrentUser.isEmpresa
 
     BottomAppBar(
         modifier = Modifier

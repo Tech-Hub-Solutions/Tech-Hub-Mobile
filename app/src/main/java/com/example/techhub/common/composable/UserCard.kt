@@ -1,5 +1,6 @@
 package com.example.techhub.common.composable
 
+import android.os.Bundle
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -94,7 +95,9 @@ fun UserCard(
                     }
                 }
             } else {
-                startNewActivity(context, PerfilActivity::class.java)
+                val extras = Bundle()
+                extras.putInt("id", userProfile.id!!)
+                startNewActivity(context, PerfilActivity::class.java, extras)
             }
 
         }

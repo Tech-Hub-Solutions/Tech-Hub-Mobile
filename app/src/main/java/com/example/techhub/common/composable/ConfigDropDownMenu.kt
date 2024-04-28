@@ -1,12 +1,15 @@
 package com.example.techhub.common.composable
 
+import android.os.Bundle
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Contacts
 import androidx.compose.material.icons.filled.Logout
@@ -25,12 +28,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.data.prefdatastore.DataStoreManager
+import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.presentation.configUsuario.ConfiguracoesUsuarioActivity
 import com.example.techhub.presentation.login.LoginActivity
 import com.example.techhub.presentation.perfil.PerfilActivity
@@ -54,14 +60,26 @@ fun ConfigDropDownMenu() {
         IconButton(
             onClick = { expanded = true },
         ) {
-            Icon(
-                Icons.Filled.Person,
-                contentDescription = "@string/btn_description_profile",
-                tint = Color(PrimaryBlue.value),
-                modifier = Modifier
-                    .width(28.dp)
-                    .height(28.dp)
-            )
+            if (CurrentUser.urlProfileImage.isNullOrEmpty()) {
+                Icon(
+                    Icons.Filled.Person,
+                    contentDescription = "@string/btn_description_profile",
+                    tint = Color(PrimaryBlue.value),
+                    modifier = Modifier
+                        .width(28.dp)
+                        .height(28.dp)
+                )
+            } else {
+                AsyncImage(
+                    model = CurrentUser.urlProfileImage,
+                    contentDescription = "@string/btn_description_profile",
+                    modifier = Modifier
+                        .width(28.dp)
+                        .height(28.dp)
+                        .clip(CircleShape)
+                        .border(2.dp, Color.White.copy(alpha = 0.5f), CircleShape)
+                )
+            }
         }
         DropdownMenu(
             modifier = Modifier
@@ -80,7 +98,9 @@ fun ConfigDropDownMenu() {
                 { DropDownMenuRow(icon = Icons.Filled.Person, text = "Perfil") },
                 onClick = {
                     expanded = false;
-                    startNewActivity(context, PerfilActivity::class.java)
+                    val extras = Bundle()
+                    extras.putInt("id", CurrentUser.userProfile?.id!!)
+                    startNewActivity(context, PerfilActivity::class.java, extras)
                 }
             )
             Divider(
