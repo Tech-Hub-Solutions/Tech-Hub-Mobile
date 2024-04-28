@@ -280,16 +280,10 @@ fun PerfilView() {
                     empresasInteressadas = 5,
                     recomendacoes = 3
                 )
-
-                Divider(
-                    color = Color.LightGray.copy(alpha = 0.4f),
-                    thickness = 1.dp,
-                    modifier = Modifier.padding(vertical = 12.dp)
-                )
-
-                // Seção de Comentários
-                ComentariosSection()
             }
+
+            // Seção de Comentários
+            ComentariosSection()
         }
 
         Box(
