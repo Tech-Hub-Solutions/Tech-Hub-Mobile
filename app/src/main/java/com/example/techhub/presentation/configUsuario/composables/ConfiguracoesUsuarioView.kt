@@ -73,6 +73,7 @@ fun ConfiguracoesUsuarioView() {
     var isUsing2FA by remember { mutableStateOf(false) }
     val viewModel = ConfiguracoesUsuarioViewModel()
     val errorApi = viewModel.errorApi.observeAsState().value!!
+    val usuarioTokenData = viewModel.usuarioTokenData.observeAsState().value!!
 
     Scaffold(
         topBar = {
@@ -145,7 +146,6 @@ fun ConfiguracoesUsuarioView() {
                             isUsing2FA
                         )
 
-
                     if (usuarioAtualizacaoData.nome.isNullOrBlank() || usuarioAtualizacaoData.email.isNullOrBlank() ||
                         usuarioAtualizacaoData.pais.isNullOrBlank() || usuarioAtualizacaoData.senha.isNullOrBlank()
                     ) {
@@ -161,14 +161,21 @@ fun ConfiguracoesUsuarioView() {
                         if (errorApi.isNotBlank()) {
                             Log.e("Error", "Erro ao atualizar")
                         } else {
-                            CoroutineScope(Dispatchers.IO).launch {
-                                delay(1000L)
-                                (context as Activity).runOnUiThread {
-                                    showToastError(context, "Você será redirecionado para refazer o login!")
+                            if (usuarioTokenData.isUsing2FA!!) {
+
+                            } else {
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    delay(1000L)
+                                    (context as Activity).runOnUiThread {
+                                        showToastError(
+                                            context,
+                                            "Você será redirecionado para refazer o login!"
+                                        )
+                                    }
+                                    delay(3000L)
+                                    dataStoreManager.clearDataStore()
+                                    startNewActivity(context, LoginActivity::class.java)
                                 }
-                                delay(3000L)
-                                dataStoreManager.clearDataStore()
-                                startNewActivity(context, LoginActivity::class.java)
                             }
                         }
                     }
