@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.techhub.common.composable.BottomBar
 import com.example.techhub.presentation.perfil.composables.avaliacao.AvaliacaoSection
+import com.example.techhub.presentation.perfil.composables.comentario.ComentariosSection
 import com.example.techhub.presentation.perfil.composables.informacoesAdicionais.InformacoesAdicionaisSection
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
@@ -262,13 +263,7 @@ fun PerfilView() {
 
                 if (!isEmpresa) {
                     Column(modifier = Modifier.fillMaxSize()) {
-                        Text(
-                            text = "Projetos desenvolvidos",
-                            fontSize = 18.sp,
-                            color = Color.Black,
-                            fontWeight = FontWeight(500),
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
+                        SectionTitle(title = "Projetos desenvolvidos", isCentered = false)
 
                         FlowRow(
                             modifier = Modifier.horizontalScroll(rememberScrollState())
@@ -300,6 +295,14 @@ fun PerfilView() {
                     empresasInteressadas = 5,
                     recomendacoes = 3
                 )
+
+                Divider(
+                    color = Color.LightGray.copy(alpha = 0.4f),
+                    thickness = 1.dp,
+                    modifier = Modifier.padding(vertical = 12.dp)
+                )
+
+                ComentariosSection()
             }
         }
 
