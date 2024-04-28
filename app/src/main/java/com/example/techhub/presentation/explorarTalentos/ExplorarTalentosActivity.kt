@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.example.techhub.composable.SetBarColor
 import com.example.techhub.presentation.explorarTalentos.composable.ExplorarTalentosView
-import com.example.techhub.ui.theme.TechHubTheme
+import com.example.techhub.presentation.ui.theme.TechHubTheme
 
 class ExplorarTalentosActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

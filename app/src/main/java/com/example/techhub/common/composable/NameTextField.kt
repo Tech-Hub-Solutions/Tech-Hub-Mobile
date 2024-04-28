@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun NameTextField(onValueChanged: (String) -> Unit) {
+fun NameTextField(onValueChanged: (String) -> Unit ) {
     var filledText by remember { mutableStateOf("") }
     var isNameValid by remember { mutableStateOf(false) }
 

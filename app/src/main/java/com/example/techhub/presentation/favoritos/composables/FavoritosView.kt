@@ -95,11 +95,11 @@ fun FavoritosView() {
         ) {
 
             getFavoriteUsers(
-                viewModel = FavoritosViewModel(),
+                viewModel = FavoritosViewModel(context),
                 context = context,
                 ordem = ordem,
                 selectedUsers = selectedUsers,
-                isAbleToCompare = isAbleToCompare
+                isAbleToCompare = isAbleToCompare,
             )
         }
     }
@@ -168,11 +168,11 @@ fun createBottomSheet(selectedUsers: SnapshotStateList<UsuarioFavoritoData>, isA
 
 @Composable
 fun getFavoriteUsers(
-    viewModel: FavoritosViewModel = FavoritosViewModel(),
     context: Context,
+    viewModel: FavoritosViewModel = FavoritosViewModel(context),
     ordem: MutableState<String>,
     selectedUsers: SnapshotStateList<UsuarioFavoritoData>,
-    isAbleToCompare: MutableState<Boolean>
+    isAbleToCompare: MutableState<Boolean>,
 ) {
     val favoritos = viewModel.favoritos.observeAsState().value!!
     val erroApi = viewModel.erroApi.observeAsState().value!!
@@ -199,7 +199,7 @@ fun getFavoriteUsers(
         OrderDropDownMenu(ordem)
     }
 
-    CompareSwitch {
+    CompareSwitch{
         isAbleToCompare.value = it
     }
 
