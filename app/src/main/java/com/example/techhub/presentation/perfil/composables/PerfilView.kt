@@ -281,7 +281,7 @@ fun PerfilView() {
                     modifier = Modifier.padding(vertical = 12.dp)
                 )
 
-                // Seção de avaliações
+                // Seção de Avaliações
                 AvaliacaoSection(totalRating = 4.0)
 
                 Divider(
@@ -290,6 +290,7 @@ fun PerfilView() {
                     modifier = Modifier.padding(vertical = 12.dp)
                 )
 
+                // Seção de Informações Adicionais
                 InformacoesAdicionaisSection(
                     projetosFinalizados = 10,
                     empresasInteressadas = 5,
@@ -302,6 +303,7 @@ fun PerfilView() {
                     modifier = Modifier.padding(vertical = 12.dp)
                 )
 
+                // Seção de Comentários
                 ComentariosSection()
             }
         }

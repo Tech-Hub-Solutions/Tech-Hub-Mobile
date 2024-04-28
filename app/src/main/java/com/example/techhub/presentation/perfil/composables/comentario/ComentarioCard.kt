@@ -43,8 +43,12 @@ fun ComentarioCard(description: String) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(12.dp),
-                Arrangement.SpaceBetween,
+                    .padding(
+                        bottom = 16.dp,
+                        top = 24.dp,
+                        start = 16.dp,
+                        end = 16.dp
+                    ),
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
@@ -52,7 +56,9 @@ fun ComentarioCard(description: String) {
                         .decoderFactory(SvgDecoder.Factory())
                         .build(),
                     contentDescription = "Angular Icon",
-                    modifier = Modifier.size(45.dp)
+                    modifier = Modifier
+                        .padding(end = 12.dp)
+                        .size(45.dp)
                 )
 
                 Column(
@@ -69,26 +75,43 @@ fun ComentarioCard(description: String) {
                                     text = "TechSolutions",
                                     color = Color.Black,
                                     fontSize = 18.sp,
+                                    fontWeight = FontWeight(600),
                                     modifier = Modifier.padding(0.dp),
                                 )
-                                Text(text = "Brasil", color = Color.Black, fontSize = 14.sp)
+
+                                Row(
+                                    modifier = Modifier,
+                                    horizontalArrangement = Arrangement.spacedBy(24.dp)
+                                ) {
+                                    Text(
+                                        text = "Brasil",
+                                        color = Color.Black,
+                                        fontSize = 14.sp,
+                                        fontWeight = FontWeight(200),
+                                    )
+
+                                    StarRatingBarFixed(rating = 3.0, starSize = 8)
+                                }
                             }
                         }
                     )
-
-                    StarRatingBarFixed(rating = 3.0, starSize = 8)
-
-                    Text(
-                        text = description,
-                        fontSize = 14.sp,
-                        color = Color.Black,
-                        fontWeight = FontWeight(200),
-                        textAlign = TextAlign.Justify,
-                        lineHeight = 16.sp,
-                        modifier = Modifier.padding(end = 8.dp)
-                    )
                 }
             }
+
+            Text(
+                text = description,
+                fontSize = 14.sp,
+                color = Color.Black,
+                fontWeight = FontWeight(200),
+                textAlign = TextAlign.Justify,
+                lineHeight = 24.sp,
+                modifier = Modifier.padding(
+                    bottom = 16.dp,
+                    top = 0.dp,
+                    start = 16.dp,
+                    end = 16.dp
+                )
+            )
         }
     )
 }

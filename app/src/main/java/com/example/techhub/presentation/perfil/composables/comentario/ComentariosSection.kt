@@ -3,6 +3,7 @@ package com.example.techhub.presentation.perfil.composables.comentario
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -63,4 +64,8 @@ fun ComentariosSection() {
             contentDescription = "Botão para carregar mais talentos"
         )
     }
+
+    ComentarioForm()
+
+    Spacer(modifier = Modifier.height(16.dp))
 }
