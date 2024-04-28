@@ -30,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -46,10 +47,9 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FlagDropDownMenu() {
+fun FlagDropDownMenu(flag: MutableState<String>) {
 
     val countryFlags = countryFlagsList.toList()
-    var flag by remember { mutableStateOf("") }
 
     var expanded by remember { mutableStateOf(false) }
     val interactionSource = remember { MutableInteractionSource() }
@@ -87,9 +87,9 @@ fun FlagDropDownMenu() {
                             color = Color.Black,
                             shape = RoundedCornerShape(4.dp),
                         ),
-                    value = flag,
+                    value = flag.value,
                     onValueChange = {
-                        flag = it
+                        flag.value = it
                         expanded = true
                     },
                     label = { Text("Digite para pesquisar") },
@@ -142,15 +142,15 @@ fun FlagDropDownMenu() {
                             .heightIn(max = 200.dp)
                             .background(Color.White)
                     ) {
-                        if (flag.isNotEmpty()) {
+                        if (flag.value.isNotEmpty()) {
                             items(
                                 countryFlags.filter {
                                     it.name.lowercase()
-                                        .contains(flag.lowercase()) || it.name.contains("others")
+                                        .contains(flag.value.lowercase()) || it.name.contains("others")
                                 }
                             ) {
                                 FlagItems(title = it.name) { title ->
-                                    flag = title
+                                    flag.value = title
                                     expanded = false
                                 }
                             }
@@ -159,7 +159,7 @@ fun FlagDropDownMenu() {
                                 countryFlags.sortedBy { it.name }
                             ) {
                                 FlagItems(title = it.name) { title ->
-                                    flag = title
+                                    flag.value = title
                                     expanded = false
                                 }
                             }
