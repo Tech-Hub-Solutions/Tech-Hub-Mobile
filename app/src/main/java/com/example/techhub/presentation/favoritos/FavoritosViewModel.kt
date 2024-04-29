@@ -19,8 +19,6 @@ class FavoritosViewModel(context: Context? = null) {
     val isLoading = MutableLiveData(true)
     private val toastErrorMessage = "Ops! Algo deu errado ao buscar favoritos."
 
-    private var token = "";
-
     private val usuarioApi = RetrofitService.getUsuarioService()
     private val perfilApi = RetrofitService.getPerfilService()
 
@@ -69,7 +67,7 @@ class FavoritosViewModel(context: Context? = null) {
     fun favoritarUsuario(id: Int?) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = perfilApi.favoritarTerceiro(token, id)
+                val response = perfilApi.favoritarTerceiro(id)
 
                 if (response.isSuccessful) {
                     Log.d("PUT USUARIOS/FAVORITOS", "Favoritado com sucesso")

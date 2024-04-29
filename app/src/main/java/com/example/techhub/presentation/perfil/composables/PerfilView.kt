@@ -56,6 +56,8 @@ fun PerfilView(id: Int, viewModel: PerfilViewModel = PerfilViewModel()) {
     val context = LocalContext.current
     val userInfo = viewModel.usuario.observeAsState().value!!
     val isLoading = viewModel.isLoading.observeAsState().value!!
+    val isLoadingPerfil = viewModel.isLoadingPerfil.observeAsState().value!!
+    val isLoadingWallpaper = viewModel.isLoadingWallpaper.observeAsState().value!!
 
     LaunchedEffect(Unit) {
         viewModel.getInfosUsuario(context = context, userId = id)
@@ -93,7 +95,7 @@ fun PerfilView(id: Int, viewModel: PerfilViewModel = PerfilViewModel()) {
                     modifier = Modifier
                         .fillMaxWidth()
                 ) {
-                    BannerImagePerfil(imagePath = com.example.techhub.R.mipmap.banner_perfil_image)
+                    BannerImagePerfil(imagePath = userInfo.urlFotoWallpaper)
 
                     Box(
                         modifier = Modifier
@@ -101,7 +103,7 @@ fun PerfilView(id: Int, viewModel: PerfilViewModel = PerfilViewModel()) {
                             .padding(top = 80.dp, start = 24.dp),
                         contentAlignment = Alignment.BottomStart,
                     ) {
-                        RoundedPerfilImage(imagePath = com.example.techhub.R.mipmap.rounded_perfil_image)
+                        RoundedPerfilImage(userInfo.urlFotoPerfil, isOwnProfile, perfilViewModel = viewModel, context, isLoadingPerfil)
                     }
 
                     Box(

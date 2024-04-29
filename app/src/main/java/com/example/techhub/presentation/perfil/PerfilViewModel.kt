@@ -5,17 +5,26 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.techhub.common.enums.TipoArquivo
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.domain.RetrofitService
+import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 
 class PerfilViewModel() : ViewModel() {
     private val apiPerfil = RetrofitService.getPerfilService()
     val usuario = MutableLiveData(PerfilGeralDetalhadoData())
     val isLoading = MutableLiveData(true)
+    val isLoadingPerfil = MutableLiveData(false)
+    val isLoadingWallpaper = MutableLiveData(false)
 
     fun getInfosUsuario(context: Context, userId: Int) {
         isLoading.postValue(true)
@@ -40,6 +49,50 @@ class PerfilViewModel() : ViewModel() {
                 }
                 Log.e("PERFIL_VIEW_MODEL", "ERROR: ${error.message}")
             } finally {
+                isLoading.postValue(false)
+            }
+        }
+    }
+
+    fun atualizarArquivo(context: Context, arquivo: File, tipoArquivo: TipoArquivo) {
+        if (tipoArquivo == TipoArquivo.WALLPAPER) {
+            isLoadingWallpaper.postValue(true)
+        } else {
+            isLoadingPerfil.postValue(true)
+        }
+
+        val toastErrorMessage = "Ops! Ocorreu um erro em seu perfil."
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val requestBody = arquivo.asRequestBody("image/*".toMediaTypeOrNull())
+                val filePart =
+                    MultipartBody.Part.createFormData("arquivo", arquivo.name, requestBody)
+                val tipoArquivoPart =
+                    MultipartBody.Part.createFormData("tipoArquivo", tipoArquivo.name)
+
+                val response = apiPerfil.atualizarArquivo(filePart, tipoArquivoPart)
+
+                if (response.isSuccessful) {
+                    getInfosUsuario(context, CurrentUser.userProfile?.id!!)
+                } else {
+                    Log.d("PERFIL_VIEW_MODEL", "ERROR: ${response.errorBody()?.string()}")
+                    (context as Activity).runOnUiThread {
+                        showToastError(context = context, message = toastErrorMessage)
+                    }
+                }
+
+            } catch (error: Exception) {
+                (context as Activity).runOnUiThread {
+                    showToastError(context = context, message = toastErrorMessage)
+                }
+                Log.e("PERFIL_VIEW_MODEL", "ERROR: ${error.message}")
+            } finally {
+                if (tipoArquivo == TipoArquivo.WALLPAPER) {
+                    isLoadingWallpaper.postValue(false)
+                } else {
+                    isLoadingPerfil.postValue(false)
+                }
                 isLoading.postValue(false)
             }
         }
