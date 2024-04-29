@@ -32,6 +32,8 @@ import androidx.compose.ui.unit.dp
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.data.prefdatastore.DataStoreManager
 import com.example.techhub.presentation.configUsuario.ConfiguracoesUsuarioActivity
+import com.example.techhub.presentation.editarUsuario.EditarUsuarioActivity
+import com.example.techhub.presentation.editarUsuario.EditarUsuarioView
 import com.example.techhub.presentation.login.LoginActivity
 import com.example.techhub.presentation.perfil.PerfilActivity
 import com.example.techhub.presentation.ui.theme.GrayTinyButton
@@ -73,7 +75,7 @@ fun ConfigDropDownMenu() {
                 { DropDownMenuRow(icon = Icons.Filled.Settings, text = "Configurações") },
                 onClick = {
                     expanded = false;
-                    startNewActivity(context, ConfiguracoesUsuarioActivity::class.java)
+                    startNewActivity(context, EditarUsuarioActivity::class.java)
                 }
             )
             DropdownMenuItem(
