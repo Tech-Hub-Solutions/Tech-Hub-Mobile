@@ -54,10 +54,10 @@ fun PerfilView(id: Int, viewModel: PerfilViewModel = PerfilViewModel()) {
     val isEmpresa = CurrentUser.isEmpresa
     val isOwnProfile = id == CurrentUser.userProfile?.id
     val context = LocalContext.current
-    val userInfo = viewModel.usuario.observeAsState().value!!
-    val isLoading = viewModel.isLoading.observeAsState().value!!
-    val isLoadingPerfil = viewModel.isLoadingPerfil.observeAsState().value!!
-    val isLoadingWallpaper = viewModel.isLoadingWallpaper.observeAsState().value!!
+    val userInfo = viewModel.usuario.observeAsState()
+    val isLoading = viewModel.isLoading.observeAsState();
+    val isLoadingPerfil = viewModel.isLoadingPerfil.observeAsState()
+    val isLoadingWallpaper = viewModel.isLoadingWallpaper.observeAsState()
 
     LaunchedEffect(Unit) {
         viewModel.getInfosUsuario(context = context, userId = id)
@@ -71,7 +71,7 @@ fun PerfilView(id: Int, viewModel: PerfilViewModel = PerfilViewModel()) {
         modifier = Modifier
             .fillMaxSize()
     ) { innerPadding ->
-        if (isLoading) {
+        if (isLoading.value!!) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -95,7 +95,7 @@ fun PerfilView(id: Int, viewModel: PerfilViewModel = PerfilViewModel()) {
                     modifier = Modifier
                         .fillMaxWidth()
                 ) {
-                    BannerImagePerfil(imagePath = userInfo.urlFotoWallpaper)
+                    BannerImagePerfil(imagePath = userInfo.value!!.urlFotoWallpaper, isLoadingWallpaper.value!!)
 
                     Box(
                         modifier = Modifier
@@ -103,7 +103,7 @@ fun PerfilView(id: Int, viewModel: PerfilViewModel = PerfilViewModel()) {
                             .padding(top = 80.dp, start = 24.dp),
                         contentAlignment = Alignment.BottomStart,
                     ) {
-                        RoundedPerfilImage(userInfo.urlFotoPerfil, isOwnProfile, perfilViewModel = viewModel, context, isLoadingPerfil)
+                        RoundedPerfilImage(userInfo.value!!.urlFotoPerfil, isOwnProfile, perfilViewModel = viewModel, context, isLoadingPerfil.value!!)
                     }
 
                     Box(
@@ -151,7 +151,7 @@ fun PerfilView(id: Int, viewModel: PerfilViewModel = PerfilViewModel()) {
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text(
-                            text = "${userInfo.nome}",
+                            text = "${userInfo.value!!.nome}",
                             fontSize = 24.sp,
                             color = Color.Black,
                             fontWeight = FontWeight(500),
@@ -165,7 +165,7 @@ fun PerfilView(id: Int, viewModel: PerfilViewModel = PerfilViewModel()) {
                         )
 
                         Text(
-                            text = "${userInfo.pais}",
+                            text = "${userInfo.value!!.pais}",
                             fontSize = 18.sp,
                             color = Color.Black,
                             fontWeight = FontWeight(200),
@@ -223,19 +223,19 @@ fun PerfilView(id: Int, viewModel: PerfilViewModel = PerfilViewModel()) {
                     if (!isEmpresa) {
                         TextContainer(
                             title = "Experiência",
-                            description = "${userInfo.experiencia}"
+                            description = "${userInfo.value!!.experiencia}"
                         )
                     }
 
                     TextContainer(
                         title = if (isEmpresa) "Sobre nós" else "Sobre mim",
-                        description = "${userInfo.sobreMim}"
+                        description = "${userInfo.value!!.sobreMim}"
                     )
 
                     if (isEmpresa) {
                         TextContainer(
                             title = "Quem procuramos",
-                            description = "${userInfo.descricao}"
+                            description = "${userInfo.value!!.descricao}"
                         )
                     }
 

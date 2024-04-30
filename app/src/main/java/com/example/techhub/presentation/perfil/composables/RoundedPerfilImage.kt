@@ -101,8 +101,10 @@ fun RoundedPerfilImageIcon() {
         contentDescription = "@string/btn_description_profile",
         tint = PrimaryBlue,
         modifier = Modifier
-            .size(115.dp)
+            .size(113.dp)
             .clip(CircleShape)
+            .background(Color(0xFFE4E4E4))
+            .padding(2.dp)
             .border(2.dp, Color.White.copy(alpha = 0.5f), CircleShape)
     )
 }

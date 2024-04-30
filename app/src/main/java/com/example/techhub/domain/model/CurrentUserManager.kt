@@ -32,6 +32,21 @@ fun updateCurrentUser(context: Context, usuarioTokenData: UsuarioTokenData) {
     }
 }
 
+fun updateFotoPerfil(context: Context, url: String) {
+    val dataStoreManager = DataStoreManager(context)
+
+    CoroutineScope(Dispatchers.Main).launch {
+        val data = DataStoreData(
+            userTokenJwt = CurrentUser.userTokenJwt!!,
+            urlProfileImage = url,
+            userProfile = CurrentUser.userProfile,
+            userFuncao = CurrentUser.isEmpresa
+        )
+        dataStoreManager.saveToDataStore(data)
+        updateCurrentUser(data)
+    }
+}
+
 fun updateCurrentUser(dataStoreData: DataStoreData) {
     Log.d("UpdateCurrentUser", dataStoreData.userTokenJwt)
     CurrentUser.userTokenJwt = dataStoreData.userTokenJwt

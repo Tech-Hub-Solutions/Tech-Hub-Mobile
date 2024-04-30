@@ -1,11 +1,11 @@
 package com.example.techhub.data.remote
 
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
+import com.example.techhub.domain.model.perfil.PerfilNewArquivo
 import com.example.techhub.domain.model.referencia.ReferenciaDetalhadoData
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.PUT
 import retrofit2.http.Part
@@ -25,5 +25,5 @@ interface PerfilApi {
     suspend fun atualizarArquivo(
         @Part arquivo: MultipartBody.Part,
         @Part tipoArquivo: MultipartBody.Part
-    ): Response<Void>
+    ): Response<PerfilNewArquivo>
 }

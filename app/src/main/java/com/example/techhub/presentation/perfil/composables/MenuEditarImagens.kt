@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
@@ -24,14 +23,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toFile
 import com.example.techhub.common.enums.TipoArquivo
+import com.example.techhub.common.utils.uriToFile
 import com.example.techhub.presentation.perfil.PerfilViewModel
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.File
-import java.io.FileOutputStream
 
 @Composable
 fun MenuEditarImagens(
@@ -49,25 +43,24 @@ fun MenuEditarImagens(
             expanded = expanded.value,
             onDismissRequest = { expanded.value = false },
         ) {
+            val tipoArquivo = remember { mutableStateOf(TipoArquivo.PERFIL) }
             val getContent =
                 rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { result: Uri? ->
                     result?.let { uri ->
-                        val inputStream = context.contentResolver.openInputStream(uri)
-                        val file = getFileName(context, uri)?.let { File(context.cacheDir, it) }
-                        val outputStream = FileOutputStream(file)
-                        inputStream.use { input ->
-                            outputStream.use { output ->
-                                input!!.copyTo(output)
-                            }
-                        }
+                        val file = uriToFile(context, uri);
                         if (file != null) {
-                            perfilViewModel.atualizarArquivo(context, file, TipoArquivo.PERFIL)
+                            perfilViewModel.atualizarArquivo(
+                                context,
+                                file,
+                                tipoArquivo.value
+                            )
                         }
                     }
                 }
 
             DropdownMenuItem(
                 onClick = {
+                    tipoArquivo.value = TipoArquivo.PERFIL
                     getContent.launch("image/*")
                 },
                 text = {
@@ -78,7 +71,10 @@ fun MenuEditarImagens(
                 }
             )
             DropdownMenuItem(
-                onClick = { },
+                onClick = {
+                    tipoArquivo.value = TipoArquivo.WALLPAPER
+                    getContent.launch("image/*")
+                },
                 text = {
                     Text("Editar Wallpaper")
                 },

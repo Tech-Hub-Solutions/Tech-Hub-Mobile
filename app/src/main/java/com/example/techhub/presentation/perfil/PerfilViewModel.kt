@@ -10,16 +10,16 @@ import com.example.techhub.common.utils.showToastError
 import com.example.techhub.domain.RetrofitService
 import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
+import com.example.techhub.domain.model.updateFotoPerfil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
-class PerfilViewModel() : ViewModel() {
+class PerfilViewModel : ViewModel() {
     private val apiPerfil = RetrofitService.getPerfilService()
     val usuario = MutableLiveData(PerfilGeralDetalhadoData())
     val isLoading = MutableLiveData(true)
@@ -74,7 +74,20 @@ class PerfilViewModel() : ViewModel() {
                 val response = apiPerfil.atualizarArquivo(filePart, tipoArquivoPart)
 
                 if (response.isSuccessful) {
-                    getInfosUsuario(context, CurrentUser.userProfile?.id!!)
+                    val url = response.body()!!.url
+
+                    usuario.postValue(usuario.value!!.apply {
+                        if (tipoArquivo == TipoArquivo.PERFIL) {
+                            CurrentUser.urlProfileImage = url
+                            updateFotoPerfil(context, url ?: "")
+                            urlFotoPerfil = url
+                        } else {
+                            urlFotoWallpaper = url
+                            usuario.value!!.urlFotoPerfil
+                        }
+
+                    })
+
                 } else {
                     Log.d("PERFIL_VIEW_MODEL", "ERROR: ${response.errorBody()?.string()}")
                     (context as Activity).runOnUiThread {
@@ -93,7 +106,6 @@ class PerfilViewModel() : ViewModel() {
                 } else {
                     isLoadingPerfil.postValue(false)
                 }
-                isLoading.postValue(false)
             }
         }
     }
