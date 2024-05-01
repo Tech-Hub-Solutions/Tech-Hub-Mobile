@@ -47,10 +47,17 @@ fun ComentariosSection(
     val comments = viewModel.comentariosDoUsuario.observeAsState().value?.toList()
     val page = remember { mutableStateOf(0) }
     val isLastPage = viewModel.isLastPage.observeAsState()
+    val comentarioUsuario = remember { mutableStateOf("") }
+    val rating = remember {mutableStateOf(1.0)}
 
     LaunchedEffect(Unit) {
         page.value = 0
-        viewModel.getComentariosDoUsuario(context = context, userId = userId!!, page = page.value, size = 5)
+        viewModel.getComentariosDoUsuario(
+            context = context,
+            userId = userId!!,
+            page = page.value,
+            size = 5
+        )
     }
 
     Column(modifier = Modifier.background(GrayLoadButton)) {
@@ -78,7 +85,7 @@ fun ComentariosSection(
             } else {
                 Log.d("COMENTARIOSECTION -> comentarios", comments.toString())
 
-                comments.forEach{
+                comments.forEach {
                     ComentarioCard(
                         userId = it.idAvaliador!!,
                         nome = it.avaliador!!,
@@ -97,7 +104,12 @@ fun ComentariosSection(
                 ) {
                     CustomizedElevatedButton(
                         onClick = {
-                            viewModel.getComentariosDoUsuario(context = context, userId = userId!!, page = ++page.value, size = 10)
+                            viewModel.getComentariosDoUsuario(
+                                context = context,
+                                userId = userId!!,
+                                page = ++page.value,
+                                size = 10
+                            )
                         },
                         horizontalPadding = 16,
                         verticalPadding = 8,
@@ -122,7 +134,11 @@ fun ComentariosSection(
 
     Spacer(modifier = Modifier.height(16.dp))
 
-    ComentarioForm()
+    ComentarioForm(
+        urlFoto = userInfo.value?.urlFotoPerfil!!,
+        filledText = comentarioUsuario,
+        rating = rating
+    )
 
     Spacer(modifier = Modifier.height(16.dp))
 
