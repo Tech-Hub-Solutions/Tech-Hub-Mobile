@@ -102,7 +102,10 @@ fun PerfilView(id: Int, viewModel: PerfilViewModel = PerfilViewModel()) {
                 )
 
                 // Seção de Comentários
-                ComentariosSection()
+                ComentariosSection(
+                    userInfo = userInfo,
+                    viewModel = viewModel,
+                    context = context)
             }
 
             Box(

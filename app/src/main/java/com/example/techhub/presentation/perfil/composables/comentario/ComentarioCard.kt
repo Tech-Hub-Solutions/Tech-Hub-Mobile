@@ -28,7 +28,12 @@ import coil.request.ImageRequest
 import com.example.techhub.common.composable.StarRatingBarFixed
 
 @Composable
-fun ComentarioCard(description: String) {
+fun ComentarioCard(
+    nome: String,
+    description: String,
+    urlFoto: String,
+    rating: Double,
+) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -39,7 +44,6 @@ fun ComentarioCard(description: String) {
             .wrapContentHeight()
             .background(color = Color.White),
         content = {
-            // TODO - Trazer nome e foto do usuário e rating do comentário
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -52,7 +56,7 @@ fun ComentarioCard(description: String) {
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data("https://angular.io/assets/images/logos/angular/angular.svg")
+                        .data(urlFoto)
                         .decoderFactory(SvgDecoder.Factory())
                         .build(),
                     contentDescription = "Angular Icon",
@@ -72,7 +76,7 @@ fun ComentarioCard(description: String) {
                         content = {
                             Column {
                                 Text(
-                                    text = "TechSolutions",
+                                    text = nome,
                                     color = Color.Black,
                                     fontSize = 18.sp,
                                     fontWeight = FontWeight(600),
