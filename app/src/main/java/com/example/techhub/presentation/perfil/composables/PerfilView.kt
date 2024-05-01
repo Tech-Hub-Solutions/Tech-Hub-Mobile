@@ -106,7 +106,8 @@ fun PerfilView(id: Int, viewModel: PerfilViewModel = PerfilViewModel(), gitHubVi
                 ComentariosSection(
                     userInfo = userInfo,
                     viewModel = viewModel,
-                    context = context)
+                    context = context,
+                    isOwnProfile = isOwnProfile)
             }
 
             Box(

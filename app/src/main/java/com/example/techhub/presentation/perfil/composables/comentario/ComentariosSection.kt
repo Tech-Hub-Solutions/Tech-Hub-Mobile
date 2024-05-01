@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.techhub.common.composable.CustomizedElevatedButton
 import com.example.techhub.common.composable.ElevatedButtonTH
+import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.domain.model.perfil.PerfilAvaliacaoDetalhadoData
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import com.example.techhub.presentation.perfil.PerfilViewModel
@@ -42,15 +43,23 @@ fun ComentariosSection(
     userInfo: State<PerfilGeralDetalhadoData?>,
     viewModel: PerfilViewModel,
     context: Context,
+    isOwnProfile: Boolean,
 ) {
     val userId = userInfo.value?.idUsuario
     val comments = viewModel.comentariosDoUsuario.observeAsState().value?.toList()
     val page = remember { mutableStateOf(0) }
     val isLastPage = viewModel.isLastPage.observeAsState()
+    val comentarioUsuario = remember { mutableStateOf("") }
+    val rating = remember { mutableStateOf(0.0) }
 
     LaunchedEffect(Unit) {
         page.value = 0
-        viewModel.getComentariosDoUsuario(context = context, userId = userId!!, page = page.value, size = 5)
+        viewModel.getComentariosDoUsuario(
+            context = context,
+            userId = userId!!,
+            page = page.value,
+            size = 5
+        )
     }
 
     Column(modifier = Modifier.background(GrayLoadButton)) {
@@ -78,7 +87,7 @@ fun ComentariosSection(
             } else {
                 Log.d("COMENTARIOSECTION -> comentarios", comments.toString())
 
-                comments.forEach{
+                comments.forEach {
                     ComentarioCard(
                         userId = it.idAvaliador!!,
                         nome = it.avaliador!!,
@@ -97,7 +106,12 @@ fun ComentariosSection(
                 ) {
                     CustomizedElevatedButton(
                         onClick = {
-                            viewModel.getComentariosDoUsuario(context = context, userId = userId!!, page = ++page.value, size = 10)
+                            viewModel.getComentariosDoUsuario(
+                                context = context,
+                                userId = userId!!,
+                                page = ++page.value,
+                                size = 10
+                            )
                         },
                         horizontalPadding = 16,
                         verticalPadding = 8,
@@ -122,15 +136,31 @@ fun ComentariosSection(
 
     Spacer(modifier = Modifier.height(16.dp))
 
-    ComentarioForm()
+    if (!isOwnProfile) {
+        ComentarioForm(
+            urlFoto = CurrentUser.urlProfileImage ?: "",
+            filledText = comentarioUsuario,
+            rating = rating
+        )
 
-    Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-    ElevatedButtonTH(
-        onClick = { /* TODO - Publicar comentário */ },
-        text = "Comentar",
-        backgroundColor = PrimaryBlue,
-        width = 160,
-        height = 40,
-    )
+        ElevatedButtonTH(
+            onClick = {
+                viewModel.setComentarioUsuario(
+                    context = context,
+                    avaliadoId = userId!!,
+                    comment = comentarioUsuario.value,
+                    rating = rating.value
+                )
+
+                rating.value = 0.0
+                comentarioUsuario.value = ""
+            },
+            text = "Comentar",
+            backgroundColor = PrimaryBlue,
+            width = 160,
+            height = 40,
+        )
+    }
 }
