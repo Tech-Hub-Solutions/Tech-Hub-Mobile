@@ -121,7 +121,7 @@ fun ConfiguracoesUsuarioView(
             ) {
                 Spacer(modifier = Modifier.padding(0.dp))
 
-                NameTextField { name = it }
+                NameTextField(onValueChanged = { name = it })
 
                 FlagDropDownMenu(nacionalidade)
 

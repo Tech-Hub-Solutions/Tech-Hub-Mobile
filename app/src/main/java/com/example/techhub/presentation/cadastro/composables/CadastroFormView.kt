@@ -165,7 +165,7 @@ fun CadastroFormView(
                 )
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                NameTextField { name = it }
+                NameTextField( onValueChanged = { name = it } )
 
                 Spacer(modifier = Modifier.padding(12.dp))
 

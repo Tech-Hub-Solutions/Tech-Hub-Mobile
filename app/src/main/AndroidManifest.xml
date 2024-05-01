@@ -48,6 +48,9 @@
         <activity
             android:name=".presentation.configUsuario.ConfiguracoesUsuarioActivity"
             android:theme="@style/Theme.TechHub" />
+        <activity
+            android:name=".presentation.editarUsuario.EditarUsuarioActivity"
+            android:theme="@style/Theme.TechHub" />
     </application>
 
 </manifest>

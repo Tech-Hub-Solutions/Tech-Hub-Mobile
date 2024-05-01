@@ -2,12 +2,14 @@ package com.example.techhub.common.composable
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -20,24 +22,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
-import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun NameTextField(onValueChanged: (String) -> Unit, initialValue: String = "") {
+fun DescriptionTextField(onValueChanged: (String) -> Unit, initialValue: String = "") {
     var filledText by remember { mutableStateOf(initialValue) }
     var isNameValid by remember { mutableStateOf(false) }
 
     Column {
-        OutlinedTextField(
+
+        androidx.compose.material3.OutlinedTextField(
             value = filledText,
             onValueChange = {
                 filledText = it
                 isNameValid = filledText.isBlank()
                 onValueChanged(filledText)
             },
-            label = { Text("Nome") },
-            placeholder = { Text("Digite seu nome") },
+            label = { Text("Descrição") },
+            placeholder = { Text("Descrição") },
             textStyle = LocalTextStyle.current.copy(
                 color = Color.Black,
                 fontSize = 16.sp
@@ -52,20 +54,17 @@ fun NameTextField(onValueChanged: (String) -> Unit, initialValue: String = "") {
             ),
             leadingIcon = {
                 Icon(
-                    imageVector = Icons.Filled.Person,
-                    contentDescription = "campo para o nome",
+                    imageVector = Icons.Filled.Description,
+                    contentDescription = "Campo descrição",
                     tint = Color(PrimaryBlue.value)
                 )
             },
             modifier = Modifier
-                .fillMaxWidth(),
-            singleLine = true,
+                .fillMaxWidth()
+                .wrapContentHeight(),
             isError = isNameValid,
-            supportingText = {
-                if (filledText.isBlank() && isNameValid) Text("É necessário preencher o nome")
-            },
             keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Email,
+                keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Go
             ),
         )

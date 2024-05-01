@@ -1,6 +1,7 @@
 package com.example.techhub.common.composable
 
 import android.content.Context
+import android.os.Bundle
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -18,6 +19,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.techhub.common.utils.startNewActivity
+import com.example.techhub.domain.model.CurrentUser
+import com.example.techhub.presentation.perfil.PerfilActivity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,8 +43,19 @@ fun TopBar(
         requireNotNull(activity) { "Activity must not be null when willRedirectToActivity is true" }
         requireNotNull(context) { "Context must not be null when willRedirectToActivity is true" }
 
+        var extras = Bundle()
+
+        if (activity == PerfilActivity::class.java) {
+            extras.putInt("id", CurrentUser.userProfile!!.id!!)
+        }
         navigationIcon = {
-            IconButton(onClick = { startNewActivity(context!!, activity!!) }) {
+            IconButton(onClick = {
+                startNewActivity(
+                    context,
+                    activity,
+                    bundle = extras
+                )
+            }) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBackIos,
                     contentDescription = "botão de retornar ao início",

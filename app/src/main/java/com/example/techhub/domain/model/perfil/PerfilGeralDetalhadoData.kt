@@ -2,6 +2,7 @@ package com.example.techhub.domain.model.perfil
 
 import com.example.techhub.domain.model.flag.FlagData
 import com.example.techhub.common.enums.UsuarioFuncao
+import java.io.Serializable
 
 
 data class PerfilGeralDetalhadoData(
@@ -26,4 +27,4 @@ data class PerfilGeralDetalhadoData(
     var qtdFavoritos: Long? = null,
     var isRecomendado: Boolean? = null,
     var qtdRecomendacoes: Long? = null,
-)
+) : Serializable
