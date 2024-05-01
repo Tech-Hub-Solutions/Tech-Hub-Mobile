@@ -27,11 +27,11 @@ fun AvaliacaoSection(
     context: Context
 ) {
     val avaliacoes = viewModel.avaliacoesDoUsuario.observeAsState()
-    var totalAvaliacoes = avaliacoes.value!!.sumOf { it.quantidade?.toInt() ?: 0 }
-    totalAvaliacoes = if (totalAvaliacoes == 0) 1 else totalAvaliacoes
+    val totalAvaliacoes = avaliacoes.value!!.sumOf { it.quantidade?.toInt() ?: 0 }
+    val totalAvaliacoesToDivide = if (totalAvaliacoes == 0) 1 else totalAvaliacoes
     val totalAvaliacoesPorEstrela =
         avaliacoes.value!!.sumOf { (it.quantidade?.toInt() ?: 0) * (it.qtdEstrela ?: 1) }
-    val totalRating = (totalAvaliacoesPorEstrela.toDouble() / totalAvaliacoes).roundToInt()
+    val totalRating = (totalAvaliacoesPorEstrela.toDouble() / totalAvaliacoesToDivide).roundToInt()
 
     LaunchedEffect(Unit) {
         viewModel.getAvaliacoesDoUsuario(context, usuarioId)
