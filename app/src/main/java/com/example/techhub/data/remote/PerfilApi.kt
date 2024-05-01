@@ -1,5 +1,6 @@
 package com.example.techhub.data.remote
 
+import com.example.techhub.domain.model.avaliacao.AvaliacaoTotalData
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import com.example.techhub.domain.model.perfil.PerfilNewArquivo
 import com.example.techhub.domain.model.referencia.ReferenciaDetalhadoData
@@ -31,4 +32,9 @@ interface PerfilApi {
     suspend fun recomendarUsuario(
         @Path("usuarioId") usuarioId: Int
     ): Response<Void>
+
+    @GET("perfis/avaliacao/geral/{usuarioId}")
+    suspend fun getAvaliacoesUsuario(
+        @Path("usuarioId") usuarioId: Int
+    ): Response<List<AvaliacaoTotalData>>
 }

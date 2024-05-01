@@ -9,6 +9,7 @@ import com.example.techhub.common.enums.TipoArquivo
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.domain.RetrofitService
 import com.example.techhub.domain.model.CurrentUser
+import com.example.techhub.domain.model.avaliacao.AvaliacaoTotalData
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import com.example.techhub.domain.model.updateFotoPerfil
 import kotlinx.coroutines.CoroutineScope
@@ -25,6 +26,7 @@ class PerfilViewModel : ViewModel() {
     val isLoading = MutableLiveData(true)
     val isLoadingPerfil = MutableLiveData(false)
     val isLoadingWallpaper = MutableLiveData(false)
+    val avaliacoesDoUsuario = MutableLiveData(listOf(AvaliacaoTotalData()))
 
     fun getInfosUsuario(context: Context, userId: Int) {
         isLoading.postValue(true)
@@ -140,6 +142,30 @@ class PerfilViewModel : ViewModel() {
                 val response = apiPerfil.recomendarUsuario(usuarioId)
 
                 if (!response.isSuccessful) {
+                    (context as Activity).runOnUiThread {
+                        showToastError(context = context, message = toastErrorMessage)
+                    }
+                }
+
+            } catch (error: Exception) {
+                (context as Activity).runOnUiThread {
+                    showToastError(context = context, message = toastErrorMessage)
+                }
+                Log.e("PERFIL_VIEW_MODEL", "ERROR: ${error.message}")
+            }
+        }
+    }
+
+    fun getAvaliacoesDoUsuario(context: Context, userId: Int) {
+        val toastErrorMessage = "Ops! Ocorreu um erro ao buscar as avaliações do perfil."
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = apiPerfil.getAvaliacoesUsuario(userId)
+
+                if (response.isSuccessful) {
+                    avaliacoesDoUsuario.postValue(response.body()!!)
+                } else {
                     (context as Activity).runOnUiThread {
                         showToastError(context = context, message = toastErrorMessage)
                     }

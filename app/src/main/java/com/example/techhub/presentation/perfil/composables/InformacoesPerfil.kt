@@ -95,8 +95,11 @@ fun InformacoesPerfil(
         }
 
         // Seção de Avaliações
-        // "isFavorito":true,"qtdFavoritos":1,"isRecomendado":false,"qtdRecomendacoes":0}
-        AvaliacaoSection(totalRating = 4.0)
+        AvaliacaoSection(
+            usuarioId = userInfo.value!!.idUsuario!!,
+            viewModel = viewModel,
+            context = context
+        )
 
         Divider(
             color = Color.LightGray.copy(alpha = 0.4f),
