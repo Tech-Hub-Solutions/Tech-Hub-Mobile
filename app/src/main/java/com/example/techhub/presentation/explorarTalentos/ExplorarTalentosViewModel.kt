@@ -26,11 +26,11 @@ class ExplorarTalentosViewModel : ViewModel() {
     private val usuarioApi = RetrofitService.getUsuarioService()
     private val flagsApi = RetrofitService.getFlagService()
 
-    fun getTalentos(page: Int, size: Int, ordem: String, usuarioFiltroData: UsuarioFiltroData) {
+    fun getTalentos(page: Int, size: Int, usuarioFiltroData: UsuarioFiltroData) {
         if (page == 0) isLoading.postValue(true)
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = usuarioApi.getTalentos(page, size, ordem, usuarioFiltroData)
+                val response = usuarioApi.getTalentos(page, size, usuarioFiltroData)
 
                 if (response.isSuccessful) {
                     val responsePage = response.body()
