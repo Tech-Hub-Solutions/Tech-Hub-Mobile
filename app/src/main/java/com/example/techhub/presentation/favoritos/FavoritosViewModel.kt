@@ -12,7 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class FavoritosViewModel(context: Context? = null) {
+class FavoritosViewModel() {
     val favoritos = MutableLiveData(SnapshotStateList<UsuarioFavoritoData>())
     val erroApi = MutableLiveData("")
     val isLastPage = MutableLiveData(false)
@@ -22,9 +22,6 @@ class FavoritosViewModel(context: Context? = null) {
     private val usuarioApi = RetrofitService.getUsuarioService()
     private val perfilApi = RetrofitService.getPerfilService()
 
-    init {
-        getFavoriteUsers(0, 10, "", "avaliacao,desc", context!!)
-    }
 
     fun getFavoriteUsers(page: Int, size: Int, sort: String, ordem: String, context: Context) {
         isLoading.postValue(true)

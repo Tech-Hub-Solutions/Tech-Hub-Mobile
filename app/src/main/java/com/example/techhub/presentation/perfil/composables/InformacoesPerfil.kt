@@ -39,12 +39,14 @@ fun InformacoesPerfil(
             description = userInfo.value!!.sobreMim ?: "sem descrição"
         )
 
-        TagsSection(
-            title = if (isEmpresa) "Valores" else "Soft Skills",
-            flags = userInfo.value!!.flags!!.filter {
-                it.categoria == "soft-skill"
-            }
-        )
+        userInfo.value!!.flags?.filter {
+            it.categoria == "soft-skill"
+        }?.let {
+            TagsSection(
+                title = if (isEmpresa) "Valores" else "Soft Skills",
+                flags = it
+            )
+        }
 
         Divider(
             color = Color.LightGray.copy(alpha = 0.4f),

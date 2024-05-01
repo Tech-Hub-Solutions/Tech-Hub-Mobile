@@ -41,7 +41,7 @@ import com.example.techhub.presentation.ui.theme.GrayText
 @Composable
 fun FavoriteUsers(
     context: Context,
-    viewModel: FavoritosViewModel = FavoritosViewModel(context),
+    viewModel: FavoritosViewModel = FavoritosViewModel(),
     ordem: MutableState<String>,
     selectedUsers: SnapshotStateList<UsuarioFavoritoData>,
     isAbleToCompare: MutableState<Boolean>,
@@ -52,6 +52,10 @@ fun FavoriteUsers(
     val isLastPage = viewModel.isLastPage.observeAsState().value!!
 
     val page = remember { mutableStateOf(0) }
+
+    LaunchedEffect(Unit) {
+        viewModel.getFavoriteUsers(0, 10, "", "avaliacao,desc", context)
+    }
 
     LaunchedEffect(ordem.value) {
         page.value = 0

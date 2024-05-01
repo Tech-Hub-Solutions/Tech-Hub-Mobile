@@ -82,7 +82,7 @@ fun UserCard(
             .then(modifier),
         shape = RectangleShape,
         onClick = {
-            if (isComparing && isAbleToCompare!!.value) {
+            if (isComparing && isAbleToCompare?.value == true) {
                 if (selectedUsers != null && selectedUsers.size < 2 ||
                     selectedUsers != null && selectedUsers.contains(userProfile)
                 ) {

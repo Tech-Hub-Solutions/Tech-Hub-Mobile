@@ -9,14 +9,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.UploadFile
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
@@ -33,6 +37,9 @@ fun TopoDoPerfil(
     viewModel: PerfilViewModel,
     context: Context
 ) {
+    val isFavorito = remember {
+        mutableStateOf(userInfo.value!!.isFavorito == true)
+    }
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -64,13 +71,23 @@ fun TopoDoPerfil(
             contentAlignment = Alignment.BottomEnd,
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                // TODO - Add lógica de que se não for o perfil da pessoa, mostrar o icone de favoritos
                 if (!isOwnProfile && !isEmpresa && CurrentUser.isEmpresa) {
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = {
+                        viewModel.favoritarPerfil(context, userInfo.value!!.idUsuario!!)
+                        isFavorito.value = !isFavorito.value
+                    }) {
+                        var icon = Icons.Outlined.FavoriteBorder
+                        var color = PrimaryBlue
+
+                        if(isFavorito.value) {
+                            icon = Icons.Filled.Favorite
+                            color = Color(0xFFD32F2F)
+                        }
+
                         Icon(
-                            imageVector = Icons.Outlined.FavoriteBorder,
-                            contentDescription = "Currículo",
-                            tint = PrimaryBlue,
+                            imageVector = icon,
+                            contentDescription = "Favoritar",
+                            tint = color,
                             modifier = Modifier.size(34.dp)
                         )
                     }

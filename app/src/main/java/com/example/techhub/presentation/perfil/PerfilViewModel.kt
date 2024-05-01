@@ -110,4 +110,26 @@ class PerfilViewModel : ViewModel() {
         }
     }
 
+    fun favoritarPerfil(context: Context, idUsuario: Int) {
+        val toastErrorMessage = "Ops! Ocorreu um erro ao favoritar o perfil."
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = apiPerfil.favoritarTerceiro(idUsuario)
+
+                if (!response.isSuccessful) {
+                    (context as Activity).runOnUiThread {
+                        showToastError(context = context, message = toastErrorMessage)
+                    }
+                }
+
+            } catch (error: Exception) {
+                (context as Activity).runOnUiThread {
+                    showToastError(context = context, message = toastErrorMessage)
+                }
+                Log.e("PERFIL_VIEW_MODEL", "ERROR: ${error.message}")
+            }
+        }
+    }
+
 }
