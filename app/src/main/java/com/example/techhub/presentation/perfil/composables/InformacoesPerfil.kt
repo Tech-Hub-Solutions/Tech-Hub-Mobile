@@ -64,12 +64,14 @@ fun InformacoesPerfil(
         )
 
         if (!isEmpresa) {
-            TagsSection(
-                title = "Hard Skills",
-                flags = userInfo.value!!.flags!!.filter {
-                    it.categoria == "hard-skill"
-                }
-            )
+            userInfo.value!!.flags?.filter {
+                it.categoria == "hard-skill"
+            }?.let {
+                TagsSection(
+                    title = "Hard Skills",
+                    flags = it
+                )
+            }
             Divider(
                 color = Color.LightGray.copy(alpha = 0.4f),
                 thickness = 1.dp,

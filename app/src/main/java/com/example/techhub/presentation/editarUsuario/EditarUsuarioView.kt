@@ -1,5 +1,6 @@
 package com.example.techhub.presentation.editarUsuario
 
+import android.os.Bundle
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -37,11 +38,14 @@ import com.example.techhub.common.composable.LinkedinTextField
 import com.example.techhub.common.composable.NameTextField
 import com.example.techhub.common.composable.PriceTextField
 import com.example.techhub.common.composable.TopBar
+import com.example.techhub.common.utils.startNewActivity
+import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.presentation.perfil.PerfilActivity
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
 fun EditarUsuarioView() {
+    val context = LocalContext.current
     var name by remember { mutableStateOf("") }
     var descricao by remember { mutableStateOf("") }
     var experiencia by remember { mutableStateOf("") }
@@ -139,7 +143,11 @@ fun EditarUsuarioView() {
                 Spacer(modifier = Modifier.padding(12.dp))
 
                 ElevatedButton(
-                    onClick = { },
+                    onClick = {
+                        val extras = Bundle()
+                        extras.putInt("id", CurrentUser.userProfile!!.id!!)
+                        startNewActivity(context, PerfilActivity::class.java, extras)
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp),
