@@ -1,6 +1,7 @@
 package com.example.techhub.presentation.perfil.composables.comentario
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -9,14 +10,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -26,6 +33,7 @@ import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.example.techhub.common.composable.StarRatingBarFixed
+import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
 fun ComentarioCard(
@@ -54,16 +62,33 @@ fun ComentarioCard(
                         end = 16.dp
                     ),
             ) {
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(urlFoto)
-                        .decoderFactory(SvgDecoder.Factory())
-                        .build(),
-                    contentDescription = "Angular Icon",
-                    modifier = Modifier
-                        .padding(end = 12.dp)
-                        .size(45.dp)
-                )
+                if (urlFoto.isNullOrBlank()) {
+                    Icon(
+                        Icons.Filled.Person,
+                        contentDescription = "@string/btn_description_profile",
+                        tint = PrimaryBlue,
+                        modifier = Modifier
+                            .padding(end = 12.dp)
+                            .size(45.dp)
+                            .clip(CircleShape)
+                            .background(Color(0xFFE4E4E4))
+                            .padding(2.dp)
+                            .border(2.dp, Color.White.copy(alpha = 0.5f), CircleShape)
+                    )
+                } else {
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(urlFoto)
+                            .decoderFactory(SvgDecoder.Factory())
+                            .build(),
+                        contentDescription = "Angular Icon",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .padding(end = 12.dp)
+                            .size(45.dp)
+                            .clip(CircleShape)
+                    )
+                }
 
                 Column(
                     modifier = Modifier,
