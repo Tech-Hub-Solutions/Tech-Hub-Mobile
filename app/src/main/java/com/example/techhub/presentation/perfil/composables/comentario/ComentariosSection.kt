@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.techhub.common.composable.CustomizedElevatedButton
 import com.example.techhub.common.composable.ElevatedButtonTH
+import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.domain.model.perfil.PerfilAvaliacaoDetalhadoData
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import com.example.techhub.presentation.perfil.PerfilViewModel
@@ -42,13 +43,14 @@ fun ComentariosSection(
     userInfo: State<PerfilGeralDetalhadoData?>,
     viewModel: PerfilViewModel,
     context: Context,
+    isOwnProfile: Boolean,
 ) {
     val userId = userInfo.value?.idUsuario
     val comments = viewModel.comentariosDoUsuario.observeAsState().value?.toList()
     val page = remember { mutableStateOf(0) }
     val isLastPage = viewModel.isLastPage.observeAsState()
     val comentarioUsuario = remember { mutableStateOf("") }
-    val rating = remember {mutableStateOf(1.0)}
+    val rating = remember { mutableStateOf(0.0) }
 
     LaunchedEffect(Unit) {
         page.value = 0
@@ -134,19 +136,31 @@ fun ComentariosSection(
 
     Spacer(modifier = Modifier.height(16.dp))
 
-    ComentarioForm(
-        urlFoto = userInfo.value?.urlFotoPerfil!!,
-        filledText = comentarioUsuario,
-        rating = rating
-    )
+    if (!isOwnProfile) {
+        ComentarioForm(
+            urlFoto = CurrentUser.urlProfileImage ?: "",
+            filledText = comentarioUsuario,
+            rating = rating
+        )
 
-    Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-    ElevatedButtonTH(
-        onClick = { /* TODO - Publicar comentário */ },
-        text = "Comentar",
-        backgroundColor = PrimaryBlue,
-        width = 160,
-        height = 40,
-    )
+        ElevatedButtonTH(
+            onClick = {
+                viewModel.setComentarioUsuario(
+                    context = context,
+                    avaliadoId = userId!!,
+                    comment = comentarioUsuario.value,
+                    rating = rating.value
+                )
+
+                rating.value = 0.0
+                comentarioUsuario.value = ""
+            },
+            text = "Comentar",
+            backgroundColor = PrimaryBlue,
+            width = 160,
+            height = 40,
+        )
+    }
 }

@@ -47,7 +47,6 @@ fun ComentarioForm(
     filledText: MutableState<String>,
     rating: MutableState<Double>
 ) {
-
     Column(modifier = Modifier
         .padding(16.dp)) {
         Row(
@@ -92,9 +91,9 @@ fun ComentarioForm(
 
                 StarBarWithVariableRating(
                     maxStars = 5,
-                    rating = rating.value,
+                    rating = rating,
                     onRatingChanged = {
-                        it
+                        rating.value = it
                     },
                     size = 8
                 )
@@ -104,7 +103,7 @@ fun ComentarioForm(
         OutlinedTextField(
             value = filledText.value,
             onValueChange = {
-                it
+                filledText.value = it
             },
             label = { Text("Comentário") },
             placeholder = { Text("adicionar comentário") },

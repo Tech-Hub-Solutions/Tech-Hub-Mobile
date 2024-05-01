@@ -10,6 +10,7 @@ import com.example.techhub.common.enums.TipoArquivo
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.domain.RetrofitService
 import com.example.techhub.domain.model.CurrentUser
+import com.example.techhub.domain.model.avaliacao.AvaliacaoData
 import com.example.techhub.domain.model.avaliacao.AvaliacaoTotalData
 import com.example.techhub.domain.model.perfil.PerfilAvaliacaoDetalhadoData
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
@@ -219,5 +220,38 @@ class PerfilViewModel : ViewModel() {
         }
     }
 
+    fun setComentarioUsuario(context: Context, avaliadoId: Int, comment: String, rating: Double){
+        val toastErrorMessage = "Ops! Ocorreu um erro ao fazer um comentario!"
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try{
+                val response = apiPerfil.setComentariosUsuario(
+                    avaliadoId,
+                    AvaliacaoData(
+                        comentario = comment,
+                        qtdEstrela = rating.toInt()
+                    )
+                )
+
+                if (response.isSuccessful) {
+                    Log.d("PERFIL_VIEW_MODEL", "Comentario realizado com sucesso")
+                    (context as Activity).runOnUiThread {
+                        showToastError(context = context, message = "Comentário realizado com sucesso!")
+                    }
+                    comentariosDoUsuario.value?.add(0,response.body()!!)
+                } else {
+                    (context as Activity).runOnUiThread {
+                        showToastError(context = context, message = toastErrorMessage)
+                    }
+                }
+            } catch (error: Exception) {
+                (context as Activity).runOnUiThread {
+                    showToastError(context = context, message = toastErrorMessage)
+                }
+                Log.e("PERFIL_VIEW_MODEL", "ERROR: ${error.message}")
+            }
+        }
+
+    }
 
 }

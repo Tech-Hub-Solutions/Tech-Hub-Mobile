@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,7 +21,7 @@ import com.example.techhub.presentation.ui.theme.GrayAccordionRowText
 @Composable
 fun StarBarWithVariableRating(
     maxStars: Int = 5,
-    rating: Double,
+    rating: MutableState<Double>,
     onRatingChanged: (Double) -> Unit,
     size: Int
 ) {
@@ -33,7 +34,7 @@ fun StarBarWithVariableRating(
         verticalAlignment = Alignment.CenterVertically
     ) {
         for (i in 1..maxStars) {
-            val isSelected = i <= rating
+            val isSelected = i <= rating.value
             val icon = if (isSelected) Icons.Filled.Star else Icons.Default.Star
             val iconTintColor =
                 if (isSelected) Color(0xFFFFC700) else Color(GrayAccordionRowText.value)
