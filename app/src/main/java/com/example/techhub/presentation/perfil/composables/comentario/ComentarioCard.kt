@@ -119,7 +119,7 @@ fun ComentarioCard(
                                         fontWeight = FontWeight(200),
                                     )
 
-                                    StarRatingBarFixed(rating = 3.0, starSize = 8)
+                                    StarRatingBarFixed(rating = rating, starSize = 8)
                                 }
                             }
                         }
