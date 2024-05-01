@@ -34,6 +34,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.MutableLiveData
+import androidx.navigation.NavController
+import com.example.techhub.common.Screen
 import com.example.techhub.common.composable.EmailTextField
 import com.example.techhub.common.composable.FlagDropDownMenu
 import com.example.techhub.common.composable.NameTextField
@@ -44,6 +47,7 @@ import com.example.techhub.common.utils.showToastError
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.data.prefdatastore.DataStoreManager
 import com.example.techhub.domain.model.usuario.UsuarioAtualizacaoData
+import com.example.techhub.domain.model.usuario.UsuarioSimpleVerifyData
 import com.example.techhub.presentation.configUsuario.ConfiguracoesUsuarioViewModel
 import com.example.techhub.presentation.login.LoginActivity
 import com.example.techhub.presentation.perfil.PerfilActivity
@@ -56,7 +60,10 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ConfiguracoesUsuarioView() {
+fun ConfiguracoesUsuarioView(
+    navController: NavController,
+    usuarioSimpleVerifyData: MutableLiveData<UsuarioSimpleVerifyData>
+) {
     val context = LocalContext.current
     val isEmpresa = false
     var dataStoreManager = DataStoreManager(context)
@@ -157,7 +164,15 @@ fun ConfiguracoesUsuarioView() {
                             Log.e("Error", "Erro ao atualizar")
                         } else {
                             if (usuarioTokenData.isUsing2FA!!) {
-
+                                usuarioSimpleVerifyData.postValue(
+                                    UsuarioSimpleVerifyData(
+                                        email = email,
+                                        senha = password,
+                                        encodedUrl = usuarioTokenData.secretQrCodeUrl!!,
+                                        secretKey = usuarioTokenData.secret!!
+                                    )
+                                )
+                                navController.navigate(Screen.ConfiguracoesUsuarioFirstAuthView.route)
                             } else {
                                 CoroutineScope(Dispatchers.IO).launch {
                                     delay(1000L)
