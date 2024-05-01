@@ -26,4 +26,9 @@ interface PerfilApi {
         @Part arquivo: MultipartBody.Part,
         @Part tipoArquivo: MultipartBody.Part
     ): Response<PerfilNewArquivo>
+
+    @PUT("perfis/recomendar/{usuarioId}")
+    suspend fun recomendarUsuario(
+        @Path("usuarioId") usuarioId: Int
+    ): Response<Void>
 }

@@ -1,5 +1,6 @@
 package com.example.techhub.presentation.perfil.composables
 
+import android.content.Context
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -15,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
+import com.example.techhub.presentation.perfil.PerfilViewModel
 import com.example.techhub.presentation.perfil.composables.avaliacao.AvaliacaoSection
 import com.example.techhub.presentation.perfil.composables.informacoesAdicionais.InformacoesAdicionaisSection
 
@@ -22,7 +24,10 @@ import com.example.techhub.presentation.perfil.composables.informacoesAdicionais
 @Composable
 fun InformacoesPerfil(
     userInfo: State<PerfilGeralDetalhadoData?>,
-    isEmpresa: Boolean
+    isOwnProfile: Boolean,
+    isEmpresa: Boolean,
+    viewModel: PerfilViewModel,
+    context: Context
 ) {
     Column(
         modifier = Modifier
@@ -90,6 +95,7 @@ fun InformacoesPerfil(
         }
 
         // Seção de Avaliações
+        // "isFavorito":true,"qtdFavoritos":1,"isRecomendado":false,"qtdRecomendacoes":0}
         AvaliacaoSection(totalRating = 4.0)
 
         Divider(
@@ -100,9 +106,13 @@ fun InformacoesPerfil(
 
         // Seção de Informações Adicionais
         InformacoesAdicionaisSection(
-            projetosFinalizados = 10,
-            empresasInteressadas = 5,
-            recomendacoes = 3
+            isOwnProfile = isOwnProfile,
+            usuarioId = userInfo.value!!.idUsuario!!,
+            empresasInteressadas = userInfo.value!!.qtdFavoritos?.toInt() ?: 0,
+            recomendacoes = userInfo.value!!.qtdRecomendacoes?.toInt() ?: 0,
+            isRecomendado = userInfo.value!!.isRecomendado ?: false,
+            viewModel = viewModel,
+            context = context
         )
     }
 }

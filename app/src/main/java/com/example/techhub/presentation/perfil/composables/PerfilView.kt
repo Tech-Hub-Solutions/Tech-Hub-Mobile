@@ -95,7 +95,10 @@ fun PerfilView(id: Int, viewModel: PerfilViewModel = PerfilViewModel()) {
                 // Column das informações pós header/banner
                 InformacoesPerfil(
                     userInfo = userInfo,
-                    isEmpresa = isEmpresa
+                    isOwnProfile = isOwnProfile,
+                    isEmpresa = isEmpresa,
+                    viewModel = viewModel,
+                    context = context
                 )
 
                 // Seção de Comentários

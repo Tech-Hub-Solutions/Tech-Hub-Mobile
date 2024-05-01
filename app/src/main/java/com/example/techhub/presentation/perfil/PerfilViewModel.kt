@@ -132,4 +132,26 @@ class PerfilViewModel : ViewModel() {
         }
     }
 
+    fun recomendarUsuario(context:Context, usuarioId: Int) {
+        val toastErrorMessage = "Ops! Ocorreu um erro ao recomendar o perfil."
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = apiPerfil.recomendarUsuario(usuarioId)
+
+                if (!response.isSuccessful) {
+                    (context as Activity).runOnUiThread {
+                        showToastError(context = context, message = toastErrorMessage)
+                    }
+                }
+
+            } catch (error: Exception) {
+                (context as Activity).runOnUiThread {
+                    showToastError(context = context, message = toastErrorMessage)
+                }
+                Log.e("PERFIL_VIEW_MODEL", "ERROR: ${error.message}")
+            }
+        }
+    }
+
 }
