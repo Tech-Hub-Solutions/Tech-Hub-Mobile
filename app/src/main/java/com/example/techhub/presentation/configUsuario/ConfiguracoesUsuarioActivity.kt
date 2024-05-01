@@ -11,8 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import com.example.techhub.common.Screen
 import com.example.techhub.composable.SetBarColor
+import com.example.techhub.domain.navigation.nav_graph.cadastroGraph
 import com.example.techhub.presentation.configUsuario.composables.ConfiguracoesUsuarioView
+import com.example.techhub.presentation.configUsuario.composables.configuracoesUsuarioGraph
 import com.example.techhub.presentation.perfil.composables.PerfilView
 import com.example.techhub.presentation.ui.theme.TechHubTheme
 
@@ -27,7 +32,13 @@ class ConfiguracoesUsuarioActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ConfiguracoesUsuarioView()
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination = Screen.ConfiguracoesUsuarioGraph.route
+                    ) {
+                        configuracoesUsuarioGraph(navController)
+                    }
                 }
             }
         }
