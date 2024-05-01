@@ -40,9 +40,7 @@ fun ProjetosDesenvolvidos(
     val text = remember { mutableStateOf("") }
 
     LaunchedEffect(nomeGitHub) {
-        if (nomeGitHub.isNullOrBlank()) {
-            text.value = "Usuário não cadastrou seu GitHub."
-        } else {
+        if (!nomeGitHub.isNullOrBlank()) {
             viewModel.getRepositorios(context, nomeGitHub)
         }
     }
@@ -60,7 +58,7 @@ fun ProjetosDesenvolvidos(
     }
 
 
-    if (text.value.isNotBlank()) {
+    if (text.value.isNotBlank() || nomeGitHub.isNullOrBlank()) {
         Row(
             modifier = Modifier
                 .background(Color(0xFFF5F5F5))
@@ -71,7 +69,7 @@ fun ProjetosDesenvolvidos(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = text.value,
+                text = if(nomeGitHub.isNullOrBlank()) "Usuário não cadastrou seu GitHub." else text.value,
                 color = Color(0xFF8D8B8B),
                 textAlign = TextAlign.Center
             )
