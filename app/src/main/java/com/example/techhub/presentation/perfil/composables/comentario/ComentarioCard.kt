@@ -22,6 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -107,34 +108,34 @@ fun ComentarioCard(
                     TextButton(
                         onClick = {
                             val extras = Bundle()
-                            extras.putInt("id", userId!!)
+                            extras.putInt("id", userId)
                             startNewActivity(context, PerfilActivity::class.java, extras)
                         },
                         shape = RoundedCornerShape(0.dp),
                         contentPadding = PaddingValues(horizontal = 0.dp),
                         content = {
                             Column {
-                                Text(
-                                    text = nome,
-                                    color = Color.Black,
-                                    fontSize = 18.sp,
-                                    fontWeight = FontWeight(600),
-                                    modifier = Modifier.padding(0.dp),
-                                )
 
                                 Row(
                                     modifier = Modifier,
-                                    horizontalArrangement = Arrangement.spacedBy(24.dp)
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                    verticalAlignment = Alignment.CenterVertically
                                 ) {
+                                    Text(
+                                        text = nome,
+                                        color = Color.Black,
+                                        fontSize = 18.sp,
+                                        fontWeight = FontWeight(600),
+                                        modifier = Modifier.padding(0.dp),
+                                    )
                                     Text(
                                         text = countriesEmoji.countries.get(pais) ?: "🌍",
                                         color = Color.Black,
                                         fontSize = 14.sp,
                                         fontWeight = FontWeight(200),
                                     )
-
-                                    StarRatingBarFixed(rating = rating, starSize = 8)
                                 }
+                                StarRatingBarFixed(rating = rating, starSize = 8)
                             }
                         }
                     )
