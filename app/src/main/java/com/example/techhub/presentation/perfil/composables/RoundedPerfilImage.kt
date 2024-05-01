@@ -1,7 +1,6 @@
 package com.example.techhub.presentation.perfil.composables
 
 import android.content.Context
-import android.security.identity.AccessControlProfile
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -11,20 +10,25 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.techhub.common.utils.shadowCustom
 import com.example.techhub.presentation.perfil.PerfilViewModel
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
@@ -68,21 +72,28 @@ fun RoundedPerfilImage(
 
         if (isOwnProfile) {
             val expanded = remember { mutableStateOf(false) }
-            Icon(
-                Icons.Outlined.Edit,
-                contentDescription = "Edit Perfil Image",
-                tint = Color.White,
+            IconButton(
+                onClick = { expanded.value = !expanded.value },
                 modifier = Modifier
-                    .size(40.dp)
+                    .shadowCustom(
+                        blurRadius = 4.dp,
+                        shapeRadius = 100.dp,
+                        color = Color.Black.copy(alpha = 0.5f)
+                    )
                     .clip(CircleShape)
-                    .background(PrimaryBlue)
+                    .background(Color.White)
                     .align(Alignment.BottomEnd)
-                    .padding(5.dp)
-                    .clickable {
-                        expanded.value = !expanded.value
-                    }
 
-            )
+            ) {
+                Icon(
+                    Icons.Rounded.Edit,
+                    contentDescription = "Edit Perfil Image",
+                    tint = PrimaryBlue,
+                    modifier = Modifier
+                        .size(30.dp)
+                        .clip(CircleShape)
+                )
+            }
             MenuEditarImagens(
                 expanded,
                 Modifier.align(Alignment.BottomCenter),

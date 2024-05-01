@@ -9,8 +9,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.EditAttributes
+import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.UploadFile
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,8 +25,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
+import com.example.techhub.presentation.configUsuario.ConfiguracoesUsuarioActivity
+import com.example.techhub.presentation.favoritos.FavoritosActivity
 import com.example.techhub.presentation.perfil.PerfilViewModel
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
@@ -101,6 +107,21 @@ fun TopoDoPerfil(
                             imageVector = Icons.Filled.UploadFile,
                             contentDescription = "Currículo",
                             tint = PrimaryBlue,
+                            modifier = Modifier.size(34.dp)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(8.dp))
+                }
+
+                if (isOwnProfile) {
+                    IconButton(onClick = {
+                        startNewActivity(context, ConfiguracoesUsuarioActivity::class.java)
+                    }) {
+                        Icon(
+                            imageVector = Icons.Filled.EditNote,
+                            contentDescription = "Editar Perfil",
+                            tint = Color.Gray,
                             modifier = Modifier.size(34.dp)
                         )
                     }
