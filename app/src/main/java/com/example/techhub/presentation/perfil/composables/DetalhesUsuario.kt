@@ -20,8 +20,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.techhub.common.countriesEmoji
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
+import java.util.Locale
+
 
 @Composable
 fun DetalhesUsuario(
@@ -45,10 +48,7 @@ fun DetalhesUsuario(
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            Text(
-                // TODO - inserir lógica para renderizar bandeira do país
-                text = "🍕",
-            )
+            Text(countriesEmoji.countries.get(userInfo.value!!.pais) ?: "🌍",)
 
             Text(
                 text = "${userInfo.value!!.pais}",
