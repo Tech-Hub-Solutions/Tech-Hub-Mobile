@@ -24,12 +24,12 @@ import androidx.compose.ui.unit.dp
 import com.example.techhub.common.composable.BottomBar
 import com.example.techhub.common.enums.UsuarioFuncao
 import com.example.techhub.domain.model.CurrentUser
+import com.example.techhub.presentation.perfil.GitHubViewModel
 import com.example.techhub.presentation.perfil.PerfilViewModel
 import com.example.techhub.presentation.perfil.composables.comentario.ComentariosSection
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun PerfilView(id: Int, viewModel: PerfilViewModel = PerfilViewModel()) {
+fun PerfilView(id: Int, viewModel: PerfilViewModel = PerfilViewModel(), gitHubViewModel: GitHubViewModel = GitHubViewModel()) {
     val scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
     val isOwnProfile = id == CurrentUser.userProfile?.id
@@ -98,6 +98,7 @@ fun PerfilView(id: Int, viewModel: PerfilViewModel = PerfilViewModel()) {
                     isOwnProfile = isOwnProfile,
                     isEmpresa = isEmpresa,
                     viewModel = viewModel,
+                    gitHubViewModel = gitHubViewModel,
                     context = context
                 )
 

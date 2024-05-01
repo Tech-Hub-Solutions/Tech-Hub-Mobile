@@ -16,9 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
+import com.example.techhub.presentation.perfil.GitHubViewModel
 import com.example.techhub.presentation.perfil.PerfilViewModel
 import com.example.techhub.presentation.perfil.composables.avaliacao.AvaliacaoSection
 import com.example.techhub.presentation.perfil.composables.informacoesAdicionais.InformacoesAdicionaisSection
+import com.example.techhub.presentation.perfil.composables.projetosDesenvolvidos.GitHubProjectCard
+import com.example.techhub.presentation.perfil.composables.projetosDesenvolvidos.ProjetosDesenvolvidos
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -27,6 +30,7 @@ fun InformacoesPerfil(
     isOwnProfile: Boolean,
     isEmpresa: Boolean,
     viewModel: PerfilViewModel,
+    gitHubViewModel: GitHubViewModel,
     context: Context
 ) {
     Column(
@@ -77,14 +81,7 @@ fun InformacoesPerfil(
         if (!isEmpresa) {
             Column(modifier = Modifier.fillMaxSize()) {
                 SectionTitle(title = "Projetos desenvolvidos", isCentered = false)
-
-                FlowRow(
-                    modifier = Modifier.horizontalScroll(rememberScrollState())
-                ) {
-                    GitHubProjectCard()
-                    GitHubProjectCard()
-                    GitHubProjectCard()
-                }
+                ProjetosDesenvolvidos(context = context, nomeGitHub = userInfo.value!!.nomeGithub!!, viewModel = gitHubViewModel)
             }
 
             Divider(
