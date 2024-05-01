@@ -23,8 +23,8 @@ import androidx.compose.ui.unit.sp
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun PriceTextField(onValueChanged: (String) -> Unit) {
-    var filledText by remember { mutableStateOf("") }
+fun PriceTextField(onValueChanged: (String) -> Unit, initialValue: String = "") {
+    var filledText by remember { mutableStateOf(initialValue) }
     var isValueValid by remember { mutableStateOf(false) }
     Column {
 

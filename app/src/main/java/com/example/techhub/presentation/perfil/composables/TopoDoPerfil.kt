@@ -114,7 +114,9 @@ fun TopoDoPerfil(
 
                 if (isOwnProfile) {
                     IconButton(onClick = {
-                        startNewActivity(context, EditarUsuarioActivity::class.java)
+                        val extras = Bundle()
+                        extras.putSerializable("userInfo", userInfo.value!!)
+                        startNewActivity(context, EditarUsuarioActivity::class.java, extras)
                     }) {
                         Icon(
                             imageVector = Icons.Filled.EditNote,

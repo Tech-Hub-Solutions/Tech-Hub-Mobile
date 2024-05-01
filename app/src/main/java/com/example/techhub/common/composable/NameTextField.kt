@@ -20,11 +20,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
+import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun NameTextField(onValueChanged: (String) -> Unit ) {
-    var filledText by remember { mutableStateOf("") }
+fun NameTextField(onValueChanged: (String) -> Unit, initialValue: String = "") {
+    var filledText by remember { mutableStateOf(initialValue) }
     var isNameValid by remember { mutableStateOf(false) }
 
     Column {

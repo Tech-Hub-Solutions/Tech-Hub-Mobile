@@ -40,19 +40,22 @@ import com.example.techhub.common.composable.PriceTextField
 import com.example.techhub.common.composable.TopBar
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.model.CurrentUser
+import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import com.example.techhub.presentation.perfil.PerfilActivity
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun EditarUsuarioView() {
+fun EditarUsuarioView(
+    userInfo: PerfilGeralDetalhadoData
+) {
     val context = LocalContext.current
-    var name by remember { mutableStateOf("") }
-    var descricao by remember { mutableStateOf("") }
-    var experiencia by remember { mutableStateOf("") }
-    var sobreMim by remember { mutableStateOf("") }
-    var preco by remember { mutableStateOf("") }
-    var linkLinkedin by remember { mutableStateOf("") }
-    var linkGithub by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf(userInfo.nome) }
+    var descricao by remember { mutableStateOf(userInfo.descricao) }
+    var experiencia by remember { mutableStateOf(userInfo.experiencia) }
+    var sobreMim by remember { mutableStateOf(userInfo.sobreMim) }
+    var preco by remember { mutableStateOf(userInfo.precoMedio) }
+    var linkLinkedin by remember { mutableStateOf(userInfo.linkLinkedin) }
+    var linkGithub by remember { mutableStateOf(userInfo.linkGithub) }
 
     val toastErrorMessage = "Ops! Algo deu errado.\n Tente novamente."
 
@@ -87,21 +90,21 @@ fun EditarUsuarioView() {
             ) {
                 Spacer(modifier = Modifier.padding(0.dp))
 
-                NameTextField { name = it }
+                NameTextField(initialValue = userInfo.descricao ?: "", onValueChanged = { name = it })
 
-                DescriptionTextField { descricao = it }
-
-                Spacer(modifier = Modifier.padding(0.dp))
-
-                ExperienceTextField { experiencia = it }
+                DescriptionTextField (initialValue = userInfo.descricao ?: "", onValueChanged = { descricao = it })
 
                 Spacer(modifier = Modifier.padding(0.dp))
 
-                AboutMeTextField { sobreMim = it }
+                ExperienceTextField (initialValue = userInfo.experiencia ?: "", onValueChanged = { experiencia = it })
 
                 Spacer(modifier = Modifier.padding(0.dp))
 
-                PriceTextField { preco = it }
+                AboutMeTextField (initialValue = userInfo.sobreMim ?: "", onValueChanged = { sobreMim = it })
+
+                Spacer(modifier = Modifier.padding(0.dp))
+
+                PriceTextField (initialValue = userInfo.precoMedio.toString(), onValueChanged = { preco = it.toDouble() })
                 // Necessário fazer máscara
 
                 Spacer(modifier = Modifier.padding(2.dp))
@@ -115,13 +118,11 @@ fun EditarUsuarioView() {
                 }
                 Spacer(modifier = Modifier.padding(2.dp))
 
-                LinkedinTextField { linkLinkedin = it }
+                LinkedinTextField(initialValue = userInfo.linkLinkedin ?: "", onValueChanged = { linkLinkedin = it })
 
                 Spacer(modifier = Modifier.padding(2.dp))
 
-                GitHubTextField {
-                    linkGithub = it
-                }
+                GitHubTextField(initialValue = userInfo.linkGithub ?: "", onValueChanged = { linkGithub = it })
 
                 ElevatedButton(
                     onClick = { },

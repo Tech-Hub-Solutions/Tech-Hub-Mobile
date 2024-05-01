@@ -83,7 +83,7 @@ fun InformacoesPerfil(
         if (!isEmpresa) {
             Column(modifier = Modifier.fillMaxSize()) {
                 SectionTitle(title = "Projetos desenvolvidos", isCentered = false)
-                ProjetosDesenvolvidos(context = context, nomeGitHub = userInfo.value!!.nomeGithub!!, viewModel = gitHubViewModel)
+                ProjetosDesenvolvidos(context = context, nomeGitHub = userInfo.value!!.nomeGithub, viewModel = gitHubViewModel)
             }
 
             Divider(

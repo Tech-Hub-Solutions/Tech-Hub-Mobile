@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.sp
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import com.example.techhub.R
 @Composable
-fun LinkedinTextField(onValueChanged: (String) -> Unit) {
-    var filledText by remember { mutableStateOf("") }
+fun LinkedinTextField(onValueChanged: (String) -> Unit, initialValue: String = "") {
+    var filledText by remember { mutableStateOf(initialValue) }
     var isValueValid by remember { mutableStateOf(false) }
     Column {
 

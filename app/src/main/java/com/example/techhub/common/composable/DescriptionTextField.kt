@@ -25,8 +25,8 @@ import androidx.compose.ui.unit.sp
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun DescriptionTextField(onValueChanged: (String) -> Unit ) {
-    var filledText by remember { mutableStateOf("") }
+fun DescriptionTextField(onValueChanged: (String) -> Unit, initialValue: String = "") {
+    var filledText by remember { mutableStateOf(initialValue) }
     var isNameValid by remember { mutableStateOf(false) }
 
     Column {

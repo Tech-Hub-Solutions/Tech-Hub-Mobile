@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.sp
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import com.example.techhub.R
 @Composable
-fun GitHubTextField(onValueChanged: (String) -> Unit) {
-    var filledText by remember { mutableStateOf("") }
+fun GitHubTextField(onValueChanged: (String) -> Unit, initialValue: String = "") {
+    var filledText by remember { mutableStateOf(initialValue) }
     var isValueValid by remember { mutableStateOf(false) }
     Column {
 

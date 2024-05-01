@@ -82,7 +82,7 @@ fun ConfiguracoesUsuarioView() {
                 verticalArrangement = Arrangement.spacedBy(24.dp)) {
                 Spacer(modifier = Modifier.padding(0.dp))
 
-                NameTextField { name = it }
+                NameTextField(onValueChanged = { name = it })
 
                 FlagDropDownMenu()
 
