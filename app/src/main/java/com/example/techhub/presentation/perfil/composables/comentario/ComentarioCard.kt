@@ -1,5 +1,7 @@
 package com.example.techhub.presentation.perfil.composables.comentario
 
+import android.content.Context
+import android.os.Bundle
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -33,14 +35,22 @@ import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.example.techhub.common.composable.StarRatingBarFixed
+import com.example.techhub.common.countriesEmoji
+import com.example.techhub.common.countryFlagsList
+import com.example.techhub.common.devIconMap
+import com.example.techhub.common.utils.startNewActivity
+import com.example.techhub.presentation.perfil.PerfilActivity
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
 fun ComentarioCard(
+    userId: Int,
     nome: String,
     description: String,
     urlFoto: String,
+    pais: String,
     rating: Double,
+    context: Context
 ) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
@@ -81,7 +91,7 @@ fun ComentarioCard(
                             .data(urlFoto)
                             .decoderFactory(SvgDecoder.Factory())
                             .build(),
-                        contentDescription = "Angular Icon",
+                        contentDescription = "Imagem do avaliador",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .padding(end = 12.dp)
@@ -95,7 +105,11 @@ fun ComentarioCard(
                     Arrangement.spacedBy(6.dp)
                 ) {
                     TextButton(
-                        onClick = { /* TODO - Redirecionar para o perfil do usuário */ },
+                        onClick = {
+                            val extras = Bundle()
+                            extras.putInt("id", userId!!)
+                            startNewActivity(context, PerfilActivity::class.java, extras)
+                        },
                         shape = RoundedCornerShape(0.dp),
                         contentPadding = PaddingValues(horizontal = 0.dp),
                         content = {
@@ -113,7 +127,7 @@ fun ComentarioCard(
                                     horizontalArrangement = Arrangement.spacedBy(24.dp)
                                 ) {
                                     Text(
-                                        text = "Brasil",
+                                        text = countriesEmoji.countries.get(pais) ?: "🌍",
                                         color = Color.Black,
                                         fontSize = 14.sp,
                                         fontWeight = FontWeight(200),

@@ -80,10 +80,13 @@ fun ComentariosSection(
 
                 comments.forEach{
                     ComentarioCard(
+                        userId = it.idAvaliador!!,
                         nome = it.avaliador!!,
                         description = it.comentario!!,
                         urlFoto = it.urlFotoPerfil ?: "",
-                        rating = it.qtdEstrela!!.toDouble()
+                        pais = it.pais!!,
+                        rating = it.qtdEstrela!!.toDouble(),
+                        context = context
                     )
                 }
             }
