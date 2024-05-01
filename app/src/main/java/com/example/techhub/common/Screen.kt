@@ -17,4 +17,8 @@ sealed class Screen(
     data object PerfilViewScreen : Screen("perfil_view_screen")
     data object FavoritosView : Screen("favoritos_view")
     data object ExplorarTalentosView : Screen("explorar_talentos_view")
+
+    data object ConfiguracoesUsuarioGraph : Screen("configuracoes_usuario_graph")
+    data object ConfiguracoesUsuarioView : Screen("configuracoes_usuario_view")
+    data object ConfiguracoesUsuarioFirstAuthView : Screen("configuracoes_usuario_first_auth_view")
 }

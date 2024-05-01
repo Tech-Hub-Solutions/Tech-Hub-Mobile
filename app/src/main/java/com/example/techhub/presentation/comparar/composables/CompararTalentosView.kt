@@ -53,7 +53,7 @@ fun CompararTalentosView(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             UserCard(
                 userProfile = selectedUsers.get(0),
