@@ -1,5 +1,6 @@
 package com.example.techhub.presentation.cadastro.composables
 
+import android.os.Bundle
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,7 +23,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -96,9 +96,13 @@ fun CadastroFormView(
 
                         onAuthSuccess(usuarioSimpleVerifyData)
                     } else {
+                        val extras = Bundle()
+                        extras.putInt("id", response.body()?.id!!)
+
                         redirectToPerfilUsuario(
                             context = context,
-                            fullName = response.body()?.nome!!
+                            fullName = response.body()?.nome!!,
+                            extras = extras
                         )
                     }
                 } else {
@@ -124,8 +128,8 @@ fun CadastroFormView(
     ) { innerPadding ->
         Column(
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .background(Color.White)
                 .padding(
                     top = innerPadding.calculateTopPadding(),

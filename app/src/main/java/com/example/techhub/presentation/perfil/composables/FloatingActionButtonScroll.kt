@@ -1,5 +1,6 @@
 package com.example.techhub.presentation.perfil.composables
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowUpward
@@ -11,12 +12,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
-fun FloatingActionButtonScroll(isScrolled: Boolean) {
+fun FloatingActionButtonScroll(
+    isScrolled: Boolean,
+    scrollState: ScrollState,
+    scope: CoroutineScope
+) {
     if (isScrolled) {
         FloatingActionButton(
-            onClick = { /* TODO - ir para o topo da página ao scrollar */ },
+            onClick = {
+                scope.launch {
+                    scrollState.animateScrollTo(0)
+                }
+            },
             containerColor = Color(PrimaryBlue.value),
             shape = FloatingActionButtonDefaults.smallShape,
             elevation = FloatingActionButtonDefaults.elevation(10.dp),

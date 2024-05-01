@@ -30,7 +30,7 @@ fun TopBar(
     route: String? = null
 ) {
     val topAppBarColors = TopAppBarDefaults.topAppBarColors(
-        containerColor = Color.Transparent,
+        containerColor = if (title == "Primeiros Passos") Color.Transparent else Color.White,
         titleContentColor = MaterialTheme.colorScheme.primary,
     )
     val modifier = Modifier.padding(bottom = 8.dp)

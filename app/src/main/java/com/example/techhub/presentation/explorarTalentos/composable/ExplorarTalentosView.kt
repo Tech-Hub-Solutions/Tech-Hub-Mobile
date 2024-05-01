@@ -48,12 +48,12 @@ import androidx.compose.ui.unit.sp
 import com.example.techhub.R
 import com.example.techhub.common.composable.BottomBar
 import com.example.techhub.common.composable.CustomizedElevatedButton
+import com.example.techhub.common.composable.TopBarTitle
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.composable.OrderDropDownMenu
-import com.example.techhub.composable.UserCard
+import com.example.techhub.common.composable.UserCard
 import com.example.techhub.domain.model.usuario.UsuarioFiltroData
 import com.example.techhub.presentation.explorarTalentos.ExplorarTalentosViewModel
-import com.example.techhub.presentation.favoritos.composables.spacedBy
 import com.example.techhub.presentation.ui.theme.GrayLoadButton
 import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.GrayTinyButton
@@ -85,16 +85,12 @@ fun ExplorarTalentosView(viewModel: ExplorarTalentosViewModel = ExplorarTalentos
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                 Scaffold(
                     topBar = {
-                        Text(
-                            text = "Procurar Talentos",
-                            style = MaterialTheme.typography.titleLarge,
-                            color = PrimaryBlue,
-                            modifier = Modifier.background(Color.Transparent),
+                        TopBarTitle(
+                            title = "Explorar Talentos"
                         )
                     },
-                    bottomBar = { BottomBar(isEmpresa = true) }
+                    bottomBar = { BottomBar() }
                 ) { innerPadding ->
-
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
@@ -151,12 +147,12 @@ fun GetTalentos(
 
     LaunchedEffect(ordem.value) {
         page.value = 0
-        viewModel.getTalentos(0, 10, ordem.value, UsuarioFiltroData())
+        viewModel.getTalentos(0, 10, UsuarioFiltroData())
     }
 
     LaunchedEffect(filtro) {
         page.value = 0
-        viewModel.getTalentos(0, 10, ordem.value, filtro)
+        viewModel.getTalentos(0, 10, filtro)
     }
 
     Row(
@@ -166,7 +162,8 @@ fun GetTalentos(
     ) {
         Text(
             text = "${totalElements} profissionais encontrados",
-            modifier = Modifier.fillMaxWidth(0.4f)
+            modifier = Modifier.fillMaxWidth(0.4f),
+            color = GrayText
         )
 
         IconButton(
@@ -213,7 +210,7 @@ fun GetTalentos(
             }
         }
 
-        OrderDropDownMenu(ordem)
+//        OrderDropDownMenu(ordem)
     }
 
     Spacer(modifier = Modifier.padding(vertical = 8.dp))
@@ -271,7 +268,7 @@ fun GetTalentos(
                         ) {
                             CustomizedElevatedButton(
                                 onClick = {
-                                    viewModel.getTalentos(++page.value, 10, ordem.value, filtro)
+                                    viewModel.getTalentos(++page.value, 10, filtro)
                                 },
                                 horizontalPadding = 16,
                                 verticalPadding = 8,
@@ -280,7 +277,7 @@ fun GetTalentos(
                                 containerColor = Color(GrayLoadButton.value),
                                 contentColor = Color(0xFF505050),
                                 shape = RoundedCornerShape(50),
-                                horizontalArrangement = spacedBy(
+                                horizontalArrangement = Arrangement.spacedBy(
                                     8.dp,
                                     Alignment.CenterHorizontally
                                 ),
