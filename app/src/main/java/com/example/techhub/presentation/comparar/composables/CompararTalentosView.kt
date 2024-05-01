@@ -15,7 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.techhub.composable.UserCard
+import com.example.techhub.common.composable.UserCard
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
 
 @Composable
@@ -53,7 +53,7 @@ fun CompararTalentosView(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             UserCard(
                 userProfile = selectedUsers.get(0),

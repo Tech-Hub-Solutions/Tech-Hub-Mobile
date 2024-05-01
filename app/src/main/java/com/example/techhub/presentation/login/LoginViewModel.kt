@@ -2,11 +2,13 @@ package com.example.techhub.presentation.login
 
 import android.app.Activity
 import android.content.Context
+import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.domain.RetrofitService
+import com.example.techhub.domain.model.updateCurrentUser
 import com.example.techhub.domain.model.usuario.UsuarioLoginData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,21 +27,23 @@ class LoginViewModel : ViewModel() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val response = apiUsuario.loginUser(user)
+                val extras = Bundle()
+                extras.putInt("id", response.body()?.id!!)
 
                 if (response.isSuccessful) {
                     if (response.body()?.isUsing2FA!!) {
                         onAuthSucess(user)
                     } else {
 
-
-                        RetrofitService.updateTokenJwt(
+                        updateCurrentUser(
                             context = context,
                             usuarioTokenData = response.body()!!
                         )
 
                         redirectToPerfilUsuario(
                             context = context,
-                            fullName = response.body()?.nome!!
+                            fullName = response.body()?.nome!!,
+                            extras = extras
                         )
                     }
                 } else {

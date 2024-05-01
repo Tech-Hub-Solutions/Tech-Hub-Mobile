@@ -35,17 +35,16 @@ interface UsuarioApi {
     suspend fun getFavoriteUsers(
         @Query("page") page: Int?,
         @Query("size") size: Int?,
-        @Query("sort") sort: String?,
-        @Query("ordem") ordem: String,
-    ): Response<Page<UsuarioFavoritoData>>
+        @Query("ordem") ordem: String
+    ) : Response<Page<UsuarioFavoritoData>>
 
     @POST("usuarios/filtro")
     suspend fun getTalentos(
         @Query("page") page: Int?,
         @Query("size") size: Int?,
-        @Query("ordem") ordem: String,
-        @Body filtroData: UsuarioFiltroData,
-    ): Response<Page<UsuarioFavoritoData>>
+        @Body filtroData: UsuarioFiltroData
+    ) : Response<Page<UsuarioFavoritoData>>
+
 
     @PUT("usuarios")
     suspend fun atualizarConfigUsuario(@Body usuarioAtualizacaoData: UsuarioAtualizacaoData)

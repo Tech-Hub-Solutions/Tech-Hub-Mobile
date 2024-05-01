@@ -1,8 +1,6 @@
 package com.example.techhub.presentation.perfil.composables
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
@@ -16,18 +14,8 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun TextContainer(title: String, description: String) {
-    Column(
-        modifier = Modifier
-            .padding(horizontal = 24.dp, vertical = 8.dp)
-    ) {
-        Text(
-            text = title,
-            fontSize = 18.sp,
-            color = Color.Black,
-            fontWeight = FontWeight(500),
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
+    Column {
+        SectionTitle(title = title, isCentered = false)
 
         Text(
             text = description,
@@ -36,6 +24,7 @@ fun TextContainer(title: String, description: String) {
             fontWeight = FontWeight(200),
             textAlign = TextAlign.Justify,
         )
+
         Divider(
             color = Color.LightGray.copy(alpha = 0.4f),
             thickness = 1.dp,
