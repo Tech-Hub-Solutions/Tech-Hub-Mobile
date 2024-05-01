@@ -1,7 +1,10 @@
 package com.example.techhub.common.composable
 
+import android.content.Context
+import android.content.ContextWrapper
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -48,16 +51,23 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+fun Context.getActivity(): ComponentActivity? = when (this) {
+    is ComponentActivity -> this
+    is ContextWrapper -> baseContext.getActivity()
+    else -> null
+}
+
 @Composable
 fun ConfigDropDownMenu() {
     val context = LocalContext.current
-    val actualActivity = context.javaClass.simpleName
+    val actualActivity = context.getActivity()?.javaClass?.simpleName
+    val activityExtras = context.getActivity()?.intent?.extras
+    val currentId = activityExtras?.getInt("id")
+
     val dataStoreManager = DataStoreManager(context = context)
     var expanded by remember { mutableStateOf(false) }
-    val dropDownPages = listOf(
-        "PerfilActivity",
-        "ConfiguracoesUsuarioActivity",
-    )
+    val isOnOwnPerfilActivity =
+        actualActivity == "PerfilActivity" && currentId == CurrentUser.userProfile?.id
 
     Box(
         modifier = Modifier
@@ -71,7 +81,7 @@ fun ConfigDropDownMenu() {
                 Icon(
                     Icons.Filled.Person,
                     contentDescription = "@string/btn_description_profile",
-                    tint = if (dropDownPages.contains(actualActivity)) {
+                    tint = if (isOnOwnPerfilActivity) {
                         PrimaryBlue
                     } else {
                         Color.Gray
@@ -89,7 +99,7 @@ fun ConfigDropDownMenu() {
                         .height(28.dp)
                         .border(
                             2.dp,
-                            if (dropDownPages.contains(actualActivity)) {
+                            if (isOnOwnPerfilActivity) {
                                 PrimaryBlue
                             } else {
                                 Color.Gray
@@ -112,8 +122,7 @@ fun ConfigDropDownMenu() {
                     DropDownMenuRow(
                         icon = Icons.Filled.Settings,
                         text = "Configurações",
-                        actualActivity,
-                        "ConfiguracoesUsuarioActivity"
+                        actualActivity == "ConfiguracoesUsuarioActivity"
                     )
                 },
                 onClick = {
@@ -126,8 +135,7 @@ fun ConfigDropDownMenu() {
                     DropDownMenuRow(
                         icon = Icons.Filled.Person,
                         text = "Perfil",
-                        actualActivity,
-                        "PerfilActivity"
+                        active = isOnOwnPerfilActivity
                     )
                 },
                 onClick = {
@@ -160,11 +168,10 @@ fun ConfigDropDownMenu() {
 fun DropDownMenuRow(
     icon: ImageVector,
     text: String,
-    actualActivity: String? = null,
-    activityName: String? = null
+    active: Boolean = false,
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
-        val color = if (!activityName.isNullOrEmpty() && actualActivity == activityName) {
+        val color = if (active) {
             PrimaryBlue
         } else {
             Color(0xFF858585)
