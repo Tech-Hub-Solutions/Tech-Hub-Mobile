@@ -33,7 +33,6 @@ interface UsuarioApi {
     suspend fun getFavoriteUsers(
         @Query("page") page: Int?,
         @Query("size") size: Int?,
-        @Query("sort") sort: String?,
         @Query("ordem") ordem: String
     ) : Response<Page<UsuarioFavoritoData>>
 
@@ -41,7 +40,6 @@ interface UsuarioApi {
     suspend fun getTalentos(
         @Query("page") page: Int?,
         @Query("size") size: Int?,
-        @Query("ordem") ordem: String,
         @Body filtroData: UsuarioFiltroData
     ) : Response<Page<UsuarioFavoritoData>>
 }

@@ -16,6 +16,9 @@ class PerfilActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val extras = intent.extras
+        val id = extras!!.getInt("id")
+
         setContent {
             TechHubTheme {
                 SetBarColor(color = Color.White)
@@ -24,7 +27,7 @@ class PerfilActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    PerfilView()
+                    PerfilView(id = id)
                 }
             }
         }

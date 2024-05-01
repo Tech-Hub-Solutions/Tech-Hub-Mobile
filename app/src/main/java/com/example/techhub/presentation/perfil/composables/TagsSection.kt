@@ -8,24 +8,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.techhub.common.utils.verificarCorFlag
+import com.example.techhub.domain.model.flag.FlagData
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun TagsSection(title: String) {
+fun TagsSection(title: String, flags: List<FlagData> = emptyList()) {
     Column {
         SectionTitle(title = title, isCentered = false)
 
         FlowRow(
             modifier = Modifier,
-            Arrangement.spacedBy(8.dp),
-            Arrangement.Top,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement =  Arrangement.spacedBy(8.dp),
         ) {
-            Tag(title = "Responsabilidade", backgroundColor = Color(0xFFCDEAF9))
-            Tag(title = "Proatividade", backgroundColor = Color(0xFFCDEAF9))
-            Tag(title = "Comunicação", backgroundColor = Color(0xFFCDEAF9))
-            Tag(title = "Inovação", backgroundColor = Color(0xFFCDEAF9))
-            Tag(title = "Paciência", backgroundColor = Color(0xFFCDEAF9))
-            Tag(title = "Resiliência", backgroundColor = Color(0xFFCDEAF9))
+            flags.forEach { flag ->
+                Tag(title = flag.nome ?: "", backgroundColor = verificarCorFlag(flag.area?: ""))
+            }
         }
     }
 }

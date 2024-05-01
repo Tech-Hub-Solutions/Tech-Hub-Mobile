@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,8 +27,6 @@ fun FavoritosView() {
     val selectedUsers = remember { SnapshotStateList<UsuarioFavoritoData>() }
     var ordem = remember { mutableStateOf("avaliacao,desc") }
     val isAbleToCompare = remember { mutableStateOf(false) }
-    var expanded by remember { mutableStateOf(false) }
-    var erroApi = remember { mutableStateOf("") }
     val context = LocalContext.current
 
     Scaffold(
@@ -52,7 +51,7 @@ fun FavoritosView() {
         ) {
 
             FavoriteUsers(
-                viewModel = FavoritosViewModel(context),
+                viewModel = FavoritosViewModel(),
                 context = context,
                 ordem = ordem,
                 selectedUsers = selectedUsers,

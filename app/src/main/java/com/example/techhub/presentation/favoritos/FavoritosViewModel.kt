@@ -12,25 +12,23 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class FavoritosViewModel(context: Context? = null) {
+class FavoritosViewModel() {
     val favoritos = MutableLiveData(SnapshotStateList<UsuarioFavoritoData>())
     val erroApi = MutableLiveData("")
     val isLastPage = MutableLiveData(false)
+    val isLoading = MutableLiveData(true)
+    val totalElements = MutableLiveData(0)
     private val toastErrorMessage = "Ops! Algo deu errado ao buscar favoritos."
-
-    private var token = "";
 
     private val usuarioApi = RetrofitService.getUsuarioService()
     private val perfilApi = RetrofitService.getPerfilService()
 
-    init {
-        getFavoriteUsers(0, 10, "", "avaliacao,desc", context!!)
-    }
 
-    fun getFavoriteUsers(page: Int, size: Int, sort: String, ordem: String, context: Context) {
+    fun getFavoriteUsers(page: Int, size: Int, ordem: String, context: Context) {
+        if (page == 0) isLoading.postValue(true)
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = usuarioApi.getFavoriteUsers(page, size, sort, ordem)
+                val response = usuarioApi.getFavoriteUsers(page, size, ordem)
 
                 Log.d("GET USUARIOS/FAVORITOS", response.toString())
 
@@ -40,12 +38,12 @@ class FavoritosViewModel(context: Context? = null) {
 
                     isLastPage.postValue(page?.last ?: false)
 
-                    if (page?.first == true) {
+                    if (page!!.first) {
                         favoritos.value!!.clear()
                     }
 
                     favoritos.value!!.addAll(list)
-
+                    totalElements.postValue(page.totalElements.toInt())
                     erroApi.postValue("")
                 } else {
                     (context as Activity).runOnUiThread {
@@ -58,6 +56,8 @@ class FavoritosViewModel(context: Context? = null) {
                     showToastError(context = context, message = toastErrorMessage)
                 }
                 Log.e("GET USUARIOS/FAVORITOS", "Ocorreu um erro no get ${e.message}")
+            } finally {
+                isLoading.postValue(false)
             }
         }
     }
@@ -65,7 +65,7 @@ class FavoritosViewModel(context: Context? = null) {
     fun favoritarUsuario(id: Int?) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = perfilApi.favoritarTerceiro(token, id)
+                val response = perfilApi.favoritarTerceiro(id)
 
                 if (response.isSuccessful) {
                     Log.d("PUT USUARIOS/FAVORITOS", "Favoritado com sucesso")

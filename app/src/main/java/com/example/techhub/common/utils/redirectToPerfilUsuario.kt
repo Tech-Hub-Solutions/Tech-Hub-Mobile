@@ -1,9 +1,10 @@
 package com.example.techhub.common.utils
 
 import android.content.Context
+import android.os.Bundle
 import com.example.techhub.presentation.perfil.PerfilActivity
 
-fun redirectToPerfilUsuario(context: Context, fullName: String) {
+fun redirectToPerfilUsuario(context: Context, fullName: String, extras: Bundle?) {
     showWelcomeToastWithName(
         context = context,
         fullName = fullName,
@@ -11,7 +12,7 @@ fun redirectToPerfilUsuario(context: Context, fullName: String) {
 
     startNewActivity(
         context = context,
-        // TODO - No parâmetro, passar o pefil e seu token p/ salvar no Data Store
         activity = PerfilActivity::class.java,
+        bundle = extras
     )
 }

@@ -1,10 +1,16 @@
 package com.example.techhub.presentation.perfil.composables.informacoesAdicionais
 
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
@@ -13,20 +19,34 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.techhub.common.composable.ElevatedButtonTH
+import com.example.techhub.presentation.perfil.PerfilViewModel
 import com.example.techhub.presentation.perfil.composables.SectionTitle
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
 fun InformacoesAdicionaisSection(
-    projetosFinalizados: Int,
+    isOwnProfile: Boolean,
+    usuarioId: Int,
     empresasInteressadas: Int,
-    recomendacoes: Int
+    recomendacoes: Int,
+    isRecomendado: Boolean,
+    viewModel: PerfilViewModel,
+    context: Context
 ) {
-    val informacoes = listOf(
-        projetosFinalizados to InformacoesAdicionais.projetosFinalizados,
-        empresasInteressadas to InformacoesAdicionais.empresasInteressadas,
-        recomendacoes to InformacoesAdicionais.recomendacoes
+    val isRecomendado = remember {
+        mutableStateOf(isRecomendado)
+    }
+    val qtdRecomendacoes = remember {
+        mutableIntStateOf(recomendacoes)
+    }
+
+    val informacoes = mutableListOf(
+        qtdRecomendacoes.intValue to InformacoesAdicionais.recomendacoes
     )
+
+    if (!isOwnProfile) {
+        informacoes.add(empresasInteressadas to InformacoesAdicionais.empresasInteressadas)
+    }
 
     SectionTitle(title = "Informações Adicionais", isCentered = true)
 
@@ -50,16 +70,33 @@ fun InformacoesAdicionaisSection(
             )
         }
 
-        ElevatedButtonTH(
-            onClick = {
-                /* TODO - Requisição para recomandar */
-            },
-            text = "Recomendar",
-            backgroundColor = Color.White,
-            textColor = PrimaryBlue,
-            width = 160,
-            height = 40,
-        )
+        if (!isOwnProfile) {
+            val color = if (isRecomendado.value) Color.White else PrimaryBlue
+            val background = if (isRecomendado.value) PrimaryBlue else Color.White
+            val text = if (isRecomendado.value) "Recomendado" else "Recomendar"
+            ElevatedButtonTH(
+                onClick = {
+                    viewModel.recomendarUsuario(context, usuarioId)
+                    isRecomendado.value = !isRecomendado.value
+                    qtdRecomendacoes.intValue = if (isRecomendado.value) {
+                        qtdRecomendacoes.intValue + 1
+                    } else {
+                        qtdRecomendacoes.intValue - 1
+                    }
+                },
+                text = text,
+                backgroundColor = background,
+                textColor = color,
+                width = 160,
+                height = 40,
+            )
+        } else {
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp)
+            )
+        }
     }
 }
 

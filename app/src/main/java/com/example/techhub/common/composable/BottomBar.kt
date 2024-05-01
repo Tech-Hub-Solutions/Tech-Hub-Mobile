@@ -1,6 +1,7 @@
 package com.example.techhub.common.composable
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.example.techhub.common.utils.shadowCustom
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.RetrofitService
+import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.presentation.explorarTalentos.ExplorarTalentosActivity
 import com.example.techhub.presentation.favoritos.FavoritosActivity
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
@@ -29,8 +31,9 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 @Composable
 fun BottomBar() {
     val context = LocalContext.current
-    val retrofirService = RetrofitService
-    val isUserEmpresa = retrofirService.getIsUserEmpresa(context)
+    val actualActivity = context.javaClass.simpleName
+    Log.d("BottomBar", "actualActivity: $actualActivity")
+    val isUserEmpresa = CurrentUser.isEmpresa
 
     BottomAppBar(
         modifier = Modifier
@@ -56,7 +59,11 @@ fun BottomBar() {
                     Icon(
                         Icons.Outlined.TravelExplore,
                         contentDescription = "@string/btn_description_search_talents",
-                        tint = Color(PrimaryBlue.value),
+                        tint = if (actualActivity == "ExplorarTalentosActivity") {
+                            PrimaryBlue
+                        } else {
+                            Color.Gray
+                        },
                         modifier = Modifier
                             .width(28.dp)
                             .height(28.dp)
@@ -70,7 +77,11 @@ fun BottomBar() {
                         Icon(
                             Icons.Filled.FavoriteBorder,
                             contentDescription = "@string/btn_description_favorites",
-                            tint = Color(PrimaryBlue.value),
+                            tint = if (actualActivity == "FavoritosActivity") {
+                                PrimaryBlue
+                            } else {
+                                Color.Gray
+                            },
                             modifier = Modifier
                                 .width(28.dp)
                                 .height(28.dp)
@@ -85,3 +96,4 @@ fun BottomBar() {
         containerColor = Color.White,
     )
 }
+

@@ -147,12 +147,12 @@ fun GetTalentos(
 
     LaunchedEffect(ordem.value) {
         page.value = 0
-        viewModel.getTalentos(0, 10, ordem.value, UsuarioFiltroData())
+        viewModel.getTalentos(0, 10, UsuarioFiltroData())
     }
 
     LaunchedEffect(filtro) {
         page.value = 0
-        viewModel.getTalentos(0, 10, ordem.value, filtro)
+        viewModel.getTalentos(0, 10, filtro)
     }
 
     Row(
@@ -210,7 +210,7 @@ fun GetTalentos(
             }
         }
 
-        OrderDropDownMenu(ordem)
+//        OrderDropDownMenu(ordem)
     }
 
     Spacer(modifier = Modifier.padding(vertical = 8.dp))
@@ -268,7 +268,7 @@ fun GetTalentos(
                         ) {
                             CustomizedElevatedButton(
                                 onClick = {
-                                    viewModel.getTalentos(++page.value, 10, ordem.value, filtro)
+                                    viewModel.getTalentos(++page.value, 10, filtro)
                                 },
                                 horizontalPadding = 16,
                                 verticalPadding = 8,
