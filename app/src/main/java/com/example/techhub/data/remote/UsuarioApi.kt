@@ -33,7 +33,6 @@ interface UsuarioApi {
     suspend fun getFavoriteUsers(
         @Query("page") page: Int?,
         @Query("size") size: Int?,
-        @Query("sort") sort: String?,
         @Query("ordem") ordem: String
     ) : Response<Page<UsuarioFavoritoData>>
 

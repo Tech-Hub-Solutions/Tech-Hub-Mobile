@@ -17,17 +17,18 @@ class FavoritosViewModel() {
     val erroApi = MutableLiveData("")
     val isLastPage = MutableLiveData(false)
     val isLoading = MutableLiveData(true)
+    val totalElements = MutableLiveData(0)
     private val toastErrorMessage = "Ops! Algo deu errado ao buscar favoritos."
 
     private val usuarioApi = RetrofitService.getUsuarioService()
     private val perfilApi = RetrofitService.getPerfilService()
 
 
-    fun getFavoriteUsers(page: Int, size: Int, sort: String, ordem: String, context: Context) {
-        isLoading.postValue(true)
+    fun getFavoriteUsers(page: Int, size: Int, ordem: String, context: Context) {
+        if (page == 0) isLoading.postValue(true)
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = usuarioApi.getFavoriteUsers(page, size, sort, ordem)
+                val response = usuarioApi.getFavoriteUsers(page, size, ordem)
 
                 Log.d("GET USUARIOS/FAVORITOS", response.toString())
 
@@ -37,12 +38,12 @@ class FavoritosViewModel() {
 
                     isLastPage.postValue(page?.last ?: false)
 
-                    if (page?.first == true) {
+                    if (page!!.first) {
                         favoritos.value!!.clear()
                     }
 
                     favoritos.value!!.addAll(list)
-
+                    totalElements.postValue(page.totalElements.toInt())
                     erroApi.postValue("")
                 } else {
                     (context as Activity).runOnUiThread {

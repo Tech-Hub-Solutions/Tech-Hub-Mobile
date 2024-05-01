@@ -1,6 +1,7 @@
 package com.example.techhub.presentation.favoritos.composables
 
 import android.content.Context
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -47,6 +48,7 @@ fun FavoriteUsers(
     isAbleToCompare: MutableState<Boolean>,
 ) {
     val favoritos = viewModel.favoritos.observeAsState().value!!
+    val totalElements = viewModel.totalElements.observeAsState()
     val erroApi = viewModel.erroApi.observeAsState().value!!
     val isLoading = viewModel.isLoading.observeAsState().value!!
     val isLastPage = viewModel.isLastPage.observeAsState().value!!
@@ -54,12 +56,12 @@ fun FavoriteUsers(
     val page = remember { mutableStateOf(0) }
 
     LaunchedEffect(Unit) {
-        viewModel.getFavoriteUsers(0, 10, "", "avaliacao,desc", context)
+        viewModel.getFavoriteUsers(0, 10, "avaliacao,desc", context)
     }
 
     LaunchedEffect(ordem.value) {
         page.value = 0
-        viewModel.getFavoriteUsers(page.value, 10, "", ordem.value, context)
+        viewModel.getFavoriteUsers(page.value, 30, ordem.value, context)
     }
 
     if (isLoading) {
@@ -77,7 +79,7 @@ fun FavoriteUsers(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Top
         ) {
-            Text(text = "${favoritos.size} profissionais encontrados", color = GrayText)
+            Text(text = "${totalElements.value} profissionais encontrados", color = GrayText)
 
             OrderDropDownMenu(ordem)
         }
@@ -109,7 +111,7 @@ fun FavoriteUsers(
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start)
                 ) {
-                    for (item in subLista) {
+                    subLista.forEachIndexed { index, item ->
                         UserCard(
                             item,
                             selectedUsers,
@@ -123,27 +125,34 @@ fun FavoriteUsers(
                         }
                     }
                 }
+                if (index == subLists.size - 1 && !isLastPage && favoritos.isNotEmpty()) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        CustomizedElevatedButton(
+                            onClick = {
+                                viewModel.getFavoriteUsers(++page.value, 30, ordem.value, context)
+                            },
+                            horizontalPadding = 16,
+                            verticalPadding = 8,
+                            defaultElevation = 0,
+                            pressedElevation = 0,
+                            containerColor = Color(GrayLoadButton.value),
+                            contentColor = Color(0xFF505050),
+                            shape = RoundedCornerShape(50),
+                            horizontalArrangement = Arrangement.spacedBy(
+                                8.dp,
+                                Alignment.CenterHorizontally
+                            ),
+                            text = "Carregar mais talentos",
+                            fontSize = 16,
+                            fontWeight = FontWeight.Medium,
+                            contentDescription = "Botão para carregar mais talentos"
+                        )
+                    }
+                }
             }
-        }
-        if (!isLastPage && favoritos.isNotEmpty()) {
-            CustomizedElevatedButton(
-                onClick = {
-                    page.value += 1
-                    viewModel.getFavoriteUsers(page.value, 3, "", ordem.value, context)
-                },
-                horizontalPadding = 16,
-                verticalPadding = 8,
-                defaultElevation = 0,
-                pressedElevation = 0,
-                containerColor = Color(GrayLoadButton.value),
-                contentColor = Color(0xFF505050),
-                shape = RoundedCornerShape(50),
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
-                text = "Carregar mais talentos",
-                fontSize = 16,
-                fontWeight = FontWeight.Medium,
-                contentDescription = "Botão para carregar mais talentos"
-            )
         }
     }
 }
