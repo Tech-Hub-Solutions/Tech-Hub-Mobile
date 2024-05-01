@@ -1,5 +1,6 @@
 package com.example.techhub.common.composable
 
+import android.os.Bundle
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -13,8 +14,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,6 +29,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
@@ -81,7 +85,7 @@ fun UserCard(
             .then(modifier),
         shape = RectangleShape,
         onClick = {
-            if (isComparing && isAbleToCompare!!.value) {
+            if (isComparing && isAbleToCompare?.value == true) {
                 if (selectedUsers != null && selectedUsers.size < 2 ||
                     selectedUsers != null && selectedUsers.contains(userProfile)
                 ) {
@@ -94,19 +98,34 @@ fun UserCard(
                     }
                 }
             } else {
-                startNewActivity(context, PerfilActivity::class.java)
+                val extras = Bundle()
+                extras.putInt("id", userProfile.id!!)
+                startNewActivity(context, PerfilActivity::class.java, extras)
             }
 
         }
     ) {
 
-        AsyncImage(
-            model = userProfile.urlFotoPerfil,
-            contentDescription = "Foto do freelancer",
-            modifier = Modifier.fillMaxHeight(0.4f),
-            alignment = Alignment.TopCenter,
-            contentScale = ContentScale.Crop
-        )
+        if (userProfile.urlFotoPerfil.isNullOrBlank()) {
+            Icon(
+                Icons.Filled.Person,
+                contentDescription = "@string/btn_description_profile",
+                tint = PrimaryBlue,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .size(113.dp)
+                    .background(Color(0xFFE4E4E4))
+                    .fillMaxHeight(0.4f)
+            )
+        } else {
+            AsyncImage(
+                model = userProfile.urlFotoPerfil,
+                contentDescription = "Foto do freelancer",
+                modifier = Modifier.fillMaxHeight(0.4f),
+                alignment = Alignment.TopCenter,
+                contentScale = ContentScale.Crop
+            )
+        }
 
         Column(
             Modifier
@@ -120,13 +139,15 @@ fun UserCard(
                     color = Color.Black,
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp
-                )
+                ),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
 
             Spacer(modifier = Modifier.padding(2.dp))
 
             Text(
-                text = userProfile.descricao.toString(),
+                text = userProfile.descricao ?: "Sem descrição",
                 style = TextStyle(
                     color = Color.Black,
                     fontWeight = FontWeight.Light,
@@ -151,12 +172,22 @@ fun UserCard(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
+                var text = "Preço não informado"
+                var color = Color.Gray
+                var fontSize = 12.sp
+
+                if (userProfile.precoMedio?.isNaN() == false) {
+                    text = "R$ ${"%.2f".format(userProfile.precoMedio)}"
+                    color = Color.Black
+                    fontSize = 14.sp
+
+                }
                 Text(
-                    text = "R$ ${"%.2f".format(userProfile.precoMedio)}",
+                    text = text,
                     style = TextStyle(
-                        color = Color.Black,
+                        color = color,
                         fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp
+                        fontSize = fontSize
                     )
                 )
 

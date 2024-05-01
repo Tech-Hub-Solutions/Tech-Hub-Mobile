@@ -1,12 +1,19 @@
 package com.example.techhub.common.composable
 
+import android.content.Context
+import android.content.ContextWrapper
+import android.os.Bundle
+import android.util.Log
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Contacts
 import androidx.compose.material.icons.filled.Logout
@@ -25,12 +32,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import com.example.techhub.common.utils.shadowCustom
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.data.prefdatastore.DataStoreManager
+import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.presentation.configUsuario.ConfiguracoesUsuarioActivity
 import com.example.techhub.presentation.editarUsuario.EditarUsuarioActivity
 import com.example.techhub.presentation.editarUsuario.EditarUsuarioView
@@ -42,11 +53,23 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+fun Context.getActivity(): ComponentActivity? = when (this) {
+    is ComponentActivity -> this
+    is ContextWrapper -> baseContext.getActivity()
+    else -> null
+}
+
 @Composable
 fun ConfigDropDownMenu() {
     val context = LocalContext.current
+    val actualActivity = context.getActivity()?.javaClass?.simpleName
+    val activityExtras = context.getActivity()?.intent?.extras
+    val currentId = activityExtras?.getInt("id")
+
     val dataStoreManager = DataStoreManager(context = context)
     var expanded by remember { mutableStateOf(false) }
+    val isOnOwnPerfilActivity =
+        actualActivity == "PerfilActivity" && currentId == CurrentUser.userProfile?.id
 
     Box(
         modifier = Modifier
@@ -56,14 +79,39 @@ fun ConfigDropDownMenu() {
         IconButton(
             onClick = { expanded = true },
         ) {
-            Icon(
-                Icons.Filled.Person,
-                contentDescription = "@string/btn_description_profile",
-                tint = Color(PrimaryBlue.value),
-                modifier = Modifier
-                    .width(28.dp)
-                    .height(28.dp)
-            )
+            if (CurrentUser.urlProfileImage.isNullOrEmpty()) {
+                Icon(
+                    Icons.Filled.Person,
+                    contentDescription = "@string/btn_description_profile",
+                    tint = if (isOnOwnPerfilActivity) {
+                        PrimaryBlue
+                    } else {
+                        Color.Gray
+                    },
+                    modifier = Modifier
+                        .width(28.dp)
+                        .height(28.dp)
+                )
+            } else {
+                AsyncImage(
+                    model = CurrentUser.urlProfileImage,
+                    contentDescription = "@string/btn_description_profile",
+                    modifier = Modifier
+                        .width(28.dp)
+                        .height(28.dp)
+                        .border(
+                            2.dp,
+                            if (isOnOwnPerfilActivity) {
+                                PrimaryBlue
+                            } else {
+                                Color.Gray
+                            },
+                            CircleShape
+                        )
+                        .clip(CircleShape)
+                        .border(2.dp, Color.White.copy(alpha = 0.5f), CircleShape)
+                )
+            }
         }
         DropdownMenu(
             modifier = Modifier
@@ -72,17 +120,31 @@ fun ConfigDropDownMenu() {
             onDismissRequest = { expanded = false },
         ) {
             DropdownMenuItem(
-                { DropDownMenuRow(icon = Icons.Filled.Settings, text = "Configurações") },
+                {
+                    DropDownMenuRow(
+                        icon = Icons.Filled.Settings,
+                        text = "Configurações",
+                        actualActivity == "ConfiguracoesUsuarioActivity"
+                    )
+                },
                 onClick = {
                     expanded = false;
                     startNewActivity(context, EditarUsuarioActivity::class.java)
                 }
             )
             DropdownMenuItem(
-                { DropDownMenuRow(icon = Icons.Filled.Person, text = "Perfil") },
+                {
+                    DropDownMenuRow(
+                        icon = Icons.Filled.Person,
+                        text = "Perfil",
+                        active = isOnOwnPerfilActivity
+                    )
+                },
                 onClick = {
                     expanded = false;
-                    startNewActivity(context, PerfilActivity::class.java)
+                    val extras = Bundle()
+                    extras.putInt("id", CurrentUser.userProfile?.id!!)
+                    startNewActivity(context, PerfilActivity::class.java, extras)
                 }
             )
             Divider(
@@ -105,17 +167,26 @@ fun ConfigDropDownMenu() {
 }
 
 @Composable
-fun DropDownMenuRow(icon: ImageVector, text: String) {
+fun DropDownMenuRow(
+    icon: ImageVector,
+    text: String,
+    active: Boolean = false,
+) {
     Row(verticalAlignment = Alignment.CenterVertically) {
+        val color = if (active) {
+            PrimaryBlue
+        } else {
+            Color(0xFF858585)
+        }
         Icon(
             icon,
             contentDescription = "@string/btn_description_profile",
-            tint = Color(0xFF858585),
+            tint = color,
             modifier = Modifier
                 .width(28.dp)
                 .height(28.dp)
                 .padding(end = 8.dp)
         )
-        Text(text = text, color = Color(0xFF858585))
+        Text(text = text, color = color)
     }
 }
