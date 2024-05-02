@@ -15,9 +15,11 @@ object CurrentUser {
     var urlProfileImage: String? = ""
     var userProfile: UsuarioTokenData? = null
     var isEmpresa: Boolean = false
+    var email: String? = ""
+    var isUsing2FA: Boolean = false
 }
 
-fun updateCurrentUser(context: Context, usuarioTokenData: UsuarioTokenData) {
+fun updateCurrentUser(context: Context, usuarioTokenData: UsuarioTokenData, email: String) {
     val dataStoreManager = DataStoreManager(context)
 
     CoroutineScope(Dispatchers.Main).launch {
@@ -25,7 +27,9 @@ fun updateCurrentUser(context: Context, usuarioTokenData: UsuarioTokenData) {
             userTokenJwt = usuarioTokenData.token!!,
             urlProfileImage = usuarioTokenData.urlFotoPerfil ?: "",
             userProfile = usuarioTokenData,
-            userFuncao = usuarioTokenData.funcao == UsuarioFuncao.EMPRESA
+            userFuncao = usuarioTokenData.funcao == UsuarioFuncao.EMPRESA,
+            email = email,
+            isUsing2FA = usuarioTokenData.isUsing2FA!!
         )
         dataStoreManager.saveToDataStore(data)
         updateCurrentUser(data)
@@ -53,4 +57,6 @@ fun updateCurrentUser(dataStoreData: DataStoreData) {
     CurrentUser.urlProfileImage = dataStoreData.urlProfileImage
     CurrentUser.userProfile = dataStoreData.userProfile
     CurrentUser.isEmpresa = dataStoreData.userFuncao
+    CurrentUser.email = dataStoreData.email
+    CurrentUser.isUsing2FA = dataStoreData.isUsing2FA
 }

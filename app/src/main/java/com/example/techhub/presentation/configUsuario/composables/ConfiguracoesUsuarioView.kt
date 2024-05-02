@@ -2,6 +2,7 @@ package com.example.techhub.presentation.configUsuario.composables
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.os.Bundle
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -21,6 +22,7 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -34,18 +36,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
-import com.example.techhub.common.Screen
 import com.example.techhub.common.composable.EmailTextField
 import com.example.techhub.common.composable.FlagDropDownMenu
 import com.example.techhub.common.composable.NameTextField
 import com.example.techhub.common.composable.PasswordTextField
 import com.example.techhub.common.composable.Switch2FALeft
 import com.example.techhub.common.composable.TopBar
+import com.example.techhub.common.countryFlagsList
+import com.example.techhub.common.utils.base64Images.encodeBase64
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.common.utils.startNewActivity
-import com.example.techhub.data.prefdatastore.DataStoreManager
+import com.example.techhub.domain.model.CurrentUser
+import com.example.techhub.domain.model.updateCurrentUser
 import com.example.techhub.domain.model.usuario.UsuarioAtualizacaoData
 import com.example.techhub.domain.model.usuario.UsuarioSimpleVerifyData
 import com.example.techhub.presentation.configUsuario.ConfiguracoesUsuarioViewModel
@@ -62,21 +65,35 @@ import kotlinx.coroutines.launch
 @Composable
 fun ConfiguracoesUsuarioView(
     navController: NavController,
-    usuarioSimpleVerifyData: MutableLiveData<UsuarioSimpleVerifyData>
+    redirectToAuth: (UsuarioSimpleVerifyData) -> Unit,
+    viewModel: ConfiguracoesUsuarioViewModel
 ) {
     val context = LocalContext.current
-    val isEmpresa = false
-    var dataStoreManager = DataStoreManager(context)
-
-    var name by remember { mutableStateOf("") }
-    val nacionalidade = remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf(CurrentUser.userProfile!!.nome!!) }
+    val nacionalidade = remember {
+        mutableStateOf(
+            countryFlagsList.find { it.acronym == CurrentUser.userProfile!!.pais!! }?.name ?: ""
+        )
+    }
+    var email by remember { mutableStateOf(CurrentUser.email!!) }
     var password by remember { mutableStateOf("") }
-    var isUsing2FA by remember { mutableStateOf(false) }
-    val viewModel = ConfiguracoesUsuarioViewModel()
+    var isUsing2FA by remember { mutableStateOf(CurrentUser.isUsing2FA) }
     val errorApi = viewModel.errorApi.observeAsState().value!!
-    val usuarioTokenData = viewModel.usuarioTokenData.observeAsState().value!!
+    val usuarioTokenData = viewModel.usuarioTokenData.observeAsState()
 
+
+    LaunchedEffect(usuarioTokenData.value) {
+        if (!usuarioTokenData.value!!.secret.isNullOrBlank()) {
+            redirectToAuth(
+                UsuarioSimpleVerifyData(
+                    email = email,
+                    senha = password,
+                    encodedUrl = encodeBase64(usuarioTokenData.value!!.secretQrCodeUrl!!),
+                    secretKey = usuarioTokenData.value!!.secret!!
+                )
+            )
+        }
+    }
     Scaffold(
         topBar = {
             TopBar(
@@ -121,17 +138,21 @@ fun ConfiguracoesUsuarioView(
             ) {
                 Spacer(modifier = Modifier.padding(0.dp))
 
-                NameTextField(onValueChanged = { name = it })
+                NameTextField(
+                    initialValue = CurrentUser.userProfile!!.nome!!,
+                    onValueChanged = { name = it })
 
                 FlagDropDownMenu(nacionalidade)
 
                 Spacer(modifier = Modifier.padding(0.dp))
 
-                EmailTextField { email = it }
+                EmailTextField(initialValue = CurrentUser.email!!, onValueChanged = { email = it })
 
                 PasswordTextField { password = it }
 
-                Switch2FALeft { isUsing2FA = it }
+                Switch2FALeft(
+                    initialValue = CurrentUser.isUsing2FA,
+                    onValueChanged = { isUsing2FA = it })
 
                 Spacer(modifier = Modifier.padding(0.dp))
 
@@ -139,11 +160,12 @@ fun ConfiguracoesUsuarioView(
 
             ElevatedButton(
                 onClick = {
+                    val countryCode = countryFlagsList.find { it.name == nacionalidade.value }
                     val usuarioAtualizacaoData =
                         UsuarioAtualizacaoData(
                             name,
                             email,
-                            nacionalidade.value,
+                            countryCode?.name,
                             password,
                             isUsing2FA
                         )
@@ -163,27 +185,17 @@ fun ConfiguracoesUsuarioView(
                         if (errorApi.isNotBlank()) {
                             Log.e("Error", "Erro ao atualizar")
                         } else {
-                            if (usuarioTokenData.isUsing2FA!!) {
-                                usuarioSimpleVerifyData.postValue(
-                                    UsuarioSimpleVerifyData(
-                                        email = email,
-                                        senha = password,
-                                        encodedUrl = usuarioTokenData.secretQrCodeUrl!!,
-                                        secretKey = usuarioTokenData.secret!!
-                                    )
-                                )
-                                navController.navigate(Screen.ConfiguracoesUsuarioFirstAuthView.route)
-                            } else {
+                            if (!isUsing2FA) {
                                 CoroutineScope(Dispatchers.IO).launch {
                                     delay(1000L)
                                     (context as Activity).runOnUiThread {
                                         showToastError(
                                             context,
-                                            "Você será redirecionado para refazer o login!"
+                                            "Dados atualizados com sucesso!!"
                                         )
                                     }
                                     delay(3000L)
-                                    dataStoreManager.clearDataStore()
+                                    updateCurrentUser(context, usuarioTokenData.value!!, email)
                                     startNewActivity(context, LoginActivity::class.java)
                                 }
                             }
@@ -205,7 +217,11 @@ fun ConfiguracoesUsuarioView(
             Spacer(modifier = Modifier.padding(12.dp))
 
             ElevatedButton(
-                onClick = { startNewActivity(context, PerfilActivity::class.java) },
+                onClick = {
+                    val extras = Bundle()
+                    extras.putInt("id", CurrentUser.userProfile!!.id!!)
+                    startNewActivity(context, PerfilActivity::class.java, extras)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(60.dp),

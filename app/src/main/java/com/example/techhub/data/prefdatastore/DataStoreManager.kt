@@ -23,6 +23,8 @@ class DataStoreManager(val context: Context) {
         val URL_PROFILE_IMAGE = stringPreferencesKey("user_url_profile_image")
         val USER_PROFILE = stringPreferencesKey("user_profile")
         val USER_FUNCAO = booleanPreferencesKey("user_funcao")
+        val USER_EMAIL = stringPreferencesKey("user_email")
+        val USER_IS_USING_2FA = booleanPreferencesKey("user_is_using_2fa")
     }
 
     suspend fun saveToDataStore(dataStoreData: DataStoreData) {
@@ -31,6 +33,8 @@ class DataStoreManager(val context: Context) {
             it[URL_PROFILE_IMAGE] = dataStoreData.urlProfileImage
             it[USER_PROFILE] = gson.toJson(dataStoreData.userProfile)
             it[USER_FUNCAO] = dataStoreData.userFuncao
+            it[USER_EMAIL] = dataStoreData.email!!
+            it[USER_IS_USING_2FA] = dataStoreData.isUsing2FA
         }
     }
 
@@ -39,7 +43,9 @@ class DataStoreManager(val context: Context) {
             userTokenJwt = it[USER_TOKEN_JWT] ?: "",
             urlProfileImage = it[URL_PROFILE_IMAGE] ?: "",
             userProfile = it[USER_PROFILE]?.let { gson.fromJson(it, UsuarioTokenData::class.java) },
-            userFuncao = it[USER_FUNCAO] ?: false
+            userFuncao = it[USER_FUNCAO] ?: false,
+            email = it[USER_EMAIL] ?: "",
+            isUsing2FA = it[USER_IS_USING_2FA] ?: false
         )
     }
 

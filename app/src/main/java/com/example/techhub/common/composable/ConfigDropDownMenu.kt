@@ -129,7 +129,7 @@ fun ConfigDropDownMenu() {
                 },
                 onClick = {
                     expanded = false;
-                    startNewActivity(context, EditarUsuarioActivity::class.java)
+                    startNewActivity(context, ConfiguracoesUsuarioActivity::class.java)
                 }
             )
             DropdownMenuItem(

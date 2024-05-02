@@ -107,9 +107,7 @@ fun LoginFormView(
                 modifier = Modifier
                     .width(350.dp)
             ) {
-                EmailTextField {
-                    userSetter(user.copy(email = it))
-                }
+                EmailTextField(onValueChanged = { userSetter(user.copy(email = it)) })
 
                 PasswordTextField {
                     userSetter(user.copy(senha = it))

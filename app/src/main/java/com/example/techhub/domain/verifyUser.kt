@@ -28,7 +28,8 @@ fun verifyUser(
             if (response.isSuccessful) {
                 updateCurrentUser(
                     context = context,
-                    usuarioTokenData = response.body()!!
+                    usuarioTokenData = response.body()!!,
+                    email = userData.email!!
                 )
 
                 redirectToPerfilUsuario(
