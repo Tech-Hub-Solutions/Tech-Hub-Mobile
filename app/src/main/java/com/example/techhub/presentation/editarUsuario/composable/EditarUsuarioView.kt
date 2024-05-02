@@ -1,4 +1,4 @@
-package com.example.techhub.presentation.editarUsuario
+package com.example.techhub.presentation.editarUsuario.composable
 
 import android.os.Bundle
 import androidx.compose.foundation.BorderStroke
@@ -40,12 +40,13 @@ import com.example.techhub.common.composable.LinkedinTextField
 import com.example.techhub.common.composable.NameTextField
 import com.example.techhub.common.composable.PriceTextField
 import com.example.techhub.common.composable.SkillsSelectedField
-import com.example.techhub.common.composable.SoftskillDropMenu
+import com.example.techhub.common.composable.SkillsDropDownMenu
 import com.example.techhub.common.composable.TopBar
 import com.example.techhub.common.enums.UsuarioFuncao
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
+import com.example.techhub.presentation.editarUsuario.EditarUsuarioViewModel
 import com.example.techhub.presentation.perfil.PerfilActivity
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
@@ -62,13 +63,17 @@ fun EditarUsuarioView(
     var preco by remember { mutableStateOf(userInfo.precoMedio) }
     var linkLinkedin by remember { mutableStateOf(userInfo.linkLinkedin) }
     var linkGithub by remember { mutableStateOf(userInfo.linkGithub) }
-    val skill =  remember { mutableStateOf("") }
-    val softSkillList = remember { mutableStateOf(userInfo.flags!!.filter {
-        it.categoria == "soft-skill"
-    }.toMutableStateList())}
-    val hardSkillList = remember { mutableStateOf(userInfo.flags!!.filter {
-        it.categoria == "hard-skill"
-    }.toMutableStateList())}
+    val skill = remember { mutableStateOf("") }
+    val softSkillList = remember {
+        mutableStateOf(userInfo.flags!!.filter {
+            it.categoria == "soft-skill"
+        }.toMutableStateList())
+    }
+    val hardSkillList = remember {
+        mutableStateOf(userInfo.flags!!.filter {
+            it.categoria == "hard-skill"
+        }.toMutableStateList())
+    }
 
     val toastErrorMessage = "Ops! Algo deu errado.\n Tente novamente."
 
@@ -109,25 +114,38 @@ fun EditarUsuarioView(
             ) {
                 Spacer(modifier = Modifier.padding(0.dp))
 
-                NameTextField(initialValue = userInfo.descricao ?: "", onValueChanged = { name = it })
+                // Informações do Perfil
+                NameTextField(
+                    initialValue = userInfo.descricao ?: "",
+                    onValueChanged = { name = it })
 
-                DescriptionTextField (initialValue = userInfo.descricao ?: "", onValueChanged = { descricao = it })
-
-                Spacer(modifier = Modifier.padding(0.dp))
-
-                ExperienceTextField (initialValue = userInfo.experiencia ?: "", onValueChanged = { experiencia = it })
-
-                Spacer(modifier = Modifier.padding(0.dp))
-
-                AboutMeTextField (initialValue = userInfo.sobreMim ?: "", onValueChanged = { sobreMim = it })
+                DescriptionTextField(
+                    initialValue = userInfo.descricao ?: "",
+                    onValueChanged = { descricao = it })
 
                 Spacer(modifier = Modifier.padding(0.dp))
 
-                PriceTextField (initialValue = userInfo.precoMedio.toString(), onValueChanged = { preco = it.toDouble() })
-                // Necessário fazer máscara
+                ExperienceTextField(
+                    initialValue = userInfo.experiencia ?: "",
+                    onValueChanged = { experiencia = it })
+
+                Spacer(modifier = Modifier.padding(0.dp))
+
+                AboutMeTextField(
+                    initialValue = userInfo.sobreMim ?: "",
+                    onValueChanged = { sobreMim = it })
+
+                Spacer(modifier = Modifier.padding(0.dp))
+
+                // TODO: Necessário fazer máscara
+                PriceTextField(
+                    initialValue = userInfo.precoMedio.toString(),
+                    onValueChanged = { preco = it.toDouble() })
 
                 Spacer(modifier = Modifier.padding(2.dp))
 
+
+                // Formas de contato
                 Row {
                     Text(
                         text = "Formas de Contato",
@@ -137,29 +155,39 @@ fun EditarUsuarioView(
                 }
                 Spacer(modifier = Modifier.padding(2.dp))
 
-                LinkedinTextField(initialValue = userInfo.linkLinkedin ?: "", onValueChanged = { linkLinkedin = it })
+                LinkedinTextField(
+                    initialValue = userInfo.linkLinkedin ?: "",
+                    onValueChanged = { linkLinkedin = it })
 
                 Spacer(modifier = Modifier.padding(2.dp))
 
-                GitHubTextField(initialValue = userInfo.linkGithub ?: "", onValueChanged = { linkGithub = it })
+                GitHubTextField(
+                    initialValue = userInfo.linkGithub ?: "",
+                    onValueChanged = { linkGithub = it })
 
                 Spacer(modifier = Modifier.padding(2.dp))
 
+
+                // Skills
                 Row {
-                    val texto = if (userInfo.funcao == UsuarioFuncao.FREELANCER) "Soft skills" else "Valores"
+                    val texto =
+                        if (userInfo.funcao == UsuarioFuncao.FREELANCER) "Soft skills" else "Valores"
                     Text(
                         text = texto,
                         fontSize = 20.sp,
                         fontWeight = FontWeight(500),
                     )
                 }
-
-                SoftskillDropMenu(skill = skill, viewModel = viewModel, categoria = "soft-skill", softSkillList.value)
-
+                SkillsDropDownMenu(
+                    viewModel = viewModel,
+                    categoria = "soft-skill",
+                    softSkillList.value
+                )
                 SkillsSelectedField(softSkillList.value)
 
                 Spacer(modifier = Modifier.padding(2.dp))
-                if (userInfo.funcao == UsuarioFuncao.FREELANCER){
+
+                if (userInfo.funcao == UsuarioFuncao.FREELANCER) {
                     Row {
                         Text(
                             text = "Hard skills",
@@ -167,14 +195,14 @@ fun EditarUsuarioView(
                             fontWeight = FontWeight(500),
                         )
                     }
-
-                    SoftskillDropMenu(skill = skill, viewModel = viewModel, categoria = "hard-skill", hardSkillList.value)
-
+                    SkillsDropDownMenu(
+                        viewModel = viewModel,
+                        categoria = "hard-skill",
+                        hardSkillList.value
+                    )
                     SkillsSelectedField(hardSkillList.value)
-
                     Spacer(modifier = Modifier.padding(2.dp))
                 }
-
 
                 ElevatedButton(
                     onClick = { },
@@ -189,9 +217,6 @@ fun EditarUsuarioView(
                 ) {
                     Text(text = "Salvar", fontSize = 16.sp, fontWeight = FontWeight(500))
                 }
-
-
-
 
                 Spacer(modifier = Modifier.padding(12.dp))
 

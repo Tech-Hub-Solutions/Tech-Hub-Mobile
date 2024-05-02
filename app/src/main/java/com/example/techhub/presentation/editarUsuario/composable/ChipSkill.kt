@@ -10,14 +10,11 @@ import androidx.compose.material3.InputChip
 import androidx.compose.material3.InputChipDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.example.techhub.common.utils.verificarCorFlag
 import com.example.techhub.domain.model.flag.FlagData
+import com.example.techhub.presentation.ui.theme.GrayText
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -28,18 +25,18 @@ fun ChipSkill(
 ) {
     InputChip(
         colors = InputChipDefaults.inputChipColors(
-            containerColor = verificarCorFlag(flag.area?:""),
-            selectedContainerColor = verificarCorFlag(flag.area?:""),
-        ) ,
+            containerColor = verificarCorFlag(flag.area ?: ""),
+            selectedContainerColor = verificarCorFlag(flag.area ?: ""),
+        ),
         onClick = {},
-        label = { Text(flag.nome?:"") },
+        label = { Text(flag.nome ?: "", color = GrayText) },
         selected = true,
         trailingIcon = {
             Icon(
                 Icons.Default.Close,
                 contentDescription = "Localized description",
                 modifier = Modifier.clickable { onDismiss() },
-                tint = Color.Gray ,
+                tint = Color.Gray,
             )
         },
     )

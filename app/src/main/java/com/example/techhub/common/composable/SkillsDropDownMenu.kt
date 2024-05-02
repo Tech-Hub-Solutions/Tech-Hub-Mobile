@@ -1,4 +1,5 @@
 package com.example.techhub.common.composable
+
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,7 +17,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Assistant
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -35,27 +35,30 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
+import com.example.techhub.common.utils.showToastError
+import com.example.techhub.common.utils.verificarCorFlag
 import com.example.techhub.domain.model.flag.FlagData
 import com.example.techhub.presentation.editarUsuario.EditarUsuarioViewModel
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
-import org.chromium.base.Flag
 
 
 @Composable
-fun SoftskillDropMenu(skill: MutableState<String>,
-                      viewModel : EditarUsuarioViewModel,
-                      categoria:String,
-                      flagsSkills: SnapshotStateList<FlagData>
-                        ) {
+fun SkillsDropDownMenu(
+    viewModel: EditarUsuarioViewModel,
+    categoria: String,
+    flagsSkills: SnapshotStateList<FlagData>
+) {
     val flags = viewModel.flags.observeAsState()
     var skill by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
     val interactionSource = remember { MutableInteractionSource() }
+    val toastErrorMessage = "Você pode selecionar até 10 skills"
+    val context = LocalContext.current
 
 
     Column(
@@ -146,16 +149,28 @@ fun SoftskillDropMenu(skill: MutableState<String>,
                             .heightIn(max = 200.dp)
                             .background(Color.White)
                     ) {
-                            items(
-                                flags.value!!.filter {
-                                    it.categoria == categoria
-                                }
-                            ) {
-                                FlagItems(title = it.nome!!) {title ->
+                        items(
+                            flags.value!!.filter {
+                                it.categoria == categoria && !flagsSkills.contains(it)
+                            }
+                        ) {
+                            val underlineColor = if (it.categoria != "soft-skill") {
+                                verificarCorFlag(it.area!!)
+                            } else {
+                                Color.Transparent
+                            }
+                            ItemSelecionavel(
+                                title = it.nome!!,
+                                underlineColor = underlineColor,
+                                underlineHeight = 2
+                            ) { title ->
+                                if (flagsSkills.size < 10) {
                                     flagsSkills.add(it)
                                     skill = title
                                     expanded = false
                                     skill = ""
+                                } else {
+                                    showToastError(context = context, message = toastErrorMessage)
                                 }
                             }
                         }
@@ -164,6 +179,7 @@ fun SoftskillDropMenu(skill: MutableState<String>,
             }
         }
     }
+}
 
 
 
