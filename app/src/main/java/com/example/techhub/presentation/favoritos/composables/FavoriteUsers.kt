@@ -95,11 +95,6 @@ fun FavoriteUsers(
         }
 
         LazyColumn(
-            modifier = Modifier
-                .verticalScroll(
-                    rememberScrollState()
-                )
-                .height(920.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             val subLists = favoritos.chunked(2)
@@ -125,7 +120,10 @@ fun FavoriteUsers(
                         }
                     }
                 }
-                if (index == subLists.size - 1 && !isLastPage && favoritos.isNotEmpty()) {
+            }
+
+            item {
+                if (!isLastPage && favoritos.isNotEmpty()) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -36,6 +37,7 @@ import com.example.techhub.presentation.perfil.PerfilViewModel
 import com.example.techhub.presentation.perfil.composables.SectionTitle
 import com.example.techhub.presentation.ui.theme.GrayLoadButton
 import com.example.techhub.presentation.ui.theme.GrayStar
+import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
@@ -76,14 +78,14 @@ fun ComentariosSection(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(550.dp)
+                .heightIn(max = 550.dp)
                 .verticalScroll(rememberScrollState())
                 .padding(bottom = 16.dp, start = 24.dp, end = 24.dp),
             Arrangement.spacedBy(16.dp)
         ) {
 
             if (comments.isNullOrEmpty()) {
-                Text(text = "Não há comentários")
+                Text(text = "Não há comentários", color = GrayText)
             } else {
                 Log.d("COMENTARIOSECTION -> comentarios", comments.toString())
 

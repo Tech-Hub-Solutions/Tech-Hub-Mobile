@@ -228,65 +228,59 @@ fun GetTalentos(
             CircularProgressIndicator(modifier = Modifier.size(50.dp))
         }
     } else {
-        Column(
+        LazyColumn(
             modifier = Modifier
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
-                .heightIn(max = 1000.dp)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                val subLists = talentos.chunked(2)
-                var count = 0
-                itemsIndexed(subLists) { index, subLista ->
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start)
-                    ) {
-                        subLista.forEachIndexed { index, item ->
-                            count++;
-                            UserCard(
-                                item,
-                                talentos,
-                                isComparing = false,
-                                modifier = Modifier
-                                    .weight(1f, false)
-                            )
+            val subLists = talentos.chunked(2)
+            var count = 0
+            itemsIndexed(subLists) { index, subLista ->
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start)
+                ) {
+                    subLista.forEachIndexed { index, item ->
+                        count++;
+                        UserCard(
+                            item,
+                            talentos,
+                            isComparing = false,
+                            modifier = Modifier
+                                .weight(1f, false)
+                        )
 
-                            if (index == subLista.size - 1 && subLista.size % 2 != 0) {
-                                Spacer(modifier = Modifier.weight(1f))
-                            }
+                        if (index == subLista.size - 1 && subLista.size % 2 != 0) {
+                            Spacer(modifier = Modifier.weight(1f))
                         }
                     }
-
-                    if (index == subLists.size - 1 && !isLastPage) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            CustomizedElevatedButton(
-                                onClick = {
-                                    viewModel.getTalentos(++page.value, 10, filtro)
-                                },
-                                horizontalPadding = 16,
-                                verticalPadding = 8,
-                                defaultElevation = 0,
-                                pressedElevation = 0,
-                                containerColor = Color(GrayLoadButton.value),
-                                contentColor = Color(0xFF505050),
-                                shape = RoundedCornerShape(50),
-                                horizontalArrangement = Arrangement.spacedBy(
-                                    8.dp,
-                                    Alignment.CenterHorizontally
-                                ),
-                                text = "Carregar mais talentos",
-                                fontSize = 16,
-                                fontWeight = FontWeight.Medium,
-                                contentDescription = "Botão para carregar mais talentos"
-                            )
-                        }
+                }
+            }
+            item {
+                if (!isLastPage && talentos.isNotEmpty()) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        CustomizedElevatedButton(
+                            onClick = {
+                                viewModel.getTalentos(++page.value, 10, filtro)
+                            },
+                            horizontalPadding = 16,
+                            verticalPadding = 8,
+                            defaultElevation = 0,
+                            pressedElevation = 0,
+                            containerColor = Color(GrayLoadButton.value),
+                            contentColor = Color(0xFF505050),
+                            shape = RoundedCornerShape(50),
+                            horizontalArrangement = Arrangement.spacedBy(
+                                8.dp,
+                                Alignment.CenterHorizontally
+                            ),
+                            text = "Carregar mais talentos",
+                            fontSize = 16,
+                            fontWeight = FontWeight.Medium,
+                            contentDescription = "Botão para carregar mais talentos"
+                        )
                     }
                 }
             }

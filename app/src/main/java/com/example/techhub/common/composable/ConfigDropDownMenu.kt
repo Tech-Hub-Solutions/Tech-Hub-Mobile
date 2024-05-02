@@ -3,7 +3,6 @@ package com.example.techhub.common.composable
 import android.content.Context
 import android.content.ContextWrapper
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -15,7 +14,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Contacts
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
@@ -38,13 +36,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.techhub.common.utils.shadowCustom
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.data.prefdatastore.DataStoreManager
 import com.example.techhub.domain.model.CurrentUser
-import com.example.techhub.presentation.configUsuario.ConfiguracoesUsuarioActivity
 import com.example.techhub.presentation.editarUsuario.EditarUsuarioActivity
-import com.example.techhub.presentation.editarUsuario.composable.EditarUsuarioView
 import com.example.techhub.presentation.login.LoginActivity
 import com.example.techhub.presentation.perfil.PerfilActivity
 import com.example.techhub.presentation.ui.theme.GrayTinyButton
