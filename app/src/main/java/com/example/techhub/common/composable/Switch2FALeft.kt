@@ -25,8 +25,8 @@ import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun Switch2FALeft(onValueChanged: (Boolean) -> Unit) {
-    var checked by remember { mutableStateOf(false) }
+fun Switch2FALeft(onValueChanged: (Boolean) -> Unit, initialValue: Boolean = false) {
+    var checked by remember { mutableStateOf(initialValue) }
 
     Row(
         horizontalArrangement = Arrangement.Start,

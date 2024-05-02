@@ -38,9 +38,5 @@ class MainActivity : ComponentActivity() {
             }
         }
         super.onCreate(savedInstanceState)
-        setContent {
-            Text(text = "Hello World!")
-        }
-
     }
 }

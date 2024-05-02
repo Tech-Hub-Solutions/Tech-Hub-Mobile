@@ -85,7 +85,7 @@ fun ComentariosSection(
             if (comments.isNullOrEmpty()) {
                 Text(text = "Não há comentários")
             } else {
-                Log.d("COMENTARIOSECTION -> comentarios", comments.toString())
+                Log.d("COMENTARIO SECTION -> comentarios", comments.toString())
 
                 comments.forEach {
                     ComentarioCard(

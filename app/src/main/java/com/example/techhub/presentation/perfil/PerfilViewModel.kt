@@ -162,7 +162,7 @@ class PerfilViewModel : ViewModel() {
     }
 
     fun getAvaliacoesDoUsuario(context: Context, userId: Int) {
-        val toastErrorMessage = "Ops! Ocorreu um erro ao buscar as avaliações do perfil."
+        var toastErrorMessage = "Ops! Ocorreu um erro ao buscar as avaliações do perfil."
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -172,11 +172,15 @@ class PerfilViewModel : ViewModel() {
                     avaliacoesDoUsuario.postValue(response.body()!!)
                 } else {
                     (context as Activity).runOnUiThread {
-                        showToastError(context = context, message = toastErrorMessage)
+                        showToastError(context = context, message = "Nenhuma avaliação encontrada!")
                     }
                 }
-
             } catch (error: Exception) {
+
+                if (error.message.equals(null)) {
+                    toastErrorMessage = "Nenhuma avaliação encontrada!"
+                }
+
                 (context as Activity).runOnUiThread {
                     showToastError(context = context, message = toastErrorMessage)
                 }
@@ -186,7 +190,7 @@ class PerfilViewModel : ViewModel() {
     }
 
     fun getComentariosDoUsuario(context: Context, userId: Int, page: Int, size: Int) {
-        val toastErrorMessage = "Ops! Ocorreu um erro ao buscar os comentários do usuário"
+        var toastErrorMessage = "Ops! Ocorreu um erro ao buscar os comentários do usuário"
 
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -208,10 +212,14 @@ class PerfilViewModel : ViewModel() {
                     comentariosDoUsuario.value!!.addAll(list)
                 } else {
                     (context as Activity).runOnUiThread {
-                        showToastError(context = context, message = toastErrorMessage)
+                        showToastError(context = context, message = "Nenhum comentário encontrado!")
                     }
                 }
             } catch (error: Exception) {
+                if (error.message.equals(null)) {
+                    toastErrorMessage = "Nenhum comentário encontrado!"
+                }
+
                 (context as Activity).runOnUiThread {
                     showToastError(context = context, message = toastErrorMessage)
                 }

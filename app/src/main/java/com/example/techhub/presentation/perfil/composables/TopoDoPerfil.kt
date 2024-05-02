@@ -1,6 +1,7 @@
 package com.example.techhub.presentation.perfil.composables
 
 import android.content.Context
+import android.os.Bundle
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,11 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.EditAttributes
 import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.UploadFile
-import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -28,8 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
-import com.example.techhub.presentation.configUsuario.ConfiguracoesUsuarioActivity
-import com.example.techhub.presentation.favoritos.FavoritosActivity
+import com.example.techhub.presentation.editarUsuario.EditarUsuarioActivity
 import com.example.techhub.presentation.perfil.PerfilViewModel
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
@@ -116,7 +114,9 @@ fun TopoDoPerfil(
 
                 if (isOwnProfile) {
                     IconButton(onClick = {
-                        startNewActivity(context, ConfiguracoesUsuarioActivity::class.java)
+                        val extras = Bundle()
+                        extras.putSerializable("userInfo", userInfo.value!!)
+                        startNewActivity(context, EditarUsuarioActivity::class.java, extras)
                     }) {
                         Icon(
                             imageVector = Icons.Filled.EditNote,

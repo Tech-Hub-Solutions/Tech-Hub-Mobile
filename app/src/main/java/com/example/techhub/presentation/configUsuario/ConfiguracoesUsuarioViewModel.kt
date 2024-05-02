@@ -4,9 +4,12 @@ import android.app.Activity
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.NavController
+import com.example.techhub.common.Screen
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.domain.RetrofitService
 import com.example.techhub.domain.model.usuario.UsuarioAtualizacaoData
+import com.example.techhub.domain.model.usuario.UsuarioSimpleVerifyData
 import com.example.techhub.domain.model.usuario.UsuarioTokenData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +22,10 @@ class ConfiguracoesUsuarioViewModel {
     private val usuarioApi = RetrofitService.getUsuarioService()
 
 
-    fun atualizarConfigUsuario(usuarioAtualizacaoData: UsuarioAtualizacaoData, context: Context) {
+    fun atualizarConfigUsuario(
+        usuarioAtualizacaoData: UsuarioAtualizacaoData,
+        context: Context,
+    ) {
         try {
             CoroutineScope(Dispatchers.IO).launch {
                 val response = usuarioApi.atualizarConfigUsuario(usuarioAtualizacaoData)

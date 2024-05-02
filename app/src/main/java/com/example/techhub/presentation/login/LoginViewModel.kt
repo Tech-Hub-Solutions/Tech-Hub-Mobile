@@ -37,7 +37,8 @@ class LoginViewModel : ViewModel() {
 
                         updateCurrentUser(
                             context = context,
-                            usuarioTokenData = response.body()!!
+                            usuarioTokenData = response.body()!!,
+                            email = user.email!!
                         )
 
                         redirectToPerfilUsuario(

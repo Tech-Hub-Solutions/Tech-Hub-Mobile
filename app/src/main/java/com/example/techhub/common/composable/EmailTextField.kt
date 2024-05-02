@@ -26,8 +26,8 @@ import androidx.core.util.PatternsCompat
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun EmailTextField(onValueChanged: (String) -> Unit) {
-    var filledText by remember { mutableStateOf("") }
+fun EmailTextField(onValueChanged: (String) -> Unit, initialValue: String = "") {
+    var filledText by remember { mutableStateOf(initialValue) }
     var isEmailValid by remember { mutableStateOf(true) }
 
     Column {

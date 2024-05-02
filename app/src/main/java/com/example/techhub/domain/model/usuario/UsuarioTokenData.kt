@@ -1,6 +1,7 @@
 package com.example.techhub.domain.model.usuario
 
 import com.example.techhub.common.enums.UsuarioFuncao
+import java.io.Serializable
 
 
 data class UsuarioTokenData(
@@ -13,5 +14,4 @@ data class UsuarioTokenData(
     val secretQrCodeUrl: String? = null,
     val secret: String? = null,
     val token: String? = null,
-) {
-}
+) : Serializable

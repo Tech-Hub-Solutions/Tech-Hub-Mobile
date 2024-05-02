@@ -165,7 +165,7 @@ fun CadastroFormView(
                 )
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                NameTextField { name = it }
+                NameTextField( onValueChanged = { name = it } )
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
@@ -177,7 +177,7 @@ fun CadastroFormView(
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                EmailTextField { email = it }
+                EmailTextField(onValueChanged = { email = it })
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
