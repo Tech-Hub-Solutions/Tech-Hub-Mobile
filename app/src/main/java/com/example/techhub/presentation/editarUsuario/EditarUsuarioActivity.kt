@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.example.techhub.composable.SetBarColor
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
+import com.example.techhub.presentation.configUsuario.composables.ConfiguracoesUsuarioView
+import com.example.techhub.presentation.editarUsuario.composable.EditarUsuarioView
 import com.example.techhub.presentation.ui.theme.TechHubTheme
 
 class EditarUsuarioActivity: ComponentActivity(){
