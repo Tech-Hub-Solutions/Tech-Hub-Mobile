@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -64,6 +66,7 @@ fun LoginFormView(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .background(Color.White)
                 .padding(
                     top = innerPadding.calculateTopPadding(),
@@ -104,9 +107,7 @@ fun LoginFormView(
                 modifier = Modifier
                     .width(350.dp)
             ) {
-                EmailTextField {
-                    userSetter(user.copy(email = it))
-                }
+                EmailTextField(onValueChanged = { userSetter(user.copy(email = it)) })
 
                 PasswordTextField {
                     userSetter(user.copy(senha = it))

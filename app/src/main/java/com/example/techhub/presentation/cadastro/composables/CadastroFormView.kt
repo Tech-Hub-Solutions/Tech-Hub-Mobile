@@ -1,11 +1,14 @@
 package com.example.techhub.presentation.cadastro.composables
 
+import android.os.Bundle
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -93,9 +96,13 @@ fun CadastroFormView(
 
                         onAuthSuccess(usuarioSimpleVerifyData)
                     } else {
+                        val extras = Bundle()
+                        extras.putInt("id", response.body()?.id!!)
+
                         redirectToPerfilUsuario(
                             context = context,
-                            fullName = response.body()?.nome!!
+                            fullName = response.body()?.nome!!,
+                            extras = extras
                         )
                     }
                 } else {
@@ -122,6 +129,7 @@ fun CadastroFormView(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .background(Color.White)
                 .padding(
                     top = innerPadding.calculateTopPadding(),
@@ -157,7 +165,7 @@ fun CadastroFormView(
                 )
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                NameTextField { name = it }
+                NameTextField( onValueChanged = { name = it } )
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
@@ -169,7 +177,7 @@ fun CadastroFormView(
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                EmailTextField { email = it }
+                EmailTextField(onValueChanged = { email = it })
 
                 Spacer(modifier = Modifier.padding(12.dp))
 

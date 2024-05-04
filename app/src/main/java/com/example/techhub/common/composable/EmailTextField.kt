@@ -7,8 +7,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.LaunchedEffect
@@ -25,10 +25,9 @@ import androidx.compose.ui.unit.sp
 import androidx.core.util.PatternsCompat
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun EmailTextField(onValueChanged: (String) -> Unit) {
-    var filledText by remember { mutableStateOf("") }
+fun EmailTextField(onValueChanged: (String) -> Unit, initialValue: String = "") {
+    var filledText by remember { mutableStateOf(initialValue) }
     var isEmailValid by remember { mutableStateOf(true) }
 
     Column {

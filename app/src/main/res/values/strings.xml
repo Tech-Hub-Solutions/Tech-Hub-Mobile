@@ -9,4 +9,8 @@
     <string name="btn_description_favorites">botão para ir à pagina de favoritos</string>
     <string name="btn_description_chat">botão para ir à pagina de conversas (chat)</string>
     <string name="btn_description_profile">botão com foto de perfil do usuário para abrir menu de configurações de perfil</string>
+    <string name="title_activity_teste_comparar_talentos">TesteCompararTalentosActivity</string>
+    <string name="title_activity_favoritos">FavoritosActivity</string>
+    <string name="title_activity_configuracoes_usuario">ConfiguracoesUsuarioActivity</string>
+    <string name="title_activity_launch">MainActivity</string>
 </resources>

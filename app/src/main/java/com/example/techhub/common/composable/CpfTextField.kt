@@ -5,13 +5,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AssignmentInd
-import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,10 +27,8 @@ fun CpfTextField(onValueChanged: (String) -> Unit){
     var filledText by remember { mutableStateOf("") }
     var isCpfValid by remember { mutableStateOf(false) }
 
-
     Column {
-
-        androidx.compose.material3.OutlinedTextField(
+        OutlinedTextField(
             value = filledText,
             onValueChange = {
                 filledText = it

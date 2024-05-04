@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -50,6 +51,11 @@ android {
 }
 
 dependencies {
+    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    implementation("org.chromium.net:cronet-embedded:119.6045.31")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
     val nav_version = "2.7.6"
     val retrofit2_version = "2.9.0"
     val logging_interceptor_version = "4.11.0"
@@ -58,6 +64,7 @@ dependencies {
     val data_store_version = "1.1.0"
     val coroutines_version = "1.7.3"
     val livedata_version = "1.6.5"
+    val dagger_hilt_version = "2.40.1"
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
@@ -79,12 +86,14 @@ dependencies {
     implementation("io.arrow-kt:arrow-core:$arrow_version")
     implementation("io.arrow-kt:arrow-fx-coroutines:$arrow_version")
     implementation("io.coil-kt:coil-compose:$coil_version")
+    implementation("io.coil-kt:coil-svg:$coil_version")
     implementation("androidx.datastore:datastore-preferences:$data_store_version")
     implementation("androidx.datastore:datastore-core:$data_store_version")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
     implementation("androidx.compose.runtime:runtime-livedata:$livedata_version")
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation("com.google.dagger:hilt-android:$dagger_hilt_version")
+    kapt("com.google.dagger:hilt-android-compiler:$dagger_hilt_version")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
