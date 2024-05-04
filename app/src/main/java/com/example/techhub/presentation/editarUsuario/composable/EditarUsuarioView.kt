@@ -45,6 +45,7 @@ import com.example.techhub.common.composable.TopBar
 import com.example.techhub.common.enums.UsuarioFuncao
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.model.CurrentUser
+import com.example.techhub.domain.model.perfil.PerfilCadastroData
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import com.example.techhub.presentation.editarUsuario.EditarUsuarioViewModel
 import com.example.techhub.presentation.perfil.PerfilActivity
@@ -63,7 +64,7 @@ fun EditarUsuarioView(
     var preco by remember { mutableStateOf(userInfo.precoMedio) }
     var linkLinkedin by remember { mutableStateOf(userInfo.linkLinkedin) }
     var linkGithub by remember { mutableStateOf(userInfo.linkGithub) }
-    val skill = remember { mutableStateOf("") }
+    var nomeGithub by remember { mutableStateOf(userInfo.nomeGithub) }
     val softSkillList = remember {
         mutableStateOf(userInfo.flags!!.filter {
             it.categoria == "soft-skill"
@@ -74,9 +75,6 @@ fun EditarUsuarioView(
             it.categoria == "hard-skill"
         }.toMutableStateList())
     }
-
-    val toastErrorMessage = "Ops! Algo deu errado.\n Tente novamente."
-
 
     Scaffold(
         topBar = {
@@ -137,10 +135,9 @@ fun EditarUsuarioView(
 
                 Spacer(modifier = Modifier.padding(0.dp))
 
-                // TODO: Necessário fazer máscara
                 PriceTextField(
-                    initialValue = userInfo.precoMedio.toString(),
-                    onValueChanged = { preco = it.toDouble() })
+                    initialValue = userInfo.precoMedio,
+                    onValueChanged = { preco = it })
 
                 Spacer(modifier = Modifier.padding(2.dp))
 
@@ -162,8 +159,16 @@ fun EditarUsuarioView(
                 Spacer(modifier = Modifier.padding(2.dp))
 
                 GitHubTextField(
+                    label = "Link do GitHub",
                     initialValue = userInfo.linkGithub ?: "",
                     onValueChanged = { linkGithub = it })
+
+                Spacer(modifier = Modifier.padding(2.dp))
+
+                GitHubTextField(
+                    label = "Nome do GitHub",
+                    initialValue = userInfo.nomeGithub ?: "",
+                    onValueChanged = { nomeGithub = it })
 
                 Spacer(modifier = Modifier.padding(2.dp))
 
@@ -205,7 +210,23 @@ fun EditarUsuarioView(
                 }
 
                 ElevatedButton(
-                    onClick = { },
+                    onClick = {
+                        // juntar as skills em uma lista só
+                        val skills = mutableListOf<Int>()
+                        skills.addAll(softSkillList.value.map { it.id!! })
+                        skills.addAll(hardSkillList.value.map { it.id!! })
+                        val perfilCadastroData = PerfilCadastroData(
+                            sobreMim = sobreMim,
+                            experiencia = experiencia,
+                            descricao = descricao,
+                            precoMedio = preco,
+                            nomeGithub = nomeGithub,
+                            linkGithub = linkGithub,
+                            linkLinkedin = linkLinkedin,
+                            flagsId = skills
+                        )
+                        viewModel.updateUserInfo(context, perfilCadastroData)
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp),
@@ -245,3 +266,4 @@ fun EditarUsuarioView(
         }
     }
 }
+
