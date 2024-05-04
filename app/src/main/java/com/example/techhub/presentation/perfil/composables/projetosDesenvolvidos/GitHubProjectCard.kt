@@ -25,6 +25,7 @@ import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.example.techhub.common.devIconMap
+import com.example.techhub.common.utils.openLink
 import com.example.techhub.domain.model.github.Repositorio
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
@@ -33,11 +34,15 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 fun GitHubProjectCard(
     repositorio: Repositorio
 ) {
+    val contexto = LocalContext.current
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),
-        onClick = { /* TODO - Redirecionar para o GitHub */ },
+        onClick = {
+            if (repositorio.url.isNullOrBlank()) return@ElevatedCard
+            openLink(contexto, repositorio.url)
+        },
         colors = CardDefaults.cardColors(containerColor = Color.White),
         modifier = Modifier
             .size(width = 180.dp, height = 190.dp)

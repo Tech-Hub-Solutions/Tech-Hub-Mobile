@@ -83,7 +83,8 @@ fun PerfilView(id: Int, viewModel: PerfilViewModel = PerfilViewModel(), gitHubVi
                 // Nome e Infos
                 DetalhesUsuario(
                     userInfo = userInfo,
-                    isEmpresa = isEmpresa
+                    isEmpresa = isEmpresa,
+                    context = context
                 )
 
                 Divider(

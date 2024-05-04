@@ -165,12 +165,13 @@ fun EditarUsuarioView(
 
                 Spacer(modifier = Modifier.padding(2.dp))
 
-                GitHubTextField(
-                    label = "Nome do GitHub",
-                    initialValue = userInfo.nomeGithub ?: "",
-                    onValueChanged = { nomeGithub = it })
-
-                Spacer(modifier = Modifier.padding(2.dp))
+                if (userInfo.funcao == UsuarioFuncao.FREELANCER) {
+                    GitHubTextField(
+                        label = "Nome do GitHub",
+                        initialValue = userInfo.nomeGithub ?: "",
+                        onValueChanged = { nomeGithub = it })
+                    Spacer(modifier = Modifier.padding(2.dp))
+                }
 
 
                 // Skills

@@ -69,9 +69,6 @@ fun UserCard(
             Color.Transparent
         }
 
-    //TODO val isEmpresa = remember{ mutableStateOf(false) }
-
-
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 4.dp,
