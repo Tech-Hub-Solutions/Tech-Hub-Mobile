@@ -20,7 +20,11 @@ import androidx.compose.ui.unit.sp
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import com.example.techhub.R
 @Composable
-fun GitHubTextField(onValueChanged: (String) -> Unit, initialValue: String = "") {
+fun GitHubTextField(
+    label: String,
+    onValueChanged: (String) -> Unit,
+    initialValue: String = ""
+) {
     var filledText by remember { mutableStateOf(initialValue) }
     var isValueValid by remember { mutableStateOf(false) }
     Column {
@@ -31,8 +35,8 @@ fun GitHubTextField(onValueChanged: (String) -> Unit, initialValue: String = "")
                 filledText = it
                 onValueChanged(filledText)
             },
-            label = { Text("Link do Github") },
-            placeholder = { Text("Link do Github") },
+            label = { Text(label) },
+            placeholder = { Text(label) },
             textStyle = LocalTextStyle.current.copy(
                 color = Color.Black,
                 fontSize = 16.sp

@@ -3,6 +3,8 @@ package com.example.techhub.data.remote
 import com.example.techhub.domain.model.avaliacao.AvaliacaoData
 import com.example.techhub.domain.model.avaliacao.AvaliacaoTotalData
 import com.example.techhub.domain.model.perfil.PerfilAvaliacaoDetalhadoData
+import com.example.techhub.domain.model.perfil.PerfilCadastroData
+import com.example.techhub.domain.model.perfil.PerfilDetalhadoData
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import com.example.techhub.domain.model.perfil.PerfilNewArquivo
 import com.example.techhub.domain.model.referencia.ReferenciaDetalhadoData
@@ -57,4 +59,10 @@ interface PerfilApi {
         @Path("avaliadoId") avaliadoId: Int,
         @Body avaliacaoData : AvaliacaoData
     ): Response<PerfilAvaliacaoDetalhadoData>
+
+
+    @PUT("perfis")
+    suspend fun atualizarPerfil(
+        @Body perfil: PerfilCadastroData
+    ): Response<PerfilDetalhadoData>
 }
