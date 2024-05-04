@@ -165,7 +165,7 @@ fun ConfiguracoesUsuarioView(
                         UsuarioAtualizacaoData(
                             name,
                             email,
-                            countryCode?.name,
+                            countryCode?.acronym,
                             password,
                             isUsing2FA
                         )

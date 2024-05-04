@@ -2,7 +2,6 @@ package com.example.techhub.common.composable
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -12,12 +11,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Flag
 import androidx.compose.material.icons.rounded.ArrowDropDown
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
@@ -43,7 +40,7 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 fun FlagDropDownMenu(flag: MutableState<String>) {
 
     val countryFlags = countryFlagsList.toList()
-    var flag by remember { mutableStateOf("") }
+
     var expanded by remember { mutableStateOf(false) }
     val interactionSource = remember { MutableInteractionSource() }
 
@@ -137,7 +134,7 @@ fun FlagDropDownMenu(flag: MutableState<String>) {
                                 }
                             ) {
                                 ItemSelecionavel(title = it.name) { title ->
-                                    flag = title
+                                    flag.value = title
                                     expanded = false
                                 }
                             }
@@ -146,7 +143,7 @@ fun FlagDropDownMenu(flag: MutableState<String>) {
                                 countryFlags.sortedBy { it.name }
                             ) {
                                 ItemSelecionavel(title = it.name) { title ->
-                                    flag = title
+                                    flag.value = title
                                     expanded = false
                                 }
                             }
