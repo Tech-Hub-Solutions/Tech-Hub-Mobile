@@ -39,17 +39,17 @@ fun SkillsSelectedField(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(0.dp),
         ) {
-            if(flags.isEmpty()) {
+            if (flags.isEmpty()) {
                 Text(
                     text = "Nenhuma skill selecionada",
-                    color = GrayText,
+                    color = Color(0xFF9E9E9E),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
             }
-                flags.forEach {
-                    ChipSkill(flag = it, onDismiss = { flags.remove(it) })
-                }
+            flags.forEach {
+                ChipSkill(flag = it, onDismiss = { flags.remove(it) })
+            }
 
         }
     }

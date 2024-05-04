@@ -65,7 +65,6 @@ fun EditarUsuarioView(
     var linkLinkedin by remember { mutableStateOf(userInfo.linkLinkedin) }
     var linkGithub by remember { mutableStateOf(userInfo.linkGithub) }
     var nomeGithub by remember { mutableStateOf(userInfo.nomeGithub) }
-    val skill = remember { mutableStateOf("") }
     val softSkillList = remember {
         mutableStateOf(userInfo.flags!!.filter {
             it.categoria == "soft-skill"
@@ -76,9 +75,6 @@ fun EditarUsuarioView(
             it.categoria == "hard-skill"
         }.toMutableStateList())
     }
-
-    val toastErrorMessage = "Ops! Algo deu errado.\n Tente novamente."
-
 
     Scaffold(
         topBar = {
@@ -139,10 +135,9 @@ fun EditarUsuarioView(
 
                 Spacer(modifier = Modifier.padding(0.dp))
 
-                // TODO: Necessário fazer máscara
                 PriceTextField(
-                    initialValue = userInfo.precoMedio.toString(),
-                    onValueChanged = { preco = it.toDouble() })
+                    initialValue = userInfo.precoMedio,
+                    onValueChanged = { preco = it })
 
                 Spacer(modifier = Modifier.padding(2.dp))
 
