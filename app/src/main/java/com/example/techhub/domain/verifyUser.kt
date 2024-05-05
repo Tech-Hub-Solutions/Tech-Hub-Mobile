@@ -17,11 +17,11 @@ fun verifyUser(
     context: Context,
     toastErrorMessage: String,
 ) {
-    val usuarioService = RetrofitService.getUsuarioService()
+    val authService = RetrofitService.getAuthService()
 
     CoroutineScope(Dispatchers.Main).launch {
         try {
-            val response = usuarioService.verifyUser(userData)
+            val response = authService.verifyUser(userData)
             val extras = Bundle()
             extras.putInt("id", response.body()?.id!!)
 

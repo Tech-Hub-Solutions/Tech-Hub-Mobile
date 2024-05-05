@@ -43,6 +43,7 @@ import com.example.techhub.common.utils.base64Images.encodeBase64
 import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.domain.RetrofitService
+import com.example.techhub.domain.model.updateCurrentUser
 import com.example.techhub.domain.model.usuario.UsuarioCriacaoData
 import com.example.techhub.domain.model.usuario.UsuarioSimpleVerifyData
 import com.example.techhub.domain.model.usuario.UsuarioTokenData
@@ -74,9 +75,9 @@ fun CadastroFormView(
             isUsing2FA = isUsing2FA
         )
 
-        val usuarioService = RetrofitService.getUsuarioService()
+        val authService = RetrofitService.getAuthService()
 
-        usuarioService.cadastrarUsuario(user).enqueue(object : Callback<UsuarioTokenData> {
+        authService.cadastrarUsuario(user).enqueue(object : Callback<UsuarioTokenData> {
             override fun onResponse(
                 call: Call<UsuarioTokenData>,
                 response: Response<UsuarioTokenData>
@@ -96,6 +97,12 @@ fun CadastroFormView(
 
                         onAuthSuccess(usuarioSimpleVerifyData)
                     } else {
+                        updateCurrentUser(
+                            context = context,
+                            usuarioTokenData = response.body()!!,
+                            email = user.email!!
+                        )
+
                         val extras = Bundle()
                         extras.putInt("id", response.body()?.id!!)
 

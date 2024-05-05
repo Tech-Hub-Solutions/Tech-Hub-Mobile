@@ -40,12 +40,12 @@ fun InformacoesPerfil(
     ) {
         TextContainer(
             title = "Experiência",
-            description = "${userInfo.value!!.experiencia}"
+            description = userInfo.value!!.experiencia ?: "Sem descrição"
         )
 
         TextContainer(
             title = if (isEmpresa) "Quem procuramos" else "Sobre mim",
-            description = userInfo.value!!.sobreMim ?: "sem descrição"
+            description = userInfo.value!!.sobreMim ?: "Sem descrição"
         )
 
         userInfo.value!!.flags?.filter {
