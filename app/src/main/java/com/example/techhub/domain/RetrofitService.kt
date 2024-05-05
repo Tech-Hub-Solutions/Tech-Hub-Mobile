@@ -2,6 +2,7 @@ package com.example.techhub.domain
 
 import android.util.Log
 import com.example.techhub.common.Constants
+import com.example.techhub.data.remote.AuthApi
 import com.example.techhub.data.remote.FlagApi
 import com.example.techhub.data.remote.PerfilApi
 import com.example.techhub.data.remote.UsuarioApi
@@ -44,6 +45,10 @@ object RetrofitService {
             .client(getClient(hasAuthorization))
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+    }
+
+    fun getAuthService(): AuthApi {
+        return getRetrofitInstance(false).create(AuthApi::class.java)
     }
 
     fun getUsuarioService(): UsuarioApi {

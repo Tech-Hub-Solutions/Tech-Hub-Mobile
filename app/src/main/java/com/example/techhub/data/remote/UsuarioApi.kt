@@ -18,32 +18,19 @@ import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface UsuarioApi {
-    @POST("usuarios/login")
-    @Headers("Authorization: ")
-    suspend fun loginUser(@Body user: UsuarioLoginData): Response<UsuarioTokenData>
-
-    @POST("usuarios/verify")
-    @Headers("Authorization: ")
-    suspend fun verifyUser(@Body usuario: UsuarioVerifyData): Response<UsuarioTokenData>
-
-    @POST("usuarios")
-    @Headers("Authorization: ")
-    fun cadastrarUsuario(@Body usuario: UsuarioCriacaoData): Call<UsuarioTokenData>
-
-
     @GET("usuarios/favoritos")
     suspend fun getFavoriteUsers(
         @Query("page") page: Int?,
         @Query("size") size: Int?,
         @Query("ordem") ordem: String
-    ) : Response<Page<UsuarioFavoritoData>>
+    ): Response<Page<UsuarioFavoritoData>>
 
     @POST("usuarios/filtro")
     suspend fun getTalentos(
         @Query("page") page: Int?,
         @Query("size") size: Int?,
         @Body filtroData: UsuarioFiltroData
-    ) : Response<Page<UsuarioFavoritoData>>
+    ): Response<Page<UsuarioFavoritoData>>
 
 
     @PUT("usuarios")

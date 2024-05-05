@@ -101,7 +101,7 @@ fun DetalhesUsuario(
 
         Row {
             Text(
-                text = userInfo.value!!.descricao ?: "sem descrição",
+                text = userInfo.value!!.descricao ?: "Sem descrição",
                 fontSize = 18.sp,
                 color = Color(PrimaryBlue.value),
                 fontWeight = FontWeight(400),
