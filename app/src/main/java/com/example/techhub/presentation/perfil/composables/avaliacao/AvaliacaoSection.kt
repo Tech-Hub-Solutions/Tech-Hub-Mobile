@@ -73,31 +73,6 @@ fun AvaliacaoSection(
                         ?: 0f) / totalAvaliacoes
                 )
             }
-//            AvaliacaoCountRow(
-//                titleNumber = "5",
-//                totalProgress = 0.7f,
-//                qtdEstrela = 50
-//            )
-//            AvaliacaoCountRow(
-//                titleNumber = "4",
-//                totalProgress = 0.5f,
-//                qtdEstrela = 5
-//            )
-//            AvaliacaoCountRow(
-//                titleNumber = "3",
-//                totalProgress = 0.2f,
-//                qtdEstrela = 2
-//            )
-//            AvaliacaoCountRow(
-//                titleNumber = "2",
-//                totalProgress = 0.0f,
-//                qtdEstrela = 0
-//            )
-//            AvaliacaoCountRow(
-//                titleNumber = "1",
-//                totalProgress = 0.1f,
-//                qtdEstrela = 1
-//            )
         }
     }
 }
