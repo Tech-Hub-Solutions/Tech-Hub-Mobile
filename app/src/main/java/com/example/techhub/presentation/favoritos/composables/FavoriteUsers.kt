@@ -55,10 +55,6 @@ fun FavoriteUsers(
 
     val page = remember { mutableStateOf(0) }
 
-    LaunchedEffect(Unit) {
-        viewModel.getFavoriteUsers(0, 10, "avaliacao,desc", context)
-    }
-
     LaunchedEffect(ordem.value) {
         page.value = 0
         viewModel.getFavoriteUsers(page.value, 30, ordem.value, context)

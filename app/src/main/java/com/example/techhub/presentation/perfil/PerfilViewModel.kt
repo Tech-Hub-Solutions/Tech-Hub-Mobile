@@ -247,6 +247,7 @@ class PerfilViewModel : ViewModel() {
                         showToastError(context = context, message = "Comentário realizado com sucesso!")
                     }
                     comentariosDoUsuario.value?.add(0,response.body()!!)
+                    getAvaliacoesDoUsuario(context, avaliadoId)
                 } else {
                     (context as Activity).runOnUiThread {
                         showToastError(context = context, message = toastErrorMessage)
