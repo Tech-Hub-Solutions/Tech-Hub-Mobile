@@ -151,7 +151,10 @@ fun SkillsDropDownMenu(
                     ) {
                         items(
                             flags.value!!.filter {
-                                it.categoria == categoria && !flagsSkills.contains(it)
+                                it.categoria == categoria && !flagsSkills.contains(it) && it.nome!!.contains(
+                                    skill,
+                                    ignoreCase = true
+                                )
                             }
                         ) {
                             val underlineColor = if (it.categoria != "soft-skill") {
