@@ -57,7 +57,6 @@ fun EditarUsuarioView(
     viewModel: EditarUsuarioViewModel = EditarUsuarioViewModel(),
 ) {
     val context = LocalContext.current
-    var name by remember { mutableStateOf(userInfo.nome) }
     var descricao by remember { mutableStateOf(userInfo.descricao) }
     var experiencia by remember { mutableStateOf(userInfo.experiencia) }
     var sobreMim by remember { mutableStateOf(userInfo.sobreMim) }
@@ -111,11 +110,6 @@ fun EditarUsuarioView(
                 verticalArrangement = Arrangement.spacedBy(5.dp)
             ) {
                 Spacer(modifier = Modifier.padding(0.dp))
-
-                // Informações do Perfil
-                NameTextField(
-                    initialValue = userInfo.descricao ?: "",
-                    onValueChanged = { name = it })
 
                 DescriptionTextField(
                     initialValue = userInfo.descricao ?: "",

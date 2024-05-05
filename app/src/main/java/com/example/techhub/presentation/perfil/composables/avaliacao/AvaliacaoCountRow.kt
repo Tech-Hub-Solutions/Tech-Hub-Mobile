@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,7 +23,6 @@ fun AvaliacaoCountRow(
     Row(
         modifier = Modifier
             .fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(7.dp)
     ) {
         Text(
             text = "$titleNumber " + if (titleNumber == "1") "estrela " else "estrelas",
@@ -32,7 +32,7 @@ fun AvaliacaoCountRow(
                 .weight(1f)
         )
 
-        AvaliacaoProgressIndicator(totalProgress = totalProgress, modifier = Modifier.weight(5f))
+        AvaliacaoProgressIndicator(totalProgress = totalProgress, modifier = Modifier.weight(3f))
 
         Text(
             text = "($qtdEstrela)",
