@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -104,7 +105,8 @@ fun ConfigDropDownMenu() {
                             CircleShape
                         )
                         .clip(CircleShape)
-                        .border(2.dp, Color.White.copy(alpha = 0.5f), CircleShape)
+                        .border(2.dp, Color.White.copy(alpha = 0.5f), CircleShape),
+                    contentScale = ContentScale.Crop
                 )
             }
         }

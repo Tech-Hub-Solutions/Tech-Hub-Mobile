@@ -13,14 +13,14 @@ import androidx.compose.ui.unit.dp
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun AvaliacaoProgressIndicator(totalProgress: Float) {
+fun AvaliacaoProgressIndicator(totalProgress: Float, modifier: Modifier) {
     // TODO - Caso o Text do AvaliacaoCountRow tiver dois digitos, ele desalinha o LinearProgressIndicator
     LinearProgressIndicator(
         progress = totalProgress,
         color = PrimaryBlue,
         modifier = Modifier
             .height(16.dp)
-            .width(200.dp)
+            .then(modifier)
             .clip(RoundedCornerShape(8.dp)),
         trackColor = Color.LightGray,
         strokeCap = StrokeCap.Round

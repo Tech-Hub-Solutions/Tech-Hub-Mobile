@@ -101,7 +101,7 @@ fun ComentariosSection(
                     )
                 }
             }
-            if (!isLastPage.value!! && !comments.isNullOrEmpty()) {
+            if (!isLastPage.value!! && !comments.isNullOrEmpty() && comments.size > 1) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
