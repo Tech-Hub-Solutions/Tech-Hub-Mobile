@@ -13,6 +13,7 @@
     <string name="btn_text_entrar">Entrar</string>
     <string name="btn_text_cadastrar">Cadastrar</string>
 
-    <string name="subtitle_index">Unindo talento e necessidade.</string>
+    <string name="toast_text_welcome">Seja bem-vindo(a)!</string>
 
+    <string name="subtitle_index">Unindo talento e necessidade.</string>
 </resources>
