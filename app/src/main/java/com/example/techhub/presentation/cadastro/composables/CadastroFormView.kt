@@ -42,7 +42,7 @@ import com.example.techhub.common.enums.UsuarioFuncao
 import com.example.techhub.common.utils.base64Images.encodeBase64
 import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.showToastError
-import com.example.techhub.domain.RetrofitService
+import com.example.techhub.domain.service.RetrofitService
 import com.example.techhub.domain.model.updateCurrentUser
 import com.example.techhub.domain.model.usuario.UsuarioCriacaoData
 import com.example.techhub.domain.model.usuario.UsuarioSimpleVerifyData

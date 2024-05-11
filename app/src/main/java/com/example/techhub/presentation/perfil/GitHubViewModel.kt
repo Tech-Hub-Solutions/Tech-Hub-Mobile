@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.techhub.common.utils.showToastError
-import com.example.techhub.domain.RetrofitGitHubService
+import com.example.techhub.domain.service.RetrofitGitHubService
 import com.example.techhub.domain.model.github.Repositorio
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,21 +31,7 @@ class GitHubViewModel : ViewModel() {
                     repos.forEach {
                         it.languages = listOf(it.language ?: "")
                     }
-
-//                    repos.forEach() { repo ->
-//                        launch {
-//                            val languageResponse = apiGitHub.getLanguages(username, repo.name!!)
-//                            if (languageResponse.isSuccessful) {
-//                                val languages = languageResponse.body()?.keys ?: emptyList()
-//                                repo.languages = languages.toList()
-//                            } else {
-//                                Log.e("GITHUB_VIEW_MODEL", "ERROR: ${languageResponse.errorBody()}")
-//                            }
-//                        }
-//                    }
-
                     repositorios.postValue(repos)
-
                 }
 
                 responseCode.postValue(response.code())

@@ -41,7 +41,7 @@ import com.example.techhub.common.composable.TopBar
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.model.usuario.UsuarioLoginData
 import com.example.techhub.domain.model.usuario.UsuarioVerifyData
-import com.example.techhub.domain.verifyUser
+import com.example.techhub.common.utils.verifyUser
 import com.example.techhub.presentation.login.LoginActivity
 import com.example.techhub.presentation.ui.theme.GrayButtonText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue

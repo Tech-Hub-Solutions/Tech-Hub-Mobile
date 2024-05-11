@@ -1,4 +1,4 @@
-package com.example.techhub.domain
+package com.example.techhub.common.utils
 
 import android.app.Activity
 import android.content.Context
@@ -8,6 +8,7 @@ import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.domain.model.updateCurrentUser
 import com.example.techhub.domain.model.usuario.UsuarioVerifyData
+import com.example.techhub.domain.service.RetrofitService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.common.utils.startNewActivity
-import com.example.techhub.domain.RetrofitService
+import com.example.techhub.domain.service.RetrofitService
 import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.domain.model.flag.FlagData
 import com.example.techhub.domain.model.perfil.PerfilCadastroData

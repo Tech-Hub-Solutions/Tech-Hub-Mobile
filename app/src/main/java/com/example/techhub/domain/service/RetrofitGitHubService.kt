@@ -1,9 +1,7 @@
-package com.example.techhub.domain
+package com.example.techhub.domain.service
 
-import android.util.Log
+import com.example.techhub.common.Constants
 import com.example.techhub.data.remote.GitHubApi
-import com.example.techhub.data.remote.UsuarioApi
-import com.example.techhub.domain.model.CurrentUser
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -11,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitGitHubService {
-    private const val BASE_URL = "https://api.github.com/"
+    private const val BASE_URL = Constants.GITHUB_BASE_URL
 
     private fun getGitHubClient(): OkHttpClient {
         return OkHttpClient.Builder()

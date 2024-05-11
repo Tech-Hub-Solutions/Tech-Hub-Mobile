@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.MutableLiveData
 import com.example.techhub.common.utils.showToastError
-import com.example.techhub.domain.RetrofitService
+import com.example.techhub.domain.service.RetrofitService
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

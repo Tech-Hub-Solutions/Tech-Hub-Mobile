@@ -1,4 +1,4 @@
-package com.example.techhub.domain
+package com.example.techhub.domain.service
 
 import android.util.Log
 import com.example.techhub.common.Constants
