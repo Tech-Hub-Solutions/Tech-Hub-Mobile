@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Tech Hub</string>
+    <string name="description_image_index">imagem de pessoas se cumprimentando</string>
+    <string name="description_image_login">imagem de duas pessoas com computadores</string>
+    <string name="description_image_login_auth">imagem de um cadeaco branco com fundo azul</string>
+    <string name="description_image_logo">logo da Tech Hub</string>
+    <string name="btn_description_up_scroll_to_top">botão de ir ao topo da página</string>
+    <string name="btn_description_search_talents">botão para ir para a página de busca de talentos</string>
+    <string name="btn_description_favorites">botão para ir à pagina de favoritos</string>
+    <string name="btn_description_chat">botão para ir à pagina de conversas (chat)</string>
+    <string name="btn_description_profile">botão com foto de perfil do usuário para abrir menu de configurações de perfil</string>
 </resources>
