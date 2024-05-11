@@ -1,6 +1,5 @@
 package com.example.techhub.common.composable
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -22,7 +21,6 @@ fun CenteredImageSection(imagePath: Any, contentDescription: String, width: Int,
     ) {
         AsyncImage(
             model = imagePath,
-
             contentDescription = contentDescription,
             contentScale = ContentScale.FillWidth,
             modifier = Modifier

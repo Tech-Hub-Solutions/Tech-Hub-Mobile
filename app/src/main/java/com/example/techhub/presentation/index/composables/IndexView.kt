@@ -15,6 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.techhub.R
 import com.example.techhub.common.composable.CenteredImageSection
+import com.example.techhub.common.utils.UiText
 
 @Composable
 fun IndexView() {
@@ -30,7 +31,9 @@ fun IndexView() {
     ) {
         CenteredImageSection(
             imagePath = R.mipmap.logo,
-            contentDescription = "@string/description_image_logo",
+            contentDescription = UiText.StringResource(
+                R.string.description_image_logo
+            ).asString(context = context),
             width = 110,
             height = 20,
         )
@@ -39,7 +42,9 @@ fun IndexView() {
 
         CenteredImageSection(
             imagePath = R.mipmap.index_image,
-            contentDescription = "@string/description_image_index",
+            contentDescription = UiText.StringResource(
+                R.string.description_image_index
+            ).asString(context = context),
             width = 252,
             height = 300,
         )
