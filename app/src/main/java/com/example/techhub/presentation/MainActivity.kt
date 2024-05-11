@@ -1,13 +1,9 @@
 package com.example.techhub.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.material3.Text
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.data.prefdatastore.DataStoreManager
-import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.domain.model.updateCurrentUser
 import com.example.techhub.presentation.index.IndexActivity
 import com.example.techhub.presentation.perfil.PerfilActivity
@@ -24,8 +20,6 @@ class MainActivity : ComponentActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             dataStore.collect { value ->
                 val token = value.userTokenJwt
-
-                Log.d("CurrentUser", token)
 
                 if (token.isEmpty()) {
                     startNewActivity(context, IndexActivity::class.java)

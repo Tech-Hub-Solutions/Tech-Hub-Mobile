@@ -1,4 +1,4 @@
-package com.example.techhub.common
+package com.example.techhub.common.enums
 
 sealed class Screen(
     val route: String

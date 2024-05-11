@@ -6,7 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.example.techhub.common.Screen
+import com.example.techhub.common.enums.Screen
 import com.example.techhub.domain.model.usuario.UsuarioSimpleVerifyData
 import com.example.techhub.presentation.cadastro.composables.CadastroAuthView
 import com.example.techhub.presentation.cadastro.composables.CadastroFormView

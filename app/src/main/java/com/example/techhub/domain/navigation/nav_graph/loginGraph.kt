@@ -6,10 +6,10 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.example.techhub.common.Screen
+import com.example.techhub.common.enums.Screen
 import com.example.techhub.domain.model.usuario.UsuarioLoginData
-import com.example.techhub.presentation.login.components.LoginAuthView
-import com.example.techhub.presentation.login.components.LoginFormView
+import com.example.techhub.presentation.login.composables.LoginAuthView
+import com.example.techhub.presentation.login.composables.LoginFormView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 

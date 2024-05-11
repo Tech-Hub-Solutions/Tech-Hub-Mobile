@@ -27,7 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.techhub.R
-import com.example.techhub.common.Constants
+import com.example.techhub.common.objects.Constants
 import com.example.techhub.common.composable.CardTravaTelaCadastro
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.TopBar

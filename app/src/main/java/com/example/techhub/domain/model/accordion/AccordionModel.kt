@@ -1,6 +1,4 @@
-package com.example.techhub.presentation.comparar.composables
-
-import android.inputmethodservice.Keyboard.Row
+package com.example.techhub.domain.model.accordion
 
 data class AccordionModel (
     val area: String,

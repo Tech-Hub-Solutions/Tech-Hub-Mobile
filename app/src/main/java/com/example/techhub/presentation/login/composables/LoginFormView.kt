@@ -1,6 +1,5 @@
-package com.example.techhub.presentation.login.components
+package com.example.techhub.presentation.login.composables
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,7 +40,6 @@ import com.example.techhub.presentation.login.LoginViewModel
 import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
-@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun LoginFormView(
     viewModel: LoginViewModel = LoginViewModel(),

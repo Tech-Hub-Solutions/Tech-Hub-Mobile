@@ -1,4 +1,4 @@
-package com.example.techhub.presentation.editarUsuario.composable
+package com.example.techhub.presentation.editarUsuario.composables
 
 import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons

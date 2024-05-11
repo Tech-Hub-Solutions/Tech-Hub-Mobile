@@ -1,6 +1,6 @@
 package com.example.techhub.domain.service
 
-import com.example.techhub.common.Constants
+import com.example.techhub.common.objects.Constants
 import com.example.techhub.data.remote.GitHubApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

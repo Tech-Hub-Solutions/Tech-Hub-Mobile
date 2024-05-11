@@ -87,8 +87,6 @@ fun ComentariosSection(
             if (comments.isNullOrEmpty()) {
                 Text(text = "Não há comentários", color = GrayText)
             } else {
-                Log.d("COMENTARIO SECTION -> comentarios", comments.toString())
-
                 comments.forEach {
                     ComentarioCard(
                         userId = it.idAvaliador!!,

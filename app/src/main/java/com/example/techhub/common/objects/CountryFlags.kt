@@ -1,4 +1,4 @@
-package com.example.techhub.common
+package com.example.techhub.common.objects
 
 import java.util.Locale
 

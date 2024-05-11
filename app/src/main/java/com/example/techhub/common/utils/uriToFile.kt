@@ -2,7 +2,7 @@ package com.example.techhub.common.utils
 
 import android.content.Context
 import android.net.Uri
-import com.example.techhub.presentation.perfil.composables.getFileName
+import com.example.techhub.presentation.perfil.composables.images.getFileName
 import java.io.File
 import java.io.FileOutputStream
 

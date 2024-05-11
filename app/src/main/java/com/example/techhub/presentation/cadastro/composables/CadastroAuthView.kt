@@ -3,7 +3,7 @@ package com.example.techhub.presentation.cadastro.composables
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import com.example.techhub.common.Screen
+import com.example.techhub.common.enums.Screen
 import com.example.techhub.common.composable.FirstAuthView
 import com.example.techhub.common.composable.TopBar
 import com.example.techhub.domain.model.usuario.UsuarioSimpleVerifyData

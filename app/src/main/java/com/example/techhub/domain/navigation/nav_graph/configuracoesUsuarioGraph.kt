@@ -1,23 +1,18 @@
-package com.example.techhub.presentation.configUsuario.composables
+package com.example.techhub.domain.navigation.nav_graph
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.example.techhub.common.Screen
+import com.example.techhub.common.enums.Screen
 import com.example.techhub.domain.model.usuario.UsuarioSimpleVerifyData
 import com.example.techhub.presentation.configUsuario.ConfiguracoesUsuarioViewModel
+import com.example.techhub.presentation.configUsuario.composables.ConfiguracoeUsuarioAuth
+import com.example.techhub.presentation.configUsuario.composables.ConfiguracoesUsuarioView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import java.net.URLDecoder
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
-
 
 fun NavGraphBuilder.configuracoesUsuarioGraph(
     navController: NavController,
@@ -31,7 +26,6 @@ fun NavGraphBuilder.configuracoesUsuarioGraph(
     ) {
         composable(route = Screen.ConfiguracoesUsuarioView.route) {
             ConfiguracoesUsuarioView(
-                navController = navController,
                 redirectToAuth = { usuarioSimpleVerifyData ->
                     val user = gson.toJson(usuarioSimpleVerifyData)
                     navController.navigate(Screen.ConfiguracoesUsuarioFirstAuthView.route + "/$user")
@@ -49,7 +43,6 @@ fun NavGraphBuilder.configuracoesUsuarioGraph(
             val usuarioSimplifyData = navBackStackEntry.arguments?.getString("usuarioSimpleVerifyData")
             val usuarioSimpleVerifyData = gson.fromJson(usuarioSimplifyData, UsuarioSimpleVerifyData::class.java)
             ConfiguracoeUsuarioAuth(
-                navController = navController,
                 usuarioSimpleVerifyData = usuarioSimpleVerifyData
             )
         }

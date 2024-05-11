@@ -1,4 +1,4 @@
-package com.example.techhub.presentation.editarUsuario.composable
+package com.example.techhub.presentation.editarUsuario.composables
 
 import android.os.Bundle
 import androidx.compose.foundation.BorderStroke
@@ -37,7 +37,6 @@ import com.example.techhub.common.composable.DescriptionTextField
 import com.example.techhub.common.composable.ExperienceTextField
 import com.example.techhub.common.composable.GitHubTextField
 import com.example.techhub.common.composable.LinkedinTextField
-import com.example.techhub.common.composable.NameTextField
 import com.example.techhub.common.composable.PriceTextField
 import com.example.techhub.common.composable.SkillsSelectedField
 import com.example.techhub.common.composable.SkillsDropDownMenu

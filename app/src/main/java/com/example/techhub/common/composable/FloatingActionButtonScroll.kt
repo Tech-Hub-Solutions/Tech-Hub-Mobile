@@ -1,4 +1,4 @@
-package com.example.techhub.presentation.perfil.composables
+package com.example.techhub.common.composable
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.padding

@@ -1,4 +1,4 @@
-package com.example.techhub.presentation.login.components
+package com.example.techhub.presentation.login.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.example.techhub.common.Screen
+import com.example.techhub.common.enums.Screen
 import com.example.techhub.composable.SetBarColor
 import com.example.techhub.presentation.ui.theme.TechHubTheme
 import com.example.techhub.domain.navigation.nav_graph.loginGraph

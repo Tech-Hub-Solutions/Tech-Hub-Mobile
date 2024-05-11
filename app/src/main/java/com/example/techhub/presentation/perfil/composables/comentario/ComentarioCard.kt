@@ -36,9 +36,7 @@ import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.example.techhub.common.composable.StarRatingBarFixed
-import com.example.techhub.common.countriesEmoji
-import com.example.techhub.common.countryFlagsList
-import com.example.techhub.common.devIconMap
+import com.example.techhub.common.objects.countriesEmoji
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.presentation.perfil.PerfilActivity
 import com.example.techhub.presentation.ui.theme.PrimaryBlue

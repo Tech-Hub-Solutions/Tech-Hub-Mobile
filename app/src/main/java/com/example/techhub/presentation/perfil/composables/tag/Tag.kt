@@ -1,4 +1,4 @@
-package com.example.techhub.presentation.perfil.composables
+package com.example.techhub.presentation.perfil.composables.tag
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row

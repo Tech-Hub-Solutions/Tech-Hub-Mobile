@@ -1,7 +1,6 @@
 package com.example.techhub.presentation.perfil.composables.avaliacao
 
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
@@ -14,7 +13,6 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
 fun AvaliacaoProgressIndicator(totalProgress: Float, modifier: Modifier) {
-    // TODO - Caso o Text do AvaliacaoCountRow tiver dois digitos, ele desalinha o LinearProgressIndicator
     LinearProgressIndicator(
         progress = totalProgress,
         color = PrimaryBlue,

@@ -30,8 +30,6 @@ class FavoritosViewModel() {
             try {
                 val response = usuarioApi.getFavoriteUsers(page, size, ordem)
 
-                Log.d("GET USUARIOS/FAVORITOS", response.toString())
-
                 if (response.isSuccessful) {
                     val page = response.body()
                     val list = page?.content ?: emptyList()
@@ -52,10 +50,12 @@ class FavoritosViewModel() {
                     erroApi.postValue(response.errorBody()?.toString())
                 }
             } catch (e: Exception) {
-                (context as Activity).runOnUiThread {
-                    showToastError(context = context, message = toastErrorMessage)
+                if (e.message != null) {
+                    (context as Activity).runOnUiThread {
+                        showToastError(context = context, message = toastErrorMessage)
+                    }
+                    Log.e("GET USUARIOS/FAVORITOS", "Ocorreu um erro no get ${e.message}")
                 }
-                Log.e("GET USUARIOS/FAVORITOS", "Ocorreu um erro no get ${e.message}")
             } finally {
                 isLoading.postValue(false)
             }
@@ -67,9 +67,7 @@ class FavoritosViewModel() {
             try {
                 val response = perfilApi.favoritarTerceiro(id)
 
-                if (response.isSuccessful) {
-                    Log.d("PUT USUARIOS/FAVORITOS", "Favoritado com sucesso")
-                } else {
+                if (!response.isSuccessful) {
                     erroApi.postValue(response.errorBody()?.toString())
                 }
             } catch (e: Exception) {

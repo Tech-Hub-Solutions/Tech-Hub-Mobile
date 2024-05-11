@@ -1,7 +1,6 @@
 package com.example.techhub.domain.service
 
-import android.util.Log
-import com.example.techhub.common.Constants
+import com.example.techhub.common.objects.Constants
 import com.example.techhub.data.remote.AuthApi
 import com.example.techhub.data.remote.FlagApi
 import com.example.techhub.data.remote.PerfilApi
@@ -28,7 +27,6 @@ object RetrofitService {
                     .apply {
                         if (hasAuthorization) {
                             val tokenInterceptor = "Bearer ${CurrentUser.userTokenJwt}"
-                            Log.d("ADD INTERCEPTOR", "TOKEN: $tokenInterceptor")
                             addHeader("Authorization", tokenInterceptor)
                         }
                     }

@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
-import com.example.techhub.common.devIconMap
+import com.example.techhub.common.objects.devIconMap
 import com.example.techhub.common.utils.openLink
 import com.example.techhub.domain.model.github.Repositorio
 import com.example.techhub.presentation.ui.theme.PrimaryBlue

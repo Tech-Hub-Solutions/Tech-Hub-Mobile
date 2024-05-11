@@ -1,7 +1,5 @@
 package com.example.techhub.common.composable
 
-import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,12 +24,10 @@ import com.example.techhub.presentation.explorarTalentos.ExplorarTalentosActivit
 import com.example.techhub.presentation.favoritos.FavoritosActivity
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
-@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun BottomBar() {
     val context = LocalContext.current
     val actualActivity = context.javaClass.simpleName
-    Log.d("BottomBar", "actualActivity: $actualActivity")
     val isUserEmpresa = CurrentUser.isEmpresa
 
     BottomAppBar(

@@ -1,4 +1,4 @@
-package com.example.techhub.presentation.comparar.composables
+package com.example.techhub.presentation.comparar.composables.accordion
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +20,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.techhub.domain.model.accordion.AccordionModel
 import com.example.techhub.presentation.ui.theme.GrayAccordionRowText
 
 @Composable

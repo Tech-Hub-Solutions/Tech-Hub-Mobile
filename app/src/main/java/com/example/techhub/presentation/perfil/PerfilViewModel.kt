@@ -95,7 +95,7 @@ class PerfilViewModel : ViewModel() {
 
                     })
                 } else {
-                    Log.d(
+                    Log.e(
                         "PERFIL_VIEW_MODEL",
                         "ATUALIZAR ARQUIVO ERROR: ${response.errorBody()?.string()}"
                     )
@@ -239,7 +239,6 @@ class PerfilViewModel : ViewModel() {
                 )
 
                 if (response.isSuccessful) {
-                    Log.d("PERFIL_VIEW_MODEL", "Comentario realizado com sucesso")
                     (context as Activity).runOnUiThread {
                         showToastError(
                             context = context,

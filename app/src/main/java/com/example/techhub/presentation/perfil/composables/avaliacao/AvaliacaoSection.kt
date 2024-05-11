@@ -37,7 +37,6 @@ fun AvaliacaoSection(
         viewModel.getAvaliacoesDoUsuario(context, usuarioId)
     }
 
-
     SectionTitle(title = "Avaliações", isCentered = true)
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -50,7 +49,6 @@ fun AvaliacaoSection(
             Arrangement.SpaceBetween,
             Alignment.CenterVertically
         ) {
-            // TODO - Tornar a quantidade de avaliações dinâmica
             Text(text = "$totalAvaliacoes avaliações recebidas", color = GrayText)
 
             StarRatingBarFixed(
