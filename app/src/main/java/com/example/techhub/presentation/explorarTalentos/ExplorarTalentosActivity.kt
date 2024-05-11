@@ -9,7 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.example.techhub.composable.SetBarColor
-import com.example.techhub.presentation.explorarTalentos.composable.ExplorarTalentosView
+import com.example.techhub.presentation.explorarTalentos.composables.ExplorarTalentosView
 import com.example.techhub.presentation.ui.theme.TechHubTheme
 
 class ExplorarTalentosActivity : ComponentActivity() {

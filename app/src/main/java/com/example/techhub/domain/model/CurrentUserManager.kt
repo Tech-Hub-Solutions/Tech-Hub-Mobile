@@ -52,7 +52,6 @@ fun updateFotoPerfil(context: Context, url: String) {
 }
 
 fun updateCurrentUser(dataStoreData: DataStoreData) {
-    Log.d("UpdateCurrentUser", dataStoreData.userTokenJwt)
     CurrentUser.userTokenJwt = dataStoreData.userTokenJwt
     CurrentUser.urlProfileImage = dataStoreData.urlProfileImage
     CurrentUser.userProfile = dataStoreData.userProfile

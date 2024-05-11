@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.techhub.common.enums.TipoArquivo
 import com.example.techhub.common.utils.showToastError
-import com.example.techhub.domain.RetrofitService
+import com.example.techhub.domain.service.RetrofitService
 import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.domain.model.avaliacao.AvaliacaoData
 import com.example.techhub.domain.model.avaliacao.AvaliacaoTotalData
@@ -54,7 +54,7 @@ class PerfilViewModel : ViewModel() {
                 (context as Activity).runOnUiThread {
                     showToastError(context = context, message = toastErrorMessage)
                 }
-                Log.e("PERFIL_VIEW_MODEL", "ERROR: ${error.message}")
+                Log.e("PERFIL_VIEW_MODEL", "INFOS USUARIO ERROR: ${error.message}")
             } finally {
                 isLoading.postValue(false)
             }
@@ -94,19 +94,20 @@ class PerfilViewModel : ViewModel() {
                         }
 
                     })
-
                 } else {
-                    Log.d("PERFIL_VIEW_MODEL", "ERROR: ${response.errorBody()?.string()}")
+                    Log.e(
+                        "PERFIL_VIEW_MODEL",
+                        "ATUALIZAR ARQUIVO ERROR: ${response.errorBody()?.string()}"
+                    )
                     (context as Activity).runOnUiThread {
                         showToastError(context = context, message = toastErrorMessage)
                     }
                 }
-
             } catch (error: Exception) {
                 (context as Activity).runOnUiThread {
                     showToastError(context = context, message = toastErrorMessage)
                 }
-                Log.e("PERFIL_VIEW_MODEL", "ERROR: ${error.message}")
+                Log.e("PERFIL_VIEW_MODEL", "ATUALIZAR ARQUIVO ERROR: ${error.message}")
             } finally {
                 if (tipoArquivo == TipoArquivo.WALLPAPER) {
                     isLoadingWallpaper.postValue(false)
@@ -134,7 +135,7 @@ class PerfilViewModel : ViewModel() {
                 (context as Activity).runOnUiThread {
                     showToastError(context = context, message = toastErrorMessage)
                 }
-                Log.e("PERFIL_VIEW_MODEL", "ERROR: ${error.message}")
+                Log.e("PERFIL_VIEW_MODEL", "FAVORITAR PERFIL ERROR: ${error.message}")
             }
         }
     }
@@ -156,13 +157,13 @@ class PerfilViewModel : ViewModel() {
                 (context as Activity).runOnUiThread {
                     showToastError(context = context, message = toastErrorMessage)
                 }
-                Log.e("PERFIL_VIEW_MODEL", "ERROR: ${error.message}")
+                Log.e("PERFIL_VIEW_MODEL", "RECOMENDAR PERFIL ERROR: ${error.message}")
             }
         }
     }
 
     fun getAvaliacoesDoUsuario(context: Context, userId: Int) {
-        var toastErrorMessage = "Ops! Ocorreu um erro ao buscar as avaliações do perfil."
+        val toastErrorMessage = "Ops! Ocorreu um erro ao buscar as avaliações do perfil."
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -172,32 +173,26 @@ class PerfilViewModel : ViewModel() {
                     avaliacoesDoUsuario.postValue(response.body()!!)
                 } else {
                     (context as Activity).runOnUiThread {
-                        showToastError(context = context, message = "Nenhuma avaliação encontrada!")
+                        showToastError(context = context, message = toastErrorMessage)
                     }
                 }
             } catch (error: Exception) {
-
-                if (error.message.equals(null)) {
-                    toastErrorMessage = "Nenhuma avaliação encontrada!"
+                if (error.message != null) {
+                    (context as Activity).runOnUiThread {
+                        showToastError(context = context, message = toastErrorMessage)
+                    }
+                    Log.e("PERFIL_VIEW_MODEL", "AVALIACOES USUARIO ERROR: ${error.message}")
                 }
-
-                (context as Activity).runOnUiThread {
-                    showToastError(context = context, message = toastErrorMessage)
-                }
-                Log.e("PERFIL_VIEW_MODEL", "ERROR: ${error.message}")
             }
         }
     }
 
     fun getComentariosDoUsuario(context: Context, userId: Int, page: Int, size: Int) {
-        var toastErrorMessage = "Ops! Ocorreu um erro ao buscar os comentários do usuário"
-
+        val toastErrorMessage = "Ops! Ocorreu um erro ao buscar os comentários do usuário"
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = apiPerfil.getComentariosUsuario(userId, page, size)
-
-                Log.d("PERFIL_VIEW_MODEL - GET COMENTARIOS", response.toString())
 
                 if (response.isSuccessful) {
                     val page = response.body()
@@ -212,27 +207,29 @@ class PerfilViewModel : ViewModel() {
                     comentariosDoUsuario.value!!.addAll(list)
                 } else {
                     (context as Activity).runOnUiThread {
-                        showToastError(context = context, message = "Nenhum comentário encontrado!")
+                        showToastError(context = context, message = toastErrorMessage)
                     }
+                    Log.e(
+                        "PERFIL_VIEW_MODEL",
+                        "GET COMENTARIO PERFIL ERROR: ${response.errorBody()?.string()}"
+                    )
                 }
             } catch (error: Exception) {
-                if (error.message.equals(null)) {
-                    toastErrorMessage = "Nenhum comentário encontrado!"
+                if (error.message != null) {
+                    (context as Activity).runOnUiThread {
+                        showToastError(context = context, message = toastErrorMessage)
+                    }
+                    Log.e("PERFIL_VIEW_MODEL", "GET COMENTARIO PERFIL ERROR: ${error.message}")
                 }
-
-                (context as Activity).runOnUiThread {
-                    showToastError(context = context, message = toastErrorMessage)
-                }
-                Log.e("PERFIL_VIEW_MODEL", "ERROR: ${error.message}")
             }
         }
     }
 
-    fun setComentarioUsuario(context: Context, avaliadoId: Int, comment: String, rating: Double){
+    fun setComentarioUsuario(context: Context, avaliadoId: Int, comment: String, rating: Double) {
         val toastErrorMessage = "Ops! Ocorreu um erro ao fazer um comentario!"
 
         CoroutineScope(Dispatchers.IO).launch {
-            try{
+            try {
                 val response = apiPerfil.setComentariosUsuario(
                     avaliadoId,
                     AvaliacaoData(
@@ -242,25 +239,30 @@ class PerfilViewModel : ViewModel() {
                 )
 
                 if (response.isSuccessful) {
-                    Log.d("PERFIL_VIEW_MODEL", "Comentario realizado com sucesso")
                     (context as Activity).runOnUiThread {
-                        showToastError(context = context, message = "Comentário realizado com sucesso!")
+                        showToastError(
+                            context = context,
+                            message = "Comentário realizado com sucesso!"
+                        )
                     }
-                    comentariosDoUsuario.value?.add(0,response.body()!!)
+                    comentariosDoUsuario.value?.add(0, response.body()!!)
                     getAvaliacoesDoUsuario(context, avaliadoId)
                 } else {
                     (context as Activity).runOnUiThread {
                         showToastError(context = context, message = toastErrorMessage)
                     }
+                    Log.e(
+                        "PERFIL_VIEW_MODEL",
+                        "SET COMENTARIO PERFIL ERROR: ${response.errorBody()?.string()}"
+                    )
                 }
             } catch (error: Exception) {
                 (context as Activity).runOnUiThread {
                     showToastError(context = context, message = toastErrorMessage)
                 }
-                Log.e("PERFIL_VIEW_MODEL", "ERROR: ${error.message}")
+                Log.e("PERFIL_VIEW_MODEL", "SET COMENTARIO PERFIL ERROR: ${error.message}")
             }
         }
 
     }
-
 }

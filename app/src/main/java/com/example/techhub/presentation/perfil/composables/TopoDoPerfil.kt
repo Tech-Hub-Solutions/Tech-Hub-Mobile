@@ -29,6 +29,8 @@ import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import com.example.techhub.presentation.editarUsuario.EditarUsuarioActivity
 import com.example.techhub.presentation.perfil.PerfilViewModel
+import com.example.techhub.presentation.perfil.composables.images.BannerImagePerfil
+import com.example.techhub.presentation.perfil.composables.images.RoundedPerfilImage
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable

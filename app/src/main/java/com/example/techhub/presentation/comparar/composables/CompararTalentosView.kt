@@ -16,7 +16,9 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.techhub.common.composable.UserCard
+import com.example.techhub.domain.model.accordion.AccordionModel
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
+import com.example.techhub.presentation.comparar.composables.accordion.Accordion
 
 @Composable
 fun CompararTalentosView(
@@ -66,7 +68,7 @@ fun CompararTalentosView(
                 userProfile = selectedUsers.get(1),
                 selectedUsers = selectedUsers,
                 isComparing = true,
-                modifier = Modifier.weight(0.5f) ,
+                modifier = Modifier.weight(0.5f),
                 isAbleToCompare = null
             )
         }

@@ -1,6 +1,5 @@
 package com.example.techhub.presentation.configUsuario.composables
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.util.Log
@@ -36,14 +35,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.techhub.common.composable.EmailTextField
 import com.example.techhub.common.composable.FlagDropDownMenu
 import com.example.techhub.common.composable.NameTextField
 import com.example.techhub.common.composable.PasswordTextField
 import com.example.techhub.common.composable.Switch2FALeft
 import com.example.techhub.common.composable.TopBar
-import com.example.techhub.common.countryFlagsList
+import com.example.techhub.common.objects.countryFlagsList
 import com.example.techhub.common.utils.base64Images.encodeBase64
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.common.utils.startNewActivity
@@ -61,10 +59,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ConfiguracoesUsuarioView(
-    navController: NavController,
     redirectToAuth: (UsuarioSimpleVerifyData) -> Unit,
     viewModel: ConfiguracoesUsuarioViewModel
 ) {

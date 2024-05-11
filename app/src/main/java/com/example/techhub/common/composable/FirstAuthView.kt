@@ -43,9 +43,8 @@ import com.example.techhub.common.utils.copyToClipBoard
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.model.usuario.UsuarioSimpleVerifyData
 import com.example.techhub.domain.model.usuario.UsuarioVerifyData
-import com.example.techhub.domain.verifyUser
+import com.example.techhub.common.utils.verifyUser
 import com.example.techhub.presentation.cadastro.composables.QrCodeBase64AsyncImage
-import com.example.techhub.presentation.login.LoginActivity
 import com.example.techhub.presentation.perfil.PerfilActivity
 import com.example.techhub.presentation.ui.theme.GrayButtonText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue

@@ -7,7 +7,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.showToastError
-import com.example.techhub.domain.RetrofitService
+import com.example.techhub.domain.service.RetrofitService
 import com.example.techhub.domain.model.updateCurrentUser
 import com.example.techhub.domain.model.usuario.UsuarioLoginData
 import kotlinx.coroutines.CoroutineScope

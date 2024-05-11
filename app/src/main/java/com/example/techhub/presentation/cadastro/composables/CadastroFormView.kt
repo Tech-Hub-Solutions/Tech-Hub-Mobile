@@ -26,7 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.techhub.common.Constants
+import com.example.techhub.common.objects.Constants
 import com.example.techhub.common.composable.CpfTextField
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.EmailTextField
@@ -35,14 +35,14 @@ import com.example.techhub.common.composable.PasswordTextField
 import com.example.techhub.common.composable.TopBar
 import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
-import com.example.techhub.common.Screen
+import com.example.techhub.common.enums.Screen
 import com.example.techhub.common.composable.CnpjTextField
 import com.example.techhub.common.composable.Switch2FA
 import com.example.techhub.common.enums.UsuarioFuncao
 import com.example.techhub.common.utils.base64Images.encodeBase64
 import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.showToastError
-import com.example.techhub.domain.RetrofitService
+import com.example.techhub.domain.service.RetrofitService
 import com.example.techhub.domain.model.updateCurrentUser
 import com.example.techhub.domain.model.usuario.UsuarioCriacaoData
 import com.example.techhub.domain.model.usuario.UsuarioSimpleVerifyData

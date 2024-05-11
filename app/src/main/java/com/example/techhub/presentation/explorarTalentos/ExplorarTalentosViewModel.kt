@@ -4,8 +4,7 @@ import android.util.Log
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.techhub.common.Constants
-import com.example.techhub.domain.RetrofitService
+import com.example.techhub.domain.service.RetrofitService
 import com.example.techhub.domain.model.flag.FlagData
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
 import com.example.techhub.domain.model.usuario.UsuarioFiltroData

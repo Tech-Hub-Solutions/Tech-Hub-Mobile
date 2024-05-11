@@ -18,8 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.techhub.domain.model.flag.FlagData
-import com.example.techhub.presentation.editarUsuario.composable.ChipSkill
-import com.example.techhub.presentation.ui.theme.GrayText
+import com.example.techhub.presentation.editarUsuario.composables.ChipSkill
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

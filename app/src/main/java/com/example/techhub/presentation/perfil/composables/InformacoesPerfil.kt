@@ -1,14 +1,10 @@
 package com.example.techhub.presentation.perfil.composables
 
 import android.content.Context
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -20,10 +16,9 @@ import com.example.techhub.presentation.perfil.GitHubViewModel
 import com.example.techhub.presentation.perfil.PerfilViewModel
 import com.example.techhub.presentation.perfil.composables.avaliacao.AvaliacaoSection
 import com.example.techhub.presentation.perfil.composables.informacoesAdicionais.InformacoesAdicionaisSection
-import com.example.techhub.presentation.perfil.composables.projetosDesenvolvidos.GitHubProjectCard
 import com.example.techhub.presentation.perfil.composables.projetosDesenvolvidos.ProjetosDesenvolvidos
+import com.example.techhub.presentation.perfil.composables.tag.TagsSection
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun InformacoesPerfil(
     userInfo: State<PerfilGeralDetalhadoData?>,

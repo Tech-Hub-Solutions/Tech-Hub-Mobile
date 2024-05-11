@@ -18,6 +18,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.techhub.common.objects.InformacoesAdicionaisPerfil
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.presentation.perfil.PerfilViewModel
 import com.example.techhub.presentation.perfil.composables.SectionTitle
@@ -41,11 +42,11 @@ fun InformacoesAdicionaisSection(
     }
 
     val informacoes = mutableListOf(
-        qtdRecomendacoes.intValue to InformacoesAdicionais.recomendacoes
+        qtdRecomendacoes.intValue to InformacoesAdicionaisPerfil.recomendacoes
     )
 
     if (!isOwnProfile) {
-        informacoes.add(empresasInteressadas to InformacoesAdicionais.empresasInteressadas)
+        informacoes.add(empresasInteressadas to InformacoesAdicionaisPerfil.empresasInteressadas)
     }
 
     SectionTitle(title = "Informações Adicionais", isCentered = true)
@@ -98,10 +99,4 @@ fun InformacoesAdicionaisSection(
             )
         }
     }
-}
-
-object InformacoesAdicionais {
-    const val projetosFinalizados = "Projetos finalizados"
-    const val empresasInteressadas = "Empresas interessadas"
-    const val recomendacoes = "Recomendações"
 }

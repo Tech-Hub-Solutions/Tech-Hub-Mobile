@@ -87,9 +87,7 @@ fun BottomSheetCompararTalentos(
                     }
                 },
                 sheetShape = MaterialTheme.shapes.extraSmall
-            ) {
-
-            }
+            ) { }
         }
     }
 }

@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.common.utils.startNewActivity
-import com.example.techhub.domain.RetrofitService
+import com.example.techhub.domain.service.RetrofitService
 import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.domain.model.flag.FlagData
 import com.example.techhub.domain.model.perfil.PerfilCadastroData
@@ -22,10 +22,11 @@ import kotlinx.coroutines.launch
 class EditarUsuarioViewModel : ViewModel() {
 
     val flags = MutableLiveData(SnapshotStateList<FlagData>())
-    val apiPerfil = RetrofitService.getPerfilService()
-    val erroApi = MutableLiveData("")
+    private val apiPerfil = RetrofitService.getPerfilService()
+    private val erroApi = MutableLiveData("")
     private val flagsApi = RetrofitService.getFlagService()
     val toastErrorMessage = "Ops! Algo deu errado. Tente novamente."
+
     fun getFlags() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -42,7 +43,7 @@ class EditarUsuarioViewModel : ViewModel() {
                     erroApi.postValue(response.errorBody()?.toString())
                 }
             } catch (e: Exception) {
-                Log.e("api", "Ocorreu um erro no get ${e.message}")
+                Log.e("EDITAR_USUARIO_VIEW_MODEL", "Ocorreu um erro no get ${e.message}")
             }
         }
     }
@@ -53,8 +54,6 @@ class EditarUsuarioViewModel : ViewModel() {
                 val response = apiPerfil.atualizarPerfil(perfilCadastroData)
 
                 if (response.isSuccessful) {
-                    val body = response.body()
-                    Log.d("api", body.toString())
                     erroApi.postValue("")
                     (context as Activity).runOnUiThread {
                         Toast.makeText(
@@ -73,10 +72,10 @@ class EditarUsuarioViewModel : ViewModel() {
                     erroApi.postValue(response.errorBody()?.toString())
                 }
             } catch (e: Exception) {
-                Log.e("api", "Ocorreu um erro no get ${e.message}")
                 (context as Activity).runOnUiThread {
                     showToastError(context = context, message = toastErrorMessage)
                 }
+                Log.e("EDITAR_USUARIO_VIEW_MODEL", "Ocorreu um erro no get ${e.message}")
             }
         }
     }

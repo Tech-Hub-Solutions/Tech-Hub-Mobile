@@ -23,17 +23,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.techhub.common.countriesEmoji
+import com.example.techhub.common.objects.countriesEmoji
 import com.example.techhub.common.utils.openLink
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
-
 
 @Composable
 fun DetalhesUsuario(
     context: Context,
     userInfo: State<PerfilGeralDetalhadoData?>,
-    isEmpresa: Boolean
 ) {
     Column(
         modifier = Modifier
