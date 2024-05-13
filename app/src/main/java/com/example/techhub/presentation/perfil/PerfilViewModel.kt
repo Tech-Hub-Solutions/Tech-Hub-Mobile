@@ -25,6 +25,7 @@ import java.io.File
 
 class PerfilViewModel : ViewModel() {
     private val apiPerfil = RetrofitService.getPerfilService()
+    private val apiMetricas = RetrofitService.getMetricasService()
     val usuario = MutableLiveData(PerfilGeralDetalhadoData())
     val isLoading = MutableLiveData(true)
     val isLoadingPerfil = MutableLiveData(false)
@@ -44,6 +45,9 @@ class PerfilViewModel : ViewModel() {
 
                 if (response.isSuccessful) {
                     usuario.postValue(response.body()!!)
+                    if (response.body()!!.idUsuario != CurrentUser.userProfile?.id) {
+                        setVisualizacaoUsuario(context, response.body()!!.idPerfil!!)
+                    }
                 } else {
                     (context as Activity).runOnUiThread {
                         showToastError(context = context, message = toastErrorMessage)
@@ -264,5 +268,26 @@ class PerfilViewModel : ViewModel() {
             }
         }
 
+    }
+
+    fun setVisualizacaoUsuario(context: Context, perfilId: Int) {
+        val toastErrorMessage = "Ops! Ocorreu um erro ao registrar a visualização do perfil."
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = apiMetricas.registrarMetricasUsuario(perfilId)
+
+                if (response.isSuccessful) {
+                    Log.d("PERFIL_VIEW_MODEL", "SET VISUALIZACAO PERFIL SUCCESS")
+                    Log.d("PERFIL_VIEW_MODEL", "Body: ${response.body().toString()}")
+                }
+
+            } catch (error: Exception) {
+                (context as Activity).runOnUiThread {
+                    showToastError(context = context, message = toastErrorMessage)
+                }
+                Log.e("PERFIL_VIEW_MODEL", "SET VISUALIZACAO PERFIL ERROR: ${error.message}")
+            }
+        }
     }
 }
