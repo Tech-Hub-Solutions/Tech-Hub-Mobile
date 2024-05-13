@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Tech Hub</string>
 
@@ -11,7 +12,6 @@
     <string name="btn_description_editar_perfil">botão para editar perfil</string>
     <string name="btn_description_linkedin">botão para redirecionar ao LinkedIn</string>
     <string name="btn_description_github">botão para redirecionar ao GitHub</string>
-    <string name="btn_description_load_more">Botão para carregar mais talentos</string>
     <string name="btn_description_load_more_talents">Botão para carregar mais talentos</string>
 
     // BTN TEXT
@@ -32,7 +32,7 @@
     // TOAST TEXT
     <string name="toast_text_welcome">Seja bem-vindo(a)!</string>
     <string name="toast_auth_text_error">Erro ao verificar usuário</string>
-    <string name="toast_text_error_login">Ops! Algo deu errado.\\n Tente novamente.</string>
+    <string name="toast_text_error_login">Ops! Algo deu errado.\n Tente novamente.</string>
     <string name="toast_text_copy_secret_key">Código copiado</string>
     <string name="toast_text_error_trava_tela_cadastro">Selecione uma opção para continuar</string>
     <string name="toast_text_error_cadastro_auth">Erro ao verificar usuário</string>
@@ -44,6 +44,7 @@
     <string name="toast_text_error_comentar_perfil">Ops! Ocorreu um erro ao fazer um comentario!</string>
     <string name="toast_text_success_comentar_perfil">Comentário realizado com sucesso!</string>
     <string name="toast_error_get_repositorios">Ops! Ocorreu um erro ao buscar os repositórios.</string>
+    <string name="toast_error_get_favorite_users">Ops! Algo deu errado ao buscar favoritos.</string>
 
     // TITLE, SUBTITLE
     <string name="subtitle_index">Unindo talento e necessidade.</string>
@@ -113,10 +114,13 @@
     <string name="text_no_comments">Não há comentários</string>
     <string name="text_star">"estrela "</string>
     <string name="text_stars">estrelas</string>
-    <string name="text_total_avaliacoes">$d avaliações recebidas</string>
+    <string name="text_total_avaliacoes">%s avaliações recebidas</string>
     <string name="text_filter_by">Filtrar por:</string>
-    <string name="text_total_talentos">%d profissionais encontrados</string>
+    <string name="text_total_talentos">%s profissionais encontrados</string>
     <string name="text_filter">Filtrar</string>
+    <string name="text_compare_talents">Comparar Selecionados</string>
+    <string name="text_total_favorites">%s profissionais encontrados</string>
+    <string name="text_no_favorites">Nenhum favorito selecionado</string>
 
     // PLACEHOLDER
     <string name="placeholder_auth_code">Digite o código</string>
@@ -131,4 +135,5 @@
     <string name="label_auth_code">Verifique o código do aplicativo</string>
     <string name="label_minimum">Mínimo</string>
     <string name="label_maximum">Máximo</string>
+    <string name="title_favorites">Favoritos</string>
 </resources>

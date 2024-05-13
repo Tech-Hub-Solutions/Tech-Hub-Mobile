@@ -87,7 +87,7 @@ fun TalentosContent(
         Text(
             text = UiText.StringResource(
                 R.string.text_total_talentos,
-                totalElements
+                totalElements.toString()
             ).asString(context = context),
             modifier = Modifier.fillMaxWidth(0.4f),
             color = GrayText

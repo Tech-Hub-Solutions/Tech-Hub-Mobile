@@ -1,5 +1,6 @@
 package com.example.techhub.presentation.favoritos.composables
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -28,6 +29,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
 import com.example.techhub.presentation.comparar.composables.CompararTalentosView
 import kotlinx.coroutines.launch
@@ -36,12 +39,13 @@ import kotlinx.coroutines.launch
 @Composable
 fun BottomSheetCompararTalentos(
     selectedUsers: SnapshotStateList<UsuarioFavoritoData>,
-    isAbleToCompare: MutableState<Boolean>
+    isAbleToCompare: MutableState<Boolean>,
+    context: Context
 ) {
     var scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
 
-    if (isAbleToCompare.value == false && selectedUsers.isNotEmpty()) {
+    if (!isAbleToCompare.value && selectedUsers.isNotEmpty()) {
         selectedUsers.clear()
     } else {
         if (selectedUsers.size == 2) {
@@ -73,7 +77,9 @@ fun BottomSheetCompararTalentos(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                text = "Comparar Selecionados",
+                                text = UiText.StringResource(
+                                    R.string.text_compare_talents
+                                ).asString(context = context),
                                 color = Color.White,
                                 fontSize = 24.sp
                             )

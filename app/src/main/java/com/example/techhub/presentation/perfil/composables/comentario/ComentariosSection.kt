@@ -141,7 +141,7 @@ fun ComentariosSection(
                         fontSize = 16,
                         fontWeight = FontWeight.Medium,
                         contentDescription = UiText.StringResource(
-                            R.string.btn_description_load_more
+                            R.string.btn_description_load_more_talents
                         ).asString(context = context),
                     )
                 }

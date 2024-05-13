@@ -58,7 +58,8 @@ fun AvaliacaoSection(
         ) {
             Text(
                 text = UiText.StringResource(
-                    R.string.text_total_avaliacoes
+                    R.string.text_total_avaliacoes,
+                    totalAvaliacoes.toString()
                 ).asString(context = context),
                 color = GrayText
             )

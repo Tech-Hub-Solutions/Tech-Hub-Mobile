@@ -24,10 +24,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.techhub.R
 import com.example.techhub.common.composable.CircularProgressIndicatorTH
 import com.example.techhub.common.composable.CompareSwitch
 import com.example.techhub.common.composable.CustomizedElevatedButton
 import com.example.techhub.common.composable.UserCard
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.composable.OrderDropDownMenu
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
 import com.example.techhub.presentation.favoritos.FavoritosViewModel
@@ -44,7 +46,6 @@ fun FavoriteUsers(
 ) {
     val favoritos = viewModel.favoritos.observeAsState().value!!
     val totalElements = viewModel.totalElements.observeAsState()
-    val erroApi = viewModel.erroApi.observeAsState().value!!
     val isLoading = viewModel.isLoading.observeAsState().value!!
     val isLastPage = viewModel.isLastPage.observeAsState().value!!
 
@@ -70,7 +71,13 @@ fun FavoriteUsers(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Top
         ) {
-            Text(text = "${totalElements.value} profissionais encontrados", color = GrayText)
+            Text(
+                text = UiText.StringResource(
+                    R.string.text_total_favorites,
+                    totalElements.value.toString()
+                ).asString(context = context),
+                color = GrayText
+            )
 
             OrderDropDownMenu(ordem)
         }
@@ -82,7 +89,11 @@ fun FavoriteUsers(
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
 
         if (favoritos.isEmpty()) {
-            Text(text = "Nenhum favorito selecionado")
+            Text(
+                text = UiText.StringResource(
+                    R.string.text_no_favorites
+                ).asString(context = context)
+            )
         }
 
         LazyColumn(
@@ -134,10 +145,14 @@ fun FavoriteUsers(
                                 8.dp,
                                 Alignment.CenterHorizontally
                             ),
-                            text = "Carregar mais talentos",
+                            text = UiText.StringResource(
+                                R.string.btn_text_load_more_talents
+                            ).asString(context = context),
                             fontSize = 16,
                             fontWeight = FontWeight.Medium,
-                            contentDescription = "Botão para carregar mais talentos"
+                            contentDescription = UiText.StringResource(
+                                R.string.btn_description_load_more_talents
+                            ).asString(context = context)
                         )
                     }
                 }
