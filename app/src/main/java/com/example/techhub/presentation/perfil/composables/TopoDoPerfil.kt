@@ -24,6 +24,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
@@ -85,14 +87,16 @@ fun TopoDoPerfil(
                         var icon = Icons.Outlined.FavoriteBorder
                         var color = PrimaryBlue
 
-                        if(isFavorito.value) {
+                        if (isFavorito.value) {
                             icon = Icons.Filled.Favorite
                             color = Color(0xFFD32F2F)
                         }
 
                         Icon(
                             imageVector = icon,
-                            contentDescription = "Favoritar",
+                            contentDescription = UiText.StringResource(
+                                R.string.btn_description_favoritar_perfil
+                            ).asString(context = context),
                             tint = color,
                             modifier = Modifier.size(34.dp)
                         )
@@ -122,7 +126,9 @@ fun TopoDoPerfil(
                     }) {
                         Icon(
                             imageVector = Icons.Filled.EditNote,
-                            contentDescription = "Editar Perfil",
+                            contentDescription = UiText.StringResource(
+                                R.string.btn_description_editar_perfil
+                            ).asString(context = context),
                             tint = Color.Gray,
                             modifier = Modifier.size(34.dp)
                         )

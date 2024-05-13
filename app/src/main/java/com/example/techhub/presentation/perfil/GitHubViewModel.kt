@@ -5,6 +5,8 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.domain.service.RetrofitGitHubService
 import com.example.techhub.domain.model.github.Repositorio
@@ -20,7 +22,9 @@ class GitHubViewModel : ViewModel() {
 
     fun getRepositorios(context: Context, username: String) {
         isLoading.postValue(true)
-        val toastErrorMessage = "Ops! Ocorreu um erro ao buscar os repositórios."
+        val toastErrorMessage = UiText.StringResource(
+            R.string.toast_error_get_repositorios,
+        ).asString(context = context)
 
         CoroutineScope(Dispatchers.IO).launch {
             try {

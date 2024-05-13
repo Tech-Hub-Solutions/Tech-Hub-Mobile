@@ -7,6 +7,10 @@
     <string name="btn_description_favorites">botão para ir à pagina de favoritos</string>
     <string name="btn_description_chat">botão para ir à pagina de conversas (chat)</string>
     <string name="btn_description_profile">botão com foto de perfil do usuário para abrir menu de configurações de perfil</string>
+    <string name="btn_description_favoritar_perfil">botão para favoritar perfil</string>
+    <string name="btn_description_editar_perfil">botão para editar perfil</string>
+    <string name="btn_description_linkedin">botão para redirecionar ao LinkedIn</string>
+    <string name="btn_description_github">botão para redirecionar ao GitHub</string>
 
     // BTN TEXT
     <string name="btn_text_entrar">Entrar</string>
@@ -23,12 +27,24 @@
     <string name="toast_text_copy_secret_key">Código copiado</string>
     <string name="toast_text_error_trava_tela_cadastro">Selecione uma opção para continuar</string>
     <string name="toast_text_error_cadastro_auth">Erro ao verificar usuário</string>
+    <string name="toast_text_error_perfil">Ops! Ocorreu um erro em seu perfil.</string>
+    <string name="toast_text_error_favorite_perfil">Ops! Ocorreu um erro ao favoritar o perfil.</string>
+    <string name="toast_text_error_recomendar_perfil">Ops! Ocorreu um erro ao recomendar o perfil.</string>
+    <string name="toast_text_error_avaliacoes_perfil">Ops! Ocorreu um erro ao buscar as avaliações do perfil.</string>
+    <string name="toast_text_error_comentarios_perfil">Ops! Ocorreu um erro ao buscar os comentários do usuário.</string>
+    <string name="toast_text_error_comentar_perfil">Ops! Ocorreu um erro ao fazer um comentario!</string>
+    <string name="toast_text_success_comentar_perfil">Comentário realizado com sucesso!</string>
+    <string name="toast_error_get_repositorios">Ops! Ocorreu um erro ao buscar os repositórios.</string>
 
     // TITLE, SUBTITLE
     <string name="subtitle_index">Unindo talento e necessidade.</string>
     <string name="title_login">Login</string>
     <string name="title_cadastro">Cadastro</string>
     <string name="title_trava_tela_cadastro">Primeiros Passos</string>
+    <string name="title_experiencia">Experiência</string>
+    <string name="title_quem_procuramos">Quem procuramos</string>
+    <string name="title_sobre_mim">Sobre mim</string>
+    <string name="title_projetos_desenvolvidos">Projetos desenvolvidos</string>
 
     // DESCRIPTION
     <string name="description_image_logo">logo da Tech Hub</string>
@@ -56,6 +72,10 @@
     <string name="text_trava_tela_cadastro">Como deseja começar?</string>
     <string name="text_authenticator">Habilitar autenticação de 2 fatores</string>
     <string name="text_scan_qr_code">Baixe o autenticador da Google (Google Authenticator)</string>
+    <string name="text_sem_descricao">Sem descrição</string>
+    <string name="text_valores">Valores</string>
+    <string name="text_soft_skills">Soft Skills</string>
+    <string name="text_hard_skills">Hard Skills</string>
 
     // PLACEHOLDER
     <string name="placeholder_auth_code">Digite o código</string>

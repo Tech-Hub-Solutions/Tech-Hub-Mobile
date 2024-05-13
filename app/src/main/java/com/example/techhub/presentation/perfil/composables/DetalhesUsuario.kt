@@ -24,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.techhub.common.objects.countriesEmoji
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.openLink
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
@@ -70,7 +71,9 @@ fun DetalhesUsuario(
                 }) {
                     Image(
                         painter = painterResource(id = com.example.techhub.R.drawable.linkedin_icon),
-                        contentDescription = "botão para redirecionar ao LinkedIn",
+                        contentDescription = UiText.StringResource(
+                            com.example.techhub.R.string.btn_description_linkedin
+                        ).asString(context = context),
                         Modifier.size(30.dp),
                         colorFilter = if (linkLinkedin.isNullOrEmpty()) ColorFilter.colorMatrix(
                             ColorMatrix().apply { setToSaturation(0f) }
@@ -85,7 +88,9 @@ fun DetalhesUsuario(
                 }) {
                     Image(
                         painter = painterResource(id = com.example.techhub.R.drawable.github_icon),
-                        contentDescription = "botão para redirecionar ao GitHub",
+                        contentDescription = UiText.StringResource(
+                            com.example.techhub.R.string.btn_description_github
+                        ).asString(context = context),
                         Modifier.size(30.dp),
                         colorFilter = if (linkGithub.isNullOrEmpty()) ColorFilter.tint(
                             Color.Gray
@@ -99,7 +104,9 @@ fun DetalhesUsuario(
 
         Row {
             Text(
-                text = userInfo.value!!.descricao ?: "Sem descrição",
+                text = userInfo.value!!.descricao ?: UiText.StringResource(
+                    com.example.techhub.R.string.text_sem_descricao
+                ).asString(context = context),
                 fontSize = 18.sp,
                 color = Color(PrimaryBlue.value),
                 fontWeight = FontWeight(400),

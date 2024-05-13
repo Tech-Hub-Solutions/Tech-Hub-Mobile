@@ -11,6 +11,8 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import com.example.techhub.presentation.perfil.GitHubViewModel
 import com.example.techhub.presentation.perfil.PerfilViewModel
@@ -34,20 +36,36 @@ fun InformacoesPerfil(
             .padding(horizontal = 24.dp)
     ) {
         TextContainer(
-            title = "Experiência",
-            description = userInfo.value!!.experiencia ?: "Sem descrição"
+            title = UiText.StringResource(
+                R.string.title_experiencia,
+            ).asString(context = context),
+            description = userInfo.value!!.experiencia ?: UiText.StringResource(
+                R.string.text_sem_descricao,
+            ).asString(context = context)
         )
 
         TextContainer(
-            title = if (isEmpresa) "Quem procuramos" else "Sobre mim",
-            description = userInfo.value!!.sobreMim ?: "Sem descrição"
+            title = if (isEmpresa) UiText.StringResource(
+                R.string.title_quem_procuramos,
+            ).asString(context = context) else
+                UiText.StringResource(
+                    R.string.title_sobre_mim,
+                ).asString(context = context),
+            description = userInfo.value!!.sobreMim ?: UiText.StringResource(
+                R.string.text_sem_descricao,
+            ).asString(context = context)
         )
 
         userInfo.value!!.flags?.filter {
             it.categoria == "soft-skill"
         }?.let {
             TagsSection(
-                title = if (isEmpresa) "Valores" else "Soft Skills",
+                title = if (isEmpresa) UiText.StringResource(
+                    R.string.text_valores,
+                ).asString(context = context)
+                else UiText.StringResource(
+                    R.string.text_soft_skills,
+                ).asString(context = context),
                 flags = it
             )
         }
@@ -63,7 +81,9 @@ fun InformacoesPerfil(
                 it.categoria == "hard-skill"
             }?.let {
                 TagsSection(
-                    title = "Hard Skills",
+                    title = UiText.StringResource(
+                        R.string.text_hard_skills,
+                    ).asString(context = context),
                     flags = it
                 )
             }
@@ -77,8 +97,16 @@ fun InformacoesPerfil(
 
         if (!isEmpresa) {
             Column(modifier = Modifier.fillMaxSize()) {
-                SectionTitle(title = "Projetos desenvolvidos", isCentered = false)
-                ProjetosDesenvolvidos(context = context, nomeGitHub = userInfo.value!!.nomeGithub, viewModel = gitHubViewModel)
+                SectionTitle(
+                    title = UiText.StringResource(
+                        R.string.title_projetos_desenvolvidos,
+                    ).asString(context = context), isCentered = false
+                )
+                ProjetosDesenvolvidos(
+                    context = context,
+                    nomeGitHub = userInfo.value!!.nomeGithub,
+                    viewModel = gitHubViewModel
+                )
             }
 
             Divider(
