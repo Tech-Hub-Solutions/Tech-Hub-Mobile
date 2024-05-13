@@ -3,6 +3,7 @@ package com.example.techhub.domain.service
 import com.example.techhub.common.objects.Constants
 import com.example.techhub.data.remote.AuthApi
 import com.example.techhub.data.remote.FlagApi
+import com.example.techhub.data.remote.MetricasApi
 import com.example.techhub.data.remote.PerfilApi
 import com.example.techhub.data.remote.UsuarioApi
 import com.example.techhub.domain.model.CurrentUser
@@ -59,6 +60,10 @@ object RetrofitService {
 
     fun getFlagService(): FlagApi {
         return getRetrofitInstance().create(FlagApi::class.java)
+    }
+
+    fun getMetricasService(): MetricasApi {
+        return getRetrofitInstance().create(MetricasApi::class.java)
     }
 
 }
