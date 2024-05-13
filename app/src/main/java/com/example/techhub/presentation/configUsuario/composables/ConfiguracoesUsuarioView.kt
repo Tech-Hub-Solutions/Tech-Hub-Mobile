@@ -142,13 +142,18 @@ fun ConfiguracoesUsuarioView(
 
                 Spacer(modifier = Modifier.padding(0.dp))
 
-                EmailTextField(initialValue = CurrentUser.email!!, onValueChanged = { email = it })
+                EmailTextField(
+                    initialValue = CurrentUser.email!!,
+                    onValueChanged = { email = it },
+                    context = context
+                )
 
-                PasswordTextField { password = it }
+                PasswordTextField(onValueChanged = { password = it }, context = context)
 
                 Switch2FALeft(
                     initialValue = CurrentUser.isUsing2FA,
-                    onValueChanged = { isUsing2FA = it })
+                    onValueChanged = { isUsing2FA = it }
+                )
 
                 Spacer(modifier = Modifier.padding(0.dp))
 

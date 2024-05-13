@@ -31,6 +31,7 @@ import com.example.techhub.common.objects.Constants
 import com.example.techhub.common.composable.CardTravaTelaCadastro
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.TopBar
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.presentation.index.IndexActivity
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
@@ -51,7 +52,8 @@ fun TravaTelaCadastroView(onUserOptionSelected: (String) -> Unit) {
                 willRedirectToActivity = true,
                 activity = IndexActivity::class.java,
                 context = context,
-                title = "Primeiros Passos",
+                title = UiText.StringResource(R.string.title_trava_tela_cadastro)
+                    .asString(context = context),
             )
         },
     ) { innerPadding ->
@@ -62,7 +64,8 @@ fun TravaTelaCadastroView(onUserOptionSelected: (String) -> Unit) {
         ) {
             Image(
                 painter = painterResource(id = R.mipmap.fundo_azul),
-                contentDescription = "Fundo com tons de azul",
+                contentDescription = UiText.StringResource(R.string.description_image_blue_background)
+                    .asString(context = context),
                 contentScale = ContentScale.FillWidth,
                 modifier = Modifier.matchParentSize(),
                 alignment = Alignment.TopCenter
@@ -83,7 +86,8 @@ fun TravaTelaCadastroView(onUserOptionSelected: (String) -> Unit) {
                 Spacer(modifier = Modifier.padding(20.dp))
 
                 Text(
-                    text = "Como deseja começar?",
+                    text = UiText.StringResource(R.string.text_trava_tela_cadastro)
+                        .asString(context = context),
                     style = TextStyle(
                         color = Color(SecondaryBlue.value),
                         fontWeight = FontWeight.Medium,
@@ -96,8 +100,10 @@ fun TravaTelaCadastroView(onUserOptionSelected: (String) -> Unit) {
                 Row {
                     CardTravaTelaCadastro(
                         imagePath = R.mipmap.freelancer_image,
-                        contentDescription = "Imagem freelancer",
-                        text = "Freelancer",
+                        contentDescription = UiText.StringResource(R.string.description_image_freelancer)
+                            .asString(context = context),
+                        text = UiText.StringResource(R.string.text_freelancer)
+                            .asString(context = context),
                         onClick = {
                             selectUserType(userSelected = Constants.FREELANCER)
                         },
@@ -108,8 +114,10 @@ fun TravaTelaCadastroView(onUserOptionSelected: (String) -> Unit) {
 
                     CardTravaTelaCadastro(
                         imagePath = R.mipmap.empresa_image,
-                        contentDescription = "Imagem Emppresa",
-                        text = "Empresa",
+                        contentDescription = UiText.StringResource(R.string.description_image_empresa)
+                            .asString(context = context),
+                        text = UiText.StringResource(R.string.text_empresa)
+                            .asString(context = context),
                         onClick = {
                             selectUserType(userSelected = Constants.EMPRESA)
                         },
@@ -122,13 +130,16 @@ fun TravaTelaCadastroView(onUserOptionSelected: (String) -> Unit) {
                 ElevatedButtonTH(
                     onClick = {
                         if (userType.isEmpty() || userType.isBlank()) {
-                            val toastErrorMessage = "Selecione uma opção para continuar"
+                            val toastErrorMessage =
+                                UiText.StringResource(R.string.toast_text_error_trava_tela_cadastro)
+                                    .asString(context = context)
                             showToastError(context = context, message = toastErrorMessage)
                         } else {
                             onUserOptionSelected(userType)
                         }
                     },
-                    text = "Avançar",
+                    text = UiText.StringResource(R.string.btn_text_avancar)
+                        .asString(context = context),
                     backgroundColor = Color(PrimaryBlue.value),
                     width = (350),
                     height = (60)

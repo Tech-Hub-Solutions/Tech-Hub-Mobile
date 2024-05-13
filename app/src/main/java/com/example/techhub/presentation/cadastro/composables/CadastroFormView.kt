@@ -172,7 +172,7 @@ fun CadastroFormView(
                 )
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                NameTextField( onValueChanged = { name = it } )
+                NameTextField(onValueChanged = { name = it })
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
@@ -184,11 +184,11 @@ fun CadastroFormView(
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                EmailTextField(onValueChanged = { email = it })
+                EmailTextField(onValueChanged = { email = it }, context = context)
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                PasswordTextField { password = it }
+                PasswordTextField(onValueChanged = { password = it }, context = context)
 
                 Switch2FA { isUsing2FA = it }
 

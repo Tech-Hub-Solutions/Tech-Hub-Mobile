@@ -17,6 +17,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
@@ -39,6 +40,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.copyToClipBoard
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.model.usuario.UsuarioSimpleVerifyData
@@ -81,7 +84,9 @@ fun FirstAuthView(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Habilitar autenticação de 2 fatores",
+                text = UiText.StringResource(
+                    com.example.techhub.R.string.text_authenticator
+                ).asString(context = context),
                 color = Color(PrimaryBlue.value),
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Medium,
@@ -96,7 +101,9 @@ fun FirstAuthView(
 
         QrCodeBase64AsyncImage(
             base64Image = secretQrCodeUrl,
-            contentDescription = "QR Code para autenticação",
+            contentDescription = UiText.StringResource(
+                R.string.description_image_qr_code
+            ).asString(context = context),
         )
 
         Spacer(modifier = Modifier.padding(16.dp))
@@ -107,7 +114,9 @@ fun FirstAuthView(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Baixe o autenticador da Google (Google Authenticator)",
+                text = UiText.StringResource(
+                    R.string.text_scan_qr_code
+                ).asString(context = context),
                 color = Color.Red.copy(alpha = 0.6f),
                 fontSize = 17.sp,
                 fontWeight = FontWeight.Thin,
@@ -120,6 +129,7 @@ fun FirstAuthView(
         Spacer(modifier = Modifier.height(16.dp))
 
         val annotatedString = buildAnnotatedString {
+            // TODO - NECESSIDADE DE VER COMO FICARÁ COM O i18n
             withStyle(
                 style = SpanStyle(
                     color = Color.Black,
@@ -165,7 +175,9 @@ fun FirstAuthView(
                     copyToClipBoard(
                         context = context,
                         copyText = usuarioSimpleVerifyData.secretKey,
-                        toastText = "Código copiado"
+                        toastText = UiText.StringResource(
+                            R.string.toast_text_copy_secret_key
+                        ).asString(context = context)
                     )
                 }
             ),
@@ -175,18 +187,26 @@ fun FirstAuthView(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        androidx.compose.material3.OutlinedTextField(
+        OutlinedTextField(
             value = authCode,
             onValueChange = {
                 authCode = it
             },
             label = {
                 Text(
-                    "Verifique o código do aplicativo",
+                    UiText.StringResource(
+                        R.string.label_auth_code
+                    ).asString(context = context),
                     Modifier.align(Alignment.CenterHorizontally)
                 )
             },
-            placeholder = { Text("Digite o código") },
+            placeholder = {
+                Text(
+                    UiText.StringResource(
+                        R.string.placeholder_auth_code
+                    ).asString(context = context)
+                )
+            },
             textStyle = LocalTextStyle.current.copy(
                 color = Color.Black,
                 fontSize = 24.sp,
@@ -235,7 +255,9 @@ fun FirstAuthView(
                     .height(52.dp)
             ) {
                 Text(
-                    text = "Cancelar",
+                    text = UiText.StringResource(
+                        R.string.btn_text_cancelar
+                    ).asString(context = context),
                     color = Color(GrayButtonText.value),
                     fontSize = 16.sp,
                     fontWeight = FontWeight(300)
@@ -254,7 +276,9 @@ fun FirstAuthView(
                         toastErrorMessage = toastErrorMessage
                     )
                 },
-                text = "Continuar",
+                text = UiText.StringResource(
+                    R.string.btn_text_continuar
+                ).asString(context = context),
                 backgroundColor = Color(PrimaryBlue.value),
                 textColor = Color.White,
                 width = 130,
