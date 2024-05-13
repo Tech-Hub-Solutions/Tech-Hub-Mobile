@@ -14,7 +14,9 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.techhub.R
 import com.example.techhub.common.composable.StarRatingBarFixed
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.presentation.perfil.PerfilViewModel
 import com.example.techhub.presentation.perfil.composables.SectionTitle
 import com.example.techhub.presentation.ui.theme.GrayText
@@ -37,7 +39,12 @@ fun AvaliacaoSection(
         viewModel.getAvaliacoesDoUsuario(context, usuarioId)
     }
 
-    SectionTitle(title = "Avaliações", isCentered = true)
+    SectionTitle(
+        title = UiText.StringResource(
+            R.string.title_avaliacoes
+        ).asString(context = context),
+        isCentered = true
+    )
     Column(
         modifier = Modifier.fillMaxWidth(),
         Arrangement.spacedBy(12.dp)
@@ -49,7 +56,12 @@ fun AvaliacaoSection(
             Arrangement.SpaceBetween,
             Alignment.CenterVertically
         ) {
-            Text(text = "$totalAvaliacoes avaliações recebidas", color = GrayText)
+            Text(
+                text = UiText.StringResource(
+                    R.string.text_total_avaliacoes
+                ).asString(context = context),
+                color = GrayText
+            )
 
             StarRatingBarFixed(
                 maxStars = 5,

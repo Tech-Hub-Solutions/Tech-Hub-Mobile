@@ -19,6 +19,9 @@
     <string name="btn_text_continuar">Continuar</string>
     <string name="btn_text_cadastre_se">Cadastre-se.</string>
     <string name="btn_text_avancar">Avançar</string>
+    <string name="btn_text_edit_perfil">Editar Perfil</string>
+    <string name="btn_text_edit_wallpaper">Editar Wallpaper</string>
+    <string name="btn_text_comment">Comentar</string>
 
     // TOAST TEXT
     <string name="toast_text_welcome">Seja bem-vindo(a)!</string>
@@ -45,6 +48,8 @@
     <string name="title_quem_procuramos">Quem procuramos</string>
     <string name="title_sobre_mim">Sobre mim</string>
     <string name="title_projetos_desenvolvidos">Projetos desenvolvidos</string>
+    <string name="title_additional_informations">Informações Adicionais</string>
+    <string name="title_comment">Comentário</string>
 
     // DESCRIPTION
     <string name="description_image_logo">logo da Tech Hub</string>
@@ -59,6 +64,10 @@
     <string name="description_image_freelancer">Imagem freelancer</string>
     <string name="description_image_qr_code">QR Code para autenticação</string>
     <string name="description_image_empresa">Imagem Emppresa</string>
+    <string name="description_image_banner_perfil">Imagem de capa do banner do perfil</string>
+    <string name="description_image_rounded_perfil">Rounded Perfil Image</string>
+    <string name="description_image_edit_perfil">Editar Imagem de Perfil</string>
+    <string name="description_image_evaluator">Imagem do avaliador</string>
 
     // TEXT
     <string name="text_auth_code">Insira o código de autorização</string>
@@ -76,6 +85,17 @@
     <string name="text_valores">Valores</string>
     <string name="text_soft_skills">Soft Skills</string>
     <string name="text_hard_skills">Hard Skills</string>
+    <string name="text_github_project_card_no_name">Projeto sem nome</string>
+    <string name="text_github_project_card_no_description">Projeto sem descrição</string>
+    <string name="text_github_project_card_language_icon">Icone de %s</string>
+    <string name="text_github_service_limit_exceeded">Serviço temporariamente indisponível. Tente novamente mais tarde.</string>
+    <string name="text_github_user_not_found">Usuário não encontrado ou não possui repositórios públicos.</string>
+    <string name="text_github_service_error">Erro desconhecido. Tente novamente mais tarde.</string>
+    <string name="text_github_not_registered">Usuário não cadastrou seu GitHub.</string>
+    <string name="text_recommended">Recomendado</string>
+    <string name="text_to_recommend">Recomendar</string>
+    <string name="text_you">Você</string>
+    <string name="text_add_comment">Adicionar comentário</string>
 
     // PLACEHOLDER
     <string name="placeholder_auth_code">Digite o código</string>
@@ -88,4 +108,12 @@
 
     // LABEL
     <string name="label_auth_code">Verifique o código do aplicativo</string>
+    <string name="text_comments">Comentários</string>
+    <string name="text_no_comments">Não há comentários</string>
+    <string name="btn_text_load_more">Ver mais</string>
+    <string name="btn_description_load_more">Botão para carregar mais talentos</string>
+    <string name="text_star">"estrela "</string>
+    <string name="text_stars">estrelas</string>
+    <string name="title_avaliacoes">Avaliações</string>
+    <string name="text_total_avaliacoes">$d avaliações recebidas</string>
 </resources>

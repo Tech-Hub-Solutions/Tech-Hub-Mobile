@@ -6,8 +6,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 
 @Composable
 fun AvaliacaoCountRow(
@@ -15,19 +18,31 @@ fun AvaliacaoCountRow(
     qtdEstrela: Int,
     totalProgress: Float
 ) {
+    val context = LocalContext.current
+
     Row(
         modifier = Modifier
             .fillMaxWidth(),
     ) {
         Text(
-            text = "$titleNumber " + if (titleNumber == "1") "estrela " else "estrelas",
+            text = "$titleNumber " + if (titleNumber == "1")
+                UiText.StringResource(
+                    R.string.text_star
+                ).asString(context = context)
+            else
+                UiText.StringResource(
+                    R.string.text_stars
+                ).asString(context = context),
             color = Color.Black,
             fontSize = 14.sp,
             modifier = Modifier
                 .weight(1f)
         )
 
-        AvaliacaoProgressIndicator(totalProgress = totalProgress, modifier = Modifier.weight(3f))
+        AvaliacaoProgressIndicator(
+            totalProgress = totalProgress,
+            modifier = Modifier.weight(3f)
+        )
 
         Text(
             text = "($qtdEstrela)",

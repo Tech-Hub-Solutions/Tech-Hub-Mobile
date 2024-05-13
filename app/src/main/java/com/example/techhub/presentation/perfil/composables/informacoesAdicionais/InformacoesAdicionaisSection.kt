@@ -18,8 +18,10 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.techhub.R
 import com.example.techhub.common.objects.InformacoesAdicionaisPerfil
 import com.example.techhub.common.composable.ElevatedButtonTH
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.presentation.perfil.PerfilViewModel
 import com.example.techhub.presentation.perfil.composables.SectionTitle
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
@@ -49,7 +51,12 @@ fun InformacoesAdicionaisSection(
         informacoes.add(empresasInteressadas to InformacoesAdicionaisPerfil.empresasInteressadas)
     }
 
-    SectionTitle(title = "Informações Adicionais", isCentered = true)
+    SectionTitle(
+        title = UiText.StringResource(
+            R.string.title_additional_informations
+        ).asString(context = context),
+        isCentered = true
+    )
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -74,7 +81,14 @@ fun InformacoesAdicionaisSection(
         if (!isOwnProfile) {
             val color = if (isRecomendado.value) Color.White else PrimaryBlue
             val background = if (isRecomendado.value) PrimaryBlue else Color.White
-            val text = if (isRecomendado.value) "Recomendado" else "Recomendar"
+            val text = if (isRecomendado.value)
+                UiText.StringResource(
+                    R.string.text_recommended
+                ).asString(context = context)
+            else UiText.StringResource(
+                R.string.text_to_recommend
+            ).asString(context = context)
+
             ElevatedButtonTH(
                 onClick = {
                     viewModel.recomendarUsuario(context, usuarioId)

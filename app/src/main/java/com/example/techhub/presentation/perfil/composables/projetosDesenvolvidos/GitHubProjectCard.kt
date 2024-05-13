@@ -24,7 +24,10 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import com.example.techhub.R
+import com.example.techhub.common.objects.Constants
 import com.example.techhub.common.objects.devIconMap
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.openLink
 import com.example.techhub.domain.model.github.Repositorio
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
@@ -56,7 +59,9 @@ fun GitHubProjectCard(
                 Arrangement.SpaceBetween,
             ) {
                 Text(
-                    text = repositorio.name ?: "Projeto sem nome",
+                    text = repositorio.name ?: UiText.StringResource(
+                        R.string.text_github_project_card_no_name
+                    ).asString(context = contexto),
                     color = PrimaryBlue,
                     fontSize = 18.sp,
                     maxLines = 1,
@@ -64,7 +69,9 @@ fun GitHubProjectCard(
                 )
 
                 Text(
-                    text = repositorio.description ?: "Projeto sem descrição",
+                    text = repositorio.description ?: UiText.StringResource(
+                        R.string.text_github_project_card_no_description
+                    ).asString(context = contexto),
                     color = Color.Black,
                     fontWeight = FontWeight.Thin,
                     fontSize = 14.sp,
@@ -81,14 +88,17 @@ fun GitHubProjectCard(
                         if (icon.isNullOrEmpty()) {
                             Text(text = it)
                         } else {
-                            val languageIcon =
-                                "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${icon}/${icon}-original.svg"
+                            val languageIcon = Constants.getGitHubUrl(iconName = icon)
+
                             AsyncImage(
                                 model = ImageRequest.Builder(LocalContext.current)
                                     .data(languageIcon)
                                     .decoderFactory(SvgDecoder.Factory())
                                     .build(),
-                                contentDescription = "$it Icon",
+                                contentDescription = UiText.StringResource(
+                                    R.string.text_github_project_card_language_icon,
+                                    it
+                                ).asString(context = contexto),
                                 modifier = Modifier.size(45.dp)
                             )
                         }

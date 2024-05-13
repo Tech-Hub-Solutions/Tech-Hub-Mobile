@@ -35,8 +35,10 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import com.example.techhub.R
 import com.example.techhub.common.composable.StarRatingBarFixed
 import com.example.techhub.common.objects.countriesEmoji
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.presentation.perfil.PerfilActivity
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
@@ -74,7 +76,9 @@ fun ComentarioCard(
                 if (urlFoto.isNullOrBlank()) {
                     Icon(
                         Icons.Filled.Person,
-                        contentDescription = "@string/btn_description_profile",
+                        contentDescription = UiText.StringResource(
+                            R.string.btn_description_profile
+                        ).asString(context = context),
                         tint = PrimaryBlue,
                         modifier = Modifier
                             .padding(end = 12.dp)
@@ -90,7 +94,9 @@ fun ComentarioCard(
                             .data(urlFoto)
                             .decoderFactory(SvgDecoder.Factory())
                             .build(),
-                        contentDescription = "Imagem do avaliador",
+                        contentDescription = UiText.StringResource(
+                            R.string.description_image_evaluator
+                        ).asString(context = context),
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .padding(end = 12.dp)
@@ -113,7 +119,6 @@ fun ComentarioCard(
                         contentPadding = PaddingValues(horizontal = 0.dp),
                         content = {
                             Column {
-
                                 Row(
                                     modifier = Modifier,
                                     horizontalArrangement = Arrangement.spacedBy(8.dp),
