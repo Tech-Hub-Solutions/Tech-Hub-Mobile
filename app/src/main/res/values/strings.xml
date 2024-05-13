@@ -11,6 +11,7 @@
     <string name="btn_description_editar_perfil">botão para editar perfil</string>
     <string name="btn_description_linkedin">botão para redirecionar ao LinkedIn</string>
     <string name="btn_description_github">botão para redirecionar ao GitHub</string>
+    <string name="btn_description_load_more">Botão para carregar mais talentos</string>
 
     // BTN TEXT
     <string name="btn_text_entrar">Entrar</string>
@@ -22,6 +23,7 @@
     <string name="btn_text_edit_perfil">Editar Perfil</string>
     <string name="btn_text_edit_wallpaper">Editar Wallpaper</string>
     <string name="btn_text_comment">Comentar</string>
+    <string name="btn_text_load_more">Ver mais</string>
 
     // TOAST TEXT
     <string name="toast_text_welcome">Seja bem-vindo(a)!</string>
@@ -50,6 +52,8 @@
     <string name="title_projetos_desenvolvidos">Projetos desenvolvidos</string>
     <string name="title_additional_informations">Informações Adicionais</string>
     <string name="title_comment">Comentário</string>
+    <string name="title_avaliacoes">Avaliações</string>
+    <string name="title_explorar_talentos">Explorar Talentos</string>
 
     // DESCRIPTION
     <string name="description_image_logo">logo da Tech Hub</string>
@@ -96,6 +100,11 @@
     <string name="text_to_recommend">Recomendar</string>
     <string name="text_you">Você</string>
     <string name="text_add_comment">Adicionar comentário</string>
+    <string name="text_comments">Comentários</string>
+    <string name="text_no_comments">Não há comentários</string>
+    <string name="text_star">"estrela "</string>
+    <string name="text_stars">estrelas</string>
+    <string name="text_total_avaliacoes">$d avaliações recebidas</string>
 
     // PLACEHOLDER
     <string name="placeholder_auth_code">Digite o código</string>
@@ -108,12 +117,17 @@
 
     // LABEL
     <string name="label_auth_code">Verifique o código do aplicativo</string>
-    <string name="text_comments">Comentários</string>
-    <string name="text_no_comments">Não há comentários</string>
-    <string name="btn_text_load_more">Ver mais</string>
-    <string name="btn_description_load_more">Botão para carregar mais talentos</string>
-    <string name="text_star">"estrela "</string>
-    <string name="text_stars">estrelas</string>
-    <string name="title_avaliacoes">Avaliações</string>
-    <string name="text_total_avaliacoes">$d avaliações recebidas</string>
+    <string name="text_filter_by">Filtrar por:</string>
+    <string name="btn_text_apply_filter">Aplicar Filtro</string>
+    <string name="btn_text_clear_filter">Limpar Filtro</string>
+    <string name="description_image_search_by">Pesquisar por nome</string>
+    <string name="subtitle_tech_area">Área de Tecnologia</string>
+    <string name="subtitle_name">Nome</string>
+    <string name="subtitle_price">Preço</string>
+    <string name="label_minimum">Mínimo</string>
+    <string name="label_maximum">Máximo</string>
+    <string name="text_total_talentos">%d profissionais encontrados</string>
+    <string name="text_filter">Filtrar</string>
+    <string name="btn_text_load_more_talents">Carregar mais talentos</string>
+    <string name="btn_description_load_more_talents">Botão para carregar mais talentos</string>
 </resources>

@@ -34,6 +34,7 @@ import com.example.techhub.R
 import com.example.techhub.common.composable.CircularProgressIndicatorTH
 import com.example.techhub.common.composable.CustomizedElevatedButton
 import com.example.techhub.common.composable.UserCard
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.domain.model.usuario.UsuarioFiltroData
 import com.example.techhub.presentation.explorarTalentos.ExplorarTalentosViewModel
@@ -84,7 +85,10 @@ fun TalentosContent(
         verticalAlignment = Alignment.Top
     ) {
         Text(
-            text = "$totalElements profissionais encontrados",
+            text = UiText.StringResource(
+                R.string.text_total_talentos,
+                totalElements
+            ).asString(context = context),
             modifier = Modifier.fillMaxWidth(0.4f),
             color = GrayText
         )
@@ -121,13 +125,17 @@ fun TalentosContent(
                     PrimaryBlue
                 }
                 Text(
-                    text = "Filtrar",
+                    text = UiText.StringResource(
+                        R.string.text_filter
+                    ).asString(context = context),
                     fontSize = 14.sp,
                     color = color
                 )
                 Image(
                     painter = painterResource(id = R.mipmap.filter),
-                    contentDescription = "Filtrar",
+                    contentDescription = UiText.StringResource(
+                        R.string.text_filter
+                    ).asString(context = context),
                     modifier = Modifier.size(14.dp)
                 )
             }
@@ -197,10 +205,14 @@ fun TalentosContent(
                                 8.dp,
                                 Alignment.CenterHorizontally
                             ),
-                            text = "Carregar mais talentos",
+                            text = UiText.StringResource(
+                                R.string.btn_text_load_more_talents
+                            ).asString(context = context),
                             fontSize = 16,
                             fontWeight = FontWeight.Medium,
-                            contentDescription = "Botão para carregar mais talentos"
+                            contentDescription = UiText.StringResource(
+                                R.string.btn_description_load_more_talents
+                            ).asString(context = context),
                         )
                     }
                 }

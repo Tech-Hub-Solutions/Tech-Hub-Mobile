@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.example.techhub.common.composable.BottomBar
 import com.example.techhub.common.composable.TopBarTitle
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.domain.model.usuario.UsuarioFiltroData
 import com.example.techhub.presentation.explorarTalentos.ExplorarTalentosViewModel
 
@@ -50,7 +51,9 @@ fun ExplorarTalentosView(viewModel: ExplorarTalentosViewModel = ExplorarTalentos
                 Scaffold(
                     topBar = {
                         TopBarTitle(
-                            title = "Explorar Talentos"
+                            title = UiText.StringResource(
+                                com.example.techhub.R.string.title_explorar_talentos
+                            ).asString(context = context)
                         )
                     },
                     bottomBar = { BottomBar() }

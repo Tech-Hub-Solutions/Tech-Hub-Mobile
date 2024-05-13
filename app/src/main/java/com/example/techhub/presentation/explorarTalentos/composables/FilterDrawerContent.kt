@@ -21,19 +21,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.domain.model.usuario.UsuarioFiltroData
 import com.example.techhub.presentation.explorarTalentos.ExplorarTalentosViewModel
+import com.example.techhub.presentation.explorarTalentos.composables.filtros.FiltroPorAreaETecnologia
+import com.example.techhub.presentation.explorarTalentos.composables.filtros.FiltroPorNome
+import com.example.techhub.presentation.explorarTalentos.composables.filtros.FiltroPorPreco
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-
-data class Tecnologia(
-    val id: Int,
-    val nome: String,
-)
 
 @Composable
 fun FilterDrawerContent(
@@ -42,7 +43,7 @@ fun FilterDrawerContent(
     drawerState: DrawerState,
     scope: CoroutineScope
 ) {
-
+    val context = LocalContext.current
     val talentos = viewModel.talentos.observeAsState().value!!
     val maxPrice = talentos.toList().maxByOrNull { it.precoMedio ?: 0.0 }?.precoMedio ?: 0.0
 
@@ -64,7 +65,9 @@ fun FilterDrawerContent(
             .verticalScroll(rememberScrollState())
     ) {
         Text(
-            text = "Filtrar por:",
+            text = UiText.StringResource(
+                R.string.text_filter_by,
+            ).asString(context = context),
             color = PrimaryBlue,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
@@ -76,7 +79,7 @@ fun FilterDrawerContent(
                 .height(1.dp)
         )
 
-        FiltroPorNome(newFiltro, setNewFiltro)
+        FiltroPorNome(newFiltro, setNewFiltro, context)
 
         Spacer(
             modifier = Modifier
@@ -85,7 +88,7 @@ fun FilterDrawerContent(
                 .height(1.dp)
         )
 
-        FiltroPorAreaETecnologia(newFiltro, setNewFiltro, viewModel)
+        FiltroPorAreaETecnologia(newFiltro, setNewFiltro, viewModel, context)
 
         Spacer(
             modifier = Modifier
@@ -94,7 +97,7 @@ fun FilterDrawerContent(
                 .height(1.dp)
         )
 
-        FiltroPorPreco(newFiltro, setNewFiltro, maxPrice.toFloat())
+        FiltroPorPreco(newFiltro, setNewFiltro, maxPrice.toFloat(), context)
 
         Spacer(
             modifier = Modifier
@@ -118,7 +121,9 @@ fun FilterDrawerContent(
             shape = Shapes().extraLarge
         ) {
             Text(
-                text = "Aplicar Filtro",
+                text = UiText.StringResource(
+                    R.string.btn_text_apply_filter,
+                ).asString(context = context),
                 color = Color.White,
                 fontSize = 16.sp
             )
@@ -154,11 +159,12 @@ fun FilterDrawerContent(
             border = BorderStroke(1.dp, PrimaryBlue)
         ) {
             Text(
-                text = "Limpar Filtro",
+                text = UiText.StringResource(
+                    R.string.btn_text_clear_filter,
+                ).asString(context = context),
                 color = PrimaryBlue,
                 fontSize = 16.sp
             )
         }
-
     }
 }
