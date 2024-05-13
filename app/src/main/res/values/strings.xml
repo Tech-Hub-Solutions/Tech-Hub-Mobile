@@ -28,6 +28,7 @@
     <string name="btn_text_apply_filter">Aplicar Filtro</string>
     <string name="btn_text_clear_filter">Limpar Filtro</string>
     <string name="btn_text_load_more_talents">Carregar mais talentos</string>
+    <string name="btn_text_salvar">Salvar</string>
 
     // TOAST TEXT
     <string name="toast_text_welcome">Seja bem-vindo(a)!</string>
@@ -45,6 +46,9 @@
     <string name="toast_text_success_comentar_perfil">Comentário realizado com sucesso!</string>
     <string name="toast_error_get_repositorios">Ops! Ocorreu um erro ao buscar os repositórios.</string>
     <string name="toast_error_get_favorite_users">Ops! Algo deu errado ao buscar favoritos.</string>
+    <string name="toast_text_perfil_atualizado">Perfil atualizado com sucesso</string>
+    <string name="toast_text_success_atualizar_config_usuario">Suas informações foram atualizadas com sucesso</string>
+    <string name="toast_text_error_campos_obrigatorios">Todos os itens devem ser preenchidos!</string>
 
     // TITLE, SUBTITLE
     <string name="subtitle_index">Unindo talento e necessidade.</string>
@@ -63,6 +67,8 @@
     <string name="title_comment">Comentário</string>
     <string name="title_avaliacoes">Avaliações</string>
     <string name="title_explorar_talentos">Explorar Talentos</string>
+    <string name="title_favorites">Favoritos</string>
+    <string name="title_edit_config_usuario">Editar Configurações</string>
 
     // DESCRIPTION
     <string name="description_image_logo">logo da Tech Hub</string>
@@ -70,6 +76,7 @@
     <string name="description_image_login">imagem de duas pessoas com computadores</string>
     <string name="description_image_login_auth">imagem de um cadeaco branco com fundo azul</string>
     <string name="description_image_email">Campo para o e-mail</string>
+    <string name="description_image_sobre_mim">Campo para sobre mim</string>
     <string name="description_image_password">Campo para a senha</string>
     <string name="description_image_password_visible">Mostrar senha</string>
     <string name="description_image_password_invisible">Esconder senha</string>
@@ -82,6 +89,7 @@
     <string name="description_image_edit_perfil">Editar Imagem de Perfil</string>
     <string name="description_image_evaluator">Imagem do avaliador</string>
     <string name="description_image_search_by">Pesquisar por nome</string>
+    <string name="description_image_expand">Expandir</string>
 
     // TEXT
     <string name="text_auth_code">Insira o código de autorização</string>
@@ -121,6 +129,10 @@
     <string name="text_compare_talents">Comparar Selecionados</string>
     <string name="text_total_favorites">%s profissionais encontrados</string>
     <string name="text_no_favorites">Nenhum favorito selecionado</string>
+    <string name="text_formas_contato">Formas de Contato</string>
+    <string name="text_link_github">Link do GitHub</string>
+    <string name="text_nome_github">Nome do GitHub</string>
+    <string name="text_edit_config_usuario">Faça as alterações necessárias para atualizar os seus dados cadastrais.</string>
 
     // PLACEHOLDER
     <string name="placeholder_auth_code">Digite o código</string>
@@ -135,5 +147,4 @@
     <string name="label_auth_code">Verifique o código do aplicativo</string>
     <string name="label_minimum">Mínimo</string>
     <string name="label_maximum">Máximo</string>
-    <string name="title_favorites">Favoritos</string>
 </resources>
