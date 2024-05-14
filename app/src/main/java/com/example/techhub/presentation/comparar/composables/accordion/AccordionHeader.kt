@@ -1,6 +1,5 @@
 package com.example.techhub.presentation.comparar.composables.accordion
 
-import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -15,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -27,9 +27,9 @@ fun AccordionHeader(
     title: String = "Header",
     isExpanded: Boolean = false,
     onTapped: () -> Unit = {},
-    context: Context
 ) {
     val degrees = if (isExpanded) 180f else 0f
+    val context = LocalContext.current
 
     Surface(
         color = Color.White,
