@@ -129,7 +129,8 @@ fun CadastroFormView(
                 willRedirectToActivity = false,
                 navController = navController,
                 title = "Cadastro",
-                route = Screen.TravaTelaCadastroView.route
+                route = Screen.TravaTelaCadastroView.route,
+                context = context
             )
         },
     ) { innerPadding ->
@@ -190,7 +191,7 @@ fun CadastroFormView(
 
                 PasswordTextField(onValueChanged = { password = it }, context = context)
 
-                Switch2FA ({ isUsing2FA = it }, context = context)
+                Switch2FA({ isUsing2FA = it }, context = context)
 
                 Spacer(modifier = Modifier.padding(12.dp))
 

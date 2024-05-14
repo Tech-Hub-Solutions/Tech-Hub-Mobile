@@ -97,7 +97,7 @@ fun ConfiguracoesUsuarioView(
             TopBar(
                 willRedirectToActivity = true,
                 activity = PerfilActivity::class.java,
-                context = LocalContext.current,
+                context = context,
                 title = UiText.StringResource(
                     R.string.title_edit_config_usuario,
                 ).asString(context = context),

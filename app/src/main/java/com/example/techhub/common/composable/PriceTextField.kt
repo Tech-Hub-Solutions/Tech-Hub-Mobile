@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AssignmentInd
 import androidx.compose.material.icons.filled.CurrencyExchange
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
@@ -14,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -35,14 +33,15 @@ fun PriceTextField(
 ) {
     var filledText by remember { mutableStateOf(initialValue) }
     var isValueValid by remember { mutableStateOf(false) }
-    Column {
 
+    Column {
         OutlinedTextField(
             value = if (filledText == 0.0 || filledText == null) "" else "R$ ${
+                // TODO - Refatorar a máscara do decimal para editar o valor corretamente
                 String.format("%.2f", filledText)
             }",
             onValueChange = {
-                val cleanValue = it.removePrefix("R$ ")
+                val cleanValue = it.removePrefix("R$ ").replace(",", ".")
 
                 var doubleValue = try {
                     cleanValue.toDouble()
@@ -54,7 +53,7 @@ fun PriceTextField(
                     doubleValue = 0.0
                 }
 
-                filledText = String.format("%.2f", doubleValue).toDouble()
+                filledText = doubleValue
                 onValueChanged(filledText)
             },
             label = {

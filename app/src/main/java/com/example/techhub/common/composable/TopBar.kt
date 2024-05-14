@@ -30,7 +30,7 @@ fun TopBar(
     willRedirectToActivity: Boolean,
     title: String,
     activity: Class<*>? = null,
-    context: Context? = null,
+    context: Context,
     navController: NavController? = null,
     route: String? = null
 ) {
@@ -38,7 +38,7 @@ fun TopBar(
         containerColor = if (
             title == UiText.StringResource(
                 R.string.title_trava_tela_cadastro
-            ).asString(context = context!!)
+            ).asString(context = context)
         ) Color.Transparent else Color.White,
         titleContentColor = MaterialTheme.colorScheme.primary,
     )
@@ -49,7 +49,7 @@ fun TopBar(
         requireNotNull(activity) { "Activity must not be null when willRedirectToActivity is true" }
         requireNotNull(context) { "Context must not be null when willRedirectToActivity is true" }
 
-        var extras = Bundle()
+        val extras = Bundle()
 
         if (activity == PerfilActivity::class.java) {
             extras.putInt("id", CurrentUser.userProfile!!.id!!)

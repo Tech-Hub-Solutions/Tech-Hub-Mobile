@@ -67,9 +67,11 @@ fun FiltroPorPreco(
                         ).asString(context = context)
                     )
                 },
+                // TODO - Refatorar a máscara do decimal para editar o valor corretamente
+                // TODO - Não há como apagar todos os número. E sempre é inserido dois zeros ao final do número
                 value = "R$ ${String.format("%.2f", sliderPosition.start)}",
                 onValueChange = {
-                    val cleanValue = it.removePrefix("R$ ")
+                    val cleanValue = it.removePrefix("R$ ").replace(",", ".")
 
                     var floatValue = try {
                         cleanValue.toFloat()
@@ -112,18 +114,16 @@ fun FiltroPorPreco(
                         ).asString(context = context)
                     )
                 },
+                // TODO - Refatorar a máscara do decimal para editar o valor corretamente
+                // TODO - Não há como apagar todos os número. E sempre é inserido dois zeros ao final do número
                 value = "R$ ${String.format("%.2f", sliderPosition.endInclusive)}",
                 onValueChange = {
-                    val cleanValue = it.removePrefix("R$ ")
+                    val cleanValue = it.removePrefix("R$ ").replace(",", ".")
 
                     var floatValue = try {
                         cleanValue.toFloat()
                     } catch (e: Exception) {
                         sliderPosition.endInclusive
-                    }
-
-                    if (floatValue > 10_000.00f) {
-                        floatValue = 10_000.00f
                     }
 
                     setNewFiltro(
@@ -148,8 +148,8 @@ fun FiltroPorPreco(
                     .weight(0.5f)
                     .padding(start = 8.dp)
             )
-
         }
+
         RangeSlider(
             value = sliderPosition,
             onValueChange = { range -> sliderPosition = range },

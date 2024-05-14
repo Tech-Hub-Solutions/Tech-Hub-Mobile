@@ -81,7 +81,7 @@ fun EditarUsuarioView(
             TopBar(
                 willRedirectToActivity = true,
                 activity = PerfilActivity::class.java,
-                context = LocalContext.current,
+                context = context,
                 title = UiText.StringResource(
                     R.string.btn_text_edit_perfil
                 ).asString(context = context),

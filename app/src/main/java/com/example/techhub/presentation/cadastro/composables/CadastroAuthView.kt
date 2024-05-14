@@ -32,6 +32,7 @@ fun CadastroAuthView(
                 ).asString(context = context),
                 route = Screen.TravaTelaCadastroView.route,
                 navController = navController,
+                context = context
             )
         },
     ) { innerPadding ->
