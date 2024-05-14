@@ -1,5 +1,6 @@
 package com.example.techhub.common.composable
 
+import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
@@ -20,11 +21,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun NameTextField(onValueChanged: (String) -> Unit, initialValue: String = "") {
+fun NameTextField(onValueChanged: (String) -> Unit, initialValue: String = "", context: Context) {
     var filledText by remember { mutableStateOf(initialValue) }
     var isNameValid by remember { mutableStateOf(false) }
 
@@ -36,8 +39,20 @@ fun NameTextField(onValueChanged: (String) -> Unit, initialValue: String = "") {
                 isNameValid = filledText.isBlank()
                 onValueChanged(filledText)
             },
-            label = { Text("Nome") },
-            placeholder = { Text("Digite seu nome") },
+            label = {
+                Text(
+                    UiText.StringResource(
+                        R.string.subtitle_name
+                    ).asString(context = context)
+                )
+            },
+            placeholder = {
+                Text(
+                    UiText.StringResource(
+                        R.string.placeholder_text_name
+                    ).asString(context = context)
+                )
+            },
             textStyle = LocalTextStyle.current.copy(
                 color = Color.Black,
                 fontSize = 16.sp
@@ -53,7 +68,9 @@ fun NameTextField(onValueChanged: (String) -> Unit, initialValue: String = "") {
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Filled.Person,
-                    contentDescription = "campo para o nome",
+                    contentDescription = UiText.StringResource(
+                        R.string.description_image_nome
+                    ).asString(context = context),
                     tint = Color(PrimaryBlue.value)
                 )
             },
@@ -62,7 +79,11 @@ fun NameTextField(onValueChanged: (String) -> Unit, initialValue: String = "") {
             singleLine = true,
             isError = isNameValid,
             supportingText = {
-                if (filledText.isBlank() && isNameValid) Text("É necessário preencher o nome")
+                if (filledText.isBlank() && isNameValid) Text(
+                    UiText.StringResource(
+                        R.string.supporting_text_nome
+                    ).asString(context = context)
+                )
             },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,

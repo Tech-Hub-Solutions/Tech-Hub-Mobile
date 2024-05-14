@@ -35,6 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.techhub.R
 import com.example.techhub.common.composable.EmailTextField
 import com.example.techhub.common.composable.FlagDropDownMenu
 import com.example.techhub.common.composable.NameTextField
@@ -42,6 +43,7 @@ import com.example.techhub.common.composable.PasswordTextField
 import com.example.techhub.common.composable.Switch2FALeft
 import com.example.techhub.common.composable.TopBar
 import com.example.techhub.common.objects.countryFlagsList
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.base64Images.encodeBase64
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.common.utils.startNewActivity
@@ -95,8 +97,10 @@ fun ConfiguracoesUsuarioView(
             TopBar(
                 willRedirectToActivity = true,
                 activity = PerfilActivity::class.java,
-                context = LocalContext.current,
-                title = "Editar Configurações",
+                context = context,
+                title = UiText.StringResource(
+                    R.string.title_edit_config_usuario,
+                ).asString(context = context),
             )
         },
     ) { innerPadding ->
@@ -116,7 +120,9 @@ fun ConfiguracoesUsuarioView(
 
             Row {
                 Text(
-                    text = "Faça as alterações necessárias para atualizar os seus dados cadastrais.",
+                    text = UiText.StringResource(
+                        R.string.text_edit_config_usuario
+                    ).asString(context = context),
                     color = Color(GrayText.value),
                     fontSize = 17.sp,
                     fontWeight = FontWeight.Thin,
@@ -136,19 +142,27 @@ fun ConfiguracoesUsuarioView(
 
                 NameTextField(
                     initialValue = CurrentUser.userProfile!!.nome!!,
-                    onValueChanged = { name = it })
+                    onValueChanged = { name = it },
+                    context = context
+                )
 
-                FlagDropDownMenu(nacionalidade)
+                FlagDropDownMenu(flag = nacionalidade, context = context)
 
                 Spacer(modifier = Modifier.padding(0.dp))
 
-                EmailTextField(initialValue = CurrentUser.email!!, onValueChanged = { email = it })
+                EmailTextField(
+                    initialValue = CurrentUser.email!!,
+                    onValueChanged = { email = it },
+                    context = context
+                )
 
-                PasswordTextField { password = it }
+                PasswordTextField(onValueChanged = { password = it }, context = context)
 
                 Switch2FALeft(
                     initialValue = CurrentUser.isUsing2FA,
-                    onValueChanged = { isUsing2FA = it })
+                    onValueChanged = { isUsing2FA = it },
+                    context = context
+                )
 
                 Spacer(modifier = Modifier.padding(0.dp))
 
@@ -170,7 +184,12 @@ fun ConfiguracoesUsuarioView(
                         usuarioAtualizacaoData.pais.isNullOrBlank() || usuarioAtualizacaoData.senha.isNullOrBlank()
                     ) {
                         (context as Activity).runOnUiThread {
-                            showToastError(context, "Todos os itens devem ser preenchidos!!")
+                            showToastError(
+                                context,
+                                UiText.StringResource(
+                                    R.string.toast_text_error_campos_obrigatorios,
+                                ).asString(context = context),
+                            )
                         }
                     } else {
                         viewModel.atualizarConfigUsuario(
@@ -187,7 +206,9 @@ fun ConfiguracoesUsuarioView(
                                     (context as Activity).runOnUiThread {
                                         showToastError(
                                             context,
-                                            "Dados atualizados com sucesso!!"
+                                            UiText.StringResource(
+                                                R.string.toast_text_success_atualizar_config_usuario,
+                                            ).asString(context = context),
                                         )
                                     }
                                     delay(3000L)
@@ -207,7 +228,13 @@ fun ConfiguracoesUsuarioView(
                 ),
                 shape = RoundedCornerShape(10.dp),
             ) {
-                Text(text = "Salvar", fontSize = 16.sp, fontWeight = FontWeight(500))
+                Text(
+                    text = UiText.StringResource(
+                        R.string.btn_text_salvar,
+                    ).asString(context = context),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight(500)
+                )
             }
 
             Spacer(modifier = Modifier.padding(12.dp))
@@ -230,7 +257,13 @@ fun ConfiguracoesUsuarioView(
                 ),
                 shape = RoundedCornerShape(10.dp),
             ) {
-                Text(text = "Cancelar", fontSize = 16.sp, fontWeight = FontWeight(500))
+                Text(
+                    text = UiText.StringResource(
+                        R.string.btn_text_cancelar
+                    ).asString(context = context),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight(500)
+                )
             }
         }
     }

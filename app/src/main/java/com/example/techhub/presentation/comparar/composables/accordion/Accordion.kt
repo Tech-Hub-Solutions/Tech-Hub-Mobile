@@ -1,7 +1,6 @@
 package com.example.techhub.presentation.comparar.composables.accordion
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,17 +16,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.techhub.domain.model.accordion.AccordionModel
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun Accordion(model: AccordionModel) {
     var expanded by remember { mutableStateOf(false) }
 
     Column(
         Modifier
-            .padding(horizontal = 0.dp, vertical = 1.dp)) {
+            .padding(horizontal = 0.dp, vertical = 1.dp)
+    ) {
         AccordionHeader(title = model.area, isExpanded = expanded) {
             expanded = !expanded
         }
+
         AnimatedVisibility(visible = expanded) {
             Box(
                 modifier = Modifier

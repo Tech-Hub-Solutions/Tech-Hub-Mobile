@@ -1,5 +1,6 @@
 package com.example.techhub.common.composable
 
+import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
@@ -21,10 +22,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun ExperienceTextField(onValueChanged: (String) -> Unit, initialValue: String = "") {
+fun ExperienceTextField(
+    onValueChanged: (String) -> Unit,
+    initialValue: String = "",
+    context: Context
+) {
     var filledText by remember { mutableStateOf(initialValue) }
 
     Column {
@@ -35,8 +42,20 @@ fun ExperienceTextField(onValueChanged: (String) -> Unit, initialValue: String =
                 filledText = it
                 onValueChanged(filledText)
             },
-            label = { Text("Experiência") },
-            placeholder = { Text("Experiência") },
+            label = {
+                Text(
+                    UiText.StringResource(
+                        R.string.title_experiencia
+                    ).asString(context = context)
+                )
+            },
+            placeholder = {
+                Text(
+                    UiText.StringResource(
+                        R.string.title_experiencia
+                    ).asString(context = context)
+                )
+            },
             textStyle = LocalTextStyle.current.copy(
                 color = Color.Black,
                 fontSize = 16.sp
@@ -52,7 +71,9 @@ fun ExperienceTextField(onValueChanged: (String) -> Unit, initialValue: String =
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Filled.WorkspacePremium,
-                    contentDescription = "Campo de experiência",
+                    contentDescription = UiText.StringResource(
+                        R.string.description_image_experiencia
+                    ).asString(context = context),
                     tint = Color(PrimaryBlue.value)
                 )
             },

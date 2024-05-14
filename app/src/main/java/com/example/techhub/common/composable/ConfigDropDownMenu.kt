@@ -37,6 +37,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.data.prefdatastore.DataStoreManager
 import com.example.techhub.domain.model.CurrentUser
@@ -78,7 +80,9 @@ fun ConfigDropDownMenu() {
             if (CurrentUser.urlProfileImage.isNullOrEmpty()) {
                 Icon(
                     Icons.Filled.Person,
-                    contentDescription = "@string/btn_description_profile",
+                    contentDescription = UiText.StringResource(
+                        R.string.btn_description_profile
+                    ).asString(context = context),
                     tint = if (isOnOwnPerfilActivity) {
                         PrimaryBlue
                     } else {
@@ -91,7 +95,9 @@ fun ConfigDropDownMenu() {
             } else {
                 AsyncImage(
                     model = CurrentUser.urlProfileImage,
-                    contentDescription = "@string/btn_description_profile",
+                    contentDescription = UiText.StringResource(
+                        R.string.btn_description_profile
+                    ).asString(context = context),
                     modifier = Modifier
                         .width(28.dp)
                         .height(28.dp)
@@ -120,8 +126,11 @@ fun ConfigDropDownMenu() {
                 {
                     DropDownMenuRow(
                         icon = Icons.Filled.Settings,
-                        text = "Configurações",
-                        actualActivity == "ConfiguracoesUsuarioActivity"
+                        text = UiText.StringResource(
+                            R.string.btn_text_configuracoes
+                        ).asString(context = context),
+                        active = actualActivity == "ConfiguracoesUsuarioActivity",
+                        context = context
                     )
                 },
                 onClick = {
@@ -133,8 +142,11 @@ fun ConfigDropDownMenu() {
                 {
                     DropDownMenuRow(
                         icon = Icons.Filled.Person,
-                        text = "Perfil",
-                        active = isOnOwnPerfilActivity
+                        text = UiText.StringResource(
+                            R.string.btn_text_perfil
+                        ).asString(context = context),
+                        active = isOnOwnPerfilActivity,
+                        context = context
                     )
                 },
                 onClick = {
@@ -150,7 +162,15 @@ fun ConfigDropDownMenu() {
                 color = Color.Gray.copy(alpha = 0.2f)
             )
             DropdownMenuItem(
-                { DropDownMenuRow(icon = Icons.Filled.Logout, text = "Sair") },
+                {
+                    DropDownMenuRow(
+                        icon = Icons.Filled.Logout,
+                        text = UiText.StringResource(
+                            R.string.btn_text_sair
+                        ).asString(context = context),
+                        context = context
+                    )
+                },
                 onClick = {
                     expanded = false
                     CoroutineScope(Dispatchers.IO).launch {
@@ -168,6 +188,7 @@ fun DropDownMenuRow(
     icon: ImageVector,
     text: String,
     active: Boolean = false,
+    context: Context
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         val color = if (active) {
@@ -177,7 +198,9 @@ fun DropDownMenuRow(
         }
         Icon(
             icon,
-            contentDescription = "@string/btn_description_profile",
+            contentDescription = UiText.StringResource(
+                R.string.btn_description_profile
+            ).asString(context = context),
             tint = color,
             modifier = Modifier
                 .width(28.dp)

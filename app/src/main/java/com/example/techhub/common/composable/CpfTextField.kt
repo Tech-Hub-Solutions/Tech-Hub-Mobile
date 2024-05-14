@@ -1,5 +1,6 @@
 package com.example.techhub.common.composable
 
+import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
@@ -20,10 +21,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun CpfTextField(onValueChanged: (String) -> Unit){
+fun CpfTextField(onValueChanged: (String) -> Unit, context: Context) {
     var filledText by remember { mutableStateOf("") }
     var isCpfValid by remember { mutableStateOf(false) }
 
@@ -35,8 +38,20 @@ fun CpfTextField(onValueChanged: (String) -> Unit){
                 isCpfValid = isCpfTemp(filledText)
                 onValueChanged(filledText)
             },
-            label = { Text("CPF") },
-            placeholder = { Text("Digite seu CPF") },
+            label = {
+                Text(
+                    UiText.StringResource(
+                        R.string.label_cpf
+                    ).asString(context = context)
+                )
+            },
+            placeholder = {
+                Text(
+                    UiText.StringResource(
+                        R.string.placeholder_CPF
+                    ).asString(context = context)
+                )
+            },
             textStyle = LocalTextStyle.current.copy(
                 color = Color.Black,
                 fontSize = 16.sp
@@ -52,7 +67,9 @@ fun CpfTextField(onValueChanged: (String) -> Unit){
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Filled.AssignmentInd,
-                    contentDescription = "campo para CPF",
+                    contentDescription = UiText.StringResource(
+                        R.string.description_image_cpf
+                    ).asString(context = context),
                     tint = Color(PrimaryBlue.value)
                 )
             },
@@ -61,7 +78,11 @@ fun CpfTextField(onValueChanged: (String) -> Unit){
             singleLine = true,
             isError = isCpfValid,
             supportingText = {
-                if (isCpfValid) Text("CPF inválido")
+                if (isCpfValid) Text(
+                    UiText.StringResource(
+                        R.string.supporting_text_cpf
+                    ).asString(context = context)
+                )
             },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,
@@ -71,7 +92,7 @@ fun CpfTextField(onValueChanged: (String) -> Unit){
     }
 }
 
-fun isCpfTemp(cpf: String) : Boolean{
+fun isCpfTemp(cpf: String): Boolean {
     return cpf.length != 11
 }
 

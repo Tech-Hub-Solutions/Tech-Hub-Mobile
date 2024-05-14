@@ -1,11 +1,9 @@
 package com.example.techhub.presentation.comparar.composables.accordion
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowDropDown
 import androidx.compose.material3.Icon
@@ -16,20 +14,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 
-@Preview
 @Composable
 fun AccordionHeader(
     title: String = "Header",
     isExpanded: Boolean = false,
-    onTapped: () -> Unit = {}
+    onTapped: () -> Unit = {},
 ) {
     val degrees = if (isExpanded) 180f else 0f
+    val context = LocalContext.current
 
     Surface(
         color = Color.White,
@@ -49,8 +49,10 @@ fun AccordionHeader(
             )
             Surface(shape = CircleShape, color = Color(0xFF0F9EEA)) {
                 Icon(
-                    Icons.Outlined.ArrowDropDown,
-                    contentDescription = "arrow-down",
+                    imageVector = Icons.Outlined.ArrowDropDown,
+                    contentDescription = UiText.StringResource(
+                        R.string.description_image_expand
+                    ).asString(context = context),
                     modifier = Modifier.rotate(degrees),
                     tint = Color.White
                 )

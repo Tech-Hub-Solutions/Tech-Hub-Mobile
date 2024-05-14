@@ -1,11 +1,13 @@
 package com.example.techhub.common.composable
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -20,20 +22,36 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import com.example.techhub.R
-@Composable
-fun LinkedinTextField(onValueChanged: (String) -> Unit, initialValue: String = "") {
-    var filledText by remember { mutableStateOf(initialValue) }
-    var isValueValid by remember { mutableStateOf(false) }
-    Column {
+import com.example.techhub.common.utils.UiText
 
-        androidx.compose.material3.OutlinedTextField(
+@Composable
+fun LinkedinTextField(
+    onValueChanged: (String) -> Unit,
+    initialValue: String = "",
+    context: Context
+) {
+    var filledText by remember { mutableStateOf(initialValue) }
+    Column {
+        OutlinedTextField(
             value = filledText,
             onValueChange = {
                 filledText = it
                 onValueChanged(filledText)
             },
-            label = { Text("Link Linkedin") },
-            placeholder = { Text("Link Linkedin") },
+            label = {
+                Text(
+                    UiText.StringResource(
+                        R.string.text_link_linkedin
+                    ).asString(context = context)
+                )
+            },
+            placeholder = {
+                Text(
+                    UiText.StringResource(
+                        R.string.text_link_linkedin
+                    ).asString(context = context)
+                )
+            },
             textStyle = LocalTextStyle.current.copy(
                 color = Color.Black,
                 fontSize = 16.sp
@@ -49,7 +67,9 @@ fun LinkedinTextField(onValueChanged: (String) -> Unit, initialValue: String = "
             leadingIcon = {
                 Image(
                     painter = painterResource(id = R.mipmap.linkedin),
-                    contentDescription = "Campo Link do Linkedin",
+                    contentDescription = UiText.StringResource(
+                        R.string.description_image_link_linkedin
+                    ).asString(context = context),
                 )
             },
             modifier = Modifier

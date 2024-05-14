@@ -6,7 +6,9 @@ import android.util.Log
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.techhub.R
 import com.example.techhub.common.enums.TipoArquivo
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.domain.service.RetrofitService
 import com.example.techhub.domain.model.CurrentUser
@@ -25,6 +27,7 @@ import java.io.File
 
 class PerfilViewModel : ViewModel() {
     private val apiPerfil = RetrofitService.getPerfilService()
+    private val apiMetricas = RetrofitService.getMetricasService()
     val usuario = MutableLiveData(PerfilGeralDetalhadoData())
     val isLoading = MutableLiveData(true)
     val isLoadingPerfil = MutableLiveData(false)
@@ -36,7 +39,10 @@ class PerfilViewModel : ViewModel() {
     fun getInfosUsuario(context: Context, userId: Int) {
         isLoading.postValue(true)
 
-        val toastErrorMessage = "Ops! Ocorreu um erro em seu perfil."
+        val toastErrorMessage =
+            UiText.StringResource(
+                R.string.toast_text_error_perfil
+            ).asString(context = context)
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -44,6 +50,9 @@ class PerfilViewModel : ViewModel() {
 
                 if (response.isSuccessful) {
                     usuario.postValue(response.body()!!)
+                    if (response.body()!!.idUsuario != CurrentUser.userProfile?.id) {
+                        setVisualizacaoUsuario(context, response.body()!!.idPerfil!!)
+                    }
                 } else {
                     (context as Activity).runOnUiThread {
                         showToastError(context = context, message = toastErrorMessage)
@@ -68,7 +77,9 @@ class PerfilViewModel : ViewModel() {
             isLoadingPerfil.postValue(true)
         }
 
-        val toastErrorMessage = "Ops! Ocorreu um erro em seu perfil."
+        val toastErrorMessage = UiText.StringResource(
+            R.string.toast_text_error_perfil
+        ).asString(context = context)
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -119,7 +130,9 @@ class PerfilViewModel : ViewModel() {
     }
 
     fun favoritarPerfil(context: Context, idUsuario: Int) {
-        val toastErrorMessage = "Ops! Ocorreu um erro ao favoritar o perfil."
+        val toastErrorMessage = UiText.StringResource(
+            R.string.toast_text_error_favorite_perfil
+        ).asString(context = context)
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -141,7 +154,9 @@ class PerfilViewModel : ViewModel() {
     }
 
     fun recomendarUsuario(context: Context, usuarioId: Int) {
-        val toastErrorMessage = "Ops! Ocorreu um erro ao recomendar o perfil."
+        val toastErrorMessage = UiText.StringResource(
+            R.string.toast_text_error_recomendar_perfil
+        ).asString(context = context)
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -163,7 +178,9 @@ class PerfilViewModel : ViewModel() {
     }
 
     fun getAvaliacoesDoUsuario(context: Context, userId: Int) {
-        val toastErrorMessage = "Ops! Ocorreu um erro ao buscar as avaliações do perfil."
+        val toastErrorMessage = UiText.StringResource(
+            R.string.toast_text_error_avaliacoes_perfil
+        ).asString(context = context)
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -188,7 +205,9 @@ class PerfilViewModel : ViewModel() {
     }
 
     fun getComentariosDoUsuario(context: Context, userId: Int, page: Int, size: Int) {
-        val toastErrorMessage = "Ops! Ocorreu um erro ao buscar os comentários do usuário"
+        val toastErrorMessage = UiText.StringResource(
+            R.string.toast_text_error_comentarios_perfil
+        ).asString(context = context)
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -226,7 +245,9 @@ class PerfilViewModel : ViewModel() {
     }
 
     fun setComentarioUsuario(context: Context, avaliadoId: Int, comment: String, rating: Double) {
-        val toastErrorMessage = "Ops! Ocorreu um erro ao fazer um comentario!"
+        val toastErrorMessage = UiText.StringResource(
+            R.string.toast_text_error_comentar_perfil
+        ).asString(context = context)
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -242,7 +263,11 @@ class PerfilViewModel : ViewModel() {
                     (context as Activity).runOnUiThread {
                         showToastError(
                             context = context,
-                            message = "Comentário realizado com sucesso!"
+                            message = UiText.StringResource(
+                                R.string.toast_text_success_comentar_perfil
+                            ).asString(
+                                context = context
+                            )
                         )
                     }
                     comentariosDoUsuario.value?.add(0, response.body()!!)
@@ -263,6 +288,26 @@ class PerfilViewModel : ViewModel() {
                 Log.e("PERFIL_VIEW_MODEL", "SET COMENTARIO PERFIL ERROR: ${error.message}")
             }
         }
+    }
 
+    fun setVisualizacaoUsuario(context: Context, perfilId: Int) {
+        val toastErrorMessage = "Ops! Ocorreu um erro ao registrar a visualização do perfil."
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = apiMetricas.registrarMetricasUsuario(perfilId)
+
+                if (response.isSuccessful) {
+                    Log.d("PERFIL_VIEW_MODEL", "SET VISUALIZACAO PERFIL SUCCESS")
+                    Log.d("PERFIL_VIEW_MODEL", "Body: ${response.body().toString()}")
+                }
+
+            } catch (error: Exception) {
+                (context as Activity).runOnUiThread {
+                    showToastError(context = context, message = toastErrorMessage)
+                }
+                Log.e("PERFIL_VIEW_MODEL", "SET VISUALIZACAO PERFIL ERROR: ${error.message}")
+            }
+        }
     }
 }

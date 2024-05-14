@@ -13,7 +13,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ExplorarTalentosViewModel : ViewModel() {
-
     val talentos = MutableLiveData(SnapshotStateList<UsuarioFavoritoData>())
     val erroApi = MutableLiveData("")
     val totalElements = MutableLiveData(0)
@@ -49,7 +48,10 @@ class ExplorarTalentosViewModel : ViewModel() {
                     erroApi.postValue(response.errorBody()?.toString())
                 }
             } catch (e: Exception) {
-                Log.e("api", "Ocorreu um erro no get ${e.message}")
+                Log.e(
+                    "EXPLORAR_TALENTOS_VIEW_MODEL",
+                    "Ocorreu um erro no GET talentos ${e.message}"
+                )
             } finally {
                 isLoading.postValue(false)
             }
@@ -72,7 +74,7 @@ class ExplorarTalentosViewModel : ViewModel() {
                     erroApi.postValue(response.errorBody()?.toString())
                 }
             } catch (e: Exception) {
-                Log.e("api", "Ocorreu um erro no get ${e.message}")
+                Log.e("EXPLORAR_TALENTOS_VIEW_MODEL", "Ocorreu um erro no GET Flags ${e.message}")
             }
         }
     }
