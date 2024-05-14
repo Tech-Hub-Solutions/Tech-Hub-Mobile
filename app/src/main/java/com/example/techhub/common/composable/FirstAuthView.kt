@@ -85,7 +85,7 @@ fun FirstAuthView(
         ) {
             Text(
                 text = UiText.StringResource(
-                    com.example.techhub.R.string.text_authenticator
+                    R.string.text_authenticator
                 ).asString(context = context),
                 color = Color(PrimaryBlue.value),
                 fontSize = 30.sp,

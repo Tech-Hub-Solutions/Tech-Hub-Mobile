@@ -79,12 +79,15 @@ fun FavoriteUsers(
                 color = GrayText
             )
 
-            OrderDropDownMenu(ordem)
+            OrderDropDownMenu(ordem, context)
         }
 
-        CompareSwitch {
-            isAbleToCompare.value = it
-        }
+        CompareSwitch(
+            {
+                isAbleToCompare.value = it
+            },
+            context = context
+        )
 
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
 

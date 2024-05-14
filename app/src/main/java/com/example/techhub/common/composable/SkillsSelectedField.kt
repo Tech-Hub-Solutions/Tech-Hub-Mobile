@@ -1,5 +1,6 @@
 package com.example.techhub.common.composable
 
+import android.content.Context
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,13 +18,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.domain.model.flag.FlagData
 import com.example.techhub.presentation.editarUsuario.composables.ChipSkill
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SkillsSelectedField(
-    flags: SnapshotStateList<FlagData>
+    flags: SnapshotStateList<FlagData>,
+    context: Context
 ) {
     Box(
         modifier = Modifier
@@ -40,7 +44,9 @@ fun SkillsSelectedField(
         ) {
             if (flags.isEmpty()) {
                 Text(
-                    text = "Nenhuma skill selecionada",
+                    text = UiText.StringResource(
+                        R.string.text_no_skill
+                    ).asString(context = context),
                     color = Color(0xFF9E9E9E),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()

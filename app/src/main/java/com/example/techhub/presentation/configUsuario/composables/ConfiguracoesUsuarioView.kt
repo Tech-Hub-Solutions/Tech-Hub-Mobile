@@ -142,9 +142,11 @@ fun ConfiguracoesUsuarioView(
 
                 NameTextField(
                     initialValue = CurrentUser.userProfile!!.nome!!,
-                    onValueChanged = { name = it })
+                    onValueChanged = { name = it },
+                    context = context
+                )
 
-                FlagDropDownMenu(nacionalidade)
+                FlagDropDownMenu(flag = nacionalidade, context = context)
 
                 Spacer(modifier = Modifier.padding(0.dp))
 
@@ -158,7 +160,8 @@ fun ConfiguracoesUsuarioView(
 
                 Switch2FALeft(
                     initialValue = CurrentUser.isUsing2FA,
-                    onValueChanged = { isUsing2FA = it }
+                    onValueChanged = { isUsing2FA = it },
+                    context = context
                 )
 
                 Spacer(modifier = Modifier.padding(0.dp))

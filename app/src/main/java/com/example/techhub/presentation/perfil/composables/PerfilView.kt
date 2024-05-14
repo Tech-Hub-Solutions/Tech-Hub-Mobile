@@ -123,7 +123,8 @@ fun PerfilView(
                 FloatingActionButtonScroll(
                     isScrolled = scrollState.value > 0,
                     scrollState = scrollState,
-                    scope = scope
+                    scope = scope,
+                    context = context
                 )
             }
         }

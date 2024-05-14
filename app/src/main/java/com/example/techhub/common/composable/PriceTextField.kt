@@ -1,5 +1,6 @@
 package com.example.techhub.common.composable
 
+import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
@@ -22,10 +23,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun PriceTextField(onValueChanged: (Double?) -> Unit, initialValue: Double? = 0.0) {
+fun PriceTextField(
+    onValueChanged: (Double?) -> Unit,
+    initialValue: Double? = 0.0,
+    context: Context
+) {
     var filledText by remember { mutableStateOf(initialValue) }
     var isValueValid by remember { mutableStateOf(false) }
     Column {
@@ -50,8 +57,20 @@ fun PriceTextField(onValueChanged: (Double?) -> Unit, initialValue: Double? = 0.
                 filledText = String.format("%.2f", doubleValue).toDouble()
                 onValueChanged(filledText)
             },
-            label = { Text("Preço") },
-            placeholder = { Text("Preço") },
+            label = {
+                Text(
+                    UiText.StringResource(
+                        R.string.subtitle_price
+                    ).asString(context = context)
+                )
+            },
+            placeholder = {
+                Text(
+                    UiText.StringResource(
+                        R.string.subtitle_price
+                    ).asString(context = context)
+                )
+            },
             textStyle = LocalTextStyle.current.copy(
                 color = Color.Black,
                 fontSize = 16.sp
@@ -67,7 +86,9 @@ fun PriceTextField(onValueChanged: (Double?) -> Unit, initialValue: Double? = 0.
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Filled.CurrencyExchange,
-                    contentDescription = "Campo preço do serviço",
+                    contentDescription = UiText.StringResource(
+                        R.string.description_image_service_price
+                    ).asString(context = context),
                     tint = Color(PrimaryBlue.value)
                 )
             },
@@ -77,7 +98,11 @@ fun PriceTextField(onValueChanged: (Double?) -> Unit, initialValue: Double? = 0.
             isError = isValueValid,
             supportingText = {
                 if (isValueValid) {
-                    Text("Valor inválido")
+                    Text(
+                        UiText.StringResource(
+                            R.string.supporting_text_service_price
+                        ).asString(context = context)
+                    )
                 }
             },
             keyboardOptions = KeyboardOptions(

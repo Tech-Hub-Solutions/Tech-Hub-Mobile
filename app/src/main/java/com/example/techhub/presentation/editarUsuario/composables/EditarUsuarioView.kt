@@ -116,13 +116,17 @@ fun EditarUsuarioView(
 
                 DescriptionTextField(
                     initialValue = userInfo.descricao ?: "",
-                    onValueChanged = { descricao = it })
+                    onValueChanged = { descricao = it },
+                    context = context
+                )
 
                 Spacer(modifier = Modifier.padding(0.dp))
 
                 ExperienceTextField(
                     initialValue = userInfo.experiencia ?: "",
-                    onValueChanged = { experiencia = it })
+                    onValueChanged = { experiencia = it },
+                    context = context
+                )
 
                 Spacer(modifier = Modifier.padding(0.dp))
 
@@ -136,7 +140,9 @@ fun EditarUsuarioView(
 
                 PriceTextField(
                     initialValue = userInfo.precoMedio,
-                    onValueChanged = { preco = it })
+                    onValueChanged = { preco = it },
+                    context = context
+                )
 
                 Spacer(modifier = Modifier.padding(2.dp))
 
@@ -155,7 +161,9 @@ fun EditarUsuarioView(
 
                 LinkedinTextField(
                     initialValue = userInfo.linkLinkedin ?: "",
-                    onValueChanged = { linkLinkedin = it })
+                    onValueChanged = { linkLinkedin = it },
+                    context = context
+                )
 
                 Spacer(modifier = Modifier.padding(2.dp))
 
@@ -164,7 +172,9 @@ fun EditarUsuarioView(
                         R.string.text_link_github
                     ).asString(context = context),
                     initialValue = userInfo.linkGithub ?: "",
-                    onValueChanged = { linkGithub = it })
+                    onValueChanged = { linkGithub = it },
+                    context = context
+                )
 
                 Spacer(modifier = Modifier.padding(2.dp))
 
@@ -174,7 +184,9 @@ fun EditarUsuarioView(
                             R.string.text_nome_github
                         ).asString(context = context),
                         initialValue = userInfo.nomeGithub ?: "",
-                        onValueChanged = { nomeGithub = it })
+                        onValueChanged = { nomeGithub = it },
+                        context = context
+                    )
                     Spacer(modifier = Modifier.padding(2.dp))
                 }
 
@@ -201,7 +213,7 @@ fun EditarUsuarioView(
                     categoria = "soft-skill",
                     softSkillList.value
                 )
-                SkillsSelectedField(softSkillList.value)
+                SkillsSelectedField(softSkillList.value, context = context)
 
                 Spacer(modifier = Modifier.padding(2.dp))
 
@@ -220,7 +232,7 @@ fun EditarUsuarioView(
                         categoria = "hard-skill",
                         hardSkillList.value
                     )
-                    SkillsSelectedField(hardSkillList.value)
+                    SkillsSelectedField(hardSkillList.value, context = context)
                     Spacer(modifier = Modifier.padding(2.dp))
                 }
 

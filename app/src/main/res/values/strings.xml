@@ -13,6 +13,7 @@
     <string name="btn_description_linkedin">botão para redirecionar ao LinkedIn</string>
     <string name="btn_description_github">botão para redirecionar ao GitHub</string>
     <string name="btn_description_load_more_talents">Botão para carregar mais talentos</string>
+    <string name="btn_description_return_index">Botão de retornar ao início</string>
 
     // BTN TEXT
     <string name="btn_text_entrar">Entrar</string>
@@ -27,8 +28,13 @@
     <string name="btn_text_load_more">Ver mais</string>
     <string name="btn_text_apply_filter">Aplicar Filtro</string>
     <string name="btn_text_clear_filter">Limpar Filtro</string>
+    <string name="btn_text_clear">Limpar</string>
     <string name="btn_text_load_more_talents">Carregar mais talentos</string>
     <string name="btn_text_salvar">Salvar</string>
+    <string name="btn_text_configuracoes">Configurações</string>
+    <string name="btn_text_perfil">Perfil</string>
+    <string name="btn_text_sair">Sair</string>
+    <string name="btn_text_order_by">Ordenar</string>
 
     // TOAST TEXT
     <string name="toast_text_welcome">Seja bem-vindo(a)!</string>
@@ -49,6 +55,8 @@
     <string name="toast_text_perfil_atualizado">Perfil atualizado com sucesso</string>
     <string name="toast_text_success_atualizar_config_usuario">Suas informações foram atualizadas com sucesso</string>
     <string name="toast_text_error_campos_obrigatorios">Todos os itens devem ser preenchidos!</string>
+    <string name="toast_error_cnpj">CNPJ inválido</string>
+    <string name="toast_error_skills_dropdown_menu">Você pode selecionar até 10 skills</string>
 
     // TITLE, SUBTITLE
     <string name="subtitle_index">Unindo talento e necessidade.</string>
@@ -78,6 +86,14 @@
     <string name="description_image_email">Campo para o e-mail</string>
     <string name="description_image_sobre_mim">Campo para sobre mim</string>
     <string name="description_image_password">Campo para a senha</string>
+    <string name="description_image_cnpj">Campo para o CNPJ</string>
+    <string name="description_image_cpf">Campo para o CPF</string>
+    <string name="description_image_descricao">Campo para descrição</string>
+    <string name="description_image_experiencia">Campo para experiência</string>
+    <string name="description_image_nome">Campo para o nome</string>
+    <string name="description_image_link_linkedin">Campo Link do Linkedin</string>
+    <string name="description_image_link_github">Campo Link do Github</string>
+    <string name="description_image_service_price">Campo preço do serviço</string>
     <string name="description_image_password_visible">Mostrar senha</string>
     <string name="description_image_password_invisible">Esconder senha</string>
     <string name="description_image_blue_background">Fundo com tons de azul</string>
@@ -90,6 +106,8 @@
     <string name="description_image_evaluator">Imagem do avaliador</string>
     <string name="description_image_search_by">Pesquisar por nome</string>
     <string name="description_image_expand">Expandir</string>
+    <string name="description_image_historico">Icone de Histórico</string>
+    <string name="description_image_photo_freelancer">Foto do freelancer</string>
 
     // TEXT
     <string name="text_auth_code">Insira o código de autorização</string>
@@ -131,20 +149,41 @@
     <string name="text_no_favorites">Nenhum favorito selecionado</string>
     <string name="text_formas_contato">Formas de Contato</string>
     <string name="text_link_github">Link do GitHub</string>
+    <string name="text_link_linkedin">Link do LinkedIn</string>
     <string name="text_nome_github">Nome do GitHub</string>
     <string name="text_edit_config_usuario">Faça as alterações necessárias para atualizar os seus dados cadastrais.</string>
+    <string name="text_activate_compare">Ativar comparação</string>
+    <string name="text_no_skill">Nenhuma skill selecionada</string>
 
     // PLACEHOLDER
     <string name="placeholder_auth_code">Digite o código</string>
     <string name="placeholder_email">Digite seu e-mail</string>
     <string name="placeholder_password">Digite sua senha</string>
+    <string name="placeholder_cnpj">Digite seu CNPJ</string>
+    <string name="placeholder_CPF">Digite seu CPF</string>
+    <string name="placeholder_text_search_country">Digite o país</string>
+    <string name="placeholder_text_name">Digite seu nome</string>
+    <string name="placeholder_text_skill">Selecione uma skill</string>
 
     // SUPPORTING TEXT
     <string name="supporting_text_email">E-mail inválido</string>
     <string name="supporting_text_password">Senha inválida</string>
+    <string name="supporting_text_cpf">CPF inválido</string>
+    <string name="supporting_text_nome">É necessário preencher o nome</string>
+    <string name="supporting_text_service_price">Valor inválido</string>
 
     // LABEL
     <string name="label_auth_code">Verifique o código do aplicativo</string>
     <string name="label_minimum">Mínimo</string>
     <string name="label_maximum">Máximo</string>
+    <string name="label_cnpj">CNPJ</string>
+    <string name="label_cpf">CPF</string>
+    <string name="label_descricao">Descrição</string>
+    <string name="label_text_search_country">Digite para pesquisar</string>
+
+    // ORDER BY
+    <string name="order_by_most_rated">Mais avaliado</string>
+    <string name="order_by_less_rated">Menos avaliado</string>
+    <string name="order_by_higher_price">Maior preço</string>
+    <string name="order_by_lower_price">Menor preço</string>
 </resources>
