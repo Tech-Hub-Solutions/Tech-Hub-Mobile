@@ -21,7 +21,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.techhub.R
 import com.example.techhub.common.enums.TipoArquivo
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.uriToFile
 import com.example.techhub.presentation.perfil.PerfilViewModel
 
@@ -62,10 +64,19 @@ fun MenuEditarImagens(
                     getContent.launch("image/*")
                 },
                 text = {
-                    Text("Editar Perfil")
+                    Text(
+                        UiText.StringResource(
+                            R.string.btn_text_edit_perfil
+                        ).asString(context = context)
+                    )
                 },
                 leadingIcon = {
-                    Icon(Icons.Default.Person, contentDescription = "Editar Perfil")
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = UiText.StringResource(
+                            R.string.btn_text_edit_perfil
+                        ).asString(context = context)
+                    )
                 }
             )
             DropdownMenuItem(
@@ -74,10 +85,19 @@ fun MenuEditarImagens(
                     getContent.launch("image/*")
                 },
                 text = {
-                    Text("Editar Wallpaper")
+                    Text(
+                        UiText.StringResource(
+                            R.string.btn_text_edit_wallpaper
+                        ).asString(context = context)
+                    )
                 },
                 leadingIcon = {
-                    Icon(Icons.Filled.Image, contentDescription = "Editar Wallpaper")
+                    Icon(
+                        imageVector = Icons.Filled.Image,
+                        contentDescription = UiText.StringResource(
+                            R.string.btn_text_edit_wallpaper
+                        ).asString(context = context)
+                    )
                 }
             )
         }

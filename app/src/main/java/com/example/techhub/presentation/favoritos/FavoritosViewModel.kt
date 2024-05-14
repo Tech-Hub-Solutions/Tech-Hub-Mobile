@@ -4,7 +4,10 @@ import android.app.Activity
 import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.MutableLiveData
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.domain.service.RetrofitService
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
@@ -18,13 +21,14 @@ class FavoritosViewModel() {
     val isLastPage = MutableLiveData(false)
     val isLoading = MutableLiveData(true)
     val totalElements = MutableLiveData(0)
-    private val toastErrorMessage = "Ops! Algo deu errado ao buscar favoritos."
-
     private val usuarioApi = RetrofitService.getUsuarioService()
     private val perfilApi = RetrofitService.getPerfilService()
 
-
     fun getFavoriteUsers(page: Int, size: Int, ordem: String, context: Context) {
+        val toastErrorMessage = UiText.StringResource(
+            R.string.toast_error_get_favorite_users
+        ).asString(context = context)
+
         if (page == 0) isLoading.postValue(true)
         CoroutineScope(Dispatchers.IO).launch {
             try {

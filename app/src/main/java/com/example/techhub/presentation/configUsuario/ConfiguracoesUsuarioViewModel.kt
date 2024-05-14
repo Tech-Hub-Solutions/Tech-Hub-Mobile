@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.domain.service.RetrofitService
 import com.example.techhub.domain.model.usuario.UsuarioAtualizacaoData
@@ -18,7 +20,6 @@ class ConfiguracoesUsuarioViewModel {
 
     private val usuarioApi = RetrofitService.getUsuarioService()
 
-
     fun atualizarConfigUsuario(
         usuarioAtualizacaoData: UsuarioAtualizacaoData,
         context: Context,
@@ -32,7 +33,12 @@ class ConfiguracoesUsuarioViewModel {
                     if (body != null) {
                         usuarioTokenData.postValue(body)
                         (context as Activity).runOnUiThread {
-                            showToastError(context, "Suas informações foram atualizadas com sucesso")
+                            showToastError(
+                                context,
+                                UiText.StringResource(
+                                    R.string.toast_text_success_atualizar_config_usuario,
+                                ).asString(context = context),
+                            )
                         }
                     } else {
                         Log.e("PUT - AtualizarConfigUsuario - Error", "Body Nulo")

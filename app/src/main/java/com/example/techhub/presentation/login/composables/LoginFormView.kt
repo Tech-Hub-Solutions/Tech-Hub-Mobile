@@ -34,6 +34,7 @@ import com.example.techhub.R
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.EmailTextField
 import com.example.techhub.common.composable.PasswordTextField
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.presentation.cadastro.CadastroActivity
 import com.example.techhub.presentation.login.LoginViewModel
@@ -57,7 +58,9 @@ fun LoginFormView(
                 willRedirectToActivity = true,
                 activity = IndexActivity::class.java,
                 context = context,
-                title = "Login",
+                title = UiText.StringResource(
+                    R.string.title_login
+                ).asString(context = context),
             )
         },
     ) { innerPadding ->
@@ -78,7 +81,9 @@ fun LoginFormView(
 
             CenteredImageSection(
                 imagePath = R.mipmap.login_image,
-                contentDescription = "@string/description_image_login",
+                contentDescription = UiText.StringResource(
+                    R.string.description_image_login
+                ).asString(context = context),
                 width = 252,
                 height = 300,
             )
@@ -87,8 +92,9 @@ fun LoginFormView(
 
             Row {
                 Text(
-                    text = "Entre com sua conta para uma " +
-                            "experiência melhor!",
+                    text = UiText.StringResource(
+                        R.string.text_login
+                    ).asString(context = context),
                     color = Color(GrayText.value),
                     fontSize = 17.sp,
                     fontWeight = FontWeight.Thin,
@@ -105,18 +111,24 @@ fun LoginFormView(
                 modifier = Modifier
                     .width(350.dp)
             ) {
-                EmailTextField(onValueChanged = { userSetter(user.copy(email = it)) })
+                EmailTextField(
+                    onValueChanged = { userSetter(user.copy(email = it)) },
+                    context = context
+                )
 
-                PasswordTextField {
-                    userSetter(user.copy(senha = it))
-                }
+                PasswordTextField(
+                    context = context,
+                    onValueChanged = { userSetter(user.copy(senha = it)) }
+                )
             }
 
             Spacer(modifier = Modifier.padding(12.dp))
 
             ElevatedButtonTH(
                 onClick = { viewModel.loginUser(user, context, onAuthSucess) },
-                text = "Entrar",
+                text = UiText.StringResource(
+                    R.string.btn_text_entrar
+                ).asString(context = context),
                 backgroundColor = Color(PrimaryBlue.value),
                 width = (350),
                 height = (60),
@@ -130,7 +142,9 @@ fun LoginFormView(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = "Não tem uma conta?",
+                    text = UiText.StringResource(
+                        R.string.text_login_redirect_cadastro
+                    ).asString(context = context),
                     color = Color.Black,
                     fontWeight = FontWeight.Thin,
                     fontSize = 14.sp
@@ -143,7 +157,9 @@ fun LoginFormView(
                     )
                 }) {
                     Text(
-                        text = "Cadastre-se.",
+                        text = UiText.StringResource(
+                            R.string.btn_text_cadastre_se
+                        ).asString(context = context),
                         color = Color(PrimaryBlue.value),
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Thin,

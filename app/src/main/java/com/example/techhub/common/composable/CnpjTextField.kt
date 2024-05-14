@@ -1,5 +1,6 @@
 package com.example.techhub.common.composable
 
+import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
@@ -20,10 +21,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun CnpjTextField(onValueChanged: (String) -> Unit) {
+fun CnpjTextField(onValueChanged: (String) -> Unit, context: Context) {
     var filledText by remember { mutableStateOf("") }
     var isCnpjValid by remember { mutableStateOf(false) }
 
@@ -35,8 +38,20 @@ fun CnpjTextField(onValueChanged: (String) -> Unit) {
                 isCnpjValid = isCnpjValidTemp(filledText)
                 onValueChanged(filledText)
             },
-            label = { Text("CNPJ") },
-            placeholder = { Text("Digite seu CNPJ") },
+            label = {
+                Text(
+                    UiText.StringResource(
+                        R.string.label_cnpj
+                    ).asString(context = context)
+                )
+            },
+            placeholder = {
+                Text(
+                    UiText.StringResource(
+                        R.string.placeholder_cnpj
+                    ).asString(context = context)
+                )
+            },
             textStyle = LocalTextStyle.current.copy(
                 color = Color.Black,
                 fontSize = 16.sp
@@ -52,7 +67,9 @@ fun CnpjTextField(onValueChanged: (String) -> Unit) {
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Filled.AssignmentInd,
-                    contentDescription = "campo para o CNPJ",
+                    contentDescription = UiText.StringResource(
+                        R.string.description_image_cnpj
+                    ).asString(context = context),
                     tint = Color(PrimaryBlue.value)
                 )
             },
@@ -61,7 +78,11 @@ fun CnpjTextField(onValueChanged: (String) -> Unit) {
             singleLine = true,
             isError = isCnpjValid,
             supportingText = {
-                if (isCnpjValid) Text("CNPJ inválido")
+                if (isCnpjValid) Text(
+                    UiText.StringResource(
+                        R.string.toast_error_cnpj
+                    ).asString(context = context)
+                )
             },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,

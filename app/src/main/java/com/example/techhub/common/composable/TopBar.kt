@@ -18,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.presentation.perfil.PerfilActivity
@@ -28,12 +30,16 @@ fun TopBar(
     willRedirectToActivity: Boolean,
     title: String,
     activity: Class<*>? = null,
-    context: Context? = null,
+    context: Context,
     navController: NavController? = null,
     route: String? = null
 ) {
     val topAppBarColors = TopAppBarDefaults.topAppBarColors(
-        containerColor = if (title == "Primeiros Passos") Color.Transparent else Color.White,
+        containerColor = if (
+            title == UiText.StringResource(
+                R.string.title_trava_tela_cadastro
+            ).asString(context = context)
+        ) Color.Transparent else Color.White,
         titleContentColor = MaterialTheme.colorScheme.primary,
     )
     val modifier = Modifier.padding(bottom = 8.dp)
@@ -43,7 +49,7 @@ fun TopBar(
         requireNotNull(activity) { "Activity must not be null when willRedirectToActivity is true" }
         requireNotNull(context) { "Context must not be null when willRedirectToActivity is true" }
 
-        var extras = Bundle()
+        val extras = Bundle()
 
         if (activity == PerfilActivity::class.java) {
             extras.putInt("id", CurrentUser.userProfile!!.id!!)
@@ -58,7 +64,9 @@ fun TopBar(
             }) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBackIos,
-                    contentDescription = "botão de retornar ao início",
+                    contentDescription = UiText.StringResource(
+                        R.string.btn_description_return_index
+                    ).asString(context = context),
                     tint = Color.Black
                 )
             }
@@ -71,7 +79,9 @@ fun TopBar(
             IconButton(onClick = { navController.navigate(route) }) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBackIos,
-                    contentDescription = "botão de retornar ao início",
+                    contentDescription = UiText.StringResource(
+                        R.string.btn_description_return_index
+                    ).asString(context = context),
                     tint = Color.Black
                 )
             }

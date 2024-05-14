@@ -32,6 +32,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.techhub.R
 import com.example.techhub.common.composable.AboutMeTextField
 import com.example.techhub.common.composable.DescriptionTextField
 import com.example.techhub.common.composable.ExperienceTextField
@@ -42,6 +43,7 @@ import com.example.techhub.common.composable.SkillsSelectedField
 import com.example.techhub.common.composable.SkillsDropDownMenu
 import com.example.techhub.common.composable.TopBar
 import com.example.techhub.common.enums.UsuarioFuncao
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.domain.model.perfil.PerfilCadastroData
@@ -79,8 +81,10 @@ fun EditarUsuarioView(
             TopBar(
                 willRedirectToActivity = true,
                 activity = PerfilActivity::class.java,
-                context = LocalContext.current,
-                title = "Editar Perfil",
+                context = context,
+                title = UiText.StringResource(
+                    R.string.btn_text_edit_perfil
+                ).asString(context = context),
             )
         },
     ) { innerPadding ->
@@ -112,25 +116,33 @@ fun EditarUsuarioView(
 
                 DescriptionTextField(
                     initialValue = userInfo.descricao ?: "",
-                    onValueChanged = { descricao = it })
+                    onValueChanged = { descricao = it },
+                    context = context
+                )
 
                 Spacer(modifier = Modifier.padding(0.dp))
 
                 ExperienceTextField(
                     initialValue = userInfo.experiencia ?: "",
-                    onValueChanged = { experiencia = it })
+                    onValueChanged = { experiencia = it },
+                    context = context
+                )
 
                 Spacer(modifier = Modifier.padding(0.dp))
 
                 AboutMeTextField(
                     initialValue = userInfo.sobreMim ?: "",
-                    onValueChanged = { sobreMim = it })
+                    onValueChanged = { sobreMim = it },
+                    context = context
+                )
 
                 Spacer(modifier = Modifier.padding(0.dp))
 
                 PriceTextField(
                     initialValue = userInfo.precoMedio,
-                    onValueChanged = { preco = it })
+                    onValueChanged = { preco = it },
+                    context = context
+                )
 
                 Spacer(modifier = Modifier.padding(2.dp))
 
@@ -138,7 +150,9 @@ fun EditarUsuarioView(
                 // Formas de contato
                 Row {
                     Text(
-                        text = "Formas de Contato",
+                        text = UiText.StringResource(
+                            R.string.text_formas_contato
+                        ).asString(context = context),
                         fontSize = 20.sp,
                         fontWeight = FontWeight(500),
                     )
@@ -147,22 +161,32 @@ fun EditarUsuarioView(
 
                 LinkedinTextField(
                     initialValue = userInfo.linkLinkedin ?: "",
-                    onValueChanged = { linkLinkedin = it })
+                    onValueChanged = { linkLinkedin = it },
+                    context = context
+                )
 
                 Spacer(modifier = Modifier.padding(2.dp))
 
                 GitHubTextField(
-                    label = "Link do GitHub",
+                    label = UiText.StringResource(
+                        R.string.text_link_github
+                    ).asString(context = context),
                     initialValue = userInfo.linkGithub ?: "",
-                    onValueChanged = { linkGithub = it })
+                    onValueChanged = { linkGithub = it },
+                    context = context
+                )
 
                 Spacer(modifier = Modifier.padding(2.dp))
 
                 if (userInfo.funcao == UsuarioFuncao.FREELANCER) {
                     GitHubTextField(
-                        label = "Nome do GitHub",
+                        label = UiText.StringResource(
+                            R.string.text_nome_github
+                        ).asString(context = context),
                         initialValue = userInfo.nomeGithub ?: "",
-                        onValueChanged = { nomeGithub = it })
+                        onValueChanged = { nomeGithub = it },
+                        context = context
+                    )
                     Spacer(modifier = Modifier.padding(2.dp))
                 }
 
@@ -170,7 +194,14 @@ fun EditarUsuarioView(
                 // Skills
                 Row {
                     val texto =
-                        if (userInfo.funcao == UsuarioFuncao.FREELANCER) "Soft skills" else "Valores"
+                        if (userInfo.funcao == UsuarioFuncao.FREELANCER)
+                            UiText.StringResource(
+                                R.string.text_soft_skills,
+                            ).asString(context = context)
+                        else
+                            UiText.StringResource(
+                                R.string.text_valores,
+                            ).asString(context = context)
                     Text(
                         text = texto,
                         fontSize = 20.sp,
@@ -182,14 +213,16 @@ fun EditarUsuarioView(
                     categoria = "soft-skill",
                     softSkillList.value
                 )
-                SkillsSelectedField(softSkillList.value)
+                SkillsSelectedField(softSkillList.value, context = context)
 
                 Spacer(modifier = Modifier.padding(2.dp))
 
                 if (userInfo.funcao == UsuarioFuncao.FREELANCER) {
                     Row {
                         Text(
-                            text = "Hard skills",
+                            text = UiText.StringResource(
+                                R.string.text_hard_skills,
+                            ).asString(context = context),
                             fontSize = 20.sp,
                             fontWeight = FontWeight(500),
                         )
@@ -199,7 +232,7 @@ fun EditarUsuarioView(
                         categoria = "hard-skill",
                         hardSkillList.value
                     )
-                    SkillsSelectedField(hardSkillList.value)
+                    SkillsSelectedField(hardSkillList.value, context = context)
                     Spacer(modifier = Modifier.padding(2.dp))
                 }
 
@@ -230,7 +263,13 @@ fun EditarUsuarioView(
                     ),
                     shape = RoundedCornerShape(10.dp),
                 ) {
-                    Text(text = "Salvar", fontSize = 16.sp, fontWeight = FontWeight(500))
+                    Text(
+                        text = UiText.StringResource(
+                            R.string.btn_text_salvar,
+                        ).asString(context = context),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight(500)
+                    )
                 }
 
                 Spacer(modifier = Modifier.padding(12.dp))
@@ -253,7 +292,13 @@ fun EditarUsuarioView(
                     ),
                     shape = RoundedCornerShape(10.dp),
                 ) {
-                    Text(text = "Cancelar", fontSize = 16.sp, fontWeight = FontWeight(500))
+                    Text(
+                        text = UiText.StringResource(
+                            R.string.btn_text_cancelar,
+                        ).asString(context = context),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight(500)
+                    )
                 }
 
             }

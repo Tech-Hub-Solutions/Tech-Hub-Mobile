@@ -1,5 +1,6 @@
 package com.example.techhub.composable
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,22 +27,44 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.presentation.ui.theme.GrayTinyButton
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 private data class Item(
-    val texto:String,
-    val valor:String
+    val texto: String,
+    val valor: String
 )
 
 @Composable
-fun OrderDropDownMenu(ordem: MutableState<String>) {
+fun OrderDropDownMenu(ordem: MutableState<String>, context: Context) {
     var expanded by remember { mutableStateOf(false) }
     val items = listOf(
-        Item("Mais avaliado", "avaliacao,desc"),
-        Item("Menos avaliado", "avaliacao,asc"),
-        Item("Maior preço", "preco,desc"),
-        Item("Menor preço", "preco,asc")
+        Item(
+            texto = UiText.StringResource(
+                R.string.order_by_most_rated,
+            ).asString(context = context),
+            valor = "avaliacao,desc"
+        ),
+        Item(
+            texto = UiText.StringResource(
+                R.string.order_by_less_rated,
+            ).asString(context = context),
+            valor = "avaliacao,asc"
+        ),
+        Item(
+            texto = UiText.StringResource(
+                R.string.order_by_higher_price,
+            ).asString(context = context),
+            valor = "preco,desc"
+        ),
+        Item(
+            texto = UiText.StringResource(
+                R.string.order_by_lower_price,
+            ).asString(context = context),
+            valor = "preco,asc"
+        )
     )
 
     Box(
@@ -64,13 +87,15 @@ fun OrderDropDownMenu(ordem: MutableState<String>) {
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 Text(
-                    text = "Ordenar",
+                    text = UiText.StringResource(
+                        R.string.btn_text_order_by
+                    ).asString(context = context),
                     fontSize = 14.sp,
                     color = Color.Black
                 )
                 Icon(
                     Icons.Filled.DensitySmall,
-                    contentDescription = "Localized description",
+                    contentDescription = null,
                     tint = Color.Black,
                     modifier = Modifier.size(15.dp)
                 )

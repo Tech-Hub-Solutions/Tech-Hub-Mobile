@@ -1,5 +1,6 @@
 package com.example.techhub.common.composable
 
+import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -40,6 +41,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.common.utils.verificarCorFlag
 import com.example.techhub.domain.model.flag.FlagData
@@ -51,14 +54,16 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 fun SkillsDropDownMenu(
     viewModel: EditarUsuarioViewModel,
     categoria: String,
-    flagsSkills: SnapshotStateList<FlagData>
+    flagsSkills: SnapshotStateList<FlagData>,
 ) {
     val flags = viewModel.flags.observeAsState()
     var skill by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
     val interactionSource = remember { MutableInteractionSource() }
-    val toastErrorMessage = "Você pode selecionar até 10 skills"
     val context = LocalContext.current
+    val toastErrorMessage = UiText.StringResource(
+        R.string.toast_error_skills_dropdown_menu
+    ).asString(context = context)
 
 
     Column(
@@ -99,8 +104,20 @@ fun SkillsDropDownMenu(
                         skill = it
                         expanded = true
                     },
-                    label = { Text("Digite para pesquisar") },
-                    placeholder = { Text("Selecione uma skill") },
+                    label = {
+                        Text(
+                            UiText.StringResource(
+                                R.string.label_text_search_country
+                            ).asString(context = context)
+                        )
+                    },
+                    placeholder = {
+                        Text(
+                            UiText.StringResource(
+                                R.string.placeholder_text_skill
+                            ).asString(context = context)
+                        )
+                    },
                     colors = TextFieldDefaults.colors(
                         cursorColor = Color(PrimaryBlue.value),
                         errorCursorColor = Color(PrimaryBlue.value),
@@ -112,7 +129,9 @@ fun SkillsDropDownMenu(
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Filled.Assistant,
-                            contentDescription = "campo para o nome",
+                            contentDescription = UiText.StringResource(
+                                R.string.description_image_nome
+                            ).asString(context = context),
                             tint = Color(PrimaryBlue.value)
                         )
                     },
@@ -129,7 +148,7 @@ fun SkillsDropDownMenu(
                         IconButton(onClick = { expanded = !expanded }) {
                             Icon(
                                 imageVector = Icons.Rounded.ArrowDropDown,
-                                contentDescription = "ArrowDropDown",
+                                contentDescription = null,
                             )
                         }
                     }

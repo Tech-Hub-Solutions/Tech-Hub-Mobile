@@ -31,7 +31,9 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import com.example.techhub.R
 import com.example.techhub.common.composable.StarBarWithVariableRating
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
@@ -40,8 +42,12 @@ fun ComentarioForm(
     filledText: MutableState<String>,
     rating: MutableState<Double>
 ) {
-    Column(modifier = Modifier
-        .padding(16.dp)) {
+    val context = LocalContext.current
+
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -49,7 +55,9 @@ fun ComentarioForm(
             if (urlFoto.isNullOrBlank()) {
                 Icon(
                     Icons.Filled.Person,
-                    contentDescription = "@string/btn_description_profile",
+                    contentDescription = UiText.StringResource(
+                        R.string.btn_description_profile
+                    ).asString(context = context),
                     tint = PrimaryBlue,
                     modifier = Modifier
                         .padding(end = 8.dp)
@@ -65,7 +73,9 @@ fun ComentarioForm(
                         .data(urlFoto)
                         .decoderFactory(SvgDecoder.Factory())
                         .build(),
-                    contentDescription = "Imagem do avaliador",
+                    contentDescription = UiText.StringResource(
+                        R.string.description_image_evaluator
+                    ).asString(context = context),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .padding(end = 8.dp)
@@ -76,7 +86,9 @@ fun ComentarioForm(
 
             Column(modifier = Modifier) {
                 Text(
-                    text = "Você",
+                    text = UiText.StringResource(
+                        R.string.text_you
+                    ).asString(context = context),
                     color = Color.Black,
                     fontSize = 18.sp,
                     modifier = Modifier.padding(0.dp),
@@ -98,8 +110,20 @@ fun ComentarioForm(
             onValueChange = {
                 filledText.value = it
             },
-            label = { Text("Comentário") },
-            placeholder = { Text("adicionar comentário") },
+            label = {
+                Text(
+                    UiText.StringResource(
+                        R.string.title_comment
+                    ).asString(context = context)
+                )
+            },
+            placeholder = {
+                Text(
+                    UiText.StringResource(
+                        R.string.text_add_comment
+                    ).asString(context = context)
+                )
+            },
             textStyle = LocalTextStyle.current.copy(
                 color = Color.Black,
                 fontSize = 16.sp
