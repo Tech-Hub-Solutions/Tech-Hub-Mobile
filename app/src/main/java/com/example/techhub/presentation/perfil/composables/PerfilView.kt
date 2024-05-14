@@ -82,7 +82,7 @@ fun PerfilView(
                     isOwnProfile = isOwnProfile,
                     isEmpresa = isEmpresa,
                     viewModel = viewModel,
-                    context = context
+                    context = context,
                 )
 
                 // Nome e Infos

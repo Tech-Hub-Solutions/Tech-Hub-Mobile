@@ -1,7 +1,11 @@
 package com.example.techhub.presentation.perfil.composables
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -24,7 +28,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.techhub.common.enums.TipoArquivo
 import com.example.techhub.common.utils.startNewActivity
+import com.example.techhub.common.utils.uriToFile
 import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import com.example.techhub.presentation.editarUsuario.EditarUsuarioActivity
@@ -41,7 +47,7 @@ fun TopoDoPerfil(
     isOwnProfile: Boolean,
     isEmpresa: Boolean,
     viewModel: PerfilViewModel,
-    context: Context
+    context: Context,
 ) {
     val isFavorito = remember {
         mutableStateOf(userInfo.value!!.isFavorito == true)
@@ -50,6 +56,21 @@ fun TopoDoPerfil(
         modifier = Modifier
             .fillMaxWidth()
     ) {
+        val tipoArquivo = remember { mutableStateOf(TipoArquivo.CURRICULO) }
+        val getContent =
+            rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { result: Uri? ->
+                result?.let { uri ->
+                    val file = uriToFile(context, uri);
+                    if (file != null) {
+                        viewModel.enviarCurriculo(
+                            context,
+                            file,
+                            tipoArquivo.value
+                        )
+                    }
+                }
+            }
+
         BannerImagePerfil(
             imagePath = userInfo.value!!.urlFotoWallpaper,
             isLoadingWallpaper.value!!
@@ -85,7 +106,7 @@ fun TopoDoPerfil(
                         var icon = Icons.Outlined.FavoriteBorder
                         var color = PrimaryBlue
 
-                        if(isFavorito.value) {
+                        if (isFavorito.value) {
                             icon = Icons.Filled.Favorite
                             color = Color(0xFFD32F2F)
                         }
@@ -101,7 +122,12 @@ fun TopoDoPerfil(
 
 
                 if (!isEmpresa && isOwnProfile) {
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(
+                        onClick = {
+                            tipoArquivo.value = TipoArquivo.CURRICULO
+                            getContent.launch("application/*")
+                        }
+                    ) {
                         Icon(
                             // TODO - Lógica para quando for seu perfil ser UploadFile, senão InsertDriveFile ou FilePresent
                             imageVector = Icons.Filled.UploadFile,
