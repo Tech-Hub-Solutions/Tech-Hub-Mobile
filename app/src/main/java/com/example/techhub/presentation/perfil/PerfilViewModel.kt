@@ -268,7 +268,6 @@ class PerfilViewModel : ViewModel() {
 
 
     fun enviarCurriculo(context: Context, arquivo: File, tipoArquivo: TipoArquivo) {
-        val toastErrorMessage = "Ops! Ocorreu um ao enviar o currilo."
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val requestBody = arquivo.asRequestBody("application/*".toMediaTypeOrNull())
@@ -280,20 +279,26 @@ class PerfilViewModel : ViewModel() {
                 val response = apiPerfil.atualizarArquivo(filePart, tipoArquivoPart)
 
                 if (response.isSuccessful) {
+                    val toastErrorMessage = "Curriculo enviado com sucesso!."
+                    (context as Activity).runOnUiThread {
+                        showToastError(context = context, message = toastErrorMessage)
+                    }
                     Log.d(
                         "PERFIL_VIEW_MODEL",
                         "CURRICULO ENVIADO: ${response.body().toString()}"
                     )
                 } else {
+                    val toastErrorMessage = "Erro ao enviar currículo!"
+                    (context as Activity).runOnUiThread {
+                        showToastError(context = context, message = toastErrorMessage)
+                    }
                     Log.e(
                         "PERFIL_VIEW_MODEL",
                         "CURRICULO NÃO ENVIADO: ${response.errorBody()?.string()}"
                     )
-                    (context as Activity).runOnUiThread {
-                        showToastError(context = context, message = toastErrorMessage)
-                    }
                 }
             } catch (error: Exception) {
+                val toastErrorMessage = "Erro ao enviar currículo!"
                 (context as Activity).runOnUiThread {
                     showToastError(context = context, message = toastErrorMessage)
                 }
@@ -301,4 +306,5 @@ class PerfilViewModel : ViewModel() {
             }
         }
     }
+
 }

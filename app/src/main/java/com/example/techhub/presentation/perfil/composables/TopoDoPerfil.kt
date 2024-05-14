@@ -35,6 +35,7 @@ import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import com.example.techhub.presentation.editarUsuario.EditarUsuarioActivity
 import com.example.techhub.presentation.perfil.PerfilViewModel
+import com.example.techhub.presentation.perfil.composables.curriculo.MenuCurriculo
 import com.example.techhub.presentation.perfil.composables.images.BannerImagePerfil
 import com.example.techhub.presentation.perfil.composables.images.RoundedPerfilImage
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
@@ -56,21 +57,6 @@ fun TopoDoPerfil(
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        val tipoArquivo = remember { mutableStateOf(TipoArquivo.CURRICULO) }
-        val getContent =
-            rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { result: Uri? ->
-                result?.let { uri ->
-                    val file = uriToFile(context, uri);
-                    if (file != null) {
-                        viewModel.enviarCurriculo(
-                            context,
-                            file,
-                            tipoArquivo.value
-                        )
-                    }
-                }
-            }
-
         BannerImagePerfil(
             imagePath = userInfo.value!!.urlFotoWallpaper,
             isLoadingWallpaper.value!!
@@ -122,10 +108,10 @@ fun TopoDoPerfil(
 
 
                 if (!isEmpresa && isOwnProfile) {
+                    val expanded = remember { mutableStateOf(false) }
                     IconButton(
                         onClick = {
-                            tipoArquivo.value = TipoArquivo.CURRICULO
-                            getContent.launch("application/*")
+                            expanded.value = !expanded.value
                         }
                     ) {
                         Icon(
@@ -136,7 +122,15 @@ fun TopoDoPerfil(
                             modifier = Modifier.size(34.dp)
                         )
                     }
-
+                    Box(){
+                        MenuCurriculo(
+                            expanded,
+                            Modifier.align(Alignment.BottomCenter),
+                            viewModel,
+                            context,
+                            userInfo.value!!.urlCurriculo!!
+                        )
+                    }
                     Spacer(modifier = Modifier.width(8.dp))
                 }
 
