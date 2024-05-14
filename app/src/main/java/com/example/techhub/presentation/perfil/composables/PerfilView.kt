@@ -47,6 +47,7 @@ fun PerfilView(
         viewModel.getInfosUsuario(context = context, userId = id)
     }
 
+
     Scaffold(
         bottomBar = {
             BottomBar()
