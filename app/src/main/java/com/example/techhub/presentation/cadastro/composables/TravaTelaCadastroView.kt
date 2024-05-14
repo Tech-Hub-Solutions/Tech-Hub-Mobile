@@ -2,6 +2,7 @@ package com.example.techhub.presentation.cadastro.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.techhub.R
@@ -92,7 +94,9 @@ fun TravaTelaCadastroView(onUserOptionSelected: (String) -> Unit) {
                         color = Color(SecondaryBlue.value),
                         fontWeight = FontWeight.Medium,
                         fontSize = 32.sp,
-                    )
+                        textAlign = TextAlign.Center
+                    ),
+                    modifier = Modifier.fillMaxWidth()
                 )
 
                 Spacer(modifier = Modifier.padding(16.dp))

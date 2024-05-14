@@ -129,7 +129,6 @@ fun FirstAuthView(
         Spacer(modifier = Modifier.height(16.dp))
 
         val annotatedString = buildAnnotatedString {
-            // TODO - NECESSIDADE DE VER COMO FICARÁ COM O i18n
             withStyle(
                 style = SpanStyle(
                     color = Color.Black,
@@ -137,7 +136,11 @@ fun FirstAuthView(
                     fontSize = 17.sp
                 )
             ) {
-                append("Impossibilitado de escanear o QR Code? Você pode usar a ")
+                append(
+                    UiText.StringResource(
+                        R.string.append_text_authenticator_qrcode
+                    ).asString(context = context)
+                )
             }
 
             withStyle(
@@ -148,11 +151,17 @@ fun FirstAuthView(
                     fontSize = 17.sp,
                 )
             ) {
-                append("chave de configuração")
+                append(
+                    UiText.StringResource(
+                        R.string.append_text_authenticator_secret_key
+                    ).asString(context = context)
+                )
                 addStringAnnotation(
                     tag = "Clickable",
                     annotation = "secretKey",
-                    start = length - "chave de configuração".length,
+                    start = length - UiText.StringResource(
+                        R.string.append_text_authenticator_secret_key
+                    ).asString(context = context).length,
                     end = length
                 )
             }
@@ -164,7 +173,11 @@ fun FirstAuthView(
                     fontSize = 17.sp
                 )
             ) {
-                append(" para configurar manualmente o aplicativo de autenticação.")
+                append(
+                    UiText.StringResource(
+                        R.string.append_text_authenticator_config_manually
+                    ).asString(context = context)
+                )
             }
         }
 

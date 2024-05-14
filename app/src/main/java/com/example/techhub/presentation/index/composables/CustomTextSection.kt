@@ -41,8 +41,11 @@ fun CustomTextSection() {
                         fontSize = 32.sp
                     )
                 ) {
-                    // TODO - NECESSIDADE DE VER COMO FICARÁ COM O i18n
-                    append("O ponto de encontro dos ")
+                    append(
+                        UiText.StringResource(
+                            R.string.append_text_index_encontro
+                        ).asString(context = context)
+                    )
                 }
                 withStyle(
                     style = SpanStyle(
@@ -51,7 +54,11 @@ fun CustomTextSection() {
                         fontSize = 32.sp
                     )
                 ) {
-                    append("talentos")
+                    append(
+                        UiText.StringResource(
+                            R.string.append_text_index_talentos
+                        ).asString(context = context)
+                    )
                 }
                 withStyle(
                     style = SpanStyle(

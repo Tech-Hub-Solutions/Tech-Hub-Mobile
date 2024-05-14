@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tech Hub</string>
+
+    // BTN DESCRIPTION
+    <string name="btn_description_up_scroll_to_top">botón para ir al principio de la página</string>
+    <string name="btn_description_search_talents">botón para ir a la página de búsqueda de talentos</string>
+    <string name="btn_description_favorites">botón para ir a la página de favoritos</string>
+    <string name="btn_description_chat">botón para ir a la página de chats</string>
+    <string name="btn_description_profile">botón con foto de perfil del usuario para abrir el menú de configuración de perfil</string>
+    <string name="btn_description_favoritar_perfil">botón para añadir perfil a favoritos</string>
+    <string name="btn_description_editar_perfil">botón para editar perfil</string>
+    <string name="btn_description_linkedin">botón para redirigir a LinkedIn</string>
+    <string name="btn_description_github">botón para redirigir a GitHub</string>
+    <string name="btn_description_load_more_talents">Botón para cargar más talentos</string>
+    <string name="btn_description_return_index">Botón para volver al inicio</string>
+
+    // BTN TEXT
+    <string name="btn_text_entrar">Entrar</string>
+    <string name="btn_text_cadastrar">Registrar</string>
+    <string name="btn_text_cancelar">Cancelar</string>
+    <string name="btn_text_continuar">Continuar</string>
+    <string name="btn_text_cadastre_se">Regístrate.</string>
+    <string name="btn_text_avancar">Avanzar</string>
+    <string name="btn_text_edit_perfil">Editar Perfil</string>
+    <string name="btn_text_edit_wallpaper">Editar Wallpaper</string>
+    <string name="btn_text_comment">Comentar</string>
+    <string name="btn_text_load_more">Ver más</string>
+    <string name="btn_text_apply_filter">Aplicar Filtro</string>
+    <string name="btn_text_clear_filter">Limpiar Filtro</string>
+    <string name="btn_text_clear">Limpiar</string>
+    <string name="btn_text_load_more_talents">Cargar más talentos</string>
+    <string name="btn_text_salvar">Guardar</string>
+    <string name="btn_text_configuracoes">Configuraciones</string>
+    <string name="btn_text_perfil">Perfil</string>
+    <string name="btn_text_sair">Salir</string>
+    <string name="btn_text_order_by">Ordenar</string>
+
+    // TOAST TEXT
+    <string name="toast_text_welcome">¡Bienvenido(a)!</string>
+    <string name="toast_auth_text_error">Error al verificar usuario</string>
+    <string name="toast_text_error_login">¡Ups! Algo salió mal.\n Inténtalo de nuevo.</string>
+    <string name="toast_text_copy_secret_key">Código copiado</string>
+    <string name="toast_text_error_trava_tela_cadastro">Seleccione una opción para continuar</string>
+    <string name="toast_text_error_cadastro_auth">Error al verificar usuario</string>
+    <string name="toast_text_error_perfil">¡Ups! Ocurrió un error en tu perfil.</string>
+    <string name="toast_text_error_favorite_perfil">¡Ups! Ocurrió un error al añadir el perfil a favoritos.</string>
+    <string name="toast_text_error_recomendar_perfil">¡Ups! Ocurrió un error al recomendar el perfil.</string>
+    <string name="toast_text_error_avaliacoes_perfil">¡Ups! Ocurrió un error al buscar las evaluaciones del perfil.</string>
+    <string name="toast_text_error_comentarios_perfil">¡Ups! Ocurrió un error al buscar los comentarios del usuario.</string>
+    <string name="toast_text_error_comentar_perfil">¡Ups! Ocurrió un error al hacer un comentario!</string>
+    <string name="toast_text_success_comentar_perfil">¡Comentario realizado con éxito!</string>
+    <string name="toast_error_get_repositorios">¡Ups! Ocurrió un error al buscar los repositorios.</string>
+    <string name="toast_error_get_favorite_users">¡Ups! Algo salió mal al buscar favoritos.</string>
+    <string name="toast_text_perfil_atualizado">Perfil actualizado con éxito</string>
+    <string name="toast_text_success_atualizar_config_usuario">Tu información ha sido actualizada con éxito</string>
+    <string name="toast_text_error_campos_obrigatorios">¡Todos los campos deben ser completados!</string>
+    <string name="toast_error_cnpj">CNPJ inválido</string>
+    <string name="toast_error_skills_dropdown_menu">Puedes seleccionar hasta 10 habilidades</string>
+
+    // TITLE, SUBTITLE
+    <string name="subtitle_index">Uniendo talento y necesidad.</string>
+    <string name="subtitle_tech_area">Área de Tecnología</string>
+    <string name="subtitle_name">Nombre</string>
+    <string name="subtitle_price">Precio</string>
+
+    <string name="title_login">Login</string>
+    <string name="title_cadastro">Registro</string>
+    <string name="title_trava_tela_cadastro">Primeros Pasos</string>
+    <string name="title_experiencia">Experiencia</string>
+    <string name="title_quem_procuramos">A quién buscamos</string>
+    <string name="title_sobre_mim">Sobre mí</string>
+    <string name="title_projetos_desenvolvidos">Proyectos desarrollados</string>
+    <string name="title_additional_informations">Información Adicional</string>
+    <string name="title_comment">Comentario</string>
+    <string name="title_avaliacoes">Evaluaciones</string>
+    <string name="title_explorar_talentos">Explorar Talentos</string>
+    <string name="title_favorites">Favoritos</string>
+    <string name="title_edit_config_usuario">Editar Configuraciones</string>
+
+    // DESCRIPTION
+    <string name="description_image_logo">logo de Tech Hub</string>
+    <string name="description_image_index">imagen de personas saludándose</string>
+    <string name="description_image_login">imagen de dos personas con ordenadores</string>
+    <string name="description_image_login_auth">imagen de un candado blanco con fondo azul</string>
+    <string name="description_image_email">Campo para el e-mail</string>
+    <string name="description_image_sobre_mim">Campo para sobre mí</string>
+    <string name="description_image_password">Campo para la contraseña</string>
+    <string name="description_image_cnpj">Campo para el CNPJ</string>
+    <string name="description_image_cpf">Campo para el CPF</string>
+    <string name="description_image_descricao">Campo para la descripción</string>
+    <string name="description_image_experiencia">Campo para la experiencia</string>
+    <string name="description_image_nome">Campo para el nombre</string>
+    <string name="description_image_link_linkedin">Campo Link de LinkedIn</string>
+    <string name="description_image_link_github">Campo Link de GitHub</string>
+    <string name="description_image_service_price">Campo precio del servicio</string>
+    <string name="description_image_password_visible">Mostrar contraseña</string>
+    <string name="description_image_password_invisible">Ocultar contraseña</string>
+    <string name="description_image_blue_background">Fondo con tonos de azul</string>
+    <string name="description_image_freelancer">Imagen de freelancer</string>
+    <string name="description_image_qr_code">QR Code para autenticación</string>
+    <string name="description_image_empresa">Imagen de Empresa</string>
+    <string name="description_image_banner_perfil">Imagen de portada del perfil</string>
+    <string name="description_image_rounded_perfil">Imagen de perfil redondeada</string>
+    <string name="description_image_edit_perfil">Editar Imagen de Perfil</string>
+    <string name="description_image_evaluator">Imagen del evaluador</string>
+    <string name="description_image_search_by">Buscar por nombre</string>
+    <string name="description_image_expand">Expandir</string>
+    <string name="description_image_historico">Icono de Histórico</string>
+    <string name="description_image_photo_freelancer">Foto del freelancer</string>
+
+    // TEXT
+    <string name="text_auth_code">Introduce el código de autorización</string>
+    <string name="text_auth_code_verify">Código de verificación</string>
+    <string name="text_login">¡Inicia sesión con tu cuenta para una mejor experiencia!</string>
+    <string name="text_login_redirect_cadastro">¿No tienes una cuenta?</string>
+    <string name="text_password">Contraseña</string>
+    <string name="text_email">E-mail</string>
+    <string name="text_freelancer">Freelancer</string>
+    <string name="text_empresa">Empresa</string>
+    <string name="text_trava_tela_cadastro">¿Cómo deseas comenzar?</string>
+    <string name="text_authenticator">Habilitar autenticación de 2 factores</string>
+    <string name="text_scan_qr_code">Descarga el autenticador de Google (Google Authenticator)</string>
+    <string name="text_sem_descricao">Sin descripción</string>
+    <string name="text_valores">Valores</string>
+    <string name="text_soft_skills">Soft Skills</string>
+    <string name="text_hard_skills">Hard Skills</string>
+    <string name="text_github_project_card_no_name">Proyecto sin nombre</string>
+    <string name="text_github_project_card_no_description">Proyecto sin descripción</string>
+    <string name="text_github_project_card_language_icon">Icono de %s</string>
+    <string name="text_github_service_limit_exceeded">Servicio temporalmente no disponible. Inténtalo de nuevo más tarde.</string>
+    <string name="text_github_user_not_found">Usuario no encontrado o no tiene repositorios públicos.</string>
+    <string name="text_github_service_error">Error desconocido. Inténtalo de nuevo más tarde.</string>
+    <string name="text_github_not_registered">El usuario no ha registrado su GitHub.</string>
+    <string name="text_recommended">Recomendado</string>
+    <string name="text_to_recommend">Recomendar</string>
+    <string name="text_you">Tú</string>
+    <string name="text_add_comment">Añadir comentario</string>
+    <string name="text_comments">Comentarios</string>
+    <string name="text_no_comments">No hay comentarios</string>
+    <string name="text_star">"estrella "</string>
+    <string name="text_stars">estrellas</string>
+    <string name="text_total_avaliacoes">%s evaluaciones recibidas</string>
+    <string name="text_filter_by">Filtrar por:</string>
+    <string name="text_total_talentos">%s profesionales encontrados</string>
+    <string name="text_filter">Filtrar</string>
+    <string name="text_compare_talents">Comparar Seleccionados</string>
+    <string name="text_total_favorites">%s profesionales encontrados</string>
+    <string name="text_no_favorites">Ningún favorito seleccionado</string>
+    <string name="text_formas_contato">Formas de Contacto</string>
+    <string name="text_link_github">Link de GitHub</string>
+    <string name="text_link_linkedin">Link de LinkedIn</string>
+    <string name="text_nome_github">Nombre de GitHub</string>
+    <string name="text_edit_config_usuario">Haz los cambios necesarios para actualizar tus datos de registro.</string>
+    <string name="text_activate_compare">Activar comparación</string>
+    <string name="text_no_skill">Ninguna habilidad seleccionada</string>
+
+    // APPEND TEXT
+    <string name="append_text_index_encontro">"El punto de encuentro de los "</string>
+    <string name="append_text_index_talentos">talentos</string>
+    <string name="append_text_authenticator_qrcode">"¿No puedes escanear el código QR? Puedes usar la "</string>
+    <string name="append_text_authenticator_secret_key">clave de configuración</string>
+    <string name="append_text_authenticator_config_manually">" para configurar manualmente la aplicación de autenticación."</string>
+
+    // PLACEHOLDER
+    <string name="placeholder_auth_code">Introduce el código</string>
+    <string name="placeholder_email">Introduce tu e-mail</string>
+    <string name="placeholder_password">Introduce tu contraseña</string>
+    <string name="placeholder_cnpj">Introduce tu CNPJ</string>
+    <string name="placeholder_CPF">Introduce tu CPF</string>
+    <string name="placeholder_text_search_country">Introduce el país</string>
+    <string name="placeholder_text_name">Introduce tu nombre</string>
+    <string name="placeholder_text_skill">Selecciona una habilidad</string>
+
+    // SUPPORTING TEXT
+    <string name="supporting_text_email">E-mail inválido</string>
+    <string name="supporting_text_password">Contraseña inválida</string>
+    <string name="supporting_text_cpf">CPF inválido</string>
+    <string name="supporting_text_nome">Es necesario rellenar el nombre</string>
+    <string name="supporting_text_service_price">Valor inválido</string>
+
+    // LABEL
+    <string name="label_auth_code">Verifica el código de la aplicación</string>
+    <string name="label_minimum">Mínimo</string>
+    <string name="label_maximum">Máximo</string>
+    <string name="label_cnpj">CNPJ</string>
+    <string name="label_cpf">CPF</string>
+    <string name="label_descricao">Descripción</string>
+    <string name="label_text_search_country">Introduce para buscar</string>
+
+    // ORDER BY
+    <string name="order_by_most_rated">Más valorado</string>
+    <string name="order_by_less_rated">Menos valorado</string>
+    <string name="order_by_higher_price">Mayor precio</string>
+    <string name="order_by_lower_price">Menor precio</string>
+</resources>
