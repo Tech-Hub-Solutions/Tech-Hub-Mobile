@@ -1,5 +1,6 @@
 package com.example.techhub.common.composable
 
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,13 +20,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.presentation.ui.theme.GrayButtonText
 import com.example.techhub.presentation.ui.theme.GraySwitchUnchecked
 import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun Switch2FALeft(onValueChanged: (Boolean) -> Unit, initialValue: Boolean = false) {
+fun Switch2FALeft(
+    onValueChanged: (Boolean) -> Unit,
+    initialValue: Boolean = false,
+    context: Context
+) {
     var checked by remember { mutableStateOf(initialValue) }
 
     Row(
@@ -51,7 +58,9 @@ fun Switch2FALeft(onValueChanged: (Boolean) -> Unit, initialValue: Boolean = fal
         Spacer(modifier = Modifier.padding(horizontal = 8.dp))
 
         Text(
-            text = "Ativar autenticação de dois fatores",
+            text = UiText.StringResource(
+                R.string.text_authenticator
+            ).asString(context = context),
             color = Color(GrayText.value),
             fontWeight = FontWeight.Thin,
             fontSize = 14.sp

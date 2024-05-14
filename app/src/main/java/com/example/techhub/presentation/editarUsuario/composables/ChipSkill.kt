@@ -34,7 +34,7 @@ fun ChipSkill(
         trailingIcon = {
             Icon(
                 Icons.Default.Close,
-                contentDescription = "Localized description",
+                contentDescription = null,
                 modifier = Modifier.clickable { onDismiss() },
                 tint = Color.Gray,
             )

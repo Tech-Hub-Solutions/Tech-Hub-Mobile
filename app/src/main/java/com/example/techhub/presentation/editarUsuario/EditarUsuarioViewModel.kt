@@ -8,6 +8,8 @@ import android.widget.Toast
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.service.RetrofitService
@@ -25,7 +27,6 @@ class EditarUsuarioViewModel : ViewModel() {
     private val apiPerfil = RetrofitService.getPerfilService()
     private val erroApi = MutableLiveData("")
     private val flagsApi = RetrofitService.getFlagService()
-    val toastErrorMessage = "Ops! Algo deu errado. Tente novamente."
 
     fun getFlags() {
         CoroutineScope(Dispatchers.IO).launch {
@@ -49,6 +50,10 @@ class EditarUsuarioViewModel : ViewModel() {
     }
 
     fun updateUserInfo(context: Context, perfilCadastroData: PerfilCadastroData) {
+        val toastErrorMessage = UiText.StringResource(
+            R.string.toast_text_error_login
+        ).asString(context = context)
+
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = apiPerfil.atualizarPerfil(perfilCadastroData)
@@ -58,7 +63,9 @@ class EditarUsuarioViewModel : ViewModel() {
                     (context as Activity).runOnUiThread {
                         Toast.makeText(
                             context,
-                            "Perfil atualizado com sucesso",
+                            UiText.StringResource(
+                                R.string.toast_text_perfil_atualizado
+                            ).asString(context = context),
                             Toast.LENGTH_SHORT
                         ).show()
                     }

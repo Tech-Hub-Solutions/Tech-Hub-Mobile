@@ -1,5 +1,6 @@
 package com.example.techhub.common.composable
 
+import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -26,10 +27,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.sp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun PasswordTextField(onValueChanged: (String) -> Unit) {
+fun PasswordTextField(onValueChanged: (String) -> Unit, context: Context) {
     var filledText by remember { mutableStateOf("") }
     var isPasswordValid by remember { mutableStateOf(true) }
     var isPasswordVisible by remember { mutableStateOf(false) }
@@ -46,8 +49,20 @@ fun PasswordTextField(onValueChanged: (String) -> Unit) {
                 isPasswordValid = validatePassword(filledText)
                 onValueChanged(filledText)
             },
-            label = { Text("Senha") },
-            placeholder = { Text("Digite sua senha") },
+            label = {
+                Text(
+                    UiText.StringResource(
+                        R.string.text_password
+                    ).asString(context = context)
+                )
+            },
+            placeholder = {
+                Text(
+                    UiText.StringResource(
+                        R.string.placeholder_password
+                    ).asString(context = context)
+                )
+            },
             textStyle = LocalTextStyle.current.copy(
                 color = Color.Black,
                 fontSize = 16.sp
@@ -63,7 +78,9 @@ fun PasswordTextField(onValueChanged: (String) -> Unit) {
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Filled.Key,
-                    contentDescription = "campo para a senha",
+                    contentDescription = UiText.StringResource(
+                        R.string.description_image_password
+                    ).asString(context = context),
                     tint = Color(PrimaryBlue.value)
                 )
             },
@@ -75,13 +92,17 @@ fun PasswordTextField(onValueChanged: (String) -> Unit) {
                         if (isPasswordVisible) {
                             Icon(
                                 imageVector = Icons.Filled.Visibility,
-                                contentDescription = "Mostrar senha",
+                                contentDescription = UiText.StringResource(
+                                    R.string.description_image_password_visible
+                                ).asString(context = context),
                                 tint = Color.Black
                             )
                         } else {
                             Icon(
                                 imageVector = Icons.Filled.VisibilityOff,
-                                contentDescription = "Esconder senha",
+                                contentDescription = UiText.StringResource(
+                                    R.string.description_image_password_invisible
+                                ).asString(context = context),
                                 tint = Color.Black
                             )
                         }
@@ -93,7 +114,11 @@ fun PasswordTextField(onValueChanged: (String) -> Unit) {
             singleLine = true,
             isError = isPasswordValid,
             supportingText = {
-                if (isPasswordValid && filledText.isNotBlank()) Text("Senha inválida")
+                if (isPasswordValid && filledText.isNotBlank()) Text(
+                    UiText.StringResource(
+                        R.string.supporting_text_password
+                    ).asString(context = context)
+                )
             },
             keyboardOptions = KeyboardOptions(
                 autoCorrect = false,

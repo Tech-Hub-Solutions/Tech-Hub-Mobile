@@ -1,5 +1,6 @@
 package com.example.techhub.common.composable
 
+import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -23,10 +24,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
 import androidx.core.util.PatternsCompat
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun EmailTextField(onValueChanged: (String) -> Unit, initialValue: String = "") {
+fun EmailTextField(onValueChanged: (String) -> Unit, initialValue: String = "", context: Context) {
     var filledText by remember { mutableStateOf(initialValue) }
     var isEmailValid by remember { mutableStateOf(true) }
 
@@ -42,8 +45,20 @@ fun EmailTextField(onValueChanged: (String) -> Unit, initialValue: String = "") 
                 isEmailValid = validateEmail(filledText)
                 onValueChanged(filledText)
             },
-            label = { Text("E-mail") },
-            placeholder = { Text("Digite seu e-mail") },
+            label = {
+                Text(
+                    UiText.StringResource(
+                        R.string.text_email
+                    ).asString(context = context),
+                )
+            },
+            placeholder = {
+                Text(
+                    UiText.StringResource(
+                        R.string.placeholder_email
+                    ).asString(context = context)
+                )
+            },
             textStyle = LocalTextStyle.current.copy(
                 color = Color.Black,
                 fontSize = 16.sp
@@ -59,7 +74,9 @@ fun EmailTextField(onValueChanged: (String) -> Unit, initialValue: String = "") 
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Filled.Mail,
-                    contentDescription = "campo para o e-mail",
+                    contentDescription = UiText.StringResource(
+                        R.string.description_image_email
+                    ).asString(context = context),
                     tint = Color(PrimaryBlue.value)
                 )
             },
@@ -68,7 +85,11 @@ fun EmailTextField(onValueChanged: (String) -> Unit, initialValue: String = "") 
             singleLine = true,
             isError = isEmailValid,
             supportingText = {
-                if (isEmailValid && filledText.isNotBlank()) Text("E-mail inválido")
+                if (isEmailValid && filledText.isNotBlank()) Text(
+                    UiText.StringResource(
+                        R.string.supporting_text_email
+                    ).asString(context = context)
+                )
             },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,

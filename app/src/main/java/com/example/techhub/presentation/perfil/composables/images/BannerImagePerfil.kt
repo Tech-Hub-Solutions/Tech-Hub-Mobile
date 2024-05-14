@@ -11,9 +11,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.techhub.R
 import com.example.techhub.common.composable.CircularProgressIndicatorTH
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
@@ -21,6 +24,8 @@ fun BannerImagePerfil(
     imagePath: String?,
     isLoading: Boolean
 ) {
+    val context = LocalContext.current
+
     Row {
         if (isLoading) {
             Box(
@@ -43,7 +48,9 @@ fun BannerImagePerfil(
             } else {
                 AsyncImage(
                     model = imagePath,
-                    contentDescription = "imagem de capa do banner",
+                    contentDescription = UiText.StringResource(
+                        R.string.description_image_banner_perfil
+                    ).asString(context = context),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .height(110.dp)

@@ -17,6 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.shadowCustom
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.model.CurrentUser
@@ -53,7 +55,9 @@ fun BottomBar() {
                 }) {
                     Icon(
                         Icons.Outlined.TravelExplore,
-                        contentDescription = "@string/btn_description_search_talents",
+                        contentDescription = UiText.StringResource(
+                            R.string.btn_description_search_talents
+                        ).asString(context = context),
                         tint = if (actualActivity == "ExplorarTalentosActivity") {
                             PrimaryBlue
                         } else {
@@ -71,7 +75,9 @@ fun BottomBar() {
                     }) {
                         Icon(
                             Icons.Filled.FavoriteBorder,
-                            contentDescription = "@string/btn_description_favorites",
+                            contentDescription = UiText.StringResource(
+                                R.string.btn_description_favorites
+                            ).asString(context = context),
                             tint = if (actualActivity == "FavoritosActivity") {
                                 PrimaryBlue
                             } else {

@@ -1,5 +1,6 @@
 package com.example.techhub.common.composable
 
+import android.content.Context
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -11,6 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -19,7 +22,8 @@ import kotlinx.coroutines.launch
 fun FloatingActionButtonScroll(
     isScrolled: Boolean,
     scrollState: ScrollState,
-    scope: CoroutineScope
+    scope: CoroutineScope,
+    context: Context
 ) {
     if (isScrolled) {
         FloatingActionButton(
@@ -35,8 +39,10 @@ fun FloatingActionButtonScroll(
             modifier = Modifier.padding(16.dp)
         ) {
             Icon(
-                Icons.Filled.ArrowUpward,
-                "@string/btn_description_up_scroll_to_top",
+                imageVector = Icons.Filled.ArrowUpward,
+                contentDescription = UiText.StringResource(
+                    R.string.btn_description_up_scroll_to_top
+                ).asString(context = context)
             )
         }
     }

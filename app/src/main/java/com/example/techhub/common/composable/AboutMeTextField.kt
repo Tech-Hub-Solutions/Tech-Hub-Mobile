@@ -1,5 +1,6 @@
 package com.example.techhub.common.composable
 
+import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
@@ -20,10 +21,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun AboutMeTextField(onValueChanged: (String) -> Unit, initialValue: String = "") {
+fun AboutMeTextField(
+    onValueChanged: (String) -> Unit,
+    initialValue: String = "",
+    context: Context
+) {
     var filledText by remember { mutableStateOf(initialValue) }
 
     Column {
@@ -34,8 +41,20 @@ fun AboutMeTextField(onValueChanged: (String) -> Unit, initialValue: String = ""
                 filledText = it
                 onValueChanged(filledText)
             },
-            label = { Text("Sobre mim") },
-            placeholder = { Text("Sobre mim") },
+            label = {
+                Text(
+                    UiText.StringResource(
+                        R.string.title_sobre_mim,
+                    ).asString(context = context),
+                )
+            },
+            placeholder = {
+                Text(
+                    UiText.StringResource(
+                        R.string.title_sobre_mim,
+                    ).asString(context = context)
+                )
+            },
             textStyle = LocalTextStyle.current.copy(
                 color = Color.Black,
                 fontSize = 16.sp
@@ -51,7 +70,9 @@ fun AboutMeTextField(onValueChanged: (String) -> Unit, initialValue: String = ""
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Filled.AssignmentInd,
-                    contentDescription = "Campo Sobre mim",
+                    contentDescription = UiText.StringResource(
+                        R.string.description_image_sobre_mim
+                    ).asString(context = context),
                     tint = Color(PrimaryBlue.value)
                 )
             },
