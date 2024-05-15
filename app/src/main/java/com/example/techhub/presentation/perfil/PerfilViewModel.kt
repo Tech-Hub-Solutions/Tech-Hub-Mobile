@@ -29,6 +29,7 @@ class PerfilViewModel : ViewModel() {
     val isLoading = MutableLiveData(true)
     val isLoadingPerfil = MutableLiveData(false)
     val isLoadingWallpaper = MutableLiveData(false)
+    val isLoadingCurriculo = MutableLiveData(false)
     val isLastPage = MutableLiveData(false)
     val avaliacoesDoUsuario = MutableLiveData(listOf(AvaliacaoTotalData()))
     val comentariosDoUsuario = MutableLiveData(SnapshotStateList<PerfilAvaliacaoDetalhadoData>())
@@ -270,6 +271,7 @@ class PerfilViewModel : ViewModel() {
 
 
     fun enviarCurriculo(context: Context, arquivo: File, tipoArquivo: TipoArquivo) {
+        isLoadingCurriculo.postValue(true)
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val requestBody = arquivo.asRequestBody("application/pdf".toMediaTypeOrNull())
@@ -311,6 +313,8 @@ class PerfilViewModel : ViewModel() {
                     showToastError(context = context, message = toastErrorMessage)
                 }
                 Log.e("PERFIL_VIEW_MODEL", "ENVIAR CURRICULO ERROR: ${error.message}")
+            } finally {
+                isLoadingCurriculo.postValue(false)
             }
         }
     }

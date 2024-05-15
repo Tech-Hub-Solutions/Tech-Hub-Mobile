@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material.icons.filled.Favorite
@@ -26,8 +29,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.techhub.common.composable.CircularProgressIndicatorTH
 import com.example.techhub.common.enums.TipoArquivo
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.common.utils.uriToFile
@@ -45,6 +50,7 @@ fun TopoDoPerfil(
     userInfo: State<PerfilGeralDetalhadoData?>,
     isLoadingPerfil: State<Boolean?>,
     isLoadingWallpaper: State<Boolean?>,
+    isLoadingCurriculo : State<Boolean?>,
     isOwnProfile: Boolean,
     isEmpresa: Boolean,
     viewModel: PerfilViewModel,
@@ -109,30 +115,36 @@ fun TopoDoPerfil(
 
 
                 if (!isEmpresa && isOwnProfile) {
-                    val expanded = remember { mutableStateOf(false) }
-                    IconButton(
-                        onClick = {
-                            expanded.value = !expanded.value
+                    if (isLoadingCurriculo.value!!){
+                            CircularProgressIndicatorTH()
+                    } else {
+                        val expanded = remember { mutableStateOf(false) }
+                        IconButton(
+                            onClick = {
+                                expanded.value = !expanded.value
+                            }
+                        ) {
+                            Icon(
+                                // TODO - Lógica para quando for seu perfil ser UploadFile, senão InsertDriveFile ou FilePresent
+                                imageVector = Icons.Filled.UploadFile,
+                                contentDescription = "Currículo",
+                                tint = PrimaryBlue,
+                                modifier = Modifier.size(34.dp)
+                            )
                         }
-                    ) {
-                        Icon(
-                            // TODO - Lógica para quando for seu perfil ser UploadFile, senão InsertDriveFile ou FilePresent
-                            imageVector = Icons.Filled.UploadFile,
-                            contentDescription = "Currículo",
-                            tint = PrimaryBlue,
-                            modifier = Modifier.size(34.dp)
-                        )
+                        Box(){
+                            MenuCurriculo(
+                                expanded,
+                                Modifier.align(Alignment.BottomCenter),
+                                viewModel,
+                                context,
+                                urlCurriculo.value!!,
+                                userInfo.value!!.nome!!
+                            )
+                        }
                     }
-                    Box(){
-                        MenuCurriculo(
-                            expanded,
-                            Modifier.align(Alignment.BottomCenter),
-                            viewModel,
-                            context,
-                            urlCurriculo.value!!,
-                            userInfo.value!!.nome!!
-                        )
-                    }
+
+
                     Spacer(modifier = Modifier.width(8.dp))
                 }
 
