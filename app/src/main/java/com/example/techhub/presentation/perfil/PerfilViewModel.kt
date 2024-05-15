@@ -32,6 +32,7 @@ class PerfilViewModel : ViewModel() {
     val isLastPage = MutableLiveData(false)
     val avaliacoesDoUsuario = MutableLiveData(listOf(AvaliacaoTotalData()))
     val comentariosDoUsuario = MutableLiveData(SnapshotStateList<PerfilAvaliacaoDetalhadoData>())
+    val urlCurriculo = MutableLiveData("")
 
     fun getInfosUsuario(context: Context, userId: Int) {
         isLoading.postValue(true)
@@ -44,6 +45,7 @@ class PerfilViewModel : ViewModel() {
 
                 if (response.isSuccessful) {
                     usuario.postValue(response.body()!!)
+                    urlCurriculo.postValue(response.body()!!.urlCurriculo)
                 } else {
                     (context as Activity).runOnUiThread {
                         showToastError(context = context, message = toastErrorMessage)
@@ -270,7 +272,7 @@ class PerfilViewModel : ViewModel() {
     fun enviarCurriculo(context: Context, arquivo: File, tipoArquivo: TipoArquivo) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val requestBody = arquivo.asRequestBody("application/*".toMediaTypeOrNull())
+                val requestBody = arquivo.asRequestBody("application/pdf".toMediaTypeOrNull())
                 val filePart =
                     MultipartBody.Part.createFormData("arquivo", arquivo.name, requestBody)
                 val tipoArquivoPart =
@@ -279,14 +281,20 @@ class PerfilViewModel : ViewModel() {
                 val response = apiPerfil.atualizarArquivo(filePart, tipoArquivoPart)
 
                 if (response.isSuccessful) {
-                    val toastErrorMessage = "Curriculo enviado com sucesso!."
-                    (context as Activity).runOnUiThread {
-                        showToastError(context = context, message = toastErrorMessage)
+                    if (response.body() != null) {
+                        val toastErrorMessage = "Curriculo enviado com sucesso!."
+
+                        urlCurriculo.postValue(response.body()!!.url)
+
+                        Log.d(
+                            "PERFIL_VIEW_MODEL",
+                            "CURRICULO ENVIADO: ${response.body().toString()}"
+                        )
+
+                        (context as Activity).runOnUiThread {
+                            showToastError(context = context, message = toastErrorMessage)
+                        }
                     }
-                    Log.d(
-                        "PERFIL_VIEW_MODEL",
-                        "CURRICULO ENVIADO: ${response.body().toString()}"
-                    )
                 } else {
                     val toastErrorMessage = "Erro ao enviar currículo!"
                     (context as Activity).runOnUiThread {

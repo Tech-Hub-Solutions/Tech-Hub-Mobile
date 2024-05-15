@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.techhub.common.enums.TipoArquivo
 import com.example.techhub.common.utils.uriToFile
+import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import com.example.techhub.presentation.perfil.PerfilViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,7 +39,8 @@ fun MenuCurriculo(
     modifier: Modifier = Modifier,
     perfilViewModel: PerfilViewModel,
     context: Context,
-    urlCurriculo: String
+    urlCurriculo: String,
+    userName: String
 ) {
     Box(
         modifier = Modifier
@@ -67,8 +69,9 @@ fun MenuCurriculo(
             DropdownMenuItem(
                 onClick = {
                     CoroutineScope(Dispatchers.IO).launch {
-                        downloadFile(context,urlCurriculo,"seu-curriculo")
+                        downloadFile(context,urlCurriculo,"Curriculo de ${userName}")
                     }
+                    expanded.value = !expanded.value
                 },
                 text = {
                     Text("Baixar currículo")
@@ -80,7 +83,7 @@ fun MenuCurriculo(
             DropdownMenuItem(
                 onClick = {
                     tipoArquivo.value = TipoArquivo.CURRICULO
-                    getContent.launch("application/*")
+                    getContent.launch("application/pdf")
                 },
                 text = {
                     Text("Subir novo currículo")

@@ -49,6 +49,7 @@ fun TopoDoPerfil(
     isEmpresa: Boolean,
     viewModel: PerfilViewModel,
     context: Context,
+    urlCurriculo: State<String?>
 ) {
     val isFavorito = remember {
         mutableStateOf(userInfo.value!!.isFavorito == true)
@@ -128,7 +129,8 @@ fun TopoDoPerfil(
                             Modifier.align(Alignment.BottomCenter),
                             viewModel,
                             context,
-                            userInfo.value!!.urlCurriculo!!
+                            urlCurriculo.value!!,
+                            userInfo.value!!.nome!!
                         )
                     }
                     Spacer(modifier = Modifier.width(8.dp))
