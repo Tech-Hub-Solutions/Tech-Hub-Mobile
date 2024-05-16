@@ -1,5 +1,6 @@
 package com.example.techhub.presentation.perfil.composables.curriculo
 
+import android.app.Activity
 import android.app.DownloadManager
 import android.content.Context
 import android.net.Uri
@@ -14,6 +15,7 @@ import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.FileUpload
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.UploadFile
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -25,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.techhub.common.enums.TipoArquivo
+import com.example.techhub.common.utils.showToastError
 import com.example.techhub.common.utils.uriToFile
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import com.example.techhub.presentation.perfil.PerfilViewModel
@@ -40,7 +43,7 @@ fun MenuCurriculo(
     perfilViewModel: PerfilViewModel,
     context: Context,
     urlCurriculo: String,
-    userName: String
+    userName: String,
 ) {
     Box(
         modifier = Modifier
@@ -68,10 +71,20 @@ fun MenuCurriculo(
 
             DropdownMenuItem(
                 onClick = {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        downloadFile(context,urlCurriculo,"Curriculo de ${userName}")
+                    if (urlCurriculo.isNullOrBlank()) {
+                        val toastErrorMessage =
+                            "O usuário ainda não possui arquivo para download!"
+                        (context as Activity).runOnUiThread {
+                            showToastError(context = context, message = toastErrorMessage)
+                        }
+                    } else {
+                        perfilViewModel.downloadFile(
+                            context,
+                            urlCurriculo,
+                            "Curriculo de ${userName}"
+                        )
+                        expanded.value = !expanded.value
                     }
-                    expanded.value = !expanded.value
                 },
                 text = {
                     Text("Baixar currículo")
@@ -89,7 +102,7 @@ fun MenuCurriculo(
                     Text("Subir novo currículo")
                 },
                 leadingIcon = {
-                    Icon(Icons.Filled.FileUpload, contentDescription = "Subir novo currículo")
+                    Icon(Icons.Filled.UploadFile, contentDescription = "Subir novo currículo")
                 }
             )
         }
@@ -97,16 +110,3 @@ fun MenuCurriculo(
 
 }
 
-fun downloadFile(context: Context, url: String, fileName: String) {
-    val request = DownloadManager.Request(Uri.parse(url))
-        .setTitle(fileName)
-        .setDescription("Baixando arquivo...")
-        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-        .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
-        .setAllowedOverMetered(true)
-        .setAllowedOverRoaming(true)
-
-    val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-    downloadManager.enqueue(request)
-
-}

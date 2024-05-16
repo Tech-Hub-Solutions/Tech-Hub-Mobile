@@ -1,5 +1,6 @@
 package com.example.techhub.presentation.perfil.composables
 
+import android.app.Activity
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -19,6 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FileDownload
 import androidx.compose.material.icons.filled.UploadFile
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
@@ -34,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.techhub.common.composable.CircularProgressIndicatorTH
 import com.example.techhub.common.enums.TipoArquivo
+import com.example.techhub.common.utils.showToastError
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.common.utils.uriToFile
 import com.example.techhub.domain.model.CurrentUser
@@ -50,12 +53,12 @@ fun TopoDoPerfil(
     userInfo: State<PerfilGeralDetalhadoData?>,
     isLoadingPerfil: State<Boolean?>,
     isLoadingWallpaper: State<Boolean?>,
-    isLoadingCurriculo : State<Boolean?>,
+    isLoadingCurriculo: State<Boolean?>,
     isOwnProfile: Boolean,
     isEmpresa: Boolean,
     viewModel: PerfilViewModel,
     context: Context,
-    urlCurriculo: State<String?>
+    urlCurriculo: String,
 ) {
     val isFavorito = remember {
         mutableStateOf(userInfo.value!!.isFavorito == true)
@@ -115,9 +118,6 @@ fun TopoDoPerfil(
 
 
                 if (!isEmpresa && isOwnProfile) {
-                    if (isLoadingCurriculo.value!!){
-                            CircularProgressIndicatorTH()
-                    } else {
                         val expanded = remember { mutableStateOf(false) }
                         IconButton(
                             onClick = {
@@ -125,28 +125,50 @@ fun TopoDoPerfil(
                             }
                         ) {
                             Icon(
-                                // TODO - Lógica para quando for seu perfil ser UploadFile, senão InsertDriveFile ou FilePresent
                                 imageVector = Icons.Filled.UploadFile,
                                 contentDescription = "Currículo",
                                 tint = PrimaryBlue,
                                 modifier = Modifier.size(34.dp)
                             )
+                            Box() {
+                                MenuCurriculo(
+                                    expanded,
+                                    Modifier.align(Alignment.BottomCenter),
+                                    viewModel,
+                                    context,
+                                    urlCurriculo,
+                                    userInfo.value!!.nome!!
+                                )
+                            }
                         }
-                        Box(){
-                            MenuCurriculo(
-                                expanded,
-                                Modifier.align(Alignment.BottomCenter),
-                                viewModel,
-                                context,
-                                urlCurriculo.value!!,
-                                userInfo.value!!.nome!!
-                            )
+
+                } else if (!isEmpresa && !isOwnProfile){
+                    IconButton(
+                        onClick = {
+                            if (urlCurriculo.isNullOrBlank()) {
+                                val toastErrorMessage =
+                                    "O usuário ainda não possui arquivo para download!"
+                                (context as Activity).runOnUiThread {
+                                    showToastError(context = context, message = toastErrorMessage)
+                                }
+                            } else {
+                                viewModel.downloadFile(
+                                    context,
+                                    urlCurriculo,
+                                    "Curriculo de ${userInfo.value!!.nome}"
+                                )
+                            }
                         }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.FileDownload,
+                            contentDescription = "Download currículo",
+                            tint = PrimaryBlue,
+                            modifier = Modifier.size(34.dp)
+                        )
                     }
-
-
-                    Spacer(modifier = Modifier.width(8.dp))
                 }
+                Spacer(modifier = Modifier.width(8.dp))
 
                 if (isOwnProfile) {
                     IconButton(onClick = {

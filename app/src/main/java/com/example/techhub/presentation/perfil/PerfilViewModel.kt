@@ -1,7 +1,10 @@
 package com.example.techhub.presentation.perfil
 
 import android.app.Activity
+import android.app.DownloadManager
 import android.content.Context
+import android.net.Uri
+import android.os.Environment
 import android.util.Log
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.MutableLiveData
@@ -17,6 +20,7 @@ import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import com.example.techhub.domain.model.updateFotoPerfil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -319,4 +323,30 @@ class PerfilViewModel : ViewModel() {
         }
     }
 
+    fun downloadFile(context: Context, url: String, fileName: String) {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val request = DownloadManager.Request(Uri.parse(url))
+                        .setTitle(fileName)
+                        .setDescription("Baixando arquivo...")
+                        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                        .setDestinationInExternalPublicDir(
+                            Environment.DIRECTORY_DOWNLOADS,
+                            fileName
+                        )
+                        .setAllowedOverMetered(true)
+                        .setAllowedOverRoaming(true)
+
+                    val downloadManager =
+                        context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+                    downloadManager.enqueue(request)
+
+                    Log.d("PERFIL_VIEW_MODEL", "BAIXAR CURRICULO - SUCCESS")
+
+                } catch (error: Exception) {
+                    Log.e("PERFIL_VIEW_MODEL", "BAIXAR CURRICULO ERROR: ${error.message}")
+                }
+            }
+
+    }
 }

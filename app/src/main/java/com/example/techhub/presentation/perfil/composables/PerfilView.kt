@@ -86,7 +86,7 @@ fun PerfilView(
                     isEmpresa = isEmpresa,
                     viewModel = viewModel,
                     context = context,
-                    urlCurriculo = urlCurriculo
+                    urlCurriculo = urlCurriculo.value ?: ""
                 )
 
                 // Nome e Infos
