@@ -214,30 +214,6 @@ fun CadastroFormView(
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                /* if (isLoading.observeAsState().value!!) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(10.dp)
-                            .height(60.dp),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        CircularProgressIndicatorTH(30.0)
-                    }
-                } else {
-                    ElevatedButtonTH(
-                        onClick = {
-                            cadastrarUsuario()
-                        },
-                        text = "Cadastrar",
-                        backgroundColor = Color.White,
-                        textColor = Color(PrimaryBlue.value),
-                        width = (350),
-                        height = (60)
-                    )
-                } */
-
                 ProgressButtonCadastro(
                     onClick = { cadastrarUsuario() },
                     text = UiText.StringResource(
