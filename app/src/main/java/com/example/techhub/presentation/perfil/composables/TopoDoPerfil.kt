@@ -22,6 +22,8 @@ import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FileDownload
 import androidx.compose.material.icons.filled.InsertDriveFile
+import androidx.compose.material.icons.filled.MoreHoriz
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.UploadFile
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
@@ -36,6 +38,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.techhub.common.composable.CircularProgressIndicatorTH
+import com.example.techhub.common.composable.MenuPerfilTerceiro
 import com.example.techhub.common.enums.TipoArquivo
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.common.utils.startNewActivity
@@ -64,6 +67,7 @@ fun TopoDoPerfil(
     val isFavorito = remember {
         mutableStateOf(userInfo.value!!.isFavorito == true)
     }
+    val expanded = remember { mutableStateOf(false) }
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -117,9 +121,10 @@ fun TopoDoPerfil(
                     }
                 }
 
-
-                if (!isEmpresa && isOwnProfile) {
-                        val expanded = remember { mutableStateOf(false) }
+                if (isLoadingCurriculo.value!!) {
+                    CircularProgressIndicatorTH(30.0)
+                } else {
+                    if (!isEmpresa && isOwnProfile) {
                         IconButton(
                             onClick = {
                                 expanded.value = !expanded.value
@@ -143,32 +148,32 @@ fun TopoDoPerfil(
                             }
                         }
 
-                } else if (!isEmpresa && !isOwnProfile){
-                    IconButton(
-                        onClick = {
-                            if (urlCurriculo.isNullOrBlank()) {
-                                val toastErrorMessage =
-                                    "O usuário ainda não possui arquivo para download!"
-                                (context as Activity).runOnUiThread {
-                                    showToastError(context = context, message = toastErrorMessage)
-                                }
-                            } else {
-                                viewModel.downloadFile(
+                    } else if (!isEmpresa && !isOwnProfile){
+                        IconButton(
+                            onClick = {
+                                expanded.value = !expanded.value
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.MoreVert,
+                                contentDescription = "Currículo",
+                                tint = PrimaryBlue,
+                                modifier = Modifier.size(34.dp)
+                            )
+                            Box() {
+                                MenuPerfilTerceiro(
+                                    expanded,
+                                    Modifier.align(Alignment.BottomCenter),
+                                    viewModel,
                                     context,
                                     urlCurriculo,
-                                    "Curriculo de ${userInfo.value!!.nome}"
+                                    userInfo.value!!.nome!!
                                 )
                             }
                         }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.FileDownload,
-                            contentDescription = "Download currículo",
-                            tint = PrimaryBlue,
-                            modifier = Modifier.size(34.dp)
-                        )
                     }
                 }
+
                 Spacer(modifier = Modifier.width(8.dp))
 
                 if (isOwnProfile) {

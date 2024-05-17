@@ -1,22 +1,16 @@
-package com.example.techhub.presentation.perfil.composables.curriculo
+package com.example.techhub.common.composable
 
 import android.app.Activity
-import android.app.DownloadManager
 import android.content.Context
 import android.net.Uri
-import android.os.Environment
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Download
-import androidx.compose.material.icons.filled.FileUpload
-import androidx.compose.material.icons.filled.Image
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Upload
-import androidx.compose.material.icons.filled.UploadFile
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -30,15 +24,10 @@ import androidx.compose.ui.unit.dp
 import com.example.techhub.common.enums.TipoArquivo
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.common.utils.uriToFile
-import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import com.example.techhub.presentation.perfil.PerfilViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 
 @Composable
-fun MenuCurriculo(
+fun MenuPerfilTerceiro(
     expanded: MutableState<Boolean>,
     modifier: Modifier = Modifier,
     perfilViewModel: PerfilViewModel,
@@ -55,20 +44,6 @@ fun MenuCurriculo(
             expanded = expanded.value,
             onDismissRequest = { expanded.value = false },
         ) {
-            val tipoArquivo = remember { mutableStateOf(TipoArquivo.CURRICULO) }
-            val getContent =
-                rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { result: Uri? ->
-                    result?.let { uri ->
-                        val file = uriToFile(context, uri);
-                        if (file != null) {
-                            perfilViewModel.enviarCurriculo(
-                                context,
-                                file,
-                                tipoArquivo.value
-                            )
-                        }
-                    }
-                }
 
             DropdownMenuItem(
                 onClick = {
@@ -94,21 +69,22 @@ fun MenuCurriculo(
                     Icon(Icons.Filled.Download, contentDescription = "Baixar currículo")
                 }
             )
+
             DropdownMenuItem(
                 onClick = {
-                    tipoArquivo.value = TipoArquivo.CURRICULO
-                    getContent.launch("application/pdf")
-                    expanded.value = !expanded.value
+                        val toastErrorMessage =
+                            "Link de perfil copiado para área de transferência!"
+                        (context as Activity).runOnUiThread {
+                            showToastError(context = context, message = toastErrorMessage)
+                        }
                 },
                 text = {
-                    Text("Subir novo currículo")
+                    Text("Compartilhar perfil")
                 },
                 leadingIcon = {
-                    Icon(Icons.Filled.Upload, contentDescription = "Subir novo currículo")
+                    Icon(Icons.Filled.Link, contentDescription = "Compartilhar perfil")
                 }
             )
         }
     }
-
 }
-
