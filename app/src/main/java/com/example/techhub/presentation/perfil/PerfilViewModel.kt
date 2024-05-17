@@ -341,6 +341,11 @@ class PerfilViewModel : ViewModel() {
                         context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
                     downloadManager.enqueue(request)
 
+                    val toastErrorMessage = "Currículo baixado com sucesso!"
+                    (context as Activity).runOnUiThread {
+                        showToastError(context = context, message = toastErrorMessage)
+                    }
+
                     Log.d("PERFIL_VIEW_MODEL", "BAIXAR CURRICULO - SUCCESS")
 
                 } catch (error: Exception) {
