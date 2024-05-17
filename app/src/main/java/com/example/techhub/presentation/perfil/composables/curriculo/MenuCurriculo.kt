@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.FileUpload
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Upload
 import androidx.compose.material.icons.filled.UploadFile
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -102,7 +103,7 @@ fun MenuCurriculo(
                     Text("Subir novo currículo")
                 },
                 leadingIcon = {
-                    Icon(Icons.Filled.UploadFile, contentDescription = "Subir novo currículo")
+                    Icon(Icons.Filled.Upload, contentDescription = "Subir novo currículo")
                 }
             )
         }

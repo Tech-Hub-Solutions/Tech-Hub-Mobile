@@ -21,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FileDownload
+import androidx.compose.material.icons.filled.InsertDriveFile
 import androidx.compose.material.icons.filled.UploadFile
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
