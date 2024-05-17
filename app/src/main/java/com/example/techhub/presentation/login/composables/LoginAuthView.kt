@@ -38,6 +38,7 @@ import com.example.techhub.R
 import com.example.techhub.common.composable.CenteredImageSection
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.TopBar
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.model.usuario.UsuarioLoginData
 import com.example.techhub.domain.model.usuario.UsuarioVerifyData
@@ -52,13 +53,17 @@ fun LoginAuthView(
 ) {
     var authCode by remember { mutableStateOf("") }
     val context = LocalContext.current
-    val toastErrorMessage = "Erro ao verificar usuário"
+    val toastErrorMessage =
+        UiText.StringResource(
+            R.string.toast_auth_text_error
+        ).asString(context = context)
 
     Scaffold(
         topBar = {
             TopBar(
                 willRedirectToActivity = true,
-                title = "Login",
+                title = UiText.StringResource(R.string.title_login)
+                    .asString(context = context),
                 activity = LoginActivity::class.java,
                 context = context
             )
@@ -81,7 +86,9 @@ fun LoginAuthView(
 
             CenteredImageSection(
                 imagePath = R.mipmap.login_auth_lock_image,
-                contentDescription = "@string/description_image_login_auth",
+                contentDescription = UiText.StringResource(
+                    R.string.description_image_login_auth
+                ).asString(context = context),
                 width = 252,
                 height = 300,
             )
@@ -94,7 +101,8 @@ fun LoginAuthView(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Insira o código de autorização",
+                    text = UiText.StringResource(R.string.text_auth_code)
+                        .asString(context = context),
                     color = Color(PrimaryBlue.value),
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Medium,
@@ -112,8 +120,18 @@ fun LoginAuthView(
                 onValueChange = {
                     authCode = it
                 },
-                label = { Text("Código de verificação") },
-                placeholder = { Text("Digite o código") },
+                label = {
+                    Text(
+                        UiText.StringResource(R.string.text_auth_code_verify)
+                            .asString(context = context)
+                    )
+                },
+                placeholder = {
+                    Text(
+                        UiText.StringResource(R.string.placeholder_auth_code)
+                            .asString(context = context)
+                    )
+                },
                 textStyle = LocalTextStyle.current.copy(
                     color = Color.Black,
                     fontSize = 24.sp,
@@ -158,7 +176,8 @@ fun LoginAuthView(
                         .height(52.dp)
                 ) {
                     Text(
-                        text = "Cancelar",
+                        text = UiText.StringResource(R.string.btn_text_cancelar)
+                            .asString(context = context),
                         color = Color(GrayButtonText.value),
                         fontSize = 16.sp,
                         fontWeight = FontWeight(300)
@@ -177,7 +196,8 @@ fun LoginAuthView(
                             toastErrorMessage = toastErrorMessage
                         )
                     },
-                    text = "Continuar",
+                    text = UiText.StringResource(R.string.btn_text_continuar)
+                        .asString(context = context),
                     backgroundColor = Color(PrimaryBlue.value),
                     textColor = Color.White,
                     width = 130,

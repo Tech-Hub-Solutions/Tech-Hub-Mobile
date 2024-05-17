@@ -28,8 +28,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.techhub.R
 import com.example.techhub.common.composable.CustomizedElevatedButton
 import com.example.techhub.common.composable.ElevatedButtonTH
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.domain.model.perfil.PerfilAvaliacaoDetalhadoData
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
@@ -72,7 +74,12 @@ fun ComentariosSection(
         )
 
         Row(modifier = Modifier.padding(bottom = 16.dp, start = 24.dp, end = 24.dp)) {
-            SectionTitle(title = "Comentários", isCentered = false)
+            SectionTitle(
+                title = UiText.StringResource(
+                    R.string.text_comments
+                ).asString(context = context),
+                isCentered = false
+            )
         }
 
         Column(
@@ -83,9 +90,13 @@ fun ComentariosSection(
                 .padding(bottom = 16.dp, start = 24.dp, end = 24.dp),
             Arrangement.spacedBy(16.dp)
         ) {
-
             if (comments.isNullOrEmpty()) {
-                Text(text = "Não há comentários", color = GrayText)
+                Text(
+                    text = UiText.StringResource(
+                        R.string.text_no_comments
+                    ).asString(context = context),
+                    color = GrayText
+                )
             } else {
                 comments.forEach {
                     ComentarioCard(
@@ -124,10 +135,14 @@ fun ComentariosSection(
                             8.dp,
                             Alignment.CenterHorizontally
                         ),
-                        text = "Ver mais",
+                        text = UiText.StringResource(
+                            R.string.btn_text_load_more
+                        ).asString(context = context),
                         fontSize = 16,
                         fontWeight = FontWeight.Medium,
-                        contentDescription = "Botão para carregar mais talentos"
+                        contentDescription = UiText.StringResource(
+                            R.string.btn_description_load_more_talents
+                        ).asString(context = context),
                     )
                 }
             }
@@ -153,11 +168,12 @@ fun ComentariosSection(
                     comment = comentarioUsuario.value,
                     rating = rating.value
                 )
-
                 rating.value = 0.0
                 comentarioUsuario.value = ""
             },
-            text = "Comentar",
+            text = UiText.StringResource(
+                R.string.btn_text_comment
+            ).asString(context = context),
             backgroundColor = PrimaryBlue,
             width = 160,
             height = 40,

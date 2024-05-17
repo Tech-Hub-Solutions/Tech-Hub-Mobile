@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -23,7 +22,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.techhub.R
 import com.example.techhub.common.composable.CircularProgressIndicatorTH
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.shadowCustom
 import com.example.techhub.presentation.perfil.PerfilViewModel
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
@@ -52,11 +53,13 @@ fun RoundedPerfilImage(
             }
         } else {
             if (imagePath.isNullOrBlank()) {
-                RoundedPerfilImageIcon()
+                RoundedPerfilImageIcon(context = context)
             } else {
                 AsyncImage(
                     model = imagePath,
-                    contentDescription = "Rounded Perfil Image",
+                    contentDescription = UiText.StringResource(
+                        R.string.description_image_rounded_perfil
+                    ).asString(context = context),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .size(115.dp)
@@ -83,13 +86,16 @@ fun RoundedPerfilImage(
             ) {
                 Icon(
                     Icons.Rounded.Edit,
-                    contentDescription = "Edit Perfil Image",
+                    contentDescription = UiText.StringResource(
+                        R.string.description_image_edit_perfil
+                    ).asString(context = context),
                     tint = PrimaryBlue,
                     modifier = Modifier
                         .size(30.dp)
                         .clip(CircleShape)
                 )
             }
+
             MenuEditarImagens(
                 expanded,
                 Modifier.align(Alignment.BottomCenter),
@@ -98,20 +104,4 @@ fun RoundedPerfilImage(
             )
         }
     }
-}
-
-
-@Composable
-fun RoundedPerfilImageIcon() {
-    Icon(
-        Icons.Filled.Person,
-        contentDescription = "@string/btn_description_profile",
-        tint = PrimaryBlue,
-        modifier = Modifier
-            .size(113.dp)
-            .clip(CircleShape)
-            .background(Color(0xFFE4E4E4))
-            .padding(2.dp)
-            .border(2.dp, Color.White.copy(alpha = 0.5f), CircleShape)
-    )
 }

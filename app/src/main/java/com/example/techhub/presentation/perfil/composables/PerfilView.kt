@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
@@ -27,7 +26,6 @@ import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.presentation.perfil.GitHubViewModel
 import com.example.techhub.presentation.perfil.PerfilViewModel
 import com.example.techhub.presentation.perfil.composables.comentario.ComentariosSection
-import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
 fun PerfilView(
@@ -50,6 +48,7 @@ fun PerfilView(
     LaunchedEffect(Unit) {
         viewModel.getInfosUsuario(context = context, userId = id)
     }
+
 
     Scaffold(
         bottomBar = {
@@ -129,7 +128,8 @@ fun PerfilView(
                 FloatingActionButtonScroll(
                     isScrolled = scrollState.value > 0,
                     scrollState = scrollState,
-                    scope = scope
+                    scope = scope,
+                    context = context
                 )
             }
         }

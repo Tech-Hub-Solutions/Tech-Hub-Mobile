@@ -1,5 +1,6 @@
 package com.example.techhub.common.composable
 
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,12 +20,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.presentation.ui.theme.GrayButtonText
 import com.example.techhub.presentation.ui.theme.GraySwitchUnchecked
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun CompareSwitch(onValueChanged: (Boolean) -> Unit) {
+fun CompareSwitch(onValueChanged: (Boolean) -> Unit, context: Context) {
     var checked by remember { mutableStateOf(false) }
 
     Row(
@@ -33,7 +36,9 @@ fun CompareSwitch(onValueChanged: (Boolean) -> Unit) {
         modifier = Modifier.fillMaxWidth()
     ) {
         Text(
-            text = "Ativar comparação",
+            text = UiText.StringResource(
+                R.string.text_activate_compare
+            ).asString(context = context),
             color = Color.Black,
             fontWeight = FontWeight.Normal,
             fontSize = 15.sp
@@ -54,8 +59,6 @@ fun CompareSwitch(onValueChanged: (Boolean) -> Unit) {
                 uncheckedBorderColor = Color.Transparent
             )
         )
-
-
     }
 }
 

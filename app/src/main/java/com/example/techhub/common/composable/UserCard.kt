@@ -41,6 +41,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
 import com.example.techhub.presentation.favoritos.FavoritosViewModel
@@ -106,7 +108,9 @@ fun UserCard(
         if (userProfile.urlFotoPerfil.isNullOrBlank()) {
             Icon(
                 Icons.Filled.Person,
-                contentDescription = "@string/btn_description_profile",
+                contentDescription = UiText.StringResource(
+                    R.string.btn_description_profile
+                ).asString(context = context),
                 tint = PrimaryBlue,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -117,7 +121,9 @@ fun UserCard(
         } else {
             AsyncImage(
                 model = userProfile.urlFotoPerfil,
-                contentDescription = "Foto do freelancer",
+                contentDescription = UiText.StringResource(
+                    R.string.description_image_photo_freelancer
+                ).asString(context = context),
                 modifier = Modifier.fillMaxHeight(0.4f),
                 alignment = Alignment.TopCenter,
                 contentScale = ContentScale.Crop
@@ -191,7 +197,9 @@ fun UserCard(
                 if (isComparing) {
                     Icon(
                         imageVector = Icons.Filled.Favorite,
-                        contentDescription = "Botão para favoritar",
+                        contentDescription = UiText.StringResource(
+                            R.string.btn_description_favoritar_perfil
+                        ).asString(context = context),
                         modifier = Modifier
                             .size(20.dp)
                             .clickable {

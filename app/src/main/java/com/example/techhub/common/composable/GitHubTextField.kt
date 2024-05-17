@@ -1,10 +1,13 @@
 package com.example.techhub.common.composable
+
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -19,17 +22,19 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
+
 @Composable
 fun GitHubTextField(
     label: String,
     onValueChanged: (String) -> Unit,
-    initialValue: String = ""
+    initialValue: String = "",
+    context: Context
 ) {
     var filledText by remember { mutableStateOf(initialValue) }
-    var isValueValid by remember { mutableStateOf(false) }
-    Column {
 
-        androidx.compose.material3.OutlinedTextField(
+    Column {
+        OutlinedTextField(
             value = filledText,
             onValueChange = {
                 filledText = it
@@ -52,7 +57,9 @@ fun GitHubTextField(
             leadingIcon = {
                 Image(
                     painter = painterResource(id = R.mipmap.github),
-                    contentDescription = "Campo Link do Github",
+                    contentDescription = UiText.StringResource(
+                        R.string.description_image_link_github
+                    ).asString(context = context),
                 )
             },
             modifier = Modifier

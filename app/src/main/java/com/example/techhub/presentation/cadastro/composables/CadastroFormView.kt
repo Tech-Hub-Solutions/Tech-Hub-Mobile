@@ -129,7 +129,8 @@ fun CadastroFormView(
                 willRedirectToActivity = false,
                 navController = navController,
                 title = "Cadastro",
-                route = Screen.TravaTelaCadastroView.route
+                route = Screen.TravaTelaCadastroView.route,
+                context = context
             )
         },
     ) { innerPadding ->
@@ -172,25 +173,25 @@ fun CadastroFormView(
                 )
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                NameTextField( onValueChanged = { name = it } )
+                NameTextField(onValueChanged = { name = it }, context = context)
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
                 if (userType == Constants.FREELANCER) {
-                    CpfTextField { userDocument = it }
+                    CpfTextField({ userDocument = it }, context = context)
                 } else if (userType == Constants.EMPRESA) {
-                    CnpjTextField { userDocument = it }
+                    CnpjTextField({ userDocument = it }, context = context)
                 }
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                EmailTextField(onValueChanged = { email = it })
+                EmailTextField(onValueChanged = { email = it }, context = context)
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                PasswordTextField { password = it }
+                PasswordTextField(onValueChanged = { password = it }, context = context)
 
-                Switch2FA { isUsing2FA = it }
+                Switch2FA({ isUsing2FA = it }, context = context)
 
                 Spacer(modifier = Modifier.padding(12.dp))
 

@@ -37,6 +37,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.techhub.R
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.composable.CircularProgressIndicatorTH
 import com.example.techhub.common.composable.MenuPerfilTerceiro
 import com.example.techhub.common.enums.TipoArquivo
@@ -114,7 +116,9 @@ fun TopoDoPerfil(
 
                         Icon(
                             imageVector = icon,
-                            contentDescription = "Favoritar",
+                            contentDescription = UiText.StringResource(
+                                R.string.btn_description_favoritar_perfil
+                            ).asString(context = context),
                             tint = color,
                             modifier = Modifier.size(34.dp)
                         )
@@ -184,7 +188,9 @@ fun TopoDoPerfil(
                     }) {
                         Icon(
                             imageVector = Icons.Filled.EditNote,
-                            contentDescription = "Editar Perfil",
+                            contentDescription = UiText.StringResource(
+                                R.string.btn_description_editar_perfil
+                            ).asString(context = context),
                             tint = Color.Gray,
                             modifier = Modifier.size(34.dp)
                         )

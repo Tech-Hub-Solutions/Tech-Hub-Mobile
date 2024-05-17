@@ -14,8 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.example.techhub.R
 import com.example.techhub.common.composable.BottomBar
 import com.example.techhub.common.composable.TopBarTitle
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
 import com.example.techhub.presentation.favoritos.FavoritosViewModel
 
@@ -29,7 +31,9 @@ fun FavoritosView() {
     Scaffold(
         topBar = {
             TopBarTitle(
-                title = "Favoritos"
+                title = UiText.StringResource(
+                    R.string.title_favorites
+                ).asString(context = context)
             )
         },
         bottomBar = { BottomBar() }
@@ -57,5 +61,5 @@ fun FavoritosView() {
         }
     }
 
-    BottomSheetCompararTalentos(selectedUsers = selectedUsers, isAbleToCompare)
+    BottomSheetCompararTalentos(selectedUsers = selectedUsers, isAbleToCompare, context)
 }
