@@ -8,9 +8,11 @@ import androidx.compose.ui.unit.dp
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun CircularProgressIndicatorTH() {
+fun CircularProgressIndicatorTH(
+    size: Double ?= 50.0
+) {
     CircularProgressIndicator(
-        modifier = Modifier.size(50.dp),
+        modifier = Modifier.size(size!!.dp),
         color = PrimaryBlue
     )
 }

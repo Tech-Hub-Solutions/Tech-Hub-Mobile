@@ -41,6 +41,8 @@ fun PerfilView(
     val isLoading = viewModel.isLoading.observeAsState();
     val isLoadingPerfil = viewModel.isLoadingPerfil.observeAsState()
     val isLoadingWallpaper = viewModel.isLoadingWallpaper.observeAsState()
+    val isLoadingCurriculo = viewModel.isLoadingCurriculo.observeAsState()
+    val urlCurriculo = viewModel.urlCurriculo.observeAsState()
     val isEmpresa = userInfo.value!!.funcao == UsuarioFuncao.EMPRESA
 
     LaunchedEffect(Unit) {
@@ -79,9 +81,11 @@ fun PerfilView(
                     isLoadingPerfil = isLoadingPerfil,
                     isLoadingWallpaper = isLoadingWallpaper,
                     isOwnProfile = isOwnProfile,
+                    isLoadingCurriculo = isLoadingCurriculo,
                     isEmpresa = isEmpresa,
                     viewModel = viewModel,
-                    context = context
+                    context = context,
+                    urlCurriculo = urlCurriculo.value ?: ""
                 )
 
                 // Nome e Infos

@@ -1,7 +1,10 @@
 package com.example.techhub.presentation.perfil
 
 import android.app.Activity
+import android.app.DownloadManager
 import android.content.Context
+import android.net.Uri
+import android.os.Environment
 import android.util.Log
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.MutableLiveData
@@ -19,6 +22,7 @@ import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import com.example.techhub.domain.model.updateFotoPerfil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -32,9 +36,11 @@ class PerfilViewModel : ViewModel() {
     val isLoading = MutableLiveData(true)
     val isLoadingPerfil = MutableLiveData(false)
     val isLoadingWallpaper = MutableLiveData(false)
+    val isLoadingCurriculo = MutableLiveData(false)
     val isLastPage = MutableLiveData(false)
     val avaliacoesDoUsuario = MutableLiveData(listOf(AvaliacaoTotalData()))
     val comentariosDoUsuario = MutableLiveData(SnapshotStateList<PerfilAvaliacaoDetalhadoData>())
+    val urlCurriculo = MutableLiveData("")
 
     fun getInfosUsuario(context: Context, userId: Int) {
         isLoading.postValue(true)
@@ -50,9 +56,12 @@ class PerfilViewModel : ViewModel() {
 
                 if (response.isSuccessful) {
                     usuario.postValue(response.body()!!)
+                    urlCurriculo.postValue(response.body()!!.urlCurriculo)
+
                     if (response.body()!!.idUsuario != CurrentUser.userProfile?.id) {
                         setVisualizacaoUsuario(context, response.body()!!.idPerfil!!)
                     }
+
                 } else {
                     (context as Activity).runOnUiThread {
                         showToastError(context = context, message = toastErrorMessage)
@@ -309,5 +318,87 @@ class PerfilViewModel : ViewModel() {
                 Log.e("PERFIL_VIEW_MODEL", "SET VISUALIZACAO PERFIL ERROR: ${error.message}")
             }
         }
+    }
+
+
+    fun enviarCurriculo(context: Context, arquivo: File, tipoArquivo: TipoArquivo) {
+        isLoadingCurriculo.postValue(true)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val requestBody = arquivo.asRequestBody("application/pdf".toMediaTypeOrNull())
+                val filePart =
+                    MultipartBody.Part.createFormData("arquivo", arquivo.name, requestBody)
+                val tipoArquivoPart =
+                    MultipartBody.Part.createFormData("tipoArquivo", tipoArquivo.name)
+
+                val response = apiPerfil.atualizarArquivo(filePart, tipoArquivoPart)
+
+                if (response.isSuccessful) {
+                    if (response.body() != null) {
+                        val toastErrorMessage = "Curriculo enviado com sucesso!."
+
+                        urlCurriculo.postValue(response.body()!!.url)
+
+                        Log.d(
+                            "PERFIL_VIEW_MODEL",
+                            "CURRICULO ENVIADO: ${response.body().toString()}"
+                        )
+
+                        (context as Activity).runOnUiThread {
+                            showToastError(context = context, message = toastErrorMessage)
+                        }
+                    }
+                } else {
+                    val toastErrorMessage = "Erro ao enviar currículo!"
+                    (context as Activity).runOnUiThread {
+                        showToastError(context = context, message = toastErrorMessage)
+                    }
+                    Log.e(
+                        "PERFIL_VIEW_MODEL",
+                        "CURRICULO NÃO ENVIADO: ${response.errorBody()?.string()}"
+                    )
+                }
+            } catch (error: Exception) {
+                val toastErrorMessage = "Erro ao enviar currículo!"
+                (context as Activity).runOnUiThread {
+                    showToastError(context = context, message = toastErrorMessage)
+                }
+                Log.e("PERFIL_VIEW_MODEL", "ENVIAR CURRICULO ERROR: ${error.message}")
+            } finally {
+                isLoadingCurriculo.postValue(false)
+            }
+        }
+    }
+
+    fun downloadFile(context: Context, url: String, fileName: String) {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val request = DownloadManager.Request(Uri.parse(url))
+                        .setTitle(fileName)
+                        .setDescription("Baixando arquivo...")
+                        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                        .setDestinationInExternalPublicDir(
+                            Environment.DIRECTORY_DOWNLOADS,
+                            fileName
+                        )
+                        .setAllowedOverMetered(true)
+                        .setAllowedOverRoaming(true)
+
+                    val downloadManager =
+                        context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+                    downloadManager.enqueue(request)
+
+                    val toastErrorMessage = "Currículo baixado com sucesso!"
+                    (context as Activity).runOnUiThread {
+                        showToastError(context = context, message = toastErrorMessage)
+                    }
+
+                    Log.d("PERFIL_VIEW_MODEL", "BAIXAR CURRICULO - SUCCESS")
+
+                } catch (error: Exception) {
+                    Log.e("PERFIL_VIEW_MODEL", "BAIXAR CURRICULO ERROR: ${error.message}")
+                }
+            }
+
     }
 }
