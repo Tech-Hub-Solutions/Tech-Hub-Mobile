@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -21,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -35,10 +37,12 @@ import androidx.compose.ui.unit.sp
 import com.example.techhub.R
 import com.example.techhub.common.composable.AboutMeTextField
 import com.example.techhub.common.composable.DescriptionTextField
+import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.ExperienceTextField
 import com.example.techhub.common.composable.GitHubTextField
 import com.example.techhub.common.composable.LinkedinTextField
 import com.example.techhub.common.composable.PriceTextField
+import com.example.techhub.common.composable.ProgressButton
 import com.example.techhub.common.composable.SkillsSelectedField
 import com.example.techhub.common.composable.SkillsDropDownMenu
 import com.example.techhub.common.composable.TopBar
@@ -75,6 +79,7 @@ fun EditarUsuarioView(
             it.categoria == "hard-skill"
         }.toMutableStateList())
     }
+    val isLoading = viewModel.isLoading.observeAsState()
 
     Scaffold(
         topBar = {
@@ -236,9 +241,8 @@ fun EditarUsuarioView(
                     Spacer(modifier = Modifier.padding(2.dp))
                 }
 
-                ElevatedButton(
+                ProgressButton(
                     onClick = {
-                        // juntar as skills em uma lista só
                         val skills = mutableListOf<Int>()
                         skills.addAll(softSkillList.value.map { it.id!! })
                         skills.addAll(hardSkillList.value.map { it.id!! })
@@ -254,25 +258,17 @@ fun EditarUsuarioView(
                         )
                         viewModel.updateUserInfo(context, perfilCadastroData)
                     },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(60.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(PrimaryBlue.value),
-                        contentColor = Color.White,
-                    ),
-                    shape = RoundedCornerShape(10.dp),
-                ) {
-                    Text(
-                        text = UiText.StringResource(
-                            R.string.btn_text_salvar,
-                        ).asString(context = context),
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight(500)
-                    )
-                }
+                    text = UiText.StringResource(
+                        R.string.btn_text_salvar,
+                    ).asString(context = context),
+                    backgroundColor = Color(PrimaryBlue.value),
+                    height = (60),
+                    width = (385),
+                    padding = (0),
+                    isLoading = isLoading,
+                )
 
-                Spacer(modifier = Modifier.padding(12.dp))
+                Spacer(modifier = Modifier.padding(6.dp))
 
                 ElevatedButton(
                     onClick = {
@@ -281,7 +277,7 @@ fun EditarUsuarioView(
                         startNewActivity(context, PerfilActivity::class.java, extras)
                     },
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .width(385.dp)
                         .height(60.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.White,
@@ -300,9 +296,9 @@ fun EditarUsuarioView(
                         fontWeight = FontWeight(500)
                     )
                 }
-
             }
         }
     }
 }
+
 

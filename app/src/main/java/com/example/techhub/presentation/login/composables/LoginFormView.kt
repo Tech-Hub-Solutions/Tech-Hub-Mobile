@@ -37,6 +37,7 @@ import com.example.techhub.common.composable.CircularProgressIndicatorTH
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.EmailTextField
 import com.example.techhub.common.composable.PasswordTextField
+import com.example.techhub.common.composable.ProgressButton
 import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.presentation.cadastro.CadastroActivity
@@ -127,27 +128,17 @@ fun LoginFormView(
 
             Spacer(modifier = Modifier.padding(12.dp))
 
-            if (isLoading.value!!) {
-                Column(
-                    modifier = Modifier.fillMaxWidth()
-                        .padding(10.dp)
-                        .height(60.dp),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    CircularProgressIndicatorTH(30.0)
-                }
-            } else {
-                ElevatedButtonTH(
-                    onClick = { viewModel.loginUser(user, context, onAuthSucess) },
-                    text = UiText.StringResource(
-                        R.string.btn_text_entrar
-                    ).asString(context = context),
-                    backgroundColor = Color(PrimaryBlue.value),
-                    width = (350),
-                    height = (60),
-                )
-            }
+            ProgressButton(
+                onClick = { viewModel.loginUser(user, context, onAuthSucess) },
+                text = UiText.StringResource(
+                    R.string.btn_text_entrar
+                ).asString(context = context),
+                backgroundColor = Color(PrimaryBlue.value),
+                height = (60),
+                width = (350),
+                padding = (10),
+                isLoading = isLoading
+            )
 
             Spacer(modifier = Modifier.padding(8.dp))
 
