@@ -22,7 +22,7 @@ fun ElevatedButtonTH(
     text: String,
     backgroundColor: Color,
     textColor: Color = Color.White,
-    width: Int, height: Int
+    width: Int, height: Int,
 ) {
     ElevatedButton(
         onClick = { onClick() },

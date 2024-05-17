@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -15,6 +16,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -31,6 +33,7 @@ import com.example.techhub.common.composable.TopBar
 import com.example.techhub.domain.model.usuario.UsuarioLoginData
 import com.example.techhub.presentation.index.IndexActivity
 import com.example.techhub.R
+import com.example.techhub.common.composable.CircularProgressIndicatorTH
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.EmailTextField
 import com.example.techhub.common.composable.PasswordTextField
@@ -47,7 +50,7 @@ fun LoginFormView(
     onAuthSucess: (UsuarioLoginData) -> Unit
 ) {
     val context = LocalContext.current
-
+    val isLoading = viewModel.isLoading.observeAsState();
     val (user, userSetter) = remember {
         mutableStateOf(UsuarioLoginData())
     }
@@ -124,15 +127,27 @@ fun LoginFormView(
 
             Spacer(modifier = Modifier.padding(12.dp))
 
-            ElevatedButtonTH(
-                onClick = { viewModel.loginUser(user, context, onAuthSucess) },
-                text = UiText.StringResource(
-                    R.string.btn_text_entrar
-                ).asString(context = context),
-                backgroundColor = Color(PrimaryBlue.value),
-                width = (350),
-                height = (60),
-            )
+            if (isLoading.value!!) {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(10.dp)
+                        .height(60.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CircularProgressIndicatorTH(30.0)
+                }
+            } else {
+                ElevatedButtonTH(
+                    onClick = { viewModel.loginUser(user, context, onAuthSucess) },
+                    text = UiText.StringResource(
+                        R.string.btn_text_entrar
+                    ).asString(context = context),
+                    backgroundColor = Color(PrimaryBlue.value),
+                    width = (350),
+                    height = (60),
+                )
+            }
 
             Spacer(modifier = Modifier.padding(8.dp))
 
