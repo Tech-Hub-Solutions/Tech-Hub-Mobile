@@ -258,8 +258,10 @@ class PerfilViewModel : ViewModel() {
             R.string.toast_text_error_comentar_perfil
         ).asString(context = context)
 
+
         CoroutineScope(Dispatchers.IO).launch {
             try {
+
                 val response = apiPerfil.setComentariosUsuario(
                     avaliadoId,
                     AvaliacaoData(
@@ -371,34 +373,34 @@ class PerfilViewModel : ViewModel() {
     }
 
     fun downloadFile(context: Context, url: String, fileName: String) {
-            CoroutineScope(Dispatchers.IO).launch {
-                try {
-                    val request = DownloadManager.Request(Uri.parse(url))
-                        .setTitle(fileName)
-                        .setDescription("Baixando arquivo...")
-                        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                        .setDestinationInExternalPublicDir(
-                            Environment.DIRECTORY_DOWNLOADS,
-                            fileName
-                        )
-                        .setAllowedOverMetered(true)
-                        .setAllowedOverRoaming(true)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val request = DownloadManager.Request(Uri.parse(url))
+                    .setTitle(fileName)
+                    .setDescription("Baixando arquivo...")
+                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                    .setDestinationInExternalPublicDir(
+                        Environment.DIRECTORY_DOWNLOADS,
+                        fileName
+                    )
+                    .setAllowedOverMetered(true)
+                    .setAllowedOverRoaming(true)
 
-                    val downloadManager =
-                        context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-                    downloadManager.enqueue(request)
+                val downloadManager =
+                    context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+                downloadManager.enqueue(request)
 
-                    val toastErrorMessage = "Currículo baixado com sucesso!"
-                    (context as Activity).runOnUiThread {
-                        showToastError(context = context, message = toastErrorMessage)
-                    }
-
-                    Log.d("PERFIL_VIEW_MODEL", "BAIXAR CURRICULO - SUCCESS")
-
-                } catch (error: Exception) {
-                    Log.e("PERFIL_VIEW_MODEL", "BAIXAR CURRICULO ERROR: ${error.message}")
+                val toastErrorMessage = "Currículo baixado com sucesso!"
+                (context as Activity).runOnUiThread {
+                    showToastError(context = context, message = toastErrorMessage)
                 }
+
+                Log.d("PERFIL_VIEW_MODEL", "BAIXAR CURRICULO - SUCCESS")
+
+            } catch (error: Exception) {
+                Log.e("PERFIL_VIEW_MODEL", "BAIXAR CURRICULO ERROR: ${error.message}")
             }
+        }
 
     }
 }

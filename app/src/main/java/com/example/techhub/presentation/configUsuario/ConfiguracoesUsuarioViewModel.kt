@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 class ConfiguracoesUsuarioViewModel {
     val errorApi = MutableLiveData("")
     val usuarioTokenData = MutableLiveData(UsuarioTokenData())
+    val isLoading = MutableLiveData(false)
 
     private val usuarioApi = RetrofitService.getUsuarioService()
 
@@ -24,6 +25,8 @@ class ConfiguracoesUsuarioViewModel {
         usuarioAtualizacaoData: UsuarioAtualizacaoData,
         context: Context,
     ) {
+        isLoading.postValue(true)
+
         try {
             CoroutineScope(Dispatchers.IO).launch {
                 val response = usuarioApi.atualizarConfigUsuario(usuarioAtualizacaoData)
@@ -42,16 +45,19 @@ class ConfiguracoesUsuarioViewModel {
                         }
                     } else {
                         Log.e("PUT - AtualizarConfigUsuario - Error", "Body Nulo")
+                        isLoading.postValue(false)
                     }
 
                     errorApi.postValue("")
                 } else {
                     errorApi.postValue(response.errorBody().toString())
+                    isLoading.postValue(false)
                 }
             }
 
         } catch (e: Exception) {
             Log.e("PUT - AtualizarConfigUsuario - Error", e.message.toString())
+            isLoading.postValue(false)
         }
     }
 }
