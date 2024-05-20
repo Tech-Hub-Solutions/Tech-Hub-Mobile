@@ -36,6 +36,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ClipboardManager
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.techhub.R
 import com.example.techhub.common.utils.UiText
@@ -70,6 +73,9 @@ fun TopoDoPerfil(
         mutableStateOf(userInfo.value!!.isFavorito == true)
     }
     val expanded = remember { mutableStateOf(false) }
+    val clipboardManager: ClipboardManager = LocalClipboardManager.current
+    val urlPerfil = "https://tech-hub.ddns.net/perfil/${userInfo.value!!.idPerfil}"
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -136,7 +142,9 @@ fun TopoDoPerfil(
                         ) {
                             Icon(
                                 imageVector = Icons.Filled.UploadFile,
-                                contentDescription = "Currículo",
+                                contentDescription = UiText.StringResource(
+                                    R.string.icon_desc_curriculo
+                                ).asString(context = context),
                                 tint = PrimaryBlue,
                                 modifier = Modifier.size(34.dp)
                             )
@@ -147,12 +155,14 @@ fun TopoDoPerfil(
                                     viewModel,
                                     context,
                                     urlCurriculo,
-                                    userInfo.value!!.nome!!
+                                    userInfo.value!!.nome!!,
+                                    clipboardManager = clipboardManager,
+                                    urlPerfil = urlPerfil
                                 )
                             }
                         }
 
-                    } else if (!isEmpresa && !isOwnProfile){
+                    } else if (!isEmpresa && !isOwnProfile) {
                         IconButton(
                             onClick = {
                                 expanded.value = !expanded.value
@@ -160,7 +170,9 @@ fun TopoDoPerfil(
                         ) {
                             Icon(
                                 imageVector = Icons.Filled.MoreVert,
-                                contentDescription = "Currículo",
+                                contentDescription = UiText.StringResource(
+                                    R.string.icon_desc_curriculo
+                                ).asString(context = context),
                                 tint = PrimaryBlue,
                                 modifier = Modifier.size(34.dp)
                             )
@@ -171,7 +183,9 @@ fun TopoDoPerfil(
                                     viewModel,
                                     context,
                                     urlCurriculo,
-                                    userInfo.value!!.nome!!
+                                    userInfo.value!!.nome!!,
+                                    clipboardManager = clipboardManager,
+                                    urlPerfil = urlPerfil
                                 )
                             }
                         }
