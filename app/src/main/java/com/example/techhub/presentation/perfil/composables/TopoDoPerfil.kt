@@ -36,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.techhub.R
 import com.example.techhub.common.utils.UiText
@@ -136,7 +137,9 @@ fun TopoDoPerfil(
                         ) {
                             Icon(
                                 imageVector = Icons.Filled.UploadFile,
-                                contentDescription = "Currículo",
+                                contentDescription = UiText.StringResource(
+                                    R.string.icon_desc_curriculo
+                                ).asString(context = context),
                                 tint = PrimaryBlue,
                                 modifier = Modifier.size(34.dp)
                             )
@@ -152,7 +155,7 @@ fun TopoDoPerfil(
                             }
                         }
 
-                    } else if (!isEmpresa && !isOwnProfile){
+                    } else if (!isEmpresa && !isOwnProfile) {
                         IconButton(
                             onClick = {
                                 expanded.value = !expanded.value
@@ -160,7 +163,9 @@ fun TopoDoPerfil(
                         ) {
                             Icon(
                                 imageVector = Icons.Filled.MoreVert,
-                                contentDescription = "Currículo",
+                                contentDescription = UiText.StringResource(
+                                    R.string.icon_desc_curriculo
+                                ).asString(context = context),
                                 tint = PrimaryBlue,
                                 modifier = Modifier.size(34.dp)
                             )
