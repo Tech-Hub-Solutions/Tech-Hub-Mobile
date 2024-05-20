@@ -26,8 +26,11 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.techhub.R
 import com.example.techhub.common.enums.TipoArquivo
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.common.utils.uriToFile
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
@@ -73,8 +76,10 @@ fun MenuCurriculo(
             DropdownMenuItem(
                 onClick = {
                     if (urlCurriculo.isNullOrBlank()) {
-                        val toastErrorMessage =
-                            "O usuário ainda não possui arquivo para download!"
+                        val toastErrorMessage = UiText.StringResource(
+                            R.string.toast_error_sem_curriculo
+                        ).asString(context = context);
+
                         (context as Activity).runOnUiThread {
                             showToastError(context = context, message = toastErrorMessage)
                         }
@@ -82,29 +87,48 @@ fun MenuCurriculo(
                         perfilViewModel.downloadFile(
                             context,
                             urlCurriculo,
-                            "Currículo de ${userName}"
+                            UiText.StringResource(
+                                R.string.text_curriculum_name
+                            ).asString(context = context) + userName
                         )
                         expanded.value = !expanded.value
                     }
                 },
                 text = {
-                    Text("Baixar currículo")
+                    Text(
+                        UiText.StringResource(
+                            R.string.btn_download_curriculo
+                        ).asString(context = context)
+                    )
                 },
                 leadingIcon = {
-                    Icon(Icons.Filled.Download, contentDescription = "Baixar currículo")
+                    Icon(
+                        Icons.Filled.Download,
+                        contentDescription = UiText.StringResource(
+                            R.string.btn_download_curriculo
+                        ).asString(context = context)
+                    )
                 }
             )
             DropdownMenuItem(
                 onClick = {
                     tipoArquivo.value = TipoArquivo.CURRICULO
                     getContent.launch("application/pdf")
-                    expanded.value = !expanded.value
                 },
                 text = {
-                    Text("Subir novo currículo")
+                    Text(
+                        UiText.StringResource(
+                            R.string.btn_upload_curriculo
+                        ).asString(context = context)
+                    )
                 },
                 leadingIcon = {
-                    Icon(Icons.Filled.Upload, contentDescription = "Subir novo currículo")
+                    Icon(
+                        Icons.Filled.Upload,
+                        contentDescription = UiText.StringResource(
+                            R.string.btn_upload_curriculo
+                        ).asString(context = context)
+                    )
                 }
             )
         }
