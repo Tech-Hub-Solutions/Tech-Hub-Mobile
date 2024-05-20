@@ -5,6 +5,7 @@ import android.app.DownloadManager
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.FileUpload
 import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Upload
 import androidx.compose.material.icons.filled.UploadFile
@@ -26,7 +28,10 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ClipboardManager
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import com.example.techhub.R
 import com.example.techhub.common.enums.TipoArquivo
@@ -48,6 +53,7 @@ fun MenuCurriculo(
     context: Context,
     urlCurriculo: String,
     userName: String,
+    clipboardManager: ClipboardManager
 ) {
     Box(
         modifier = Modifier
@@ -129,6 +135,35 @@ fun MenuCurriculo(
                             R.string.btn_upload_curriculo
                         ).asString(context = context)
                     )
+                }
+            )
+            DropdownMenuItem(
+                onClick = {
+                    clipboardManager.setText(AnnotatedString(("BANANA")))
+
+                    Log.d("CLIPBOARD", clipboardManager.getText()?.text?.let {
+                        it
+                    }.toString())
+
+                    val toastErrorMessage =
+                        UiText.StringResource(
+                            R.string.toast_text_link_perfil
+                        ).asString(context = context)
+
+                    (context as Activity).runOnUiThread {
+                        showToastError(context = context, message = toastErrorMessage)
+                    }
+                },
+                text = {
+                    Text(UiText.StringResource(
+                        R.string.btn_share_perfi
+                    ).asString(context = context))
+                },
+                leadingIcon = {
+                    Icon(Icons.Filled.Link,
+                        contentDescription = UiText.StringResource(
+                            R.string.btn_share_perfi
+                        ).asString(context = context))
                 }
             )
         }

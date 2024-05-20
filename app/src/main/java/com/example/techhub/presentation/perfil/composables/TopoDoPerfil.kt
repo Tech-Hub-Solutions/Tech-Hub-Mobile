@@ -36,6 +36,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ClipboardManager
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.techhub.R
@@ -71,6 +73,8 @@ fun TopoDoPerfil(
         mutableStateOf(userInfo.value!!.isFavorito == true)
     }
     val expanded = remember { mutableStateOf(false) }
+    val clipboardManager: ClipboardManager = LocalClipboardManager.current
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -150,7 +154,8 @@ fun TopoDoPerfil(
                                     viewModel,
                                     context,
                                     urlCurriculo,
-                                    userInfo.value!!.nome!!
+                                    userInfo.value!!.nome!!,
+                                    clipboardManager = clipboardManager
                                 )
                             }
                         }
@@ -176,7 +181,8 @@ fun TopoDoPerfil(
                                     viewModel,
                                     context,
                                     urlCurriculo,
-                                    userInfo.value!!.nome!!
+                                    userInfo.value!!.nome!!,
+                                    clipboardManager = clipboardManager
                                 )
                             }
                         }

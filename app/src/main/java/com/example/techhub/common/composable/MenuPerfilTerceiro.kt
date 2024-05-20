@@ -3,6 +3,7 @@ package com.example.techhub.common.composable
 import android.app.Activity
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
@@ -20,7 +21,9 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import com.example.techhub.R
 import com.example.techhub.common.enums.TipoArquivo
@@ -37,6 +40,7 @@ fun MenuPerfilTerceiro(
     context: Context,
     urlCurriculo: String,
     userName: String,
+    clipboardManager: ClipboardManager
 ) {
     Box(
         modifier = Modifier
@@ -84,6 +88,12 @@ fun MenuPerfilTerceiro(
 
             DropdownMenuItem(
                 onClick = {
+                    clipboardManager.setText(AnnotatedString(("BANANA")))
+
+                    Log.d("CLIPBOARD", clipboardManager.getText()?.text?.let {
+                        it
+                    }.toString())
+
                         val toastErrorMessage =
                             UiText.StringResource(
                                 R.string.toast_text_link_perfil
