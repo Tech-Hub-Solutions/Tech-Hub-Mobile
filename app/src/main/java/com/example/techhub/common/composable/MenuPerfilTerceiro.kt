@@ -40,7 +40,8 @@ fun MenuPerfilTerceiro(
     context: Context,
     urlCurriculo: String,
     userName: String,
-    clipboardManager: ClipboardManager
+    clipboardManager: ClipboardManager,
+    urlPerfil: String
 ) {
     Box(
         modifier = Modifier
@@ -88,11 +89,7 @@ fun MenuPerfilTerceiro(
 
             DropdownMenuItem(
                 onClick = {
-                    clipboardManager.setText(AnnotatedString(("BANANA")))
-
-                    Log.d("CLIPBOARD", clipboardManager.getText()?.text?.let {
-                        it
-                    }.toString())
+                    clipboardManager.setText(AnnotatedString((urlPerfil)))
 
                         val toastErrorMessage =
                             UiText.StringResource(

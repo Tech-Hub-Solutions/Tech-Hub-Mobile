@@ -74,6 +74,7 @@ fun TopoDoPerfil(
     }
     val expanded = remember { mutableStateOf(false) }
     val clipboardManager: ClipboardManager = LocalClipboardManager.current
+    val urlPerfil = "https://tech-hub.ddns.net/perfil/${userInfo.value!!.idPerfil}"
 
     Box(
         modifier = Modifier
@@ -155,7 +156,8 @@ fun TopoDoPerfil(
                                     context,
                                     urlCurriculo,
                                     userInfo.value!!.nome!!,
-                                    clipboardManager = clipboardManager
+                                    clipboardManager = clipboardManager,
+                                    urlPerfil = urlPerfil
                                 )
                             }
                         }
@@ -182,7 +184,8 @@ fun TopoDoPerfil(
                                     context,
                                     urlCurriculo,
                                     userInfo.value!!.nome!!,
-                                    clipboardManager = clipboardManager
+                                    clipboardManager = clipboardManager,
+                                    urlPerfil = urlPerfil
                                 )
                             }
                         }
