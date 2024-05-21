@@ -18,11 +18,7 @@ fun verifyUser(
     userData: UsuarioVerifyData,
     context: Context,
     toastErrorMessage: String,
-    redirectToOwnProfile: Boolean = true
-    isLoading: MutableLiveData<Boolean>? = null
 ) {
-    if (isLoading != null) isLoading.postValue(true)
-
     val authService = RetrofitService.getAuthService()
 
     CoroutineScope(Dispatchers.Main).launch {
@@ -57,14 +53,12 @@ fun verifyUser(
                 (context as Activity).runOnUiThread {
                     showToastError(context, toastErrorMessage)
                 }
-                if (isLoading != null) isLoading.postValue(false)
             }
         } catch (e: Exception) {
             Log.e("VERIFY_USER", "ERROR: ${e.message}")
             (context as Activity).runOnUiThread {
                 showToastError(context, toastErrorMessage)
             }
-            if (isLoading != null) isLoading.postValue(false)
         }
     }
 }
