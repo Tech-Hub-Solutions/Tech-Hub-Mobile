@@ -10,6 +10,7 @@ import com.example.techhub.R
 import com.example.techhub.common.enums.TipoArquivo
 import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.showToastError
+import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.service.RetrofitService
 import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.domain.model.avaliacao.AvaliacaoData
@@ -17,6 +18,7 @@ import com.example.techhub.domain.model.avaliacao.AvaliacaoTotalData
 import com.example.techhub.domain.model.perfil.PerfilAvaliacaoDetalhadoData
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import com.example.techhub.domain.model.updateFotoPerfil
+import com.example.techhub.presentation.explorarTalentos.ExplorarTalentosActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -35,6 +37,7 @@ class PerfilViewModel : ViewModel() {
     val isLastPage = MutableLiveData(false)
     val avaliacoesDoUsuario = MutableLiveData(listOf(AvaliacaoTotalData()))
     val comentariosDoUsuario = MutableLiveData(SnapshotStateList<PerfilAvaliacaoDetalhadoData>())
+    val hasError = MutableLiveData(false)
 
     fun getInfosUsuario(context: Context, userId: Int) {
         isLoading.postValue(true)
@@ -53,6 +56,11 @@ class PerfilViewModel : ViewModel() {
                     if (response.body()!!.idUsuario != CurrentUser.userProfile?.id) {
                         setVisualizacaoUsuario(context, response.body()!!.idPerfil!!)
                     }
+                } else if (response.code() == 404) {
+                    (context as Activity).runOnUiThread {
+                        showToastError(context = context, message = "Perfil não encontrado.")
+                    }
+                    hasError.postValue(true)
                 } else {
                     (context as Activity).runOnUiThread {
                         showToastError(context = context, message = toastErrorMessage)
