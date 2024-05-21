@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.domain.model.updateCurrentUser
@@ -18,11 +19,15 @@ fun verifyUser(
     context: Context,
     toastErrorMessage: String,
     redirectToOwnProfile: Boolean = true
+    isLoading: MutableLiveData<Boolean>? = null
 ) {
+    if (isLoading != null) isLoading.postValue(true)
+
     val authService = RetrofitService.getAuthService()
 
     CoroutineScope(Dispatchers.Main).launch {
         try {
+
             val response = authService.verifyUser(userData)
             val extras = Bundle()
 
@@ -52,12 +57,14 @@ fun verifyUser(
                 (context as Activity).runOnUiThread {
                     showToastError(context, toastErrorMessage)
                 }
+                if (isLoading != null) isLoading.postValue(false)
             }
         } catch (e: Exception) {
             Log.e("VERIFY_USER", "ERROR: ${e.message}")
             (context as Activity).runOnUiThread {
                 showToastError(context, toastErrorMessage)
             }
+            if (isLoading != null) isLoading.postValue(false)
         }
     }
 }

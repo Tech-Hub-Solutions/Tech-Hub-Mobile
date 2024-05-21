@@ -1,18 +1,27 @@
 package com.example.techhub.presentation.cadastro.composables
 
 import android.os.Bundle
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -20,12 +29,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
+import com.example.techhub.R
+import com.example.techhub.common.composable.CircularProgressIndicatorTH
 import com.example.techhub.common.objects.Constants
 import com.example.techhub.common.composable.CpfTextField
 import com.example.techhub.common.composable.ElevatedButtonTH
@@ -37,8 +50,10 @@ import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import com.example.techhub.common.enums.Screen
 import com.example.techhub.common.composable.CnpjTextField
+import com.example.techhub.common.composable.ProgressButton
 import com.example.techhub.common.composable.Switch2FA
 import com.example.techhub.common.enums.UsuarioFuncao
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.base64Images.encodeBase64
 import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.showToastError
@@ -57,6 +72,7 @@ fun CadastroFormView(
     userType: String,
     onAuthSuccess: (UsuarioSimpleVerifyData) -> Unit
 ) {
+    val isLoading = MutableLiveData(false)
     var name by remember { mutableStateOf("") }
     var userDocument by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -66,6 +82,7 @@ fun CadastroFormView(
     val toastErrorMessage = "Ops! Algo deu errado.\n Tente novamente."
 
     fun cadastrarUsuario() {
+        isLoading.postValue(true)
         val user = UsuarioCriacaoData(
             nome = name,
             email = email,
@@ -82,6 +99,7 @@ fun CadastroFormView(
                 call: Call<UsuarioTokenData>,
                 response: Response<UsuarioTokenData>
             ) {
+
                 if (response.isSuccessful) {
                     if (isUsing2FA) {
                         val secretQrCodeUrl = response.body()?.secretQrCodeUrl.toString()
@@ -114,11 +132,13 @@ fun CadastroFormView(
                     }
                 } else {
                     showToastError(context = context, message = toastErrorMessage)
+                    isLoading.postValue(false)
                 }
             }
 
             override fun onFailure(call: Call<UsuarioTokenData>, t: Throwable) {
                 showToastError(context = context, message = toastErrorMessage)
+                isLoading.postValue(false)
             }
         })
     }
@@ -128,7 +148,10 @@ fun CadastroFormView(
             TopBar(
                 willRedirectToActivity = false,
                 navController = navController,
-                title = "Cadastro",
+                title = UiText.StringResource(
+                    R.string.title_cadastro
+                ).asString(context = context)
+                ,
                 route = Screen.TravaTelaCadastroView.route,
                 context = context
             )
@@ -150,11 +173,22 @@ fun CadastroFormView(
             Spacer(modifier = Modifier.padding(20.dp))
 
             Text(
-                text = if (userType == Constants.FREELANCER) "Quero ser um freelancer" else "Quero explorar talentos",
+                text = if (userType == Constants.FREELANCER) {
+                    UiText.StringResource(
+                        R.string.text_entry_cadastro_freelancer
+                    ).asString(context = context)
+
+                } else {
+                    UiText.StringResource(
+                        R.string.text_entry_cadastro_empresa
+                    ).asString(context = context)
+
+                },
                 style = TextStyle(
                     color = Color(PrimaryBlue.value),
                     fontWeight = FontWeight.Medium,
                     fontSize = 32.sp,
+                    textAlign = TextAlign.Center,
                 )
             )
 
@@ -163,7 +197,9 @@ fun CadastroFormView(
                 Spacer(modifier = Modifier.padding(8.dp))
 
                 Text(
-                    text = "Faça o cadastro para ter acesso aos nossos serviços!",
+                    text = UiText.StringResource(
+                        R.string.sub_text_cadastro_formview
+                    ).asString(context = context),
                     color = Color(GrayText.value),
                     fontSize = 17.sp,
                     fontWeight = FontWeight.Thin,
@@ -195,17 +231,50 @@ fun CadastroFormView(
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                ElevatedButtonTH(
-                    onClick = {
-                        cadastrarUsuario()
-                    },
-                    text = "Cadastrar",
-                    backgroundColor = Color.White,
-                    textColor = Color(PrimaryBlue.value),
+                ProgressButtonCadastro(
+                    onClick = { cadastrarUsuario() },
+                    text = UiText.StringResource(
+                        R.string.btn_text_cadastrar
+                    ).asString(context = context),
+                    backgroundColor = Color(PrimaryBlue.value),
+                    height = (60),
                     width = (350),
-                    height = (60)
+                    padding = (10),
+                    isLoading = isLoading.observeAsState().value!!,
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun ProgressButtonCadastro(
+    onClick: () -> Unit,
+    text: String,
+    backgroundColor: Color,
+    textColor: Color = Color.White,
+    height: Int, padding: Int, width: Int,
+    isLoading: Boolean,
+) {
+    ElevatedButton(
+        onClick = { onClick() },
+        modifier = Modifier
+            .padding(padding.dp)
+            .width(width.dp)
+            .height(height.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = backgroundColor,
+            contentColor = textColor,
+        ),
+        border = BorderStroke(
+            1.dp, Color(PrimaryBlue.value)
+        ),
+        shape = RoundedCornerShape(10.dp),
+    ) {
+        if (isLoading) {
+            CircularProgressIndicatorTH(size = 30.0, color = Color.White)
+        } else {
+            Text(text = text, fontSize = 16.sp, fontWeight = FontWeight(300))
         }
     }
 }

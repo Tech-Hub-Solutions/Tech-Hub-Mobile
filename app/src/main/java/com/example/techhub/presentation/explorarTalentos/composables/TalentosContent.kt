@@ -38,6 +38,7 @@ import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.domain.model.usuario.UsuarioFiltroData
 import com.example.techhub.presentation.explorarTalentos.ExplorarTalentosViewModel
+import com.example.techhub.presentation.explorarTalentos.composables.shimmerEffect.ShimmerEffectExplorarTalentos
 import com.example.techhub.presentation.ui.theme.GrayLoadButton
 import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.GrayTinyButton
@@ -149,13 +150,7 @@ fun TalentosContent(
     }
 
     if (isLoading) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            CircularProgressIndicatorTH()
-        }
+        ShimmerEffectExplorarTalentos()
     } else {
         LazyColumn(
             modifier = Modifier

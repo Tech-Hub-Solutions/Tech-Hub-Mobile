@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.techhub.R
 import com.example.techhub.common.utils.CurrentLink
@@ -20,6 +22,7 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
 
+    val isLoading = MutableLiveData(false)
     private val authApi = RetrofitService.getAuthService()
 
     fun loginUser(
@@ -27,6 +30,8 @@ class LoginViewModel : ViewModel() {
         context: Context,
         onAuthSucess: (UsuarioLoginData) -> Unit
     ) {
+        isLoading.postValue(true)
+
         val toastErrorMessage =
             UiText.StringResource(R.string.toast_text_error_login).asString(context = context)
         CoroutineScope(Dispatchers.Main).launch {
@@ -66,6 +71,7 @@ class LoginViewModel : ViewModel() {
                     (context as Activity).runOnUiThread {
                         showToastError(context = context, message = toastErrorMessage)
                     }
+                    isLoading.postValue(false)
                 }
             } catch (error: Exception) {
                 Log.e("LOGIN_VIEW_MODEL", "ERROR: ${error.message}")
@@ -73,6 +79,7 @@ class LoginViewModel : ViewModel() {
                 (context as Activity).runOnUiThread {
                     showToastError(context = context, message = toastErrorMessage)
                 }
+                isLoading.postValue(false)
             }
         }
     }

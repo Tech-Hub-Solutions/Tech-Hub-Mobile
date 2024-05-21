@@ -23,6 +23,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -40,6 +41,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.MutableLiveData
 import com.example.techhub.R
 import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.copyToClipBoard
@@ -62,6 +64,7 @@ fun FirstAuthView(
 ) {
     val context = LocalContext.current
     var authCode by remember { mutableStateOf("") }
+    val isLoading = MutableLiveData(false)
 
     Column(
         modifier = Modifier
@@ -252,51 +255,65 @@ fun FirstAuthView(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TextButton(
-                onClick = {
-                    val extras = Bundle()
-                    if (cancelarActivity == PerfilActivity::class.java) {
-                        extras.putInt("id", 1)
-                    }
-                    startNewActivity(
-                        context = context,
-                        activity = cancelarActivity
+            if (isLoading.observeAsState().value!!) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp)
+                        .height(60.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CircularProgressIndicatorTH(30.0)
+                }
+            } else {
+                TextButton(
+                    onClick = {
+                        val extras = Bundle()
+                        if (cancelarActivity == PerfilActivity::class.java) {
+                            extras.putInt("id", 1)
+                        }
+                        startNewActivity(
+                            context = context,
+                            activity = cancelarActivity
+                        )
+                    },
+                    modifier = Modifier
+                        .width(130.dp)
+                        .height(52.dp)
+                ) {
+                    Text(
+                        text = UiText.StringResource(
+                            R.string.btn_text_cancelar
+                        ).asString(context = context),
+                        color = Color(GrayButtonText.value),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight(300)
                     )
-                },
-                modifier = Modifier
-                    .width(130.dp)
-                    .height(52.dp)
-            ) {
-                Text(
+                }
+
+                ElevatedButtonTH(
+                    onClick = {
+                        verifyUser(
+                            userData = UsuarioVerifyData(
+                                email = usuarioSimpleVerifyData.email,
+                                senha = usuarioSimpleVerifyData.senha,
+                                code = authCode
+                            ),
+                            context = context,
+                            toastErrorMessage = toastErrorMessage,
+                            isLoading = isLoading
+                        )
+                    },
                     text = UiText.StringResource(
-                        R.string.btn_text_cancelar
+                        R.string.btn_text_continuar
                     ).asString(context = context),
-                    color = Color(GrayButtonText.value),
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight(300)
+                    backgroundColor = Color(PrimaryBlue.value),
+                    textColor = Color.White,
+                    width = 130,
+                    height = 52,
                 )
             }
-
-            ElevatedButtonTH(
-                onClick = {
-                    verifyUser(
-                        userData = UsuarioVerifyData(
-                            email = usuarioSimpleVerifyData.email,
-                            senha = usuarioSimpleVerifyData.senha,
-                            code = authCode
-                        ),
-                        context = context,
-                        toastErrorMessage = toastErrorMessage
-                    )
-                },
-                text = UiText.StringResource(
-                    R.string.btn_text_continuar
-                ).asString(context = context),
-                backgroundColor = Color(PrimaryBlue.value),
-                textColor = Color.White,
-                width = 130,
-                height = 52,
-            )
         }
     }
 }

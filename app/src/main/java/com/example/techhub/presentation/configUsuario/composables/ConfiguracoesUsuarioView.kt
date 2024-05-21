@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -40,6 +41,7 @@ import com.example.techhub.common.composable.EmailTextField
 import com.example.techhub.common.composable.FlagDropDownMenu
 import com.example.techhub.common.composable.NameTextField
 import com.example.techhub.common.composable.PasswordTextField
+import com.example.techhub.common.composable.ProgressButton
 import com.example.techhub.common.composable.Switch2FALeft
 import com.example.techhub.common.composable.TopBar
 import com.example.techhub.common.objects.countryFlagsList
@@ -78,6 +80,7 @@ fun ConfiguracoesUsuarioView(
     var isUsing2FA by remember { mutableStateOf(CurrentUser.isUsing2FA) }
     val errorApi = viewModel.errorApi.observeAsState().value!!
     val usuarioTokenData = viewModel.usuarioTokenData.observeAsState()
+    val isLoading = viewModel.isLoading.observeAsState()
 
 
     LaunchedEffect(usuarioTokenData.value) {
@@ -168,7 +171,7 @@ fun ConfiguracoesUsuarioView(
 
             }
 
-            ElevatedButton(
+            ProgressButton(
                 onClick = {
                     val countryCode = countryFlagsList.find { it.name == nacionalidade.value }
                     val usuarioAtualizacaoData =
@@ -219,23 +222,15 @@ fun ConfiguracoesUsuarioView(
                         }
                     }
                 },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(60.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(PrimaryBlue.value),
-                    contentColor = Color.White,
-                ),
-                shape = RoundedCornerShape(10.dp),
-            ) {
-                Text(
-                    text = UiText.StringResource(
-                        R.string.btn_text_salvar,
-                    ).asString(context = context),
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight(500)
-                )
-            }
+                text = UiText.StringResource(
+                    R.string.btn_text_salvar,
+                ).asString(context = context),
+                backgroundColor = Color(PrimaryBlue.value),
+                height = (60),
+                padding = (0),
+                width = (385),
+                isLoading = isLoading
+            )
 
             Spacer(modifier = Modifier.padding(12.dp))
 
@@ -246,7 +241,7 @@ fun ConfiguracoesUsuarioView(
                     startNewActivity(context, PerfilActivity::class.java, extras)
                 },
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .width(385.dp)
                     .height(60.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,

@@ -193,4 +193,18 @@
     <string name="order_by_less_rated">Menos avaliado</string>
     <string name="order_by_higher_price">Maior preço</string>
     <string name="order_by_lower_price">Menor preço</string>
+    <string name="icon_desc_curriculo">Currículo</string>
+    <string name="toast_error_sem_curriculo">O usuário ainda não possui arquivo para download!</string>
+    <string name="text_curriculum_name">"Currículo de "</string>
+    <string name="btn_download_curriculo">Baixar currículo</string>
+    <string name="btn_upload_curriculo">Subir novo currículo</string>
+    <string name="btn_share_perfi">Compartilhar perfil</string>
+    <string name="toast_text_link_perfil">Link de perfil copiado para área de transferência!</string>
+    <string name="toast_text_success_send_fun">Currículo enviado com sucesso!</string>
+    <string name="toast_error_send_curriculum_fun">Erro ao enviar o currículo!</string>
+    <string name="description_dowloading_file">Baixando arquivo...</string>
+    <string name="toast_text_success_download_fun">Currículo baixado com sucesso!</string>
+    <string name="text_entry_cadastro_freelancer">Quero ser um freelancer</string>
+    <string name="text_entry_cadastro_empresa">Quero explorar talentos</string>
+    <string name="sub_text_cadastro_formview">Faça o cadastro para ter acesso aos nossos serviços!</string>
 </resources>

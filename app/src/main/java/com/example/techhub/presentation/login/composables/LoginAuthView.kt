@@ -21,6 +21,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -34,8 +35,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.MutableLiveData
 import com.example.techhub.R
 import com.example.techhub.common.composable.CenteredImageSection
+import com.example.techhub.common.composable.CircularProgressIndicatorTH
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.TopBar
 import com.example.techhub.common.utils.UiText
@@ -57,6 +60,7 @@ fun LoginAuthView(
         UiText.StringResource(
             R.string.toast_auth_text_error
         ).asString(context = context)
+    val isLoading = MutableLiveData(false)
 
     Scaffold(
         topBar = {
@@ -164,45 +168,59 @@ fun LoginAuthView(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                TextButton(
-                    onClick = {
-                        startNewActivity(
-                            context = context,
-                            activity = LoginActivity::class.java
+                if (isLoading.observeAsState().value!!) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp)
+                            .height(60.dp),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        CircularProgressIndicatorTH(30.0)
+                    }
+                } else {
+                    TextButton(
+                        onClick = {
+                            startNewActivity(
+                                context = context,
+                                activity = LoginActivity::class.java
+                            )
+                        },
+                        modifier = Modifier
+                            .width(130.dp)
+                            .height(52.dp)
+                    ) {
+                        Text(
+                            text = UiText.StringResource(R.string.btn_text_cancelar)
+                                .asString(context = context),
+                            color = Color(GrayButtonText.value),
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight(300)
                         )
-                    },
-                    modifier = Modifier
-                        .width(130.dp)
-                        .height(52.dp)
-                ) {
-                    Text(
-                        text = UiText.StringResource(R.string.btn_text_cancelar)
+                    }
+
+                    ElevatedButtonTH(
+                        onClick = {
+                            verifyUser(
+                                userData = UsuarioVerifyData(
+                                    email = usuarioVerifyData.email,
+                                    senha = usuarioVerifyData.senha,
+                                    code = authCode
+                                ),
+                                context = context,
+                                toastErrorMessage = toastErrorMessage,
+                                isLoading = isLoading,
+                            )
+                        },
+                        text = UiText.StringResource(R.string.btn_text_continuar)
                             .asString(context = context),
-                        color = Color(GrayButtonText.value),
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight(300)
+                        backgroundColor = Color(PrimaryBlue.value),
+                        textColor = Color.White,
+                        width = 130,
+                        height = 52,
                     )
                 }
-
-                ElevatedButtonTH(
-                    onClick = {
-                        verifyUser(
-                            userData = UsuarioVerifyData(
-                                email = usuarioVerifyData.email,
-                                senha = usuarioVerifyData.senha,
-                                code = authCode
-                            ),
-                            context = context,
-                            toastErrorMessage = toastErrorMessage
-                        )
-                    },
-                    text = UiText.StringResource(R.string.btn_text_continuar)
-                        .asString(context = context),
-                    backgroundColor = Color(PrimaryBlue.value),
-                    textColor = Color.White,
-                    width = 130,
-                    height = 52,
-                )
             }
         }
     }

@@ -35,6 +35,9 @@
     <string name="btn_text_perfil">Profile</string>
     <string name="btn_text_sair">Log Out</string>
     <string name="btn_text_order_by">Order By</string>
+    <string name="btn_download_curriculo">Download CV</string>
+    <string name="btn_upload_curriculo">Upload new CV</string>
+    <string name="btn_share_perfi">Share profile</string>
 
     // TOAST TEXT
     <string name="toast_text_welcome">Welcome!</string>
@@ -57,6 +60,11 @@
     <string name="toast_text_error_campos_obrigatorios">All fields must be filled out!</string>
     <string name="toast_error_cnpj">Invalid CNPJ</string>
     <string name="toast_error_skills_dropdown_menu">You can select up to 10 skills</string>
+    <string name="toast_error_sem_curriculo">The user does not have a file to download yet!</string>
+    <string name="toast_text_link_perfil">Profile link copied to clipboard!</string>
+    <string name="toast_text_success_send_fun">Resume was successfully uploaded!</string>
+    <string name="toast_error_send_curriculum_fun">Error sending resume!</string>
+    <string name="toast_text_success_download_fun">Resume downloaded successfully!</string>
 
     // TITLE, SUBTITLE
     <string name="subtitle_index">Bridging talent and need.</string>
@@ -77,6 +85,9 @@
     <string name="title_explorar_talentos">Explore Talents</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_edit_config_usuario">Edit Settings</string>
+    <string name="text_entry_cadastro_freelancer">I want to be a freelancer</string>
+    <string name="text_entry_cadastro_empresa">I want to explore talents</string>
+    <string name="sub_text_cadastro_formview">Register to have access to our services!</string>
 
     // DESCRIPTION
     <string name="description_image_logo">Tech Hub logo</string>
@@ -108,6 +119,8 @@
     <string name="description_image_expand">Expand</string>
     <string name="description_image_historico">History icon</string>
     <string name="description_image_photo_freelancer">Freelancer photo</string>
+    <string name="icon_desc_curriculo">Curriculum Vitae</string>
+    <string name="description_dowloading_file">Downloading file...</string>
 
     // TEXT
     <string name="text_auth_code">Enter the authorization code</string>
@@ -154,6 +167,8 @@
     <string name="text_edit_config_usuario">Make the necessary changes to update your registration information.</string>
     <string name="text_activate_compare">Activate comparison</string>
     <string name="text_no_skill">No skill selected</string>
+    <string name="text_curriculum_name">"CV - "</string>
+
 
     // APPEND TEXT
     <string name="append_text_index_encontro">"The meeting point of "</string>
@@ -193,4 +208,6 @@
     <string name="order_by_less_rated">Least Rated</string>
     <string name="order_by_higher_price">Highest Price</string>
     <string name="order_by_lower_price">Lowest Price</string>
+
+
 </resources>

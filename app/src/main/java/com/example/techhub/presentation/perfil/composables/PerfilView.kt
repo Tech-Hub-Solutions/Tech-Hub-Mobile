@@ -28,6 +28,7 @@ import com.example.techhub.presentation.explorarTalentos.ExplorarTalentosActivit
 import com.example.techhub.presentation.perfil.GitHubViewModel
 import com.example.techhub.presentation.perfil.PerfilViewModel
 import com.example.techhub.presentation.perfil.composables.comentario.ComentariosSection
+import com.example.techhub.presentation.perfil.composables.shimmerEffect.ShimmerEffectPerfil
 
 @Composable
 fun PerfilView(
@@ -43,6 +44,8 @@ fun PerfilView(
     val isLoading = viewModel.isLoading.observeAsState();
     val isLoadingPerfil = viewModel.isLoadingPerfil.observeAsState()
     val isLoadingWallpaper = viewModel.isLoadingWallpaper.observeAsState()
+    val isLoadingCurriculo = viewModel.isLoadingCurriculo.observeAsState()
+    val urlCurriculo = viewModel.urlCurriculo.observeAsState()
     val isEmpresa = userInfo.value!!.funcao == UsuarioFuncao.EMPRESA
     val hasError = viewModel.hasError.observeAsState()
 
@@ -55,43 +58,44 @@ fun PerfilView(
     if (hasError.value!!) {
         startNewActivity(context, ExplorarTalentosActivity::class.java)
     } else {
-
-        Scaffold(
-            bottomBar = {
-                BottomBar()
-            },
-            containerColor = Color.White,
-            modifier = Modifier
-                .fillMaxSize()
-        ) { innerPadding ->
-            if (isLoading.value!!) {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    CircularProgressIndicatorTH()
-                }
-            } else {
-                Column(
-                    horizontalAlignment = Alignment.Start,
-                    verticalArrangement = Arrangement.Top,
-                    modifier = Modifier
-                        .verticalScroll(scrollState)
-                        .fillMaxSize()
-                        .padding(bottom = 60.dp)
-                ) {
-                    // Banner e imagem de perfil
-                    TopoDoPerfil(
-                        userInfo = userInfo,
-                        isLoadingPerfil = isLoadingPerfil,
-                        isLoadingWallpaper = isLoadingWallpaper,
-                        isOwnProfile = isOwnProfile,
-                        isEmpresa = isEmpresa,
-                        viewModel = viewModel,
-                        context = context
-                    )
-
+    Scaffold(
+        bottomBar = {
+            BottomBar()
+        },
+        containerColor = Color.White,
+        modifier = Modifier
+            .fillMaxSize()
+    ) { innerPadding ->
+        if (isLoading.value!!) {
+            /* Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                CircularProgressIndicatorTH()
+            } */
+            ShimmerEffectPerfil()
+        } else {
+            Column(
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Top,
+                modifier = Modifier
+                    .verticalScroll(scrollState)
+                    .fillMaxSize()
+                    .padding(bottom = 60.dp)
+            ) {
+                // Banner e imagem de perfil
+                TopoDoPerfil(
+                    userInfo = userInfo,
+                    isLoadingPerfil = isLoadingPerfil,
+                    isLoadingWallpaper = isLoadingWallpaper,
+                    isOwnProfile = isOwnProfile,
+                    isLoadingCurriculo = isLoadingCurriculo,
+                    isEmpresa = isEmpresa,
+                    viewModel = viewModel,
+                    context = context,
+                    urlCurriculo = urlCurriculo.value ?: ""
+                )
                     // Nome e Infos
                     DetalhesUsuario(
                         userInfo = userInfo,
