@@ -5,6 +5,7 @@ import android.app.DownloadManager
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.FileUpload
 import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Upload
 import androidx.compose.material.icons.filled.UploadFile
@@ -26,8 +28,14 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ClipboardManager
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
+import com.example.techhub.R
 import com.example.techhub.common.enums.TipoArquivo
+import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.common.utils.uriToFile
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
@@ -45,6 +53,8 @@ fun MenuCurriculo(
     context: Context,
     urlCurriculo: String,
     userName: String,
+    clipboardManager: ClipboardManager,
+    urlPerfil: String
 ) {
     Box(
         modifier = Modifier
@@ -73,8 +83,10 @@ fun MenuCurriculo(
             DropdownMenuItem(
                 onClick = {
                     if (urlCurriculo.isNullOrBlank()) {
-                        val toastErrorMessage =
-                            "O usuário ainda não possui arquivo para download!"
+                        val toastErrorMessage = UiText.StringResource(
+                            R.string.toast_error_sem_curriculo
+                        ).asString(context = context);
+
                         (context as Activity).runOnUiThread {
                             showToastError(context = context, message = toastErrorMessage)
                         }
@@ -82,29 +94,73 @@ fun MenuCurriculo(
                         perfilViewModel.downloadFile(
                             context,
                             urlCurriculo,
-                            "Currículo de ${userName}"
+                            UiText.StringResource(
+                                R.string.text_curriculum_name
+                            ).asString(context = context) + userName
                         )
                         expanded.value = !expanded.value
                     }
                 },
                 text = {
-                    Text("Baixar currículo")
+                    Text(
+                        UiText.StringResource(
+                            R.string.btn_download_curriculo
+                        ).asString(context = context)
+                    )
                 },
                 leadingIcon = {
-                    Icon(Icons.Filled.Download, contentDescription = "Baixar currículo")
+                    Icon(
+                        Icons.Filled.Download,
+                        contentDescription = UiText.StringResource(
+                            R.string.btn_download_curriculo
+                        ).asString(context = context)
+                    )
                 }
             )
             DropdownMenuItem(
                 onClick = {
                     tipoArquivo.value = TipoArquivo.CURRICULO
                     getContent.launch("application/pdf")
-                    expanded.value = !expanded.value
                 },
                 text = {
-                    Text("Subir novo currículo")
+                    Text(
+                        UiText.StringResource(
+                            R.string.btn_upload_curriculo
+                        ).asString(context = context)
+                    )
                 },
                 leadingIcon = {
-                    Icon(Icons.Filled.Upload, contentDescription = "Subir novo currículo")
+                    Icon(
+                        Icons.Filled.Upload,
+                        contentDescription = UiText.StringResource(
+                            R.string.btn_upload_curriculo
+                        ).asString(context = context)
+                    )
+                }
+            )
+            DropdownMenuItem(
+                onClick = {
+                    clipboardManager.setText(AnnotatedString((urlPerfil)))
+
+                    val toastErrorMessage =
+                        UiText.StringResource(
+                            R.string.toast_text_link_perfil
+                        ).asString(context = context)
+
+                    (context as Activity).runOnUiThread {
+                        showToastError(context = context, message = toastErrorMessage)
+                    }
+                },
+                text = {
+                    Text(UiText.StringResource(
+                        R.string.btn_share_perfi
+                    ).asString(context = context))
+                },
+                leadingIcon = {
+                    Icon(Icons.Filled.Link,
+                        contentDescription = UiText.StringResource(
+                            R.string.btn_share_perfi
+                        ).asString(context = context))
                 }
             )
         }

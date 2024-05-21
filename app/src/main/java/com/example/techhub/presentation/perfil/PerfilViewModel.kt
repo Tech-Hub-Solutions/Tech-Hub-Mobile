@@ -337,7 +337,9 @@ class PerfilViewModel : ViewModel() {
 
                 if (response.isSuccessful) {
                     if (response.body() != null) {
-                        val toastErrorMessage = "Curriculo enviado com sucesso!."
+                        val toastErrorMessage = UiText.StringResource(
+                            R.string.toast_text_success_send_fun
+                        ).asString(context = context)
 
                         urlCurriculo.postValue(response.body()!!.url)
 
@@ -351,7 +353,10 @@ class PerfilViewModel : ViewModel() {
                         }
                     }
                 } else {
-                    val toastErrorMessage = "Erro ao enviar currículo!"
+                    val toastErrorMessage = UiText.StringResource(
+                        R.string.toast_error_send_curriculum_fun
+                    ).asString(context = context);
+
                     (context as Activity).runOnUiThread {
                         showToastError(context = context, message = toastErrorMessage)
                     }
@@ -361,7 +366,9 @@ class PerfilViewModel : ViewModel() {
                     )
                 }
             } catch (error: Exception) {
-                val toastErrorMessage = "Erro ao enviar currículo!"
+                val toastErrorMessage = UiText.StringResource(
+                    R.string.toast_error_send_curriculum_fun
+                ).asString(context = context)
                 (context as Activity).runOnUiThread {
                     showToastError(context = context, message = toastErrorMessage)
                 }
@@ -373,27 +380,31 @@ class PerfilViewModel : ViewModel() {
     }
 
     fun downloadFile(context: Context, url: String, fileName: String) {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val request = DownloadManager.Request(Uri.parse(url))
-                    .setTitle(fileName)
-                    .setDescription("Baixando arquivo...")
-                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                    .setDestinationInExternalPublicDir(
-                        Environment.DIRECTORY_DOWNLOADS,
-                        fileName
-                    )
-                    .setAllowedOverMetered(true)
-                    .setAllowedOverRoaming(true)
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val request = DownloadManager.Request(Uri.parse(url))
+                        .setTitle(fileName)
+                        .setDescription(UiText.StringResource(
+                            R.string.description_dowloading_file
+                        ).asString(context = context))
+                        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                        .setDestinationInExternalPublicDir(
+                            Environment.DIRECTORY_DOWNLOADS,
+                            fileName
+                        )
+                        .setAllowedOverMetered(true)
+                        .setAllowedOverRoaming(true)
 
                 val downloadManager =
                     context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
                 downloadManager.enqueue(request)
 
-                val toastErrorMessage = "Currículo baixado com sucesso!"
-                (context as Activity).runOnUiThread {
-                    showToastError(context = context, message = toastErrorMessage)
-                }
+                    val toastErrorMessage = UiText.StringResource(
+                        R.string.toast_text_success_download_fun
+                    ).asString(context = context)
+                    (context as Activity).runOnUiThread {
+                        showToastError(context = context, message = toastErrorMessage)
+                    }
 
                 Log.d("PERFIL_VIEW_MODEL", "BAIXAR CURRICULO - SUCCESS")
 
