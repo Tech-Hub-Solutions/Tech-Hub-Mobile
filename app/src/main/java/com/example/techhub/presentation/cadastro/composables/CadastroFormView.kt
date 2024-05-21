@@ -188,6 +188,7 @@ fun CadastroFormView(
                     color = Color(PrimaryBlue.value),
                     fontWeight = FontWeight.Medium,
                     fontSize = 32.sp,
+                    textAlign = TextAlign.Center,
                 )
             )
 
