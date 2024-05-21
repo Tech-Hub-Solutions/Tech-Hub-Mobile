@@ -33,6 +33,7 @@ import com.example.techhub.common.utils.UiText
 import com.example.techhub.composable.OrderDropDownMenu
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
 import com.example.techhub.presentation.favoritos.FavoritosViewModel
+import com.example.techhub.presentation.favoritos.composables.shimmerEffect.ShimmerEffectFavoritos
 import com.example.techhub.presentation.ui.theme.GrayLoadButton
 import com.example.techhub.presentation.ui.theme.GrayText
 
@@ -56,40 +57,36 @@ fun FavoriteUsers(
         viewModel.getFavoriteUsers(page.value, 30, ordem.value, context)
     }
 
-    if (isLoading) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            CircularProgressIndicatorTH()
-        }
-    } else {
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.Top
-        ) {
-            Text(
-                text = UiText.StringResource(
-                    R.string.text_total_favorites,
-                    totalElements.value.toString()
-                ).asString(context = context),
-                color = GrayText
-            )
 
-            OrderDropDownMenu(ordem, context)
-        }
-
-        CompareSwitch(
-            {
-                isAbleToCompare.value = it
-            },
-            context = context
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.Top
+    ) {
+        Text(
+            text = UiText.StringResource(
+                R.string.text_total_favorites,
+                totalElements.value.toString()
+            ).asString(context = context),
+            color = GrayText
         )
 
-        Spacer(modifier = Modifier.padding(vertical = 8.dp))
+        OrderDropDownMenu(ordem, context)
+    }
+
+    CompareSwitch(
+        {
+            isAbleToCompare.value = it
+        },
+        context = context
+    )
+
+    Spacer(modifier = Modifier.padding(vertical = 8.dp))
+
+    if (isLoading) {
+        ShimmerEffectFavoritos()
+    } else {
 
         if (favoritos.isEmpty()) {
             Text(
