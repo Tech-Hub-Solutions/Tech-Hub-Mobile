@@ -66,6 +66,7 @@ fun ShimmerEffectPerfil(
         ShimmerEffectText(width = 0.85f, padding = 10)
         ShimmerEffectText(width = 0.77f, padding = 32)
 
+        // Avaliações
         Row (modifier = Modifier
             .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center) {
@@ -78,6 +79,7 @@ fun ShimmerEffectPerfil(
         ShimmerEffectText(width = 0.5f)
         ShimmerEffectText(width = 0.4f)
         }
+        // Números das avaliações
         Spacer(modifier = Modifier.padding(top = 24.dp))
         ShimmerEffectText(width = 1f, padding = 10)
         ShimmerEffectText(width = 1f, padding = 10)
