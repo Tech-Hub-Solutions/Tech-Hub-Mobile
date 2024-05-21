@@ -26,6 +26,7 @@ import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.presentation.perfil.GitHubViewModel
 import com.example.techhub.presentation.perfil.PerfilViewModel
 import com.example.techhub.presentation.perfil.composables.comentario.ComentariosSection
+import com.example.techhub.presentation.perfil.composables.shimmerEffect.ShimmerEffectPerfil
 
 @Composable
 fun PerfilView(
@@ -59,13 +60,14 @@ fun PerfilView(
             .fillMaxSize()
     ) { innerPadding ->
         if (isLoading.value!!) {
-            Column(
+            /* Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 CircularProgressIndicatorTH()
-            }
+            } */
+            ShimmerEffectPerfil()
         } else {
             Column(
                 horizontalAlignment = Alignment.Start,

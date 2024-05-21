@@ -258,8 +258,10 @@ class PerfilViewModel : ViewModel() {
             R.string.toast_text_error_comentar_perfil
         ).asString(context = context)
 
+
         CoroutineScope(Dispatchers.IO).launch {
             try {
+
                 val response = apiPerfil.setComentariosUsuario(
                     avaliadoId,
                     AvaliacaoData(
@@ -393,9 +395,9 @@ class PerfilViewModel : ViewModel() {
                         .setAllowedOverMetered(true)
                         .setAllowedOverRoaming(true)
 
-                    val downloadManager =
-                        context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-                    downloadManager.enqueue(request)
+                val downloadManager =
+                    context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+                downloadManager.enqueue(request)
 
                     val toastErrorMessage = UiText.StringResource(
                         R.string.toast_text_success_download_fun
@@ -404,12 +406,12 @@ class PerfilViewModel : ViewModel() {
                         showToastError(context = context, message = toastErrorMessage)
                     }
 
-                    Log.d("PERFIL_VIEW_MODEL", "BAIXAR CURRICULO - SUCCESS")
+                Log.d("PERFIL_VIEW_MODEL", "BAIXAR CURRICULO - SUCCESS")
 
-                } catch (error: Exception) {
-                    Log.e("PERFIL_VIEW_MODEL", "BAIXAR CURRICULO ERROR: ${error.message}")
-                }
+            } catch (error: Exception) {
+                Log.e("PERFIL_VIEW_MODEL", "BAIXAR CURRICULO ERROR: ${error.message}")
             }
+        }
 
     }
 }
