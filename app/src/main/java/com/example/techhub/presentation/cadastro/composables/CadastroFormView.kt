@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -147,7 +148,10 @@ fun CadastroFormView(
             TopBar(
                 willRedirectToActivity = false,
                 navController = navController,
-                title = "Cadastro",
+                title = UiText.StringResource(
+                    R.string.title_cadastro
+                ).asString(context = context)
+                ,
                 route = Screen.TravaTelaCadastroView.route,
                 context = context
             )
@@ -169,7 +173,17 @@ fun CadastroFormView(
             Spacer(modifier = Modifier.padding(20.dp))
 
             Text(
-                text = if (userType == Constants.FREELANCER) "Quero ser um freelancer" else "Quero explorar talentos",
+                text = if (userType == Constants.FREELANCER) {
+                    UiText.StringResource(
+                        R.string.text_entry_cadastro_freelancer
+                    ).asString(context = context)
+
+                } else {
+                    UiText.StringResource(
+                        R.string.text_entry_cadastro_empresa
+                    ).asString(context = context)
+
+                },
                 style = TextStyle(
                     color = Color(PrimaryBlue.value),
                     fontWeight = FontWeight.Medium,
@@ -182,7 +196,9 @@ fun CadastroFormView(
                 Spacer(modifier = Modifier.padding(8.dp))
 
                 Text(
-                    text = "Faça o cadastro para ter acesso aos nossos serviços!",
+                    text = UiText.StringResource(
+                        R.string.sub_text_cadastro_formview
+                    ).asString(context = context),
                     color = Color(GrayText.value),
                     fontSize = 17.sp,
                     fontWeight = FontWeight.Thin,
@@ -217,7 +233,7 @@ fun CadastroFormView(
                 ProgressButtonCadastro(
                     onClick = { cadastrarUsuario() },
                     text = UiText.StringResource(
-                        R.string.btn_text_entrar
+                        R.string.btn_text_cadastrar
                     ).asString(context = context),
                     backgroundColor = Color(PrimaryBlue.value),
                     height = (60),

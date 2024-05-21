@@ -204,4 +204,7 @@
     <string name="toast_error_send_curriculum_fun">Erro ao enviar o currículo!</string>
     <string name="description_dowloading_file">Baixando arquivo...</string>
     <string name="toast_text_success_download_fun">Currículo baixado com sucesso!</string>
+    <string name="text_entry_cadastro_freelancer">Quero ser um freelancer</string>
+    <string name="text_entry_cadastro_empresa">Quero explorar talentos</string>
+    <string name="sub_text_cadastro_formview">Faça o cadastro para ter acesso aos nossos serviços!</string>
 </resources>

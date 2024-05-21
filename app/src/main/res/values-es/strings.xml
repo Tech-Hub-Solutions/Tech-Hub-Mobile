@@ -84,6 +84,9 @@
     <string name="title_explorar_talentos">Explorar Talentos</string>
     <string name="title_favorites">Favoritos</string>
     <string name="title_edit_config_usuario">Editar Configuraciones</string>
+    <string name="text_entry_cadastro_freelancer">Quiero ser autónomo</string>
+    <string name="text_entry_cadastro_empresa">Quiero explorar talentos</string>
+    <string name="sub_text_cadastro_formview">Regístrate para tener acceso a nuestros servicios!</string>
 
     // DESCRIPTION
     <string name="description_image_logo">logo de Tech Hub</string>
