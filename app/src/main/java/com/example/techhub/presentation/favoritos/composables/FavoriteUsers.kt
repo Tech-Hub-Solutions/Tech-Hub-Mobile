@@ -2,22 +2,29 @@ package com.example.techhub.presentation.favoritos.composables
 
 import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,6 +35,7 @@ import com.example.techhub.R
 import com.example.techhub.common.composable.CircularProgressIndicatorTH
 import com.example.techhub.common.composable.CompareSwitch
 import com.example.techhub.common.composable.CustomizedElevatedButton
+import com.example.techhub.common.composable.FloatingActionButtonScrollLazyColumn
 import com.example.techhub.common.composable.UserCard
 import com.example.techhub.common.utils.UiText
 import com.example.techhub.composable.OrderDropDownMenu
@@ -44,6 +52,7 @@ fun FavoriteUsers(
     ordem: MutableState<String>,
     selectedUsers: SnapshotStateList<UsuarioFavoritoData>,
     isAbleToCompare: MutableState<Boolean>,
+    innerPadding : PaddingValues
 ) {
     val favoritos = viewModel.favoritos.observeAsState().value!!
     val totalElements = viewModel.totalElements.observeAsState()
@@ -52,11 +61,16 @@ fun FavoriteUsers(
 
     val page = remember { mutableStateOf(0) }
 
+
     LaunchedEffect(ordem.value) {
         page.value = 0
         viewModel.getFavoriteUsers(page.value, 30, ordem.value, context)
     }
 
+
+    val listState = rememberLazyListState()
+    val scope = rememberCoroutineScope()
+    val isScrolled by remember { derivedStateOf { listState.firstVisibleItemIndex > 0 } }
 
 
     Row(
@@ -87,7 +101,6 @@ fun FavoriteUsers(
     if (isLoading) {
         ShimmerEffectFavoritos()
     } else {
-
         if (favoritos.isEmpty()) {
             Text(
                 text = UiText.StringResource(
@@ -97,6 +110,7 @@ fun FavoriteUsers(
         }
 
         LazyColumn(
+            state = listState,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             val subLists = favoritos.chunked(2)
@@ -158,5 +172,19 @@ fun FavoriteUsers(
                 }
             }
         }
+    }
+
+    Box(
+        modifier = Modifier
+            .padding(innerPadding)
+            .fillMaxSize(),
+        contentAlignment = Alignment.BottomEnd,
+    ) {
+        FloatingActionButtonScrollLazyColumn(
+            isScrolled = isScrolled,
+            listState = listState,
+            scope = scope,
+            context = context
+        )
     }
 }
