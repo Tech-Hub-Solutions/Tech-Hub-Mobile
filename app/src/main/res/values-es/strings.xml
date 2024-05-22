@@ -39,6 +39,7 @@
 
     // TOAST TEXT
     <string name="toast_text_welcome">¡Bienvenido(a)!</string>
+    <string name="toast_text_welcome_with_name">"¡Bienvenido(a), "</string>
     <string name="toast_auth_text_error">Error al verificar usuario</string>
     <string name="toast_text_error_login">¡Ups! Algo salió mal.\n Inténtalo de nuevo.</string>
     <string name="toast_text_copy_secret_key">Código copiado</string>

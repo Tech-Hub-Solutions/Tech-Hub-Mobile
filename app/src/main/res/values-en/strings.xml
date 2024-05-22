@@ -41,6 +41,7 @@
 
     // TOAST TEXT
     <string name="toast_text_welcome">Welcome!</string>
+    <string name="toast_text_welcome_with_name">"Welcome, "</string>
     <string name="toast_auth_text_error">Error verifying user</string>
     <string name="toast_text_error_login">Oops! Something went wrong.\n Please try again.</string>
     <string name="toast_text_copy_secret_key">Code copied</string>
