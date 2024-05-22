@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "152628157261",
+    "project_id": "techhubpushnotification",
+    "storage_bucket": "techhubpushnotification.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:152628157261:android:f95e32f5f0245debbdb504",
+        "android_client_info": {
+          "package_name": "com.example.techhub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP4HJXgIE0gzlwbybVCYOHx-gBvPzd75c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:152628157261:android:18f229aa4a2dad30bdb504",
+        "android_client_info": {
+          "package_name": "com.example.techhub.presentation"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP4HJXgIE0gzlwbybVCYOHx-gBvPzd75c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

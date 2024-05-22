@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -51,6 +52,8 @@ android {
 
 dependencies {
     implementation("org.chromium.net:cronet-embedded:119.6045.31")
+    implementation("com.google.firebase:firebase-messaging-ktx:24.0.0")
+    implementation("com.google.firebase:firebase-messaging:24.0.0")
     val nav_version = "2.7.6"
     val retrofit2_version = "2.9.0"
     val logging_interceptor_version = "4.11.0"
@@ -93,4 +96,5 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
 }

@@ -25,17 +25,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="https" />
-                <data android:host="tech-hub.ddns.net" />
-            </intent-filter>
         </activity>
-
+        <service android:name=".domain.service.PushNoficationService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
         <activity
             android:name=".presentation.index.IndexActivity"
             android:theme="@style/Theme.TechHub" />
@@ -50,19 +46,7 @@
             android:theme="@style/Theme.TechHub" />
         <activity
             android:name=".presentation.perfil.PerfilActivity"
-            android:exported="true"
-            android:theme="@style/Theme.TechHub">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="https" />
-                <data android:host="tech-hub.ddns.net" />
-                <data android:pathPattern="/perfil/.*" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.TechHub" />
         <activity
             android:name=".presentation.explorarTalentos.ExplorarTalentosActivity"
             android:theme="@style/Theme.TechHub" />
@@ -75,3 +59,4 @@
     </application>
 
 </manifest>
+
