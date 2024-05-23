@@ -225,6 +225,26 @@ fun LoginAuthView(
                             fontWeight = FontWeight(300)
                         )
                     }
+
+                    ElevatedButtonTH(
+                        onClick = {
+                            verifyUser(
+                                userData = UsuarioVerifyData(
+                                    email = usuarioVerifyData.email,
+                                    senha = usuarioVerifyData.senha,
+                                    code = authCode
+                                ),
+                                context = context,
+                                toastErrorMessage = toastErrorMessage,
+                            )
+                        },
+                        text = UiText.StringResource(R.string.btn_text_continuar)
+                            .asString(context = context),
+                        backgroundColor = Color(PrimaryBlue.value),
+                        textColor = Color.White,
+                        width = 130,
+                        height = 52,
+                    )
                 }
             }
         }

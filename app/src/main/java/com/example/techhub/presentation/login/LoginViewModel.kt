@@ -8,9 +8,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.techhub.R
+import com.example.techhub.common.utils.CurrentLink
 import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.showToastError
+import com.example.techhub.common.utils.showWelcomeToastWithName
 import com.example.techhub.domain.service.RetrofitService
 import com.example.techhub.domain.model.updateCurrentUser
 import com.example.techhub.domain.model.usuario.UsuarioLoginData
@@ -35,25 +37,35 @@ class LoginViewModel : ViewModel() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val response = authApi.loginUser(user)
-                val extras = Bundle()
-                extras.putInt("id", response.body()?.id!!)
 
                 if (response.isSuccessful) {
                     if (response.body()?.isUsing2FA!!) {
                         onAuthSucess(user)
                     } else {
-
                         updateCurrentUser(
                             context = context,
                             usuarioTokenData = response.body()!!,
                             email = user.email!!
                         )
 
-                        redirectToPerfilUsuario(
-                            context = context,
-                            fullName = response.body()?.nome!!,
-                            extras = extras
-                        )
+                        if (CurrentLink.appLinkData == null) {
+                            val extras = Bundle()
+                            extras.putInt("id", response.body()?.id!!)
+                            redirectToPerfilUsuario(
+                                context = context,
+                                fullName = response.body()?.nome!!,
+                                extras = extras
+                            )
+                        } else {
+                            showWelcomeToastWithName(
+                                context = context,
+                                fullName = response.body()?.nome!!
+                            )
+                            val intent = CurrentLink.appLinkIntent
+                            val extras = Bundle()
+                            extras.putInt("id", CurrentLink.appLinkId ?: 0)
+                            context.startActivity(intent)
+                        }
                     }
                 } else {
                     (context as Activity).runOnUiThread {

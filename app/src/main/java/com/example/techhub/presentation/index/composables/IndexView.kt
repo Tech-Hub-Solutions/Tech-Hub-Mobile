@@ -18,7 +18,7 @@ import com.example.techhub.common.composable.CenteredImageSection
 import com.example.techhub.common.utils.UiText
 
 @Composable
-fun IndexView() {
+fun IndexView(appLinkData: String? = null) {
     val context = LocalContext.current
 
     Column(

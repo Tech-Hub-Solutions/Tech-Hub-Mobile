@@ -41,6 +41,7 @@
 
     // TOAST TEXT
     <string name="toast_text_welcome">Welcome!</string>
+    <string name="toast_text_welcome_with_name">"Welcome, "</string>
     <string name="toast_auth_text_error">Error verifying user</string>
     <string name="toast_text_error_login">Oops! Something went wrong.\n Please try again.</string>
     <string name="toast_text_copy_secret_key">Code copied</string>
@@ -85,6 +86,9 @@
     <string name="title_explorar_talentos">Explore Talents</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_edit_config_usuario">Edit Settings</string>
+    <string name="text_entry_cadastro_freelancer">I want to be a freelancer</string>
+    <string name="text_entry_cadastro_empresa">I want to explore talents</string>
+    <string name="sub_text_cadastro_formview">Register to have access to our services!</string>
 
     // DESCRIPTION
     <string name="description_image_logo">Tech Hub logo</string>
@@ -165,6 +169,7 @@
     <string name="text_activate_compare">Activate comparison</string>
     <string name="text_no_skill">No skill selected</string>
     <string name="text_curriculum_name">"CV - "</string>
+
 
     // APPEND TEXT
     <string name="append_text_index_encontro">"The meeting point of "</string>

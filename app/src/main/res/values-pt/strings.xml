@@ -41,6 +41,7 @@
 
     // TOAST TEXT
     <string name="toast_text_welcome">Seja bem-vindo(a)!</string>
+    <string name="toast_text_welcome_with_name">"Bem-vindo, "</string>
     <string name="toast_auth_text_error">Erro ao verificar usuário</string>
     <string name="toast_text_error_login">Ops! Algo deu errado.\n Tente novamente.</string>
     <string name="toast_text_copy_secret_key">Código copiado</string>
@@ -85,6 +86,9 @@
     <string name="title_explorar_talentos">Explorar Talentos</string>
     <string name="title_favorites">Favoritos</string>
     <string name="title_edit_config_usuario">Editar Configurações</string>
+    <string name="text_entry_cadastro_freelancer">Quero ser um freelancer</string>
+    <string name="text_entry_cadastro_empresa">Quero explorar talentos</string>
+    <string name="sub_text_cadastro_formview">Faça o cadastro para ter acesso aos nossos serviços!</string>
 
     // DESCRIPTION
     <string name="description_image_logo">logo da Tech Hub</string>
@@ -165,6 +169,7 @@
     <string name="text_activate_compare">Ativar comparação</string>
     <string name="text_no_skill">Nenhuma skill selecionada</string>
     <string name="text_curriculum_name">"Currículo - "</string>
+
 
     // APPEND TEXT
     <string name="append_text_index_encontro">"O ponto de encontro dos "</string>
