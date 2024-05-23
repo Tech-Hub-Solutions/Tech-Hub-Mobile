@@ -153,7 +153,7 @@ fun TopoDoPerfil(
                                     viewModel,
                                     context,
                                     urlCurriculo,
-                                    userInfo.value!!.nome!!,
+                                    userInfo.value?.nome!!,
                                     clipboardManager = clipboardManager,
                                     urlPerfil = urlPerfil
                                 )
