@@ -19,6 +19,7 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -27,6 +28,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
@@ -79,6 +82,11 @@ fun CadastroFormView(
     var isUsing2FA by remember { mutableStateOf(false) }
     val context = LocalContext.current
     val toastErrorMessage = "Ops! Algo deu errado.\n Tente novamente."
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
 
     fun cadastrarUsuario() {
         isLoading.postValue(true)
@@ -192,7 +200,11 @@ fun CadastroFormView(
                 )
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                NameTextField(onValueChanged = { name = it }, context = context)
+                NameTextField(
+                    onValueChanged = { name = it },
+                    context = context,
+                    modifier = Modifier.focusRequester(focusRequester)
+                )
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
@@ -217,7 +229,7 @@ fun CadastroFormView(
                 ProgressButtonCadastro(
                     onClick = { cadastrarUsuario() },
                     text = UiText.StringResource(
-                        R.string.btn_text_entrar
+                        R.string.btn_text_cadastrar
                     ).asString(context = context),
                     backgroundColor = Color(PrimaryBlue.value),
                     height = (60),

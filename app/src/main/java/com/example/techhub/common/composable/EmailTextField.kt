@@ -29,7 +29,12 @@ import com.example.techhub.common.utils.UiText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun EmailTextField(onValueChanged: (String) -> Unit, initialValue: String = "", context: Context) {
+fun EmailTextField(
+    onValueChanged: (String) -> Unit,
+    initialValue: String = "",
+    context: Context,
+    modifier: Modifier? = null
+) {
     var filledText by remember { mutableStateOf(initialValue) }
     var isEmailValid by remember { mutableStateOf(true) }
 
@@ -81,7 +86,10 @@ fun EmailTextField(onValueChanged: (String) -> Unit, initialValue: String = "", 
                 )
             },
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .let {
+                    if (modifier != null) it.then(modifier) else it
+                },
             singleLine = true,
             isError = isEmailValid,
             supportingText = {

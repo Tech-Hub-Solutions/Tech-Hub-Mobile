@@ -29,6 +29,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -80,6 +82,11 @@ fun EditarUsuarioView(
         }.toMutableStateList())
     }
     val isLoading = viewModel.isLoading.observeAsState()
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
 
     Scaffold(
         topBar = {
@@ -122,7 +129,8 @@ fun EditarUsuarioView(
                 DescriptionTextField(
                     initialValue = userInfo.descricao ?: "",
                     onValueChanged = { descricao = it },
-                    context = context
+                    context = context,
+                    modifier = Modifier.focusRequester(focusRequester)
                 )
 
                 Spacer(modifier = Modifier.padding(0.dp))
