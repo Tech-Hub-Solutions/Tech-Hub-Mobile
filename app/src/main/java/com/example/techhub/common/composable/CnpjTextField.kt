@@ -8,20 +8,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.example.techhub.R
+import com.example.techhub.common.enums.DataType
 import com.example.techhub.common.utils.UiText
 
 @Composable
 fun CnpjTextField(onValueChanged: (String) -> Unit, context: Context) {
     var filledText by remember { mutableStateOf("") }
-    var isCnpjValid by remember { mutableStateOf(false) }
+    var isCnpjValid by remember { mutableStateOf(true) }
 
     Column {
         MaskedOutlinedTextField(
+            dataType = DataType.CNPJ,
             label = UiText.StringResource(
                 R.string.label_cnpj
             ).asString(context = context),
             mask = "##.###.###/####-##",
-            isError = isCnpjValid,
+            isError = !isCnpjValid,
             placeholder = UiText.StringResource(
                 R.string.placeholder_cnpj
             ).asString(context = context),
@@ -30,11 +32,11 @@ fun CnpjTextField(onValueChanged: (String) -> Unit, context: Context) {
                 val unmaskedText = it.filter { char -> char.isDigit() }
                 if (unmaskedText.length <= 14) {
                     filledText = it
-                    isCnpjValid = !isValid(unmaskedText)
                     onValueChanged(filledText)
+                    isCnpjValid = validateCnpj(unmaskedText)
                 }
             },
-            supportingText = if (isCnpjValid)
+            supportingText = if (!isCnpjValid)
                 UiText.StringResource(
                     R.string.toast_error_cnpj
                 ).asString(context = context) else "",
@@ -45,43 +47,6 @@ fun CnpjTextField(onValueChanged: (String) -> Unit, context: Context) {
     }
 }
 
-fun isValid(cnpj: String): Boolean {
-    return validateCNPJLength(cnpj) && validateCNPJRepeatedNumbers(cnpj)
-            && validateCNPJVerificationDigit(true, cnpj)
-            && validateCNPJVerificationDigit(false, cnpj)
-}
-
-private fun validateCNPJLength(cnpj: String) = cnpj.length == 14
-
-private fun validateCNPJRepeatedNumbers(cnpj: String): Boolean {
-    return (0..9)
-        .map { it.toString().repeat(14) }
-        .map { cnpj == it }
-        .all { !it }
-}
-
-private fun validateCNPJVerificationDigit(firstDigit: Boolean, cnpj: String): Boolean {
-    val startPos = when (firstDigit) {
-        true -> 11
-        else -> 12
-    }
-    val weightOffset = when (firstDigit) {
-        true -> 0
-        false -> 1
-    }
-    val sum = (startPos downTo 0).fold(0) { acc, pos ->
-        val weight = 2 + ((11 + weightOffset - pos) % 8)
-        val num = cnpj[pos].toString().toInt()
-        val sum = acc + (num * weight)
-        sum
-    }
-    val result = sum % 11
-    val expectedDigit = when (result) {
-        0, 1 -> 0
-        else -> 11 - result
-    }
-
-    val actualDigit = cnpj[startPos + 1].toString().toInt()
-
-    return expectedDigit == actualDigit
+private fun validateCnpj(cnpj: String): Boolean {
+    return cnpj.isEmpty() || cnpj.length == 14
 }

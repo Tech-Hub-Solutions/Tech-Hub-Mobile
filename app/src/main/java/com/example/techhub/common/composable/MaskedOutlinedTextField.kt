@@ -23,6 +23,7 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.techhub.common.enums.DataType
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
@@ -35,7 +36,8 @@ fun MaskedOutlinedTextField(
     visualTransformation: VisualTransformation? = null,
     supportingText: String? = null,
     contentDescription: String? = null,
-    isError: Boolean = false
+    isError: Boolean = false,
+    dataType: DataType
 ) {
     val transformation = if (mask != null && visualTransformation == null) {
         val offsetMapping = createOffsetMapping(mask)
@@ -53,13 +55,23 @@ fun MaskedOutlinedTextField(
     OutlinedTextField(
         value = value,
         singleLine = true,
-        onValueChange = {
-            onValueChange(it)
+        onValueChange = { newValue ->
+            val unmaskedText = newValue.filter { it.isDigit() }
+
+            if (dataType == DataType.CPF) {
+                if (unmaskedText.length <= 11) {
+                    onValueChange(newValue)
+                }
+            } else {
+                if (unmaskedText.length <= 14) {
+                    onValueChange(newValue)
+                }
+            }
         },
         enabled = true,
         modifier = Modifier.fillMaxWidth(),
         keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.NumberPassword,
+            keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Done
         ),
         label = {
@@ -83,11 +95,15 @@ fun MaskedOutlinedTextField(
             errorContainerColor = Color.Transparent,
             errorSupportingTextColor = Color.Red.copy(alpha = 0.6f),
         ),
-        supportingText = { Text(text = supportingText!!) },
+        supportingText = if (supportingText != null) {
+            {
+                Text(text = supportingText)
+            }
+        } else null,
         leadingIcon = {
             Icon(
                 imageVector = Icons.Filled.AssignmentInd,
-                contentDescription = contentDescription!!,
+                contentDescription = contentDescription ?: "",
                 tint = Color(PrimaryBlue.value)
             )
         },
@@ -122,7 +138,7 @@ private fun createOffsetMapping(mask: String): OffsetMapping {
                 if (char != '#') transformedOffset++
                 if (index < offset && char != '#') originalOffset++
             }
-            return transformedOffset
+            return transformedOffset.coerceAtMost(mask.length)
         }
 
         override fun transformedToOriginal(offset: Int): Int {
@@ -132,7 +148,7 @@ private fun createOffsetMapping(mask: String): OffsetMapping {
                 if (index >= originalOffset) return@forEachIndexed
                 if (char != '#') originalOffset++
             }
-            return originalOffset
+            return originalOffset.coerceAtMost(mask.count { it == '#' })
         }
     }
 }
