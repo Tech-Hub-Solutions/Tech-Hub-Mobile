@@ -3,7 +3,6 @@ package com.example.techhub.presentation.cadastro.composables
 import android.os.Bundle
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,7 +19,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -32,7 +30,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -42,9 +39,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import com.example.techhub.R
 import com.example.techhub.common.composable.CircularProgressIndicatorTH
-import com.example.techhub.common.objects.Constants
 import com.example.techhub.common.composable.CpfTextField
-import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.EmailTextField
 import com.example.techhub.common.composable.NameTextField
 import com.example.techhub.common.composable.PasswordTextField
@@ -53,7 +48,6 @@ import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import com.example.techhub.common.enums.Screen
 import com.example.techhub.common.composable.CnpjTextField
-import com.example.techhub.common.composable.ProgressButton
 import com.example.techhub.common.composable.Switch2FA
 import com.example.techhub.common.enums.UsuarioFuncao
 import com.example.techhub.common.utils.UiText
@@ -96,7 +90,7 @@ fun CadastroFormView(
             email = email,
             senha = password,
             numeroCadastroPessoa = userDocument,
-            funcao = if (userType == Constants.FREELANCER) UsuarioFuncao.FREELANCER else UsuarioFuncao.EMPRESA,
+            funcao = if (userType == UsuarioFuncao.FREELANCER.toString()) UsuarioFuncao.FREELANCER else UsuarioFuncao.EMPRESA,
             isUsing2FA = isUsing2FA
         )
 
@@ -158,8 +152,7 @@ fun CadastroFormView(
                 navController = navController,
                 title = UiText.StringResource(
                     R.string.title_cadastro
-                ).asString(context = context)
-                ,
+                ).asString(context = context),
                 route = Screen.TravaTelaCadastroView.route,
                 context = context
             )
@@ -181,7 +174,7 @@ fun CadastroFormView(
             Spacer(modifier = Modifier.padding(20.dp))
 
             Text(
-                text = if (userType == Constants.FREELANCER) {
+                text = if (userType == UsuarioFuncao.FREELANCER.toString()) {
                     UiText.StringResource(
                         R.string.text_entry_cadastro_freelancer
                     ).asString(context = context)
@@ -225,9 +218,9 @@ fun CadastroFormView(
 
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                if (userType == Constants.FREELANCER) {
+                if (userType == UsuarioFuncao.FREELANCER.toString()) {
                     CpfTextField({ userDocument = it }, context = context)
-                } else if (userType == Constants.EMPRESA) {
+                } else if (userType == UsuarioFuncao.EMPRESA.toString()) {
                     CnpjTextField({ userDocument = it }, context = context)
                 }
 
