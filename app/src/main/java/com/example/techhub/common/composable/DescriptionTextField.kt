@@ -3,14 +3,13 @@ package com.example.techhub.common.composable
 import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Description
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -38,8 +37,7 @@ fun DescriptionTextField(
     var isNameValid by remember { mutableStateOf(false) }
 
     Column {
-
-        androidx.compose.material3.OutlinedTextField(
+        OutlinedTextField(
             value = filledText,
             onValueChange = {
                 filledText = it

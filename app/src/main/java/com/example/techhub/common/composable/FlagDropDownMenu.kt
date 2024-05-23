@@ -19,6 +19,7 @@ import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -70,7 +71,7 @@ fun FlagDropDownMenu(flag: MutableState<String>, context: Context) {
                     .fillMaxWidth()
                     .background(Color.White)
             ) {
-                androidx.compose.material3.OutlinedTextField(
+                OutlinedTextField(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(Color(0xFFFFFFFF)),
