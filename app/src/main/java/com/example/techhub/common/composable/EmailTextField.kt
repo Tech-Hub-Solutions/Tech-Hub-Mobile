@@ -101,7 +101,7 @@ fun EmailTextField(
             },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,
-                imeAction = ImeAction.Go
+                imeAction = ImeAction.Done
             ),
         )
     }

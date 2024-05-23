@@ -88,7 +88,7 @@ fun DescriptionTextField(
             isError = isNameValid,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Go
+                imeAction = ImeAction.Done
             ),
         )
     }

@@ -79,7 +79,7 @@ fun ExperienceTextField(
                 .fillMaxWidth(),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Go
+                imeAction = ImeAction.Done
             ),
         )
     }

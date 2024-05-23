@@ -123,7 +123,7 @@ fun PasswordTextField(onValueChanged: (String) -> Unit, context: Context) {
             keyboardOptions = KeyboardOptions(
                 autoCorrect = false,
                 keyboardType = KeyboardType.Email,
-                imeAction = ImeAction.Go,
+                imeAction = ImeAction.Done,
             ),
             visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         )

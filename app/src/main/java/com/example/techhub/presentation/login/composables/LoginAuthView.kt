@@ -160,7 +160,7 @@ fun LoginAuthView(
                 keyboardOptions = KeyboardOptions(
                     autoCorrect = false,
                     keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Go,
+                    imeAction = ImeAction.Done,
                 ),
             )
 
