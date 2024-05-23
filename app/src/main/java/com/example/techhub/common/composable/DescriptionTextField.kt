@@ -31,7 +31,8 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 fun DescriptionTextField(
     onValueChanged: (String) -> Unit,
     initialValue: String = "",
-    context: Context
+    context: Context,
+    modifier: Modifier? = null
 ) {
     var filledText by remember { mutableStateOf(initialValue) }
     var isNameValid by remember { mutableStateOf(false) }
@@ -82,7 +83,10 @@ fun DescriptionTextField(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight(),
+                .wrapContentHeight()
+                .let {
+                    if (modifier != null) it.then(modifier) else it
+                },
             isError = isNameValid,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,

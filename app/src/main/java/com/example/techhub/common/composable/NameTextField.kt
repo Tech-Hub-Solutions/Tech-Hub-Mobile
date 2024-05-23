@@ -17,6 +17,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -27,7 +29,12 @@ import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun NameTextField(onValueChanged: (String) -> Unit, initialValue: String = "", context: Context) {
+fun NameTextField(
+    onValueChanged: (String) -> Unit,
+    initialValue: String = "",
+    context: Context,
+    modifier: Modifier? = null
+) {
     var filledText by remember { mutableStateOf(initialValue) }
     var isNameValid by remember { mutableStateOf(false) }
 
@@ -75,7 +82,10 @@ fun NameTextField(onValueChanged: (String) -> Unit, initialValue: String = "", c
                 )
             },
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .let {
+                    if (modifier != null) it.then(modifier) else it
+                },
             singleLine = true,
             isError = isNameValid,
             supportingText = {

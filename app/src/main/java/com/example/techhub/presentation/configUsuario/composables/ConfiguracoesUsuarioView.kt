@@ -30,6 +30,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -81,6 +83,11 @@ fun ConfiguracoesUsuarioView(
     val errorApi = viewModel.errorApi.observeAsState().value!!
     val usuarioTokenData = viewModel.usuarioTokenData.observeAsState()
     val isLoading = viewModel.isLoading.observeAsState()
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
 
 
     LaunchedEffect(usuarioTokenData.value) {
@@ -146,7 +153,8 @@ fun ConfiguracoesUsuarioView(
                 NameTextField(
                     initialValue = CurrentUser.userProfile!!.nome!!,
                     onValueChanged = { name = it },
-                    context = context
+                    context = context,
+                    modifier = Modifier.focusRequester(focusRequester)
                 )
 
                 FlagDropDownMenu(flag = nacionalidade, context = context)
