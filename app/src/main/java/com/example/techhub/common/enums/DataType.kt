@@ -1,6 +1,6 @@
-package com.example.techhub.common.enums;
+package com.example.techhub.common.enums
 
-public enum DataType {
+enum class DataType {
     CPF,
     CNPJ
 }
