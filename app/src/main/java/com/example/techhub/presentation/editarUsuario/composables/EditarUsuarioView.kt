@@ -154,7 +154,7 @@ fun EditarUsuarioView(
                 Spacer(modifier = Modifier.padding(0.dp))
 
                 PriceTextField(
-                    initialValue = userInfo.precoMedio.toString(),
+                    initialValue = if (userInfo.precoMedio == null) "0.00" else userInfo.precoMedio.toString(),
                     onValueChanged = { preco = if (it.isNullOrEmpty()) "0.00" else it },
                     context = context
                 )
