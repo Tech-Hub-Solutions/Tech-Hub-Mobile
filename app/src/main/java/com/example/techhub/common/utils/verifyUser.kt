@@ -18,7 +18,10 @@ fun verifyUser(
     userData: UsuarioVerifyData,
     context: Context,
     toastErrorMessage: String,
+    isLoading: MutableLiveData<Boolean> ?= null
 ) {
+    isLoading?.postValue(true)
+
     val authService = RetrofitService.getAuthService()
 
     CoroutineScope(Dispatchers.Main).launch {
@@ -50,11 +53,13 @@ fun verifyUser(
                     context.startActivity(intent)
                 }
             } else {
+                isLoading?.postValue(false)
                 (context as Activity).runOnUiThread {
                     showToastError(context, toastErrorMessage)
                 }
             }
         } catch (e: Exception) {
+            isLoading?.postValue(false)
             Log.e("VERIFY_USER", "ERROR: ${e.message}")
             (context as Activity).runOnUiThread {
                 showToastError(context, toastErrorMessage)

@@ -329,6 +329,7 @@ fun FirstAuthView(
                             ),
                             context = context,
                             toastErrorMessage = toastErrorMessage,
+                            isLoading = isLoading
                         )
                     },
                     text = UiText.StringResource(
