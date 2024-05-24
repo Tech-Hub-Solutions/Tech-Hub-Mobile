@@ -5,26 +5,27 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
 class PushNoficationService: FirebaseMessagingService(){
+    override fun onMessageReceived(message: RemoteMessage) {
+        super.onMessageReceived(message)
+        Log.v("CloudMassage","From: ${message.from}")
 
-    val tag:String = "FCMToken"
-    override fun onNewToken(token: String) {
-        Log.d(tag, "Refreshed token: $token")
+        if(message.data.isNotEmpty()){
+            Log.v("CloudMassage","Message data payload: ${message.data}")
+        }
+
+        message.data?.let {
+            Log.v("CloudMassage","Message Notification Body ${it["body"]}")
+        }
+
+        if(message.notification != null){
+            Log.v("CloudMassage","Message Notification ${message.notification}")
+            Log.v("CloudMassage","Message Notification Title ${message.notification!!.title}")
+            Log.v("CloudMassage","Message Notification Body ${message.notification!!.body}")
+        }
     }
 
-    override fun onMessageReceived(remoteMessage: RemoteMessage) {
-
-        if (remoteMessage.data.isNotEmpty()) {
-            Log.d(tag, "Message data payload: ${remoteMessage.data}")
-
-        }
-
-        // Check if message contains a notification payload.
-        remoteMessage.notification?.let {
-            Log.d(tag, "Message Notification Body: ${it.body}")
-        }
-
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
+    override fun onNewToken(token: String) {
+        super.onNewToken(token)
     }
 
 }
