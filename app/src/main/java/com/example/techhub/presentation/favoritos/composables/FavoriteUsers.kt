@@ -190,19 +190,7 @@ fun FavoriteUsers(
                 }
             }
         }
-        Box(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize(),
-            contentAlignment = Alignment.BottomEnd,
-        ) {
-            FloatingActionButtonScrollLazyColumn(
-                isScrolled = isScrolled,
-                listState = listState,
-                scope = scope,
-                context = context
-            )
-        }
+
     }
 
 
