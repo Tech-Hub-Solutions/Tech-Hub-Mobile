@@ -63,7 +63,6 @@ fun FavoritosView() {
                 ordem = ordem,
                 selectedUsers = selectedUsers,
                 isAbleToCompare = isAbleToCompare,
-                innerPadding = innerPadding
             )
 
         }

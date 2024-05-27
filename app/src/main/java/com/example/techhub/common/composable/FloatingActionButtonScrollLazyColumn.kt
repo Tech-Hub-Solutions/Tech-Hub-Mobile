@@ -28,7 +28,6 @@ import kotlinx.coroutines.launch
     context: Context
 ) {
     if (isScrolled) {
-        Log.d("FLOATIN ACTION BUTTON","TA NO IF")
         FloatingActionButton(
             onClick = {
                 scope.launch {
