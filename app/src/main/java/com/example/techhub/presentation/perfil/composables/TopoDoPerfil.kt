@@ -69,9 +69,7 @@ fun TopoDoPerfil(
     context: Context,
     urlCurriculo: String,
 ) {
-    val isFavorito = remember {
-        mutableStateOf(userInfo.value!!.isFavorito == true)
-    }
+    val isFavorito = remember { mutableStateOf(userInfo.value!!.isFavorito == true) }
     val expanded = remember { mutableStateOf(false) }
     val clipboardManager: ClipboardManager = LocalClipboardManager.current
     val urlPerfil = "https://tech-hub.ddns.net/perfil/${userInfo.value!!.idPerfil}"
@@ -155,7 +153,7 @@ fun TopoDoPerfil(
                                     viewModel,
                                     context,
                                     urlCurriculo,
-                                    userInfo.value!!.nome!!,
+                                    userInfo.value?.nome!!,
                                     clipboardManager = clipboardManager,
                                     urlPerfil = urlPerfil
                                 )
@@ -183,7 +181,7 @@ fun TopoDoPerfil(
                                     viewModel,
                                     context,
                                     urlCurriculo,
-                                    userInfo.value!!.nome!!,
+                                    userInfo.value?.nome!!,
                                     clipboardManager = clipboardManager,
                                     urlPerfil = urlPerfil
                                 )

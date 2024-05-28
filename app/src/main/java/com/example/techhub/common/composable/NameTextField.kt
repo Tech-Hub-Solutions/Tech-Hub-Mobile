@@ -23,11 +23,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
 import com.example.techhub.R
 import com.example.techhub.common.utils.UiText
-import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun NameTextField(onValueChanged: (String) -> Unit, initialValue: String = "", context: Context) {
+fun NameTextField(
+    onValueChanged: (String) -> Unit,
+    initialValue: String = "",
+    context: Context,
+    modifier: Modifier? = null
+) {
     var filledText by remember { mutableStateOf(initialValue) }
     var isNameValid by remember { mutableStateOf(false) }
 
@@ -75,7 +79,10 @@ fun NameTextField(onValueChanged: (String) -> Unit, initialValue: String = "", c
                 )
             },
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .let {
+                    if (modifier != null) it.then(modifier) else it
+                },
             singleLine = true,
             isError = isNameValid,
             supportingText = {
@@ -87,7 +94,7 @@ fun NameTextField(onValueChanged: (String) -> Unit, initialValue: String = "", c
             },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,
-                imeAction = ImeAction.Go
+                imeAction = ImeAction.Done
             ),
         )
     }

@@ -58,13 +58,14 @@ fun UserCard(
     isComparing: Boolean,
     modifier: Modifier = Modifier,
     isAbleToCompare: MutableState<Boolean>? = null,
+    favoritesList: MutableList<UsuarioFavoritoData>? = null,
 ) {
     val context = LocalContext.current
-    val isFavorito = remember { mutableStateOf(true) }
-    val isSelected = remember { mutableStateOf(false) }
+    val isFavorito = remember { mutableStateOf(favoritesList?.contains(userProfile) ?: false) }
+    val isSelected = remember { mutableStateOf(selectedUsers?.contains(userProfile) ?: false) }
 
     val borderColor =
-        if (isSelected.value && isAbleToCompare!!.value) {
+        if (isSelected.value && isAbleToCompare?.value == true) {
             Color(PrimaryBlue.value)
         } else {
             isSelected.value = false
@@ -203,6 +204,12 @@ fun UserCard(
                         modifier = Modifier
                             .size(20.dp)
                             .clickable {
+                                if (isFavorito.value) {
+                                    favoritesList!!.remove(userProfile)
+                                } else {
+                                    favoritesList!!.add(userProfile)
+                                }
+
                                 val viewModel = FavoritosViewModel()
 
                                 viewModel.favoritarUsuario(userProfile.id)

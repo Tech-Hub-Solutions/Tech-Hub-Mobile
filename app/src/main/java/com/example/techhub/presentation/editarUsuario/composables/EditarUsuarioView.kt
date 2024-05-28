@@ -1,5 +1,6 @@
 package com.example.techhub.presentation.editarUsuario.composables
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -29,15 +30,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.techhub.R
 import com.example.techhub.common.composable.AboutMeTextField
 import com.example.techhub.common.composable.DescriptionTextField
-import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.ExperienceTextField
 import com.example.techhub.common.composable.GitHubTextField
 import com.example.techhub.common.composable.LinkedinTextField
@@ -56,6 +59,7 @@ import com.example.techhub.presentation.editarUsuario.EditarUsuarioViewModel
 import com.example.techhub.presentation.perfil.PerfilActivity
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
+@SuppressLint("MutableCollectionMutableState")
 @Composable
 fun EditarUsuarioView(
     userInfo: PerfilGeralDetalhadoData,
@@ -65,7 +69,7 @@ fun EditarUsuarioView(
     var descricao by remember { mutableStateOf(userInfo.descricao) }
     var experiencia by remember { mutableStateOf(userInfo.experiencia) }
     var sobreMim by remember { mutableStateOf(userInfo.sobreMim) }
-    var preco by remember { mutableStateOf(userInfo.precoMedio) }
+    var preco by remember { mutableStateOf(userInfo.precoMedio.toString()) }
     var linkLinkedin by remember { mutableStateOf(userInfo.linkLinkedin) }
     var linkGithub by remember { mutableStateOf(userInfo.linkGithub) }
     var nomeGithub by remember { mutableStateOf(userInfo.nomeGithub) }
@@ -80,6 +84,11 @@ fun EditarUsuarioView(
         }.toMutableStateList())
     }
     val isLoading = viewModel.isLoading.observeAsState()
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
 
     Scaffold(
         topBar = {
@@ -122,7 +131,8 @@ fun EditarUsuarioView(
                 DescriptionTextField(
                     initialValue = userInfo.descricao ?: "",
                     onValueChanged = { descricao = it },
-                    context = context
+                    context = context,
+                    modifier = Modifier.focusRequester(focusRequester)
                 )
 
                 Spacer(modifier = Modifier.padding(0.dp))
@@ -144,22 +154,22 @@ fun EditarUsuarioView(
                 Spacer(modifier = Modifier.padding(0.dp))
 
                 PriceTextField(
-                    initialValue = userInfo.precoMedio,
-                    onValueChanged = { preco = it },
+                    initialValue = if (userInfo.precoMedio == null) "0.00" else userInfo.precoMedio.toString(),
+                    onValueChanged = { preco = if (it.isNullOrEmpty()) "0.00" else it },
                     context = context
                 )
 
                 Spacer(modifier = Modifier.padding(2.dp))
 
-
-                // Formas de contato
                 Row {
                     Text(
                         text = UiText.StringResource(
                             R.string.text_formas_contato
                         ).asString(context = context),
                         fontSize = 20.sp,
+                        color = Color.Black,
                         fontWeight = FontWeight(500),
+                        textAlign = TextAlign.Justify,
                     )
                 }
                 Spacer(modifier = Modifier.padding(2.dp))
@@ -195,8 +205,6 @@ fun EditarUsuarioView(
                     Spacer(modifier = Modifier.padding(2.dp))
                 }
 
-
-                // Skills
                 Row {
                     val texto =
                         if (userInfo.funcao == UsuarioFuncao.FREELANCER)
@@ -210,7 +218,9 @@ fun EditarUsuarioView(
                     Text(
                         text = texto,
                         fontSize = 20.sp,
+                        color = Color.Black,
                         fontWeight = FontWeight(500),
+                        textAlign = TextAlign.Justify,
                     )
                 }
                 SkillsDropDownMenu(
@@ -229,7 +239,9 @@ fun EditarUsuarioView(
                                 R.string.text_hard_skills,
                             ).asString(context = context),
                             fontSize = 20.sp,
+                            color = Color.Black,
                             fontWeight = FontWeight(500),
+                            textAlign = TextAlign.Justify,
                         )
                     }
                     SkillsDropDownMenu(
@@ -250,7 +262,7 @@ fun EditarUsuarioView(
                             sobreMim = sobreMim,
                             experiencia = experiencia,
                             descricao = descricao,
-                            precoMedio = preco,
+                            precoMedio = preco.toDouble(),
                             nomeGithub = nomeGithub,
                             linkGithub = linkGithub,
                             linkLinkedin = linkLinkedin,

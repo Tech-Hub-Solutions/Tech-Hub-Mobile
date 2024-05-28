@@ -1,6 +1,7 @@
 package com.example.techhub.common.composable
 
 import android.os.Bundle
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,8 +15,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -244,7 +248,7 @@ fun FirstAuthView(
             keyboardOptions = KeyboardOptions(
                 autoCorrect = false,
                 keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Go,
+                imeAction = ImeAction.Done,
             ),
         )
 
@@ -255,63 +259,65 @@ fun FirstAuthView(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (isLoading.observeAsState().value!!) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(10.dp)
-                        .height(60.dp),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    CircularProgressIndicatorTH(30.0)
-                }
-            } else {
-                TextButton(
-                    onClick = {
-                        val extras = Bundle()
-                        if (cancelarActivity == PerfilActivity::class.java) {
-                            extras.putInt("id", 1)
-                        }
-                        startNewActivity(
-                            context = context,
-                            activity = cancelarActivity
-                        )
-                    },
-                    modifier = Modifier
-                        .width(130.dp)
-                        .height(52.dp)
-                ) {
+            TextButton(
+                onClick = {
+                    val extras = Bundle()
+                    if (cancelarActivity == PerfilActivity::class.java) {
+                        extras.putInt("id", 1)
+                    }
+                    startNewActivity(
+                        context = context,
+                        activity = cancelarActivity
+                    )
+                },
+                modifier = Modifier
+                    .width(130.dp)
+                    .height(52.dp)
+            ) {
+                Text(
+                    text = UiText.StringResource(
+                        R.string.btn_text_cancelar
+                    ).asString(context = context),
+                    color = Color(GrayButtonText.value),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight(300)
+                )
+            }
+
+            ElevatedButton(
+                onClick = {
+                    verifyUser(
+                        userData = UsuarioVerifyData(
+                            email = usuarioSimpleVerifyData.email,
+                            senha = usuarioSimpleVerifyData.senha,
+                            code = authCode
+                        ),
+                        context = context,
+                        toastErrorMessage = toastErrorMessage,
+                        isLoading = isLoading
+                    )
+                },
+                modifier = Modifier
+                    .padding(10.dp)
+                    .width(130.dp)
+                    .height(52.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(PrimaryBlue.value),
+                    contentColor = Color.White,
+                ),
+                shape = RoundedCornerShape(10.dp),
+            ) {
+                if (isLoading.observeAsState().value!!) {
+                    CircularProgressIndicatorTH(size = 30.0, color = Color.White)
+                } else {
                     Text(
                         text = UiText.StringResource(
-                            R.string.btn_text_cancelar
+                            R.string.btn_text_continuar
                         ).asString(context = context),
-                        color = Color(GrayButtonText.value),
                         fontSize = 16.sp,
                         fontWeight = FontWeight(300)
                     )
                 }
-
-                ElevatedButtonTH(
-                    onClick = {
-                        verifyUser(
-                            userData = UsuarioVerifyData(
-                                email = usuarioSimpleVerifyData.email,
-                                senha = usuarioSimpleVerifyData.senha,
-                                code = authCode
-                            ),
-                            context = context,
-                            toastErrorMessage = toastErrorMessage,
-                        )
-                    },
-                    text = UiText.StringResource(
-                        R.string.btn_text_continuar
-                    ).asString(context = context),
-                    backgroundColor = Color(PrimaryBlue.value),
-                    textColor = Color.White,
-                    width = 130,
-                    height = 52,
-                )
             }
         }
     }

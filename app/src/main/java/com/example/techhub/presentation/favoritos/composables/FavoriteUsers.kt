@@ -24,6 +24,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -58,10 +59,13 @@ fun FavoriteUsers(
     selectedUsers: SnapshotStateList<UsuarioFavoritoData>,
     isAbleToCompare: MutableState<Boolean>,
 ) {
-    val favoritos = viewModel.favoritos.observeAsState().value!!
+    val freelancers = viewModel.favoritos.observeAsState().value!!
     val totalElements = viewModel.totalElements.observeAsState()
     val isLoading = viewModel.isLoading.observeAsState().value!!
     val isLastPage = viewModel.isLastPage.observeAsState().value!!
+
+    val favoritesList = remember { mutableStateListOf<UsuarioFavoritoData>() }
+    favoritesList.addAll(freelancers)
 
     val page = remember { mutableStateOf(0) }
 
@@ -69,6 +73,7 @@ fun FavoriteUsers(
         page.value = 0
         viewModel.getFavoriteUsers(page.value, 30, ordem.value, context)
     }
+
 
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
@@ -107,7 +112,7 @@ fun FavoriteUsers(
         context = context
     )
 
-    Spacer(modifier = Modifier.padding(vertical = 8.dp))
+    Spacer(modifier = Modifier.padding(vertical = 4.dp))
 
     Scaffold { innerPadding ->
         if (isLoading) {
@@ -121,75 +126,78 @@ fun FavoriteUsers(
                 )
             }
 
-            LazyColumn(
-                state = listState,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                val subLists = favoritos.chunked(2)
+        if (freelancers.isEmpty()) {
+            Text(
+                text = UiText.StringResource(
+                    R.string.text_no_favorites
+                ).asString(context = context)
+            )
+        }
 
-                itemsIndexed(subLists) { index, subLista ->
-                    Row(
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start)
-                    ) {
-                        subLista.forEachIndexed { index, item ->
-                            UserCard(
-                                item,
-                                selectedUsers,
-                                true,
-                                modifier = Modifier.weight(1f, false),
-                                isAbleToCompare
-                            )
+        LazyColumn(
+            state = listState,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            val subLists = freelancers.chunked(2)
 
-                            if (index == subLista.size - 1 && subLista.size % 2 != 0) {
-                                Spacer(modifier = Modifier.weight(1f))
-                            }
+            itemsIndexed(subLists) { index, subLista ->
+                Row(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start)
+                ) {
+                    subLista.forEachIndexed { index, item ->
+                        UserCard(
+                            userProfile = item,
+                            selectedUsers = selectedUsers,
+                            isComparing = true,
+                            modifier = Modifier.weight(1f, false),
+                            isAbleToCompare = isAbleToCompare,
+                            favoritesList = favoritesList
+                        )
+
+                        if (index == subLista.size - 1 && subLista.size % 2 != 0) {
+                            Spacer(modifier = Modifier.weight(1f))
                         }
                     }
                 }
 
-                item {
-                    if (!isLastPage && favoritos.isNotEmpty()) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            CustomizedElevatedButton(
-                                onClick = {
-                                    viewModel.getFavoriteUsers(
-                                        ++page.value,
-                                        30,
-                                        ordem.value,
-                                        context
-                                    )
-                                },
-                                horizontalPadding = 16,
-                                verticalPadding = 8,
-                                defaultElevation = 0,
-                                pressedElevation = 0,
-                                containerColor = Color(GrayLoadButton.value),
-                                contentColor = Color(0xFF505050),
-                                shape = RoundedCornerShape(50),
-                                horizontalArrangement = Arrangement.spacedBy(
-                                    8.dp,
-                                    Alignment.CenterHorizontally
-                                ),
-                                text = UiText.StringResource(
-                                    R.string.btn_text_load_more_talents
-                                ).asString(context = context),
-                                fontSize = 16,
-                                fontWeight = FontWeight.Medium,
-                                contentDescription = UiText.StringResource(
-                                    R.string.btn_description_load_more_talents
-                                ).asString(context = context)
-                            )
-                        }
+            item {
+                if (!isLastPage && freelancers.isNotEmpty()) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        CustomizedElevatedButton(
+                            onClick = {
+                                viewModel.getFavoriteUsers(++page.value, 30, ordem.value, context)
+                            },
+                            horizontalPadding = 16,
+                            verticalPadding = 8,
+                            defaultElevation = 0,
+                            pressedElevation = 0,
+                            containerColor = Color(GrayLoadButton.value),
+                            contentColor = Color(0xFF505050),
+                            shape = RoundedCornerShape(50),
+                            horizontalArrangement = Arrangement.spacedBy(
+                                8.dp,
+                                Alignment.CenterHorizontally
+                            ),
+                            text = UiText.StringResource(
+                                R.string.btn_text_load_more_talents
+                            ).asString(context = context),
+                            fontSize = 16,
+                            fontWeight = FontWeight.Medium,
+                            contentDescription = UiText.StringResource(
+                                R.string.btn_description_load_more_talents
+                            ).asString(context = context)
+                        )
                     }
                 }
             }
         }
+            
         Box(
             modifier = Modifier
                 .padding(innerPadding)

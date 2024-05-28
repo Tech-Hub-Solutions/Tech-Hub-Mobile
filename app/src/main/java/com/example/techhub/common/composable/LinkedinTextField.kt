@@ -77,7 +77,7 @@ fun LinkedinTextField(
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Uri,
-                imeAction = ImeAction.Go
+                imeAction = ImeAction.Done
             ),
         )
     }
