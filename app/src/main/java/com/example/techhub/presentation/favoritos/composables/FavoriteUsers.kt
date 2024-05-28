@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -45,10 +46,13 @@ fun FavoriteUsers(
     selectedUsers: SnapshotStateList<UsuarioFavoritoData>,
     isAbleToCompare: MutableState<Boolean>,
 ) {
-    val favoritos = viewModel.favoritos.observeAsState().value!!
+    val freelancers = viewModel.favoritos.observeAsState().value!!
     val totalElements = viewModel.totalElements.observeAsState()
     val isLoading = viewModel.isLoading.observeAsState().value!!
     val isLastPage = viewModel.isLastPage.observeAsState().value!!
+
+    val favoritesList = remember { mutableStateListOf<UsuarioFavoritoData>() }
+    favoritesList.addAll(freelancers)
 
     val page = remember { mutableStateOf(0) }
 
@@ -56,8 +60,6 @@ fun FavoriteUsers(
         page.value = 0
         viewModel.getFavoriteUsers(page.value, 30, ordem.value, context)
     }
-
-
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -82,13 +84,13 @@ fun FavoriteUsers(
         context = context
     )
 
-    Spacer(modifier = Modifier.padding(vertical = 8.dp))
+    Spacer(modifier = Modifier.padding(vertical = 4.dp))
 
     if (isLoading) {
         ShimmerEffectFavoritos()
     } else {
 
-        if (favoritos.isEmpty()) {
+        if (freelancers.isEmpty()) {
             Text(
                 text = UiText.StringResource(
                     R.string.text_no_favorites
@@ -99,7 +101,7 @@ fun FavoriteUsers(
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            val subLists = favoritos.chunked(2)
+            val subLists = freelancers.chunked(2)
 
             itemsIndexed(subLists) { index, subLista ->
                 Row(
@@ -110,11 +112,12 @@ fun FavoriteUsers(
                 ) {
                     subLista.forEachIndexed { index, item ->
                         UserCard(
-                            item,
-                            selectedUsers,
-                            true,
+                            userProfile = item,
+                            selectedUsers = selectedUsers,
+                            isComparing = true,
                             modifier = Modifier.weight(1f, false),
-                            isAbleToCompare
+                            isAbleToCompare = isAbleToCompare,
+                            favoritesList = favoritesList
                         )
 
                         if (index == subLista.size - 1 && subLista.size % 2 != 0) {
@@ -125,7 +128,7 @@ fun FavoriteUsers(
             }
 
             item {
-                if (!isLastPage && favoritos.isNotEmpty()) {
+                if (!isLastPage && freelancers.isNotEmpty()) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center
