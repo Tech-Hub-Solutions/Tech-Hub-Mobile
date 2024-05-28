@@ -61,10 +61,10 @@ fun UserCard(
 ) {
     val context = LocalContext.current
     val isFavorito = remember { mutableStateOf(true) }
-    val isSelected = remember { mutableStateOf(false) }
+    val isSelected = remember { mutableStateOf(selectedUsers?.contains(userProfile) ?: false) }
 
     val borderColor =
-        if (isSelected.value && isAbleToCompare!!.value) {
+        if (isSelected.value && isAbleToCompare?.value == true) {
             Color(PrimaryBlue.value)
         } else {
             isSelected.value = false
