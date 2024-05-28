@@ -121,6 +121,8 @@
     <string name="description_image_photo_freelancer">Foto del freelancer</string>
     <string name="icon_desc_curriculo">Curriculum Vitae</string>
     <string name="description_dowloading_file">Descargando archivo...</string>
+    <string name="desc_user_card">Sin descripción</string>
+    <string name="description_usercard_sem_preco">Precio no indicado</string>
 
     // TEXT
     <string name="text_auth_code">Introduce el código de autorización</string>

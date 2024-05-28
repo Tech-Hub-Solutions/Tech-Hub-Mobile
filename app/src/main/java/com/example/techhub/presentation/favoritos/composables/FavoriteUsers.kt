@@ -59,13 +59,11 @@ fun FavoriteUsers(
     selectedUsers: SnapshotStateList<UsuarioFavoritoData>,
     isAbleToCompare: MutableState<Boolean>,
 ) {
-    val freelancers = viewModel.favoritos.observeAsState().value!!
+    val freelancers = viewModel.freelancers.observeAsState().value!!
+    val favoritesList = viewModel.favoritos.observeAsState().value!!
     val totalElements = viewModel.totalElements.observeAsState()
     val isLoading = viewModel.isLoading.observeAsState().value!!
     val isLastPage = viewModel.isLastPage.observeAsState().value!!
-
-    val favoritesList = remember { mutableStateListOf<UsuarioFavoritoData>() }
-    favoritesList.addAll(freelancers)
 
     val page = remember { mutableStateOf(0) }
 
@@ -73,7 +71,6 @@ fun FavoriteUsers(
         page.value = 0
         viewModel.getFavoriteUsers(page.value, 30, ordem.value, context)
     }
-
 
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
