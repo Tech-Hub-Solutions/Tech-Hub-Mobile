@@ -193,7 +193,7 @@ fun TalentosContent(
                             UserCard(
                                 item,
                                 talentos,
-                                isComparing = false,
+                                isAbleToFavorite = false,
                                 modifier = Modifier
                                     .weight(1f, false)
                             )

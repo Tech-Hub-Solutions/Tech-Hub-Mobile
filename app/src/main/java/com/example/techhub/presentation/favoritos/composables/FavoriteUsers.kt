@@ -147,7 +147,7 @@ fun FavoriteUsers(
                             UserCard(
                                 userProfile = item,
                                 selectedUsers = selectedUsers,
-                                isComparing = true,
+                                isAbleToFavorite = true,
                                 modifier = Modifier.weight(1f, false),
                                 isAbleToCompare = isAbleToCompare,
                                 favoritesList = favoritesList

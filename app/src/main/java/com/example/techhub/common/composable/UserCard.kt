@@ -58,7 +58,7 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 fun UserCard(
     userProfile: UsuarioFavoritoData,
     selectedUsers: MutableList<UsuarioFavoritoData>? = null,
-    isComparing: Boolean,
+    isAbleToFavorite: Boolean,
     modifier: Modifier = Modifier,
     isAbleToCompare: MutableState<Boolean>? = null,
     favoritesList: MutableList<UsuarioFavoritoData>? = null,
@@ -90,7 +90,7 @@ fun UserCard(
             .then(modifier),
         shape = RectangleShape,
         onClick = {
-            if (isComparing && isAbleToCompare?.value == true) {
+            if (isAbleToCompare?.value == true) {
                 if (selectedUsers != null && selectedUsers.size < 2 ||
                     selectedUsers != null && selectedUsers.contains(userProfile)
                 ) {
@@ -204,7 +204,7 @@ fun UserCard(
                     )
                 )
 
-                if (isComparing) {
+                if (isAbleToFavorite) {
                     Icon(
                         imageVector = Icons.Filled.Favorite,
                         contentDescription = UiText.StringResource(
