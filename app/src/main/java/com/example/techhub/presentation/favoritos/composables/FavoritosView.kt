@@ -4,10 +4,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,6 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.techhub.R
 import com.example.techhub.common.composable.BottomBar
+import com.example.techhub.common.composable.FloatingActionButtonScrollLazyColumn
 import com.example.techhub.common.composable.TopBarTitle
 import com.example.techhub.common.utils.UiText
 import com.example.techhub.domain.model.usuario.UsuarioFavoritoData
@@ -51,6 +56,7 @@ fun FavoritosView() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
+
             FavoriteUsers(
                 viewModel = FavoritosViewModel(),
                 context = context,
@@ -58,6 +64,7 @@ fun FavoritosView() {
                 selectedUsers = selectedUsers,
                 isAbleToCompare = isAbleToCompare,
             )
+
         }
     }
 

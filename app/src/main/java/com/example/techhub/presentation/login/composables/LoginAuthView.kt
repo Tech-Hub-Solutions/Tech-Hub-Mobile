@@ -11,8 +11,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -21,6 +24,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -34,8 +38,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.MutableLiveData
 import com.example.techhub.R
 import com.example.techhub.common.composable.CenteredImageSection
+import com.example.techhub.common.composable.CircularProgressIndicatorTH
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.TopBar
 import com.example.techhub.common.utils.UiText
@@ -57,6 +63,7 @@ fun LoginAuthView(
         UiText.StringResource(
             R.string.toast_auth_text_error
         ).asString(context = context)
+    val isLoading = MutableLiveData(false)
 
     Scaffold(
         topBar = {
@@ -153,7 +160,7 @@ fun LoginAuthView(
                 keyboardOptions = KeyboardOptions(
                     autoCorrect = false,
                     keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Go,
+                    imeAction = ImeAction.Done,
                 ),
             )
 
@@ -184,7 +191,7 @@ fun LoginAuthView(
                     )
                 }
 
-                ElevatedButtonTH(
+                ElevatedButton(
                     onClick = {
                         verifyUser(
                             userData = UsuarioVerifyData(
@@ -193,18 +200,35 @@ fun LoginAuthView(
                                 code = authCode
                             ),
                             context = context,
-                            toastErrorMessage = toastErrorMessage
+                            toastErrorMessage = toastErrorMessage,
+                            isLoading = isLoading
                         )
                     },
-                    text = UiText.StringResource(R.string.btn_text_continuar)
-                        .asString(context = context),
-                    backgroundColor = Color(PrimaryBlue.value),
-                    textColor = Color.White,
-                    width = 130,
-                    height = 52,
-                )
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .width(130.dp)
+                        .height(52.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(PrimaryBlue.value),
+                        contentColor = Color.White,
+                    ),
+                    shape = RoundedCornerShape(10.dp),
+                ) {
+                    if (isLoading.observeAsState().value!!) {
+                        CircularProgressIndicatorTH(size = 30.0, color = Color.White)
+                    } else {
+                        Text(
+                            text = UiText.StringResource(
+                                R.string.btn_text_continuar
+                            ).asString(context = context),
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight(300)
+                        )
+                    }
+                }
             }
         }
     }
 }
+
 

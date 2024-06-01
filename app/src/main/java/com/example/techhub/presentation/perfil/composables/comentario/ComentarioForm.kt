@@ -144,7 +144,7 @@ fun ComentarioForm(
                 .height(150.dp),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,
-                imeAction = ImeAction.Go
+                imeAction = ImeAction.Done
             ),
         )
     }

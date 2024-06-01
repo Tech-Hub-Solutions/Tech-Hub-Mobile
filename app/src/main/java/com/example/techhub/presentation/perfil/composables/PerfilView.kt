@@ -22,15 +22,18 @@ import com.example.techhub.common.composable.BottomBar
 import com.example.techhub.common.composable.CircularProgressIndicatorTH
 import com.example.techhub.common.composable.FloatingActionButtonScroll
 import com.example.techhub.common.enums.UsuarioFuncao
+import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.model.CurrentUser
+import com.example.techhub.presentation.explorarTalentos.ExplorarTalentosActivity
 import com.example.techhub.presentation.perfil.GitHubViewModel
 import com.example.techhub.presentation.perfil.PerfilViewModel
 import com.example.techhub.presentation.perfil.composables.comentario.ComentariosSection
+import com.example.techhub.presentation.perfil.composables.shimmerEffect.ShimmerEffectPerfil
 
 @Composable
 fun PerfilView(
-    id: Int,
-    viewModel: PerfilViewModel = PerfilViewModel(),
+    id: Int?,
+    viewModel: PerfilViewModel,
     gitHubViewModel: GitHubViewModel = GitHubViewModel()
 ) {
     val scrollState = rememberScrollState()
@@ -41,13 +44,20 @@ fun PerfilView(
     val isLoading = viewModel.isLoading.observeAsState();
     val isLoadingPerfil = viewModel.isLoadingPerfil.observeAsState()
     val isLoadingWallpaper = viewModel.isLoadingWallpaper.observeAsState()
+    val isLoadingCurriculo = viewModel.isLoadingCurriculo.observeAsState()
+    val urlCurriculo = viewModel.urlCurriculo.observeAsState()
     val isEmpresa = userInfo.value!!.funcao == UsuarioFuncao.EMPRESA
+    val hasError = viewModel.hasError.observeAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.getInfosUsuario(context = context, userId = id)
+        if (id != null && id != 0) {
+            viewModel.getInfosUsuario(context = context, userId = id)
+        }
     }
 
-
+    if (hasError.value!!) {
+        startNewActivity(context, ExplorarTalentosActivity::class.java)
+    } else {
     Scaffold(
         bottomBar = {
             BottomBar()
@@ -57,13 +67,14 @@ fun PerfilView(
             .fillMaxSize()
     ) { innerPadding ->
         if (isLoading.value!!) {
-            Column(
+            /* Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 CircularProgressIndicatorTH()
-            }
+            } */
+            ShimmerEffectPerfil()
         } else {
             Column(
                 horizontalAlignment = Alignment.Start,
@@ -79,54 +90,56 @@ fun PerfilView(
                     isLoadingPerfil = isLoadingPerfil,
                     isLoadingWallpaper = isLoadingWallpaper,
                     isOwnProfile = isOwnProfile,
+                    isLoadingCurriculo = isLoadingCurriculo,
                     isEmpresa = isEmpresa,
-                    viewModel = viewModel,
-                    context = context
-                )
-
-                // Nome e Infos
-                DetalhesUsuario(
-                    userInfo = userInfo,
-                    context = context
-                )
-
-                Divider(
-                    color = Color.LightGray.copy(alpha = 0.4f),
-                    thickness = 1.dp,
-                    modifier = Modifier.padding(vertical = 20.dp)
-                )
-
-                // Column das informações pós header/banner
-                InformacoesPerfil(
-                    userInfo = userInfo,
-                    isOwnProfile = isOwnProfile,
-                    isEmpresa = isEmpresa,
-                    viewModel = viewModel,
-                    gitHubViewModel = gitHubViewModel,
-                    context = context
-                )
-
-                // Seção de Comentários
-                ComentariosSection(
-                    userInfo = userInfo,
                     viewModel = viewModel,
                     context = context,
-                    isOwnProfile = isOwnProfile
+                    urlCurriculo = urlCurriculo.value ?: ""
                 )
-            }
+                    // Nome e Infos
+                    DetalhesUsuario(
+                        userInfo = userInfo,
+                        context = context
+                    )
 
-            Box(
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize(),
-                contentAlignment = Alignment.BottomEnd,
-            ) {
-                FloatingActionButtonScroll(
-                    isScrolled = scrollState.value > 0,
-                    scrollState = scrollState,
-                    scope = scope,
-                    context = context
-                )
+                    Divider(
+                        color = Color.LightGray.copy(alpha = 0.4f),
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(vertical = 20.dp)
+                    )
+
+                    // Column das informações pós header/banner
+                    InformacoesPerfil(
+                        userInfo = userInfo,
+                        isOwnProfile = isOwnProfile,
+                        isEmpresa = isEmpresa,
+                        viewModel = viewModel,
+                        gitHubViewModel = gitHubViewModel,
+                        context = context
+                    )
+
+                    // Seção de Comentários
+                    ComentariosSection(
+                        userInfo = userInfo,
+                        viewModel = viewModel,
+                        context = context,
+                        isOwnProfile = isOwnProfile
+                    )
+                }
+
+                Box(
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.BottomEnd,
+                ) {
+                    FloatingActionButtonScroll(
+                        isScrolled = scrollState.value > 0,
+                        scrollState = scrollState,
+                        scope = scope,
+                        context = context
+                    )
+                }
             }
         }
     }

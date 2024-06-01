@@ -1,6 +1,7 @@
 package com.example.techhub.common.composable
 
 import android.os.Bundle
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,8 +15,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -23,6 +27,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -40,6 +45,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.MutableLiveData
 import com.example.techhub.R
 import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.copyToClipBoard
@@ -62,6 +68,7 @@ fun FirstAuthView(
 ) {
     val context = LocalContext.current
     var authCode by remember { mutableStateOf("") }
+    val isLoading = MutableLiveData(false)
 
     Column(
         modifier = Modifier
@@ -241,7 +248,7 @@ fun FirstAuthView(
             keyboardOptions = KeyboardOptions(
                 autoCorrect = false,
                 keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Go,
+                imeAction = ImeAction.Done,
             ),
         )
 
@@ -277,7 +284,7 @@ fun FirstAuthView(
                 )
             }
 
-            ElevatedButtonTH(
+            ElevatedButton(
                 onClick = {
                     verifyUser(
                         userData = UsuarioVerifyData(
@@ -286,17 +293,32 @@ fun FirstAuthView(
                             code = authCode
                         ),
                         context = context,
-                        toastErrorMessage = toastErrorMessage
+                        toastErrorMessage = toastErrorMessage,
+                        isLoading = isLoading
                     )
                 },
-                text = UiText.StringResource(
-                    R.string.btn_text_continuar
-                ).asString(context = context),
-                backgroundColor = Color(PrimaryBlue.value),
-                textColor = Color.White,
-                width = 130,
-                height = 52,
-            )
+                modifier = Modifier
+                    .padding(10.dp)
+                    .width(130.dp)
+                    .height(52.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(PrimaryBlue.value),
+                    contentColor = Color.White,
+                ),
+                shape = RoundedCornerShape(10.dp),
+            ) {
+                if (isLoading.observeAsState().value!!) {
+                    CircularProgressIndicatorTH(size = 30.0, color = Color.White)
+                } else {
+                    Text(
+                        text = UiText.StringResource(
+                            R.string.btn_text_continuar
+                        ).asString(context = context),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight(300)
+                    )
+                }
+            }
         }
     }
 }

@@ -75,7 +75,7 @@ fun AvaliacaoSection(
             modifier = Modifier.fillMaxWidth(),
             Arrangement.spacedBy(8.dp)
         ) {
-            for (i in 5 downTo 1) {
+            for (i in 5 downTo 0) {
                 AvaliacaoCountRow(
                     titleNumber = i.toString(),
                     qtdEstrela = avaliacoes.value!!.find { it.qtdEstrela == i }?.quantidade?.toInt()

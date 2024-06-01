@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.domain.model.updateCurrentUser
@@ -17,14 +18,17 @@ fun verifyUser(
     userData: UsuarioVerifyData,
     context: Context,
     toastErrorMessage: String,
+    isLoading: MutableLiveData<Boolean> ?= null
 ) {
+    isLoading?.postValue(true)
+
     val authService = RetrofitService.getAuthService()
 
     CoroutineScope(Dispatchers.Main).launch {
         try {
+
             val response = authService.verifyUser(userData)
             val extras = Bundle()
-            extras.putInt("id", response.body()?.id!!)
 
             if (response.isSuccessful) {
                 updateCurrentUser(
@@ -32,18 +36,30 @@ fun verifyUser(
                     usuarioTokenData = response.body()!!,
                     email = userData.email!!
                 )
-
-                redirectToPerfilUsuario(
-                    context = context,
-                    fullName = response.body()?.nome!!,
-                    extras = extras
-                )
+                if (CurrentLink.appLinkData == null) {
+                    extras.putInt("id", response.body()?.id!!)
+                    redirectToPerfilUsuario(
+                        context = context,
+                        fullName = response.body()?.nome!!,
+                        extras = extras
+                    )
+                } else {
+                    showWelcomeToastWithName(
+                        context = context,
+                        fullName = response.body()?.nome!!
+                    )
+                    val intent = CurrentLink.appLinkIntent
+                    extras.putInt("id", CurrentLink.appLinkId ?: 0)
+                    context.startActivity(intent)
+                }
             } else {
+                isLoading?.postValue(false)
                 (context as Activity).runOnUiThread {
                     showToastError(context, toastErrorMessage)
                 }
             }
         } catch (e: Exception) {
+            isLoading?.postValue(false)
             Log.e("VERIFY_USER", "ERROR: ${e.message}")
             (context as Activity).runOnUiThread {
                 showToastError(context, toastErrorMessage)

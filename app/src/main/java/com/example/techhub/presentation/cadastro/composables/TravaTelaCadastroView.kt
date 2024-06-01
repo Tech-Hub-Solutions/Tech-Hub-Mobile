@@ -2,7 +2,6 @@ package com.example.techhub.presentation.cadastro.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,10 +28,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.techhub.R
-import com.example.techhub.common.objects.Constants
 import com.example.techhub.common.composable.CardTravaTelaCadastro
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.TopBar
+import com.example.techhub.common.enums.UsuarioFuncao
 import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.showToastError
 import com.example.techhub.presentation.index.IndexActivity
@@ -109,9 +108,9 @@ fun TravaTelaCadastroView(onUserOptionSelected: (String) -> Unit) {
                         text = UiText.StringResource(R.string.text_freelancer)
                             .asString(context = context),
                         onClick = {
-                            selectUserType(userSelected = Constants.FREELANCER)
+                            selectUserType(userSelected = UsuarioFuncao.FREELANCER.toString())
                         },
-                        isSelected = userType == Constants.FREELANCER
+                        isSelected = userType == UsuarioFuncao.FREELANCER.toString()
                     )
 
                     Spacer(modifier = Modifier.padding(16.dp))
@@ -123,9 +122,9 @@ fun TravaTelaCadastroView(onUserOptionSelected: (String) -> Unit) {
                         text = UiText.StringResource(R.string.text_empresa)
                             .asString(context = context),
                         onClick = {
-                            selectUserType(userSelected = Constants.EMPRESA)
+                            selectUserType(userSelected = UsuarioFuncao.EMPRESA.toString())
                         },
-                        isSelected = userType == Constants.EMPRESA
+                        isSelected = userType == UsuarioFuncao.EMPRESA.toString()
                     )
                 }
 

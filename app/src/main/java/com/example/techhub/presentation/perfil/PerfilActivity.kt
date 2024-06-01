@@ -11,13 +11,23 @@ import androidx.compose.ui.graphics.Color
 import com.example.techhub.composable.SetBarColor
 import com.example.techhub.presentation.ui.theme.TechHubTheme
 import com.example.techhub.presentation.perfil.composables.PerfilView
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
+import androidx.compose.runtime.LaunchedEffect
+import com.example.techhub.common.utils.verifyCredentials
+import com.example.techhub.presentation.login.LoginActivity
 
 class PerfilActivity : ComponentActivity() {
+    var model = PerfilViewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val extras = intent.extras
-        val id = extras!!.getInt("id")
+        // ATTENTION: This was auto-generated to handle app links.
+        val appLinkIntent: Intent = intent
+        val appLinkAction: String? = appLinkIntent.action
+        val appLinkData: Uri? = appLinkIntent.data
+
 
         setContent {
             TechHubTheme {
@@ -27,7 +37,24 @@ class PerfilActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    PerfilView(id = id)
+
+                    val extras = intent.extras
+                    val id = extras?.getInt("id")
+
+                    LaunchedEffect(Unit) {
+                        if (id == null || id == 0) {
+                            Log.d("PerfilActivityy", appLinkData.toString())
+                            verifyCredentials(
+                                this@PerfilActivity,
+                                errorRedirectActivity = LoginActivity::class.java,
+                                redirectToOwnProfile = false,
+                                appLinkIntent = appLinkIntent,
+                                appLinkData = appLinkData
+                            )
+                        }
+                    }
+
+                    PerfilView(id = id, model)
                 }
             }
         }
