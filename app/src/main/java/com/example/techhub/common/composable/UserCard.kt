@@ -119,10 +119,11 @@ fun UserCard(
                 ).asString(context = context),
                 tint = PrimaryBlue,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .size(113.dp)
-                    .background(Color(0xFFE4E4E4))
                     .fillMaxHeight(0.4f)
+                    .fillMaxWidth()
+
+                    .background(Color(0xFFE4E4E4))
+
             )
         } else {
             AsyncImage(
@@ -187,7 +188,7 @@ fun UserCard(
                     R.string.description_usercard_sem_preco
                         ).asString(context = context)
                 var color = Color.Gray
-                var fontSize = 12.sp
+                var fontSize = 14.sp
 
                 if (userProfile.precoMedio?.isNaN() == false) {
                     text = "R$ ${"%.2f".format(userProfile.precoMedio)}"
