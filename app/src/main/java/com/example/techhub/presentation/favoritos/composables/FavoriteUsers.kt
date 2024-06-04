@@ -2,6 +2,7 @@ package com.example.techhub.presentation.favoritos.composables
 
 import android.content.Context
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -110,7 +111,11 @@ fun FavoriteUsers(
 
     Spacer(modifier = Modifier.padding(vertical = 4.dp))
 
-    Scaffold { innerPadding ->
+    Scaffold(
+        modifier = Modifier
+            .background(Color.White)
+            .fillMaxSize()
+    ) { innerPadding ->
         if (isLoading) {
             ShimmerEffectFavoritos()
         } else {
@@ -131,6 +136,9 @@ fun FavoriteUsers(
             }
 
             LazyColumn(
+                modifier = Modifier
+                    .background(Color.White)
+                    .fillMaxWidth(),
                 state = listState,
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
