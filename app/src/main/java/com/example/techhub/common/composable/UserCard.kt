@@ -58,7 +58,7 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 fun UserCard(
     userProfile: UsuarioFavoritoData,
     selectedUsers: MutableList<UsuarioFavoritoData>? = null,
-    isComparing: Boolean,
+    isAbleToFavorite: Boolean,
     modifier: Modifier = Modifier,
     isAbleToCompare: MutableState<Boolean>? = null,
     favoritesList: MutableList<UsuarioFavoritoData>? = null,
@@ -90,7 +90,7 @@ fun UserCard(
             .then(modifier),
         shape = RectangleShape,
         onClick = {
-            if (isComparing && isAbleToCompare?.value == true) {
+            if (isAbleToCompare?.value == true) {
                 if (selectedUsers != null && selectedUsers.size < 2 ||
                     selectedUsers != null && selectedUsers.contains(userProfile)
                 ) {
@@ -119,10 +119,11 @@ fun UserCard(
                 ).asString(context = context),
                 tint = PrimaryBlue,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .size(113.dp)
-                    .background(Color(0xFFE4E4E4))
                     .fillMaxHeight(0.4f)
+                    .fillMaxWidth()
+
+                    .background(Color(0xFFE4E4E4))
+
             )
         } else {
             AsyncImage(
@@ -187,7 +188,7 @@ fun UserCard(
                     R.string.description_usercard_sem_preco
                         ).asString(context = context)
                 var color = Color.Gray
-                var fontSize = 12.sp
+                var fontSize = 14.sp
 
                 if (userProfile.precoMedio?.isNaN() == false) {
                     text = "R$ ${"%.2f".format(userProfile.precoMedio)}"
@@ -204,7 +205,7 @@ fun UserCard(
                     )
                 )
 
-                if (isComparing) {
+                if (isAbleToFavorite) {
                     Icon(
                         imageVector = Icons.Filled.Favorite,
                         contentDescription = UiText.StringResource(
