@@ -55,8 +55,6 @@ fun FavoritosView() {
                 ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-
             FavoriteUsers(
                 viewModel = FavoritosViewModel(),
                 context = context,
@@ -64,7 +62,6 @@ fun FavoritosView() {
                 selectedUsers = selectedUsers,
                 isAbleToCompare = isAbleToCompare,
             )
-
         }
     }
 

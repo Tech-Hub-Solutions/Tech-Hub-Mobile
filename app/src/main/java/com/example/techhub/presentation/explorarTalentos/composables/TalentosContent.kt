@@ -63,7 +63,7 @@ fun TalentosContent(
     context: Context,
     ordem: MutableState<String>,
     scope: CoroutineScope,
-    drawerState: DrawerState
+    drawerState: DrawerState,
 ) {
     val talentos = viewModel.talentos.observeAsState().value!!
     val erroApi = viewModel.erroApi.observeAsState().value!!
@@ -172,12 +172,17 @@ fun TalentosContent(
         Text(erroApi, color = Color.Red, fontSize = 16.sp)
     }
 
-    Scaffold {innerPadding ->
+    Scaffold(
+        modifier = Modifier
+            .background(Color.White)
+            .fillMaxSize()
+    ) { innerPadding ->
         if (isLoading) {
             ShimmerEffectExplorarTalentos()
         } else {
             LazyColumn(
                 modifier = Modifier
+                    .background(Color.White)
                     .fillMaxWidth(),
                 state = listState,
                 verticalArrangement = Arrangement.spacedBy(8.dp)
