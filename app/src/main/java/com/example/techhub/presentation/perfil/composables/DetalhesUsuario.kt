@@ -123,7 +123,7 @@ fun DetalhesUsuario(
         Row {
             Text(
                 text = userInfo.value!!.descricao ?: UiText.StringResource(
-                    com.example.techhub.R.string.text_sem_descricao
+                    R.string.text_sem_descricao
                 ).asString(context = context),
                 fontSize = 18.sp,
                 color = Color(PrimaryBlue.value),
@@ -143,7 +143,9 @@ fun DetalhesUsuario(
                     )
                 } else {
                     Text(
-                        text = "R$ 0,00",
+                        text = UiText.StringResource(
+                            R.string.description_usercard_sem_preco
+                        ).asString(context = context),
                         fontSize = 18.sp,
                         color = Color.Black,
                         fontWeight = FontWeight(500),
