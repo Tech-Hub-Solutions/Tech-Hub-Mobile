@@ -153,11 +153,13 @@ fun EditarUsuarioView(
 
                 Spacer(modifier = Modifier.padding(0.dp))
 
-                PriceTextField(
-                    initialValue = if (userInfo.precoMedio == null) "0.00" else userInfo.precoMedio.toString(),
-                    onValueChanged = { preco = if (it.isNullOrEmpty()) "0.00" else it },
-                    context = context
-                )
+                if (userInfo.funcao == UsuarioFuncao.FREELANCER) {
+                    PriceTextField(
+                        initialValue = if (userInfo.precoMedio == null) "0.00" else userInfo.precoMedio.toString(),
+                        onValueChanged = { preco = if (it.isNullOrEmpty()) "0.00" else it },
+                        context = context
+                    )
+                }
 
                 Spacer(modifier = Modifier.padding(2.dp))
 
