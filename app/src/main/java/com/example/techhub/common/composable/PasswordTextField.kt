@@ -136,7 +136,7 @@ fun validatePassword(password: String): Boolean {
     val lowercaseRegex = Regex("[a-z]")
     val digitRegex = Regex("[0-9]")
 
-    return !(password.isBlank() || password.length in 6..20 &&
+    return !(password.isBlank() || password.length in 6..20 ||
             specialCharRegex.containsMatchIn(password) &&
             uppercaseRegex.containsMatchIn(password) &&
             lowercaseRegex.containsMatchIn(password) &&
