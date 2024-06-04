@@ -13,13 +13,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.techhub.R
-import com.example.techhub.common.objects.InformacoesAdicionaisPerfil
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.utils.UiText
 import com.example.techhub.presentation.perfil.PerfilViewModel
@@ -44,11 +44,17 @@ fun InformacoesAdicionaisSection(
     }
 
     val informacoes = mutableListOf(
-        qtdRecomendacoes.intValue to InformacoesAdicionaisPerfil.recomendacoes
+        qtdRecomendacoes.intValue to UiText.StringResource(
+            R.string.text_recommendations
+        ).asString(context = context)
     )
 
     if (!isOwnProfile) {
-        informacoes.add(empresasInteressadas to InformacoesAdicionaisPerfil.empresasInteressadas)
+        informacoes.add(
+            empresasInteressadas to UiText.StringResource(
+                R.string.text_interested_companies
+            ).asString(context = context)
+        )
     }
 
     SectionTitle(

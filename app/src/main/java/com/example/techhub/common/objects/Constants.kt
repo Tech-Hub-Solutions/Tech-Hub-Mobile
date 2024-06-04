@@ -7,8 +7,8 @@ object Constants {
     * ⚠️ caso estiver com a EC2 ligada, descomentar a linha 13 que possui o "https://tech-hub.ddns.net/api/"
     */
 
-    //private const val IP = "10.0.0.103"
-    //const val BASE_URL = "http://$IP:8080/api/"
+//    private const val IP = "192.168.15.60"
+//    const val BASE_URL = "http://$IP:8080/api/"
 
     const val BASE_URL = "https://tech-hub.ddns.net/api/"
     const val GITHUB_BASE_URL = "https://api.github.com/"
