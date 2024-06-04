@@ -189,6 +189,7 @@
     <string name="placeholder_text_search_country">Enter the country</string>
     <string name="placeholder_text_name">Enter your name</string>
     <string name="placeholder_text_skill">Select a skill</string>
+    <string name="placeholder_nome_empresa">Enter the company name</string>
 
     // SUPPORTING TEXT
     <string name="supporting_text_email">Invalid email</string>
@@ -196,6 +197,7 @@
     <string name="supporting_text_cpf">Invalid CPF</string>
     <string name="supporting_text_nome">Name is required</string>
     <string name="supporting_text_service_price">Invalid value</string>
+    <string name="supporting_text_nome_empresa">Company name is required</string>
 
     // LABEL
     <string name="label_auth_code">Verify the app code</string>
@@ -205,6 +207,7 @@
     <string name="label_cpf">CPF</string>
     <string name="label_descricao">Description</string>
     <string name="label_text_search_country">Type to search</string>
+    <string name="label_nome_empresa">Company Name</string>
 
     // ORDER BY
     <string name="order_by_most_rated">Most Rated</string>

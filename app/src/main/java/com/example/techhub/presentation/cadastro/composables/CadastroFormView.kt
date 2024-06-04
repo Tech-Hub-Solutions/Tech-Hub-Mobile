@@ -48,6 +48,7 @@ import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import com.example.techhub.common.enums.Screen
 import com.example.techhub.common.composable.CnpjTextField
+import com.example.techhub.common.composable.CompanyNameTextField
 import com.example.techhub.common.composable.Switch2FA
 import com.example.techhub.common.enums.UsuarioFuncao
 import com.example.techhub.common.utils.UiText
@@ -210,11 +211,19 @@ fun CadastroFormView(
                 )
                 Spacer(modifier = Modifier.padding(12.dp))
 
-                NameTextField(
-                    onValueChanged = { name = it },
-                    context = context,
-                    modifier = Modifier.focusRequester(focusRequester)
-                )
+                if (userType == UsuarioFuncao.FREELANCER.toString()) {
+                    NameTextField(
+                        onValueChanged = { name = it },
+                        context = context,
+                        modifier = Modifier.focusRequester(focusRequester)
+                    )
+                } else if (userType == UsuarioFuncao.EMPRESA.toString()) {
+                    CompanyNameTextField(
+                        onValueChanged = { name = it },
+                        context = context,
+                        modifier = Modifier.focusRequester(focusRequester)
+                    )
+                }
 
                 Spacer(modifier = Modifier.padding(12.dp))
 

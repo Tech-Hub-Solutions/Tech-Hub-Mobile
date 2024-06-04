@@ -188,6 +188,7 @@
     <string name="placeholder_text_search_country">Introduce el país</string>
     <string name="placeholder_text_name">Introduce tu nombre</string>
     <string name="placeholder_text_skill">Selecciona una habilidad</string>
+    <string name="placeholder_nome_empresa">Introduce el nombre de la empresa</string>
 
     // SUPPORTING TEXT
     <string name="supporting_text_email">E-mail inválido</string>
@@ -195,6 +196,7 @@
     <string name="supporting_text_cpf">CPF inválido</string>
     <string name="supporting_text_nome">Es necesario rellenar el nombre</string>
     <string name="supporting_text_service_price">Valor inválido</string>
+    <string name="supporting_text_nome_empresa">Es necesario rellenar el nombre de la empresa</string>
 
     // LABEL
     <string name="label_auth_code">Verifica el código de la aplicación</string>
@@ -204,6 +206,7 @@
     <string name="label_cpf">CPF</string>
     <string name="label_descricao">Descripción</string>
     <string name="label_text_search_country">Introduce para buscar</string>
+    <string name="label_nome_empresa">Nombre de la Empresa</string>
 
     // ORDER BY
     <string name="order_by_most_rated">Más valorado</string>
