@@ -121,7 +121,7 @@
     <string name="description_image_historico">History icon</string>
     <string name="description_image_photo_freelancer">Freelancer photo</string>
     <string name="icon_desc_curriculo">Curriculum Vitae</string>
-    <string name="description_dowloading_file">Downloading file...</string>
+    <string name="description_dowloading_file">Downloading file…</string>
     <string name="desc_user_card">No description</string>
     <string name="description_usercard_sem_preco">Price not stated</string>
 
@@ -171,7 +171,8 @@
     <string name="text_activate_compare">Activate comparison</string>
     <string name="text_no_skill">No skill selected</string>
     <string name="text_curriculum_name">"CV - "</string>
-
+    <string name="text_recommendations">Recommendations</string>
+    <string name="text_interested_companies">Interested Companies</string>
 
     // APPEND TEXT
     <string name="append_text_index_encontro">"The meeting point of "</string>
@@ -214,6 +215,4 @@
     <string name="order_by_less_rated">Least Rated</string>
     <string name="order_by_higher_price">Highest Price</string>
     <string name="order_by_lower_price">Lowest Price</string>
-
-
 </resources>
