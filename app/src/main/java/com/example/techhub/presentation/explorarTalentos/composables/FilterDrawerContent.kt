@@ -9,8 +9,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DrawerState
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
@@ -106,7 +109,7 @@ fun FilterDrawerContent(
                 .height(1.dp)
         )
 
-        TextButton(
+        ElevatedButton(
             onClick = {
                 setFiltro(newFiltro)
                 scope.launch {
@@ -116,24 +119,26 @@ fun FilterDrawerContent(
                 }
             },
             modifier = Modifier
-                .fillMaxWidth()
-                .background(PrimaryBlue),
-            shape = Shapes().extraLarge
+                .fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = PrimaryBlue,
+                contentColor = Color.White,
+            ),
+            shape = RoundedCornerShape(10.dp)
         ) {
             Text(
                 text = UiText.StringResource(
                     R.string.btn_text_apply_filter,
                 ).asString(context = context),
-                color = Color.White,
                 fontSize = 16.sp
             )
         }
 
-        // Limpar
-        OutlinedButton(
+        ElevatedButton(
             onClick = {
                 setNewFiltro(
                     newFiltro.copy(
+                        nome = null,
                         tecnologiasIds = mutableListOf(),
                         precoMin = 0f,
                         precoMax = null,
@@ -141,6 +146,7 @@ fun FilterDrawerContent(
                 )
                 setFiltro(
                     UsuarioFiltroData(
+                        nome = null,
                         tecnologiasIds = mutableListOf(),
                         precoMin = null,
                         precoMax = null,
@@ -153,16 +159,20 @@ fun FilterDrawerContent(
                 }
             },
             modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.White),
-            shape = Shapes().extraLarge,
-            border = BorderStroke(1.dp, PrimaryBlue)
+                .fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.White,
+                contentColor = PrimaryBlue,
+            ),
+            border = BorderStroke(
+                1.dp, Color(PrimaryBlue.value)
+            ),
+            shape = RoundedCornerShape(10.dp),
         ) {
             Text(
                 text = UiText.StringResource(
                     R.string.btn_text_clear_filter,
                 ).asString(context = context),
-                color = PrimaryBlue,
                 fontSize = 16.sp
             )
         }

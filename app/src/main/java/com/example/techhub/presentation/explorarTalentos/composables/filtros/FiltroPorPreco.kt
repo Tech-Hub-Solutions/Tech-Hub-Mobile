@@ -67,8 +67,6 @@ fun FiltroPorPreco(
                         ).asString(context = context)
                     )
                 },
-                // TODO - Refatorar a máscara do decimal para editar o valor corretamente
-                // TODO - Não há como apagar todos os número. E sempre é inserido dois zeros ao final do número
                 value = "R$ ${String.format("%.2f", sliderPosition.start)}",
                 onValueChange = {
                     val cleanValue = it.removePrefix("R$ ").replace(",", ".")
@@ -114,8 +112,6 @@ fun FiltroPorPreco(
                         ).asString(context = context)
                     )
                 },
-                // TODO - Refatorar a máscara do decimal para editar o valor corretamente
-                // TODO - Não há como apagar todos os número. E sempre é inserido dois zeros ao final do número
                 value = "R$ ${String.format("%.2f", sliderPosition.endInclusive)}",
                 onValueChange = {
                     val cleanValue = it.removePrefix("R$ ").replace(",", ".")
