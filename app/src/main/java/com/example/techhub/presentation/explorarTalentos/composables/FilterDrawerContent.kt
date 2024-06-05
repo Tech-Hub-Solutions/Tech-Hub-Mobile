@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.OutlinedButton
@@ -108,7 +109,7 @@ fun FilterDrawerContent(
                 .height(1.dp)
         )
 
-        TextButton(
+        ElevatedButton(
             onClick = {
                 setFiltro(newFiltro)
                 scope.launch {
@@ -118,32 +119,34 @@ fun FilterDrawerContent(
                 }
             },
             modifier = Modifier
-                .fillMaxWidth()
-                .background(PrimaryBlue),
-            shape = Shapes().extraLarge
+                .fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = PrimaryBlue,
+                contentColor = Color.White,
+            ),
+            shape = RoundedCornerShape(10.dp)
         ) {
             Text(
                 text = UiText.StringResource(
                     R.string.btn_text_apply_filter,
                 ).asString(context = context),
-                color = Color.White,
                 fontSize = 16.sp
             )
         }
 
-        // Limpar
-
-
         ElevatedButton(
-            onClick = { setNewFiltro(
-                newFiltro.copy(
-                    tecnologiasIds = mutableListOf(),
-                    precoMin = 0f,
-                    precoMax = null,
+            onClick = {
+                setNewFiltro(
+                    newFiltro.copy(
+                        nome = null,
+                        tecnologiasIds = mutableListOf(),
+                        precoMin = 0f,
+                        precoMax = null,
+                    )
                 )
-            )
                 setFiltro(
                     UsuarioFiltroData(
+                        nome = null,
                         tecnologiasIds = mutableListOf(),
                         precoMin = null,
                         precoMax = null,
@@ -153,9 +156,14 @@ fun FilterDrawerContent(
                     drawerState.apply {
                         if (isOpen) close()
                     }
-                }},
+                }
+            },
             modifier = Modifier
                 .fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.White,
+                contentColor = PrimaryBlue,
+            ),
             border = BorderStroke(
                 1.dp, Color(PrimaryBlue.value)
             ),
@@ -165,7 +173,6 @@ fun FilterDrawerContent(
                 text = UiText.StringResource(
                     R.string.btn_text_clear_filter,
                 ).asString(context = context),
-                color = PrimaryBlue,
                 fontSize = 16.sp
             )
         }
