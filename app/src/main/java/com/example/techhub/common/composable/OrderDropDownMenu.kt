@@ -91,7 +91,7 @@ fun OrderDropDownMenu(ordem: MutableState<String>, context: Context) {
                         R.string.btn_text_order_by
                     ).asString(context = context),
                     fontSize = 14.sp,
-                    color = Color.Black
+                    color = if (ordem.value.isNotBlank()) PrimaryBlue else Color.Black
                 )
                 Icon(
                     Icons.Filled.DensitySmall,

@@ -29,6 +29,7 @@ interface UsuarioApi {
     suspend fun getTalentos(
         @Query("page") page: Int?,
         @Query("size") size: Int?,
+        @Query("ordem") ordem: String?,
         @Body filtroData: UsuarioFiltroData
     ): Response<Page<UsuarioFavoritoData>>
 

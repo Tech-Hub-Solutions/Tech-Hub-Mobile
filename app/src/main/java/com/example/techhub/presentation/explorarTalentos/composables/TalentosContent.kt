@@ -45,6 +45,7 @@ import com.example.techhub.common.composable.FloatingActionButtonScrollLazyColum
 import com.example.techhub.common.composable.UserCard
 import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.showToastError
+import com.example.techhub.composable.OrderDropDownMenu
 import com.example.techhub.domain.model.usuario.UsuarioFiltroData
 import com.example.techhub.presentation.explorarTalentos.ExplorarTalentosViewModel
 import com.example.techhub.presentation.explorarTalentos.composables.shimmerEffect.ShimmerEffectExplorarTalentos
@@ -62,7 +63,6 @@ fun TalentosContent(
     filtro: UsuarioFiltroData,
     context: Context,
     ordem: MutableState<String>,
-    scope: CoroutineScope,
     drawerState: DrawerState,
 ) {
     val talentos = viewModel.talentos.observeAsState().value!!
@@ -86,12 +86,12 @@ fun TalentosContent(
 
     LaunchedEffect(ordem.value) {
         page.value = 0
-        viewModel.getTalentos(0, 10, UsuarioFiltroData())
+        viewModel.getTalentos(0, 10, ordem.value, UsuarioFiltroData())
     }
 
     LaunchedEffect(filtro) {
         page.value = 0
-        viewModel.getTalentos(0, 10, filtro)
+        viewModel.getTalentos(0, 10, ordem.value, filtro)
     }
 
     LaunchedEffect(listState) {
@@ -116,6 +116,8 @@ fun TalentosContent(
             modifier = Modifier.fillMaxWidth(0.4f),
             color = GrayText
         )
+
+        OrderDropDownMenu(ordem, context)
 
         IconButton(
             onClick = {
@@ -217,7 +219,7 @@ fun TalentosContent(
                         ) {
                             CustomizedElevatedButton(
                                 onClick = {
-                                    viewModel.getTalentos(++page.value, 10, filtro)
+                                    viewModel.getTalentos(++page.value, 10, ordem.value, filtro)
                                 },
                                 horizontalPadding = 16,
                                 verticalPadding = 8,

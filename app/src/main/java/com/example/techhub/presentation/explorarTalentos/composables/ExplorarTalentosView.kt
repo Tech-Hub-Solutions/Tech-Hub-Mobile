@@ -75,7 +75,6 @@ fun ExplorarTalentosView(viewModel: ExplorarTalentosViewModel = ExplorarTalentos
                             filtro = filtro,
                             context = context,
                             ordem = ordem,
-                            scope = scope,
                             drawerState = drawerState
                         )
                     }
