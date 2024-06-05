@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DrawerState
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
@@ -130,15 +132,16 @@ fun FilterDrawerContent(
         }
 
         // Limpar
-        OutlinedButton(
-            onClick = {
-                setNewFiltro(
-                    newFiltro.copy(
-                        tecnologiasIds = mutableListOf(),
-                        precoMin = 0f,
-                        precoMax = null,
-                    )
+
+
+        ElevatedButton(
+            onClick = { setNewFiltro(
+                newFiltro.copy(
+                    tecnologiasIds = mutableListOf(),
+                    precoMin = 0f,
+                    precoMax = null,
                 )
+            )
                 setFiltro(
                     UsuarioFiltroData(
                         tecnologiasIds = mutableListOf(),
@@ -150,13 +153,14 @@ fun FilterDrawerContent(
                     drawerState.apply {
                         if (isOpen) close()
                     }
-                }
-            },
+                }},
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color.White),
-            shape = Shapes().extraLarge,
-            border = BorderStroke(1.dp, PrimaryBlue)
+            border = BorderStroke(
+                1.dp, Color(PrimaryBlue.value)
+            ),
+            shape = RoundedCornerShape(10.dp),
         ) {
             Text(
                 text = UiText.StringResource(
