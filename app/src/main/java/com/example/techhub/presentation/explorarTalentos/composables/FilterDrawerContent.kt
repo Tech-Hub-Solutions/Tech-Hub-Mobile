@@ -155,8 +155,7 @@ fun FilterDrawerContent(
                     }
                 }},
             modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.White),
+                .fillMaxWidth(),
             border = BorderStroke(
                 1.dp, Color(PrimaryBlue.value)
             ),
