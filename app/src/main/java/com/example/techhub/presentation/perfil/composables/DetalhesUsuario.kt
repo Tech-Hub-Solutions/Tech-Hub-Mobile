@@ -3,6 +3,7 @@ package com.example.techhub.presentation.perfil.composables
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,9 +21,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.techhub.R
+import com.example.techhub.common.enums.UsuarioFuncao
 import com.example.techhub.common.objects.countriesEmoji
 import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.openLink
@@ -44,19 +50,31 @@ fun DetalhesUsuario(
             modifier = Modifier.fillMaxWidth()
         ) {
             Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier
+                    .weight(1f)  // Allow the inner row to take up available space
+                    .padding(end = 8.dp),  // Some padding for spacing
+                verticalAlignment = Alignment.CenterVertically
             ) {
+
                 Text(
                     text = "${userInfo.value!!.nome}",
                     fontSize = 24.sp,
                     color = Color.Black,
                     fontWeight = FontWeight(500),
+                    style = TextStyle(
+                        color = Color.Black,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp
+                    ),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(0.6f, fill = false)
                 )
 
                 Text(
                     text = countriesEmoji.countries.get(userInfo.value!!.pais) ?: "🌍",
                     fontSize = 24.sp,
+                    modifier = Modifier.padding(start = 4.dp)
                 )
             }
 
@@ -105,12 +123,35 @@ fun DetalhesUsuario(
         Row {
             Text(
                 text = userInfo.value!!.descricao ?: UiText.StringResource(
-                    com.example.techhub.R.string.text_sem_descricao
+                    R.string.text_sem_descricao
                 ).asString(context = context),
                 fontSize = 18.sp,
                 color = Color(PrimaryBlue.value),
                 fontWeight = FontWeight(400),
             )
+        }
+
+        if (userInfo.value!!.funcao!! == UsuarioFuncao.FREELANCER) {
+            Spacer(modifier = Modifier.height(6.dp))
+            Row {
+                if (userInfo.value!!.precoMedio != null) {
+                    Text(
+                        text = "R$ ${"%.2f".format(userInfo.value!!.precoMedio)}",
+                        fontSize = 18.sp,
+                        color = Color.Black,
+                        fontWeight = FontWeight(500),
+                    )
+                } else {
+                    Text(
+                        text = UiText.StringResource(
+                            R.string.description_usercard_sem_preco
+                        ).asString(context = context),
+                        fontSize = 18.sp,
+                        color = Color.Black,
+                        fontWeight = FontWeight(500),
+                    )
+                }
+            }
         }
     }
 }

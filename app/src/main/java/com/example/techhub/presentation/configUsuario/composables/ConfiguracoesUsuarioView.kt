@@ -39,6 +39,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.techhub.R
+import com.example.techhub.common.composable.CompanyNameTextField
 import com.example.techhub.common.composable.EmailTextField
 import com.example.techhub.common.composable.FlagDropDownMenu
 import com.example.techhub.common.composable.NameTextField
@@ -46,6 +47,7 @@ import com.example.techhub.common.composable.PasswordTextField
 import com.example.techhub.common.composable.ProgressButton
 import com.example.techhub.common.composable.Switch2FALeft
 import com.example.techhub.common.composable.TopBar
+import com.example.techhub.common.enums.UsuarioFuncao
 import com.example.techhub.common.objects.countryFlagsList
 import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.base64Images.encodeBase64
@@ -68,7 +70,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun ConfiguracoesUsuarioView(
     redirectToAuth: (UsuarioSimpleVerifyData) -> Unit,
-    viewModel: ConfiguracoesUsuarioViewModel
+    viewModel: ConfiguracoesUsuarioViewModel,
 ) {
     val context = LocalContext.current
     var name by remember { mutableStateOf(CurrentUser.userProfile!!.nome!!) }
@@ -88,7 +90,6 @@ fun ConfiguracoesUsuarioView(
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
     }
-
 
     LaunchedEffect(usuarioTokenData.value) {
         if (!usuarioTokenData.value!!.secret.isNullOrBlank()) {
@@ -150,12 +151,28 @@ fun ConfiguracoesUsuarioView(
             ) {
                 Spacer(modifier = Modifier.padding(0.dp))
 
-                NameTextField(
-                    initialValue = CurrentUser.userProfile!!.nome!!,
-                    onValueChanged = { name = it },
-                    context = context,
-                    modifier = Modifier.focusRequester(focusRequester)
-                )
+//                NameTextField(
+//                    initialValue = CurrentUser.userProfile!!.nome!!,
+//                    onValueChanged = { name = it },
+//                    context = context,
+//                    modifier = Modifier.focusRequester(focusRequester)
+//                )
+
+                if (!CurrentUser.isEmpresa) {
+                    NameTextField(
+                        initialValue = CurrentUser.userProfile!!.nome!!,
+                        onValueChanged = { name = it },
+                        context = context,
+                        modifier = Modifier.focusRequester(focusRequester)
+                    )
+                } else {
+                    CompanyNameTextField(
+                        initialValue = CurrentUser.userProfile!!.nome!!,
+                        onValueChanged = { name = it },
+                        context = context,
+                        modifier = Modifier.focusRequester(focusRequester)
+                    )
+                }
 
                 FlagDropDownMenu(flag = nacionalidade, context = context)
 

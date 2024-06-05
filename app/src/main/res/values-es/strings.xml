@@ -36,6 +36,9 @@
     <string name="btn_text_sair">Salir</string>
     <string name="btn_text_order_by">Ordenar</string>
     <string name="btn_share_perfi">Compartir perfil</string>
+    <string name="btn_download_curriculo">Descargar CV</string>
+    <string name="btn_upload_curriculo">Subir nuevo CV</string>
+
 
     // TOAST TEXT
     <string name="toast_text_welcome">¡Bienvenido(a)!</string>
@@ -65,7 +68,6 @@
     <string name="toast_error_send_curriculum_fun">¡Error al enviar el currículum!</string>
     <string name="toast_text_success_download_fun">¡Curriculum descargado exitosamente!</string>
 
-
     // TITLE, SUBTITLE
     <string name="subtitle_index">Uniendo talento y necesidad.</string>
     <string name="subtitle_tech_area">Área de Tecnología</string>
@@ -85,9 +87,6 @@
     <string name="title_explorar_talentos">Explorar Talentos</string>
     <string name="title_favorites">Favoritos</string>
     <string name="title_edit_config_usuario">Editar Configuraciones</string>
-    <string name="text_entry_cadastro_freelancer">Quiero ser autónomo</string>
-    <string name="text_entry_cadastro_empresa">Quiero explorar talentos</string>
-    <string name="sub_text_cadastro_formview">Regístrate para tener acceso a nuestros servicios!</string>
 
     // DESCRIPTION
     <string name="description_image_logo">logo de Tech Hub</string>
@@ -120,7 +119,7 @@
     <string name="description_image_historico">Icono de Histórico</string>
     <string name="description_image_photo_freelancer">Foto del freelancer</string>
     <string name="icon_desc_curriculo">Curriculum Vitae</string>
-    <string name="description_dowloading_file">Descargando archivo...</string>
+    <string name="description_dowloading_file">Descargando archivo…</string>
     <string name="desc_user_card">Sin descripción</string>
     <string name="description_usercard_sem_preco">Precio no indicado</string>
 
@@ -170,8 +169,12 @@
     <string name="text_activate_compare">Activar comparación</string>
     <string name="text_no_skill">Ninguna habilidad seleccionada</string>
     <string name="text_curriculum_name">"CV - "</string>
-    <string name="btn_download_curriculo">Descargar CV</string>
-    <string name="btn_upload_curriculo">Subir nuevo CV</string>
+    <string name="text_entry_cadastro_freelancer">Quiero ser autónomo</string>
+    <string name="text_entry_cadastro_empresa">Quiero explorar talentos</string>
+    <string name="sub_text_cadastro_formview">Regístrate para tener acceso a nuestros servicios!</string>
+    <string name="text_recommendations">Recomendaciones</string>
+    <string name="text_interested_companies">Empresas interesadas</string>
+
     // APPEND TEXT
     <string name="append_text_index_encontro">"El punto de encuentro de los "</string>
     <string name="append_text_index_talentos">talentos</string>
@@ -188,6 +191,7 @@
     <string name="placeholder_text_search_country">Introduce el país</string>
     <string name="placeholder_text_name">Introduce tu nombre</string>
     <string name="placeholder_text_skill">Selecciona una habilidad</string>
+    <string name="placeholder_nome_empresa">Introduce el nombre de la empresa</string>
 
     // SUPPORTING TEXT
     <string name="supporting_text_email">E-mail inválido</string>
@@ -195,6 +199,7 @@
     <string name="supporting_text_cpf">CPF inválido</string>
     <string name="supporting_text_nome">Es necesario rellenar el nombre</string>
     <string name="supporting_text_service_price">Valor inválido</string>
+    <string name="supporting_text_nome_empresa">Es necesario rellenar el nombre de la empresa</string>
 
     // LABEL
     <string name="label_auth_code">Verifica el código de la aplicación</string>
@@ -204,12 +209,11 @@
     <string name="label_cpf">CPF</string>
     <string name="label_descricao">Descripción</string>
     <string name="label_text_search_country">Introduce para buscar</string>
+    <string name="label_nome_empresa">Nombre de la Empresa</string>
 
     // ORDER BY
     <string name="order_by_most_rated">Más valorado</string>
     <string name="order_by_less_rated">Menos valorado</string>
     <string name="order_by_higher_price">Mayor precio</string>
     <string name="order_by_lower_price">Menor precio</string>
-
-
 </resources>

@@ -72,7 +72,7 @@ fun TopoDoPerfil(
     val isFavorito = remember { mutableStateOf(userInfo.value!!.isFavorito == true) }
     val expanded = remember { mutableStateOf(false) }
     val clipboardManager: ClipboardManager = LocalClipboardManager.current
-    val urlPerfil = "https://tech-hub.ddns.net/perfil/${userInfo.value!!.idPerfil}"
+    val urlPerfil = "https://tech-hub.ddns.net/perfil/${userInfo.value!!.idUsuario}"
 
     Box(
         modifier = Modifier

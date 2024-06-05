@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AssignmentInd
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextField
@@ -26,31 +26,34 @@ import com.example.techhub.common.utils.UiText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
 @Composable
-fun AboutMeTextField(
+fun CompanyNameTextField(
     onValueChanged: (String) -> Unit,
     initialValue: String = "",
-    context: Context
+    context: Context,
+    modifier: Modifier? = null
 ) {
     var filledText by remember { mutableStateOf(initialValue) }
+    var isNameValid by remember { mutableStateOf(false) }
 
     Column {
         OutlinedTextField(
             value = filledText,
             onValueChange = {
                 filledText = it
+                isNameValid = filledText.isBlank()
                 onValueChanged(filledText)
             },
             label = {
                 Text(
                     UiText.StringResource(
-                        R.string.title_sobre_mim,
-                    ).asString(context = context),
+                        R.string.label_nome_empresa
+                    ).asString(context = context)
                 )
             },
             placeholder = {
                 Text(
                     UiText.StringResource(
-                        R.string.title_sobre_mim,
+                        R.string.placeholder_nome_empresa
                     ).asString(context = context)
                 )
             },
@@ -68,17 +71,29 @@ fun AboutMeTextField(
             ),
             leadingIcon = {
                 Icon(
-                    imageVector = Icons.Filled.AssignmentInd,
+                    imageVector = Icons.Filled.Person,
                     contentDescription = UiText.StringResource(
-                        R.string.description_image_sobre_mim
+                        R.string.description_image_nome
                     ).asString(context = context),
                     tint = Color(PrimaryBlue.value)
                 )
             },
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .let {
+                    if (modifier != null) it.then(modifier) else it
+                },
+            singleLine = true,
+            isError = isNameValid,
+            supportingText = {
+                if (filledText.isBlank() && isNameValid) Text(
+                    UiText.StringResource(
+                        R.string.supporting_text_nome_empresa
+                    ).asString(context = context)
+                )
+            },
             keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text,
+                keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Done
             ),
         )
