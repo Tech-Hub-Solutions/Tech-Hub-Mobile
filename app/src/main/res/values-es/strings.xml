@@ -192,6 +192,8 @@
     <string name="placeholder_text_name">Introduce tu nombre</string>
     <string name="placeholder_text_skill">Selecciona una habilidad</string>
     <string name="placeholder_nome_empresa">Introduce el nombre de la empresa</string>
+    <string name="placeholder_filtro_area">Selecciona un área</string>
+    <string name="placeholder_filtro_nome">Introduce un nombre</string>
 
     // SUPPORTING TEXT
     <string name="supporting_text_email">E-mail inválido</string>

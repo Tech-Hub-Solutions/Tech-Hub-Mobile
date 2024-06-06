@@ -29,20 +29,26 @@ import com.example.techhub.R
 import com.example.techhub.common.composable.Subtitulo
 import com.example.techhub.common.utils.UiText
 import com.example.techhub.domain.model.usuario.UsuarioFiltroData
+import com.example.techhub.presentation.explorarTalentos.composables.PRECO_MAX
 import com.example.techhub.presentation.ui.theme.GrayText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
+
+const val MAX_DIFFERENCE = 500.0f
 
 @Composable
 fun FiltroPorPreco(
     newFiltro: UsuarioFiltroData,
     setNewFiltro: (UsuarioFiltroData) -> Unit,
-    maxPrice: Float,
     context: Context
 ) {
-    var sliderPosition by remember { mutableStateOf(0f..maxPrice) }
+    var sliderPosition by remember {
+        mutableStateOf(
+            newFiltro.precoMin!!..newFiltro.precoMax!!
+        )
+    }
 
-    LaunchedEffect(maxPrice) {
-        sliderPosition = sliderPosition.start..maxPrice
+    LaunchedEffect(newFiltro) {
+        sliderPosition = newFiltro.precoMin!!..newFiltro.precoMax!!
     }
 
     Column(
@@ -79,6 +85,10 @@ fun FiltroPorPreco(
 
                     if (floatValue < 0) {
                         floatValue = 0f
+                    }
+
+                    if(floatValue > sliderPosition.endInclusive - MAX_DIFFERENCE) {
+                        floatValue = sliderPosition.endInclusive - MAX_DIFFERENCE
                     }
 
                     setNewFiltro(
@@ -122,6 +132,10 @@ fun FiltroPorPreco(
                         sliderPosition.endInclusive
                     }
 
+                    if(floatValue < sliderPosition.start + MAX_DIFFERENCE) {
+                        floatValue = sliderPosition.start + MAX_DIFFERENCE
+                    }
+
                     setNewFiltro(
                         newFiltro.copy(
                             precoMax = floatValue
@@ -148,8 +162,14 @@ fun FiltroPorPreco(
 
         RangeSlider(
             value = sliderPosition,
-            onValueChange = { range -> sliderPosition = range },
-            valueRange = 0f..10_000.00f,
+            onValueChange = { range ->
+                run {
+                    if (range.endInclusive - range.start >= MAX_DIFFERENCE) {
+                        sliderPosition = range
+                    }
+                }
+            },
+            valueRange = 0f..PRECO_MAX,
             onValueChangeFinished = {
                 setNewFiltro(
                     newFiltro.copy(

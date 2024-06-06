@@ -175,9 +175,8 @@ fun TalentosContent(
     }
 
     Scaffold(
-        modifier = Modifier
-            .background(Color.White)
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        containerColor = Color.White,
     ) { innerPadding ->
         if (isLoading) {
             ShimmerEffectExplorarTalentos()

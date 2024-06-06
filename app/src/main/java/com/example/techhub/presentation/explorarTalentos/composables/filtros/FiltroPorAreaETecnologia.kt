@@ -48,9 +48,6 @@ fun FiltroPorAreaETecnologia(
     val flags = viewModel.flags.observeAsState().value!!
 
     LaunchedEffect(flags) {
-        if (flags.size > 0) {
-            setNewFiltro(newFiltro.copy(area = flags[0].area!!))
-        }
         flags.forEach {
             val area = it.area;
             val id = it.id;
@@ -111,7 +108,14 @@ fun FiltroPorAreaETecnologia(
                 textStyle = LocalTextStyle.current.copy(
                     color = GrayText,
                     fontSize = 14.sp
-                )
+                ),
+                placeholder = {
+                    Text(
+                        text = UiText.StringResource(
+                            R.string.placeholder_filtro_area
+                        ).asString(context = context)
+                    )
+                }
             )
             ExposedDropdownMenu(
                 expanded = expanded,
