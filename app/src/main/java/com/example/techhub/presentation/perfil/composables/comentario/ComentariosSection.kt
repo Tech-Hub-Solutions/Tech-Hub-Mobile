@@ -53,6 +53,7 @@ fun ComentariosSection(
     val comments = viewModel.comentariosDoUsuario.observeAsState().value?.toList()
     val page = remember { mutableStateOf(0) }
     val isLastPage = viewModel.isLastPage.observeAsState()
+    val isLoading = viewModel.isLoadingComentarios.observeAsState()
     val comentarioUsuario = remember { mutableStateOf("") }
     val rating = remember { mutableStateOf(0.0) }
 
@@ -143,6 +144,7 @@ fun ComentariosSection(
                         contentDescription = UiText.StringResource(
                             R.string.btn_description_load_more_talents
                         ).asString(context = context),
+                        isLoading = isLoading.value!!
                     )
                 }
             }

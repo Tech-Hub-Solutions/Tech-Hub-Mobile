@@ -17,6 +17,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.techhub.presentation.ui.theme.GrayButtonText
+import com.example.techhub.presentation.ui.theme.GrayText
 
 @Composable
 fun CustomizedElevatedButton(
@@ -32,7 +34,8 @@ fun CustomizedElevatedButton(
     text: String,
     fontSize: Int,
     fontWeight: FontWeight,
-    contentDescription: String
+    contentDescription: String,
+    isLoading: Boolean
 ) {
     ElevatedButton(
         onClick = { onClick() },
@@ -51,12 +54,16 @@ fun CustomizedElevatedButton(
         Row (
             horizontalArrangement = horizontalArrangement) {
             Text(text = text, fontSize = fontSize.sp, fontWeight = fontWeight)
-            Icon(
-                imageVector = Icons.Filled.KeyboardArrowDown,
-                modifier = Modifier.width(24.dp),
-                contentDescription = contentDescription,
-                tint = Color(0xFF505050),
-            )
+            if (isLoading) {
+                CircularProgressIndicatorTH(size = 22.0, color= Color(GrayText.value))
+            } else {
+                Icon(
+                    imageVector = Icons.Filled.KeyboardArrowDown,
+                    modifier = Modifier.width(24.dp),
+                    contentDescription = contentDescription,
+                    tint = Color(0xFF505050),
+                )
+            }
         }
 
     }
