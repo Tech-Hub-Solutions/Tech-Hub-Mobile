@@ -17,6 +17,7 @@ class ExplorarTalentosViewModel : ViewModel() {
     val erroApi = MutableLiveData("")
     val totalElements = MutableLiveData(0)
     val isLoading = MutableLiveData(false)
+    val isloadingMoreTalents = MutableLiveData(false)
     val isLastPage = MutableLiveData(false)
 
     val flags = MutableLiveData(SnapshotStateList<FlagData>())
@@ -25,7 +26,7 @@ class ExplorarTalentosViewModel : ViewModel() {
     private val flagsApi = RetrofitService.getFlagService()
 
     fun getTalentos(page: Int, size: Int, ordem: String, usuarioFiltroData: UsuarioFiltroData) {
-        if (page == 0) isLoading.postValue(true)
+        if (page == 0) isLoading.postValue(true) else isloadingMoreTalents.postValue(true)
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = usuarioApi.getTalentos(page, size, ordem, usuarioFiltroData)
@@ -54,6 +55,7 @@ class ExplorarTalentosViewModel : ViewModel() {
                 )
             } finally {
                 isLoading.postValue(false)
+                isloadingMoreTalents.postValue(false)
             }
         }
     }
