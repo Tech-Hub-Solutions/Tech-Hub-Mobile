@@ -39,6 +39,7 @@ class PerfilViewModel : ViewModel() {
     val isLoadingPerfil = MutableLiveData(false)
     val isLoadingWallpaper = MutableLiveData(false)
     val isLoadingCurriculo = MutableLiveData(false)
+    val isLoadingComentarios = MutableLiveData(false)
     val isLastPage = MutableLiveData(false)
     val avaliacoesDoUsuario = MutableLiveData(listOf(AvaliacaoTotalData()))
     val comentariosDoUsuario = MutableLiveData(SnapshotStateList<PerfilAvaliacaoDetalhadoData>())
@@ -225,6 +226,8 @@ class PerfilViewModel : ViewModel() {
             R.string.toast_text_error_comentarios_perfil
         ).asString(context = context)
 
+        isLoadingComentarios.postValue(true)
+
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = apiPerfil.getComentariosUsuario(userId, page, size)
@@ -240,6 +243,7 @@ class PerfilViewModel : ViewModel() {
                     }
 
                     comentariosDoUsuario.value!!.addAll(list)
+                    isLoadingComentarios.postValue(false)
                 } else {
                     (context as Activity).runOnUiThread {
                         showToastError(context = context, message = toastErrorMessage)
@@ -248,6 +252,7 @@ class PerfilViewModel : ViewModel() {
                         "PERFIL_VIEW_MODEL",
                         "GET COMENTARIO PERFIL ERROR: ${response.errorBody()?.string()}"
                     )
+                    isLoadingComentarios.postValue(false)
                 }
             } catch (error: Exception) {
                 if (error.message != null) {
@@ -256,6 +261,7 @@ class PerfilViewModel : ViewModel() {
                     }
                     Log.e("PERFIL_VIEW_MODEL", "GET COMENTARIO PERFIL ERROR: ${error.message}")
                 }
+                isLoadingComentarios.postValue(false)
             }
         }
     }

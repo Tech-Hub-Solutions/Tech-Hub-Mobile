@@ -63,7 +63,7 @@ fun FavoriteUsers(
     val freelancers = viewModel.freelancers.observeAsState().value!!
     val favoritesList = viewModel.favoritos.observeAsState().value!!
     val totalElements = viewModel.totalElements.observeAsState()
-    val isLoading = viewModel.isLoading.observeAsState().value!!
+    val isLoading = viewModel.isLoading.observeAsState()
     val isLastPage = viewModel.isLastPage.observeAsState().value!!
 
     val page = remember { mutableStateOf(0) }
@@ -116,7 +116,7 @@ fun FavoriteUsers(
             .background(Color.White)
             .fillMaxSize()
     ) { innerPadding ->
-        if (isLoading) {
+        if (isLoading.value!!) {
             ShimmerEffectFavoritos()
         } else {
             if (freelancers.isEmpty()) {
@@ -201,7 +201,8 @@ fun FavoriteUsers(
                                 fontWeight = FontWeight.Medium,
                                 contentDescription = UiText.StringResource(
                                     R.string.btn_description_load_more_talents
-                                ).asString(context = context)
+                                ).asString(context = context),
+                                isLoading = isLoading.value!!
                             )
                         }
                     }

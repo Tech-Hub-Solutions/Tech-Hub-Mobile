@@ -45,6 +45,7 @@ import com.example.techhub.common.composable.FloatingActionButtonScrollLazyColum
 import com.example.techhub.common.composable.UserCard
 import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.showToastError
+import com.example.techhub.composable.OrderDropDownMenu
 import com.example.techhub.domain.model.usuario.UsuarioFiltroData
 import com.example.techhub.presentation.explorarTalentos.ExplorarTalentosViewModel
 import com.example.techhub.presentation.explorarTalentos.composables.shimmerEffect.ShimmerEffectExplorarTalentos
@@ -62,12 +63,12 @@ fun TalentosContent(
     filtro: UsuarioFiltroData,
     context: Context,
     ordem: MutableState<String>,
-    scope: CoroutineScope,
     drawerState: DrawerState,
 ) {
     val talentos = viewModel.talentos.observeAsState().value!!
     val erroApi = viewModel.erroApi.observeAsState().value!!
-    val isLoading = viewModel.isLoading.observeAsState().value!!
+    val isLoading = viewModel.isLoading.observeAsState()
+    val isLoadingMoreTalents = viewModel.isloadingMoreTalents.observeAsState()
     val isLastPage = viewModel.isLastPage.observeAsState().value!!
     val totalElements = viewModel.totalElements.observeAsState().value!!
     val page = remember { mutableStateOf(0) }
@@ -86,12 +87,12 @@ fun TalentosContent(
 
     LaunchedEffect(ordem.value) {
         page.value = 0
-        viewModel.getTalentos(0, 10, UsuarioFiltroData())
+        viewModel.getTalentos(0, 10, ordem.value, UsuarioFiltroData())
     }
 
     LaunchedEffect(filtro) {
         page.value = 0
-        viewModel.getTalentos(0, 10, filtro)
+        viewModel.getTalentos(0, 10, ordem.value, filtro)
     }
 
     LaunchedEffect(listState) {
@@ -116,6 +117,8 @@ fun TalentosContent(
             modifier = Modifier.fillMaxWidth(0.4f),
             color = GrayText
         )
+
+        OrderDropDownMenu(ordem, context)
 
         IconButton(
             onClick = {
@@ -173,11 +176,10 @@ fun TalentosContent(
     }
 
     Scaffold(
-        modifier = Modifier
-            .background(Color.White)
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        containerColor = Color.White,
     ) { innerPadding ->
-        if (isLoading) {
+        if (isLoading.value!!) {
             ShimmerEffectExplorarTalentos()
         } else {
             LazyColumn(
@@ -217,7 +219,7 @@ fun TalentosContent(
                         ) {
                             CustomizedElevatedButton(
                                 onClick = {
-                                    viewModel.getTalentos(++page.value, 10, filtro)
+                                    viewModel.getTalentos(++page.value, 10, ordem.value, filtro)
                                 },
                                 horizontalPadding = 16,
                                 verticalPadding = 8,
@@ -238,6 +240,7 @@ fun TalentosContent(
                                 contentDescription = UiText.StringResource(
                                     R.string.btn_description_load_more_talents
                                 ).asString(context = context),
+                                isLoading = isLoadingMoreTalents.value!!
                             )
                         }
                     }

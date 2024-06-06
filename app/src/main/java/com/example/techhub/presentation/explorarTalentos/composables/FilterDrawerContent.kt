@@ -14,10 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -39,6 +36,8 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+const val PRECO_MAX = 10_000.00f;
+
 @Composable
 fun FilterDrawerContent(
     setFiltro: (UsuarioFiltroData) -> Unit,
@@ -47,15 +46,13 @@ fun FilterDrawerContent(
     scope: CoroutineScope
 ) {
     val context = LocalContext.current
-    val talentos = viewModel.talentos.observeAsState().value!!
-    val maxPrice = talentos.toList().maxByOrNull { it.precoMedio ?: 0.0 }?.precoMedio ?: 0.0
 
     val (newFiltro, setNewFiltro) = remember {
         mutableStateOf(
             UsuarioFiltroData(
                 tecnologiasIds = mutableListOf(),
                 precoMin = 0f,
-                precoMax = 10_000.00f
+                precoMax = 5000f
             )
         )
     }
@@ -100,7 +97,7 @@ fun FilterDrawerContent(
                 .height(1.dp)
         )
 
-        FiltroPorPreco(newFiltro, setNewFiltro, maxPrice.toFloat(), context)
+        FiltroPorPreco(newFiltro, setNewFiltro, context)
 
         Spacer(
             modifier = Modifier
@@ -137,11 +134,11 @@ fun FilterDrawerContent(
         ElevatedButton(
             onClick = {
                 setNewFiltro(
-                    newFiltro.copy(
+                    UsuarioFiltroData(
                         nome = null,
                         tecnologiasIds = mutableListOf(),
                         precoMin = 0f,
-                        precoMax = null,
+                        precoMax = 5000f
                     )
                 )
                 setFiltro(
