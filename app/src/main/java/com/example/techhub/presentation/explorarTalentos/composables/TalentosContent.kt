@@ -74,7 +74,8 @@ fun TalentosContent(
 ) {
     val talentos = viewModel.talentos.observeAsState().value!!
     val erroApi = viewModel.erroApi.observeAsState().value!!
-    val isLoading = viewModel.isLoading.observeAsState().value!!
+    val isLoading = viewModel.isLoading.observeAsState()
+    val isLoadingMoreTalents = viewModel.isloadingMoreTalents.observeAsState()
     val isLastPage = viewModel.isLastPage.observeAsState().value!!
     val totalElements = viewModel.totalElements.observeAsState().value!!
     val page = remember { mutableStateOf(0) }
@@ -105,7 +106,6 @@ fun TalentosContent(
             }
     }
 
-    // calculate here
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -181,7 +181,7 @@ fun TalentosContent(
         modifier = Modifier.fillMaxSize(),
         containerColor = Color.White,
     ) { innerPadding ->
-        if (isLoading) {
+        if (isLoading.value!!) {
             ShimmerEffectExplorarTalentos()
         } else {
             if (talentos.isEmpty()) {
@@ -264,6 +264,7 @@ fun TalentosContent(
                                     contentDescription = UiText.StringResource(
                                         R.string.btn_description_load_more_talents
                                     ).asString(context = context),
+                                    isLoading = isLoadingMoreTalents.value!!
                                 )
                             }
                         }
