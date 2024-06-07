@@ -41,7 +41,8 @@ fun FavoritosView() {
                 ).asString(context = context)
             )
         },
-        bottomBar = { BottomBar() }
+        bottomBar = { BottomBar() },
+        contentColor = Color.White,
     ) { innerPadding ->
         Column(
             modifier = Modifier

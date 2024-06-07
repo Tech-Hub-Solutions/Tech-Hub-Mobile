@@ -2,6 +2,7 @@ package com.example.techhub.presentation.favoritos.composables
 
 import android.content.Context
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -35,8 +37,10 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.techhub.R
 import com.example.techhub.common.composable.CircularProgressIndicatorTH
 import com.example.techhub.common.composable.CompareSwitch
@@ -112,97 +116,103 @@ fun FavoriteUsers(
     Spacer(modifier = Modifier.padding(vertical = 4.dp))
 
     Scaffold(
-        modifier = Modifier
-            .background(Color.White)
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        containerColor = Color.White
     ) { innerPadding ->
         if (isLoading) {
             ShimmerEffectFavoritos()
         } else {
             if (freelancers.isEmpty()) {
-                Text(
-                    text = UiText.StringResource(
-                        R.string.text_no_favorites
-                    ).asString(context = context)
-                )
-            }
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.85f),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.popularity_rafiki),
+                        contentDescription = UiText.StringResource(
+                            R.string.text_no_talents_found
+                        ).asString(context = context),
+                    )
+                    Text(
+                        text = UiText.StringResource(R.string.text_no_talents_found)
+                            .asString(context = context),
+                        color = GrayText,
+                        fontSize = 20.sp
+                    )
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .background(Color.White)
+                        .fillMaxWidth(),
+                    state = listState,
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    val subLists = freelancers.chunked(2)
 
-            if (freelancers.isEmpty()) {
-                Text(
-                    text = UiText.StringResource(
-                        R.string.text_no_favorites
-                    ).asString(context = context)
-                )
-            }
+                    itemsIndexed(subLists) { index, subLista ->
+                        Row(
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start)
+                        ) {
+                            subLista.forEachIndexed { index, item ->
+                                UserCard(
+                                    userProfile = item,
+                                    selectedUsers = selectedUsers,
+                                    isAbleToFavorite = true,
+                                    modifier = Modifier.weight(1f, false),
+                                    isAbleToCompare = isAbleToCompare,
+                                    favoritesList = favoritesList
+                                )
 
-            LazyColumn(
-                modifier = Modifier
-                    .background(Color.White)
-                    .fillMaxWidth(),
-                state = listState,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                val subLists = freelancers.chunked(2)
-
-                itemsIndexed(subLists) { index, subLista ->
-                    Row(
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start)
-                    ) {
-                        subLista.forEachIndexed { index, item ->
-                            UserCard(
-                                userProfile = item,
-                                selectedUsers = selectedUsers,
-                                isAbleToFavorite = true,
-                                modifier = Modifier.weight(1f, false),
-                                isAbleToCompare = isAbleToCompare,
-                                favoritesList = favoritesList
-                            )
-
-                            if (index == subLista.size - 1 && subLista.size % 2 != 0) {
-                                Spacer(modifier = Modifier.weight(1f))
+                                if (index == subLista.size - 1 && subLista.size % 2 != 0) {
+                                    Spacer(modifier = Modifier.weight(1f))
+                                }
                             }
                         }
                     }
-                }
 
-                item {
-                    if (!isLastPage && freelancers.isNotEmpty()) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            CustomizedElevatedButton(
-                                onClick = {
-                                    viewModel.getFavoriteUsers(
-                                        ++page.value,
-                                        30,
-                                        ordem.value,
-                                        context
-                                    )
-                                },
-                                horizontalPadding = 16,
-                                verticalPadding = 8,
-                                defaultElevation = 0,
-                                pressedElevation = 0,
-                                containerColor = Color(GrayLoadButton.value),
-                                contentColor = Color(0xFF505050),
-                                shape = RoundedCornerShape(50),
-                                horizontalArrangement = Arrangement.spacedBy(
-                                    8.dp,
-                                    Alignment.CenterHorizontally
-                                ),
-                                text = UiText.StringResource(
-                                    R.string.btn_text_load_more_talents
-                                ).asString(context = context),
-                                fontSize = 16,
-                                fontWeight = FontWeight.Medium,
-                                contentDescription = UiText.StringResource(
-                                    R.string.btn_description_load_more_talents
-                                ).asString(context = context)
-                            )
+                    item {
+                        if (!isLastPage && freelancers.isNotEmpty()) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                CustomizedElevatedButton(
+                                    onClick = {
+                                        viewModel.getFavoriteUsers(
+                                            ++page.value,
+                                            30,
+                                            ordem.value,
+                                            context
+                                        )
+                                    },
+                                    horizontalPadding = 16,
+                                    verticalPadding = 8,
+                                    defaultElevation = 0,
+                                    pressedElevation = 0,
+                                    containerColor = Color(GrayLoadButton.value),
+                                    contentColor = Color(0xFF505050),
+                                    shape = RoundedCornerShape(50),
+                                    horizontalArrangement = Arrangement.spacedBy(
+                                        8.dp,
+                                        Alignment.CenterHorizontally
+                                    ),
+                                    text = UiText.StringResource(
+                                        R.string.btn_text_load_more_talents
+                                    ).asString(context = context),
+                                    fontSize = 16,
+                                    fontWeight = FontWeight.Medium,
+                                    contentDescription = UiText.StringResource(
+                                        R.string.btn_description_load_more_talents
+                                    ).asString(context = context)
+                                )
+                            }
                         }
                     }
                 }

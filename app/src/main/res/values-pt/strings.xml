@@ -173,6 +173,7 @@
     <string name="sub_text_cadastro_formview">Faça o cadastro para ter acesso aos nossos serviços!</string>
     <string name="text_recommendations">Recomendações</string>
     <string name="text_interested_companies">Empresas interessadas</string>
+    <string name="text_no_talents_found">Ops! Talentos não encotrados</string>
 
     // APPEND TEXT
     <string name="append_text_index_encontro">"O ponto de encontro dos "</string>
