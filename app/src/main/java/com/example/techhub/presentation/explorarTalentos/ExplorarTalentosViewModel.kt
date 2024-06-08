@@ -16,7 +16,8 @@ class ExplorarTalentosViewModel : ViewModel() {
     val talentos = MutableLiveData(SnapshotStateList<UsuarioFavoritoData>())
     val erroApi = MutableLiveData("")
     val totalElements = MutableLiveData(0)
-    val isLoading = MutableLiveData(false)
+    val isLoading = MutableLiveData(true)
+    val isloadingMoreTalents = MutableLiveData(false)
     val isLastPage = MutableLiveData(false)
 
     val flags = MutableLiveData(SnapshotStateList<FlagData>())
@@ -24,11 +25,11 @@ class ExplorarTalentosViewModel : ViewModel() {
     private val usuarioApi = RetrofitService.getUsuarioService()
     private val flagsApi = RetrofitService.getFlagService()
 
-    fun getTalentos(page: Int, size: Int, usuarioFiltroData: UsuarioFiltroData) {
-        if (page == 0) isLoading.postValue(true)
+    fun getTalentos(page: Int, size: Int, ordem: String, usuarioFiltroData: UsuarioFiltroData) {
+        if (page == 0) isLoading.postValue(true) else isloadingMoreTalents.postValue(true)
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = usuarioApi.getTalentos(page, size, usuarioFiltroData)
+                val response = usuarioApi.getTalentos(page, size, ordem, usuarioFiltroData)
 
                 if (response.isSuccessful) {
                     val responsePage = response.body()
@@ -50,10 +51,15 @@ class ExplorarTalentosViewModel : ViewModel() {
             } catch (e: Exception) {
                 Log.e(
                     "EXPLORAR_TALENTOS_VIEW_MODEL",
-                    "Ocorreu um erro no GET talentos ${e.message}"
+                    "Ocorreu um erro no GET talentos $e"
                 )
+                talentos.value!!.clear()
+                totalElements.postValue(0)
+                isLastPage.postValue(true)
+
             } finally {
                 isLoading.postValue(false)
+                isloadingMoreTalents.postValue(false)
             }
         }
     }

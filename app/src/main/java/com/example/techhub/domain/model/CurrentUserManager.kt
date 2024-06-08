@@ -59,3 +59,12 @@ fun updateCurrentUser(dataStoreData: DataStoreData) {
     CurrentUser.email = dataStoreData.email
     CurrentUser.isUsing2FA = dataStoreData.isUsing2FA
 }
+
+fun cleanCurrentUser() {
+    CurrentUser.userTokenJwt = ""
+    CurrentUser.urlProfileImage = ""
+    CurrentUser.userProfile = null
+    CurrentUser.isEmpresa = false
+    CurrentUser.email = ""
+    CurrentUser.isUsing2FA = false
+}

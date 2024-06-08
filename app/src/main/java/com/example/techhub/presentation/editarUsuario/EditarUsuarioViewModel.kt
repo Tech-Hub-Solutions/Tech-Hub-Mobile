@@ -27,8 +27,10 @@ class EditarUsuarioViewModel : ViewModel() {
     private val apiPerfil = RetrofitService.getPerfilService()
     private val erroApi = MutableLiveData("")
     private val flagsApi = RetrofitService.getFlagService()
+    val isLoading = MutableLiveData(false)
 
     fun getFlags() {
+
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = flagsApi.getFlags()
@@ -50,6 +52,8 @@ class EditarUsuarioViewModel : ViewModel() {
     }
 
     fun updateUserInfo(context: Context, perfilCadastroData: PerfilCadastroData) {
+        isLoading.postValue(true)
+
         val toastErrorMessage = UiText.StringResource(
             R.string.toast_text_error_login
         ).asString(context = context)
@@ -77,11 +81,13 @@ class EditarUsuarioViewModel : ViewModel() {
                         showToastError(context = context, message = toastErrorMessage)
                     }
                     erroApi.postValue(response.errorBody()?.toString())
+                    isLoading.postValue(false)
                 }
             } catch (e: Exception) {
                 (context as Activity).runOnUiThread {
                     showToastError(context = context, message = toastErrorMessage)
                 }
+                isLoading.postValue(false)
                 Log.e("EDITAR_USUARIO_VIEW_MODEL", "Ocorreu um erro no get ${e.message}")
             }
         }

@@ -33,7 +33,7 @@ fun SkillsSelectedField(
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 48.dp)
-            .border(1.dp, Color.Gray, RoundedCornerShape(8.dp))
+            .border(1.dp, Color.LightGray, RoundedCornerShape(6.dp))
             .wrapContentHeight()
     )
     {

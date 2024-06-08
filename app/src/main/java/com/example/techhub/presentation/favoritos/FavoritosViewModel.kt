@@ -16,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class FavoritosViewModel() {
+    val freelancers = MutableLiveData(SnapshotStateList<UsuarioFavoritoData>())
     val favoritos = MutableLiveData(SnapshotStateList<UsuarioFavoritoData>())
     val erroApi = MutableLiveData("")
     val isLastPage = MutableLiveData(false)
@@ -41,9 +42,10 @@ class FavoritosViewModel() {
                     isLastPage.postValue(page?.last ?: false)
 
                     if (page!!.first) {
-                        favoritos.value!!.clear()
+                        freelancers.value!!.clear()
                     }
 
+                    freelancers.value!!.addAll(list)
                     favoritos.value!!.addAll(list)
                     totalElements.postValue(page.totalElements.toInt())
                     erroApi.postValue("")

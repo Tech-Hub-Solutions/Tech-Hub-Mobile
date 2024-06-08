@@ -35,9 +35,13 @@
     <string name="btn_text_perfil">Profile</string>
     <string name="btn_text_sair">Log Out</string>
     <string name="btn_text_order_by">Order By</string>
+    <string name="btn_download_curriculo">Download CV</string>
+    <string name="btn_upload_curriculo">Upload new CV</string>
+    <string name="btn_share_perfi">Share profile</string>
 
     // TOAST TEXT
     <string name="toast_text_welcome">Welcome!</string>
+    <string name="toast_text_welcome_with_name">"Welcome, "</string>
     <string name="toast_auth_text_error">Error verifying user</string>
     <string name="toast_text_error_login">Oops! Something went wrong.\n Please try again.</string>
     <string name="toast_text_copy_secret_key">Code copied</string>
@@ -57,6 +61,11 @@
     <string name="toast_text_error_campos_obrigatorios">All fields must be filled out!</string>
     <string name="toast_error_cnpj">Invalid CNPJ</string>
     <string name="toast_error_skills_dropdown_menu">You can select up to 10 skills</string>
+    <string name="toast_error_sem_curriculo">The user does not have a file to download yet!</string>
+    <string name="toast_text_link_perfil">Profile link copied to clipboard!</string>
+    <string name="toast_text_success_send_fun">Resume was successfully uploaded!</string>
+    <string name="toast_error_send_curriculum_fun">Error sending resume!</string>
+    <string name="toast_text_success_download_fun">Resume downloaded successfully!</string>
 
     // TITLE, SUBTITLE
     <string name="subtitle_index">Bridging talent and need.</string>
@@ -68,7 +77,7 @@
     <string name="title_cadastro">Register</string>
     <string name="title_trava_tela_cadastro">First Steps</string>
     <string name="title_experiencia">Experience</string>
-    <string name="title_quem_procuramos">Who We Are Looking For</string>
+    <string name="title_quem_procuramos">Who we are looking for</string>
     <string name="title_sobre_mim">About Me</string>
     <string name="title_projetos_desenvolvidos">Developed Projects</string>
     <string name="title_additional_informations">Additional Information</string>
@@ -77,6 +86,9 @@
     <string name="title_explorar_talentos">Explore Talents</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_edit_config_usuario">Edit Settings</string>
+    <string name="text_entry_cadastro_freelancer">I want to be a freelancer</string>
+    <string name="text_entry_cadastro_empresa">I want to explore talents</string>
+    <string name="sub_text_cadastro_formview">Register to have access to our services!</string>
 
     // DESCRIPTION
     <string name="description_image_logo">Tech Hub logo</string>
@@ -108,6 +120,10 @@
     <string name="description_image_expand">Expand</string>
     <string name="description_image_historico">History icon</string>
     <string name="description_image_photo_freelancer">Freelancer photo</string>
+    <string name="icon_desc_curriculo">Curriculum Vitae</string>
+    <string name="description_dowloading_file">Downloading file…</string>
+    <string name="desc_user_card">No description</string>
+    <string name="description_usercard_sem_preco">Price not stated</string>
 
     // TEXT
     <string name="text_auth_code">Enter the authorization code</string>
@@ -154,6 +170,10 @@
     <string name="text_edit_config_usuario">Make the necessary changes to update your registration information.</string>
     <string name="text_activate_compare">Activate comparison</string>
     <string name="text_no_skill">No skill selected</string>
+    <string name="text_curriculum_name">"CV - "</string>
+    <string name="text_recommendations">Recommendations</string>
+    <string name="text_interested_companies">Interested Companies</string>
+    <string name="text_no_talents_found">Ops! No talents found</string>
 
     // APPEND TEXT
     <string name="append_text_index_encontro">"The meeting point of "</string>
@@ -171,6 +191,9 @@
     <string name="placeholder_text_search_country">Enter the country</string>
     <string name="placeholder_text_name">Enter your name</string>
     <string name="placeholder_text_skill">Select a skill</string>
+    <string name="placeholder_nome_empresa">Enter the company name</string>
+    <string name="placeholder_filtro_area">Select an area</string>
+    <string name="placeholder_filtro_nome">Enter a name</string>
 
     // SUPPORTING TEXT
     <string name="supporting_text_email">Invalid email</string>
@@ -178,6 +201,7 @@
     <string name="supporting_text_cpf">Invalid CPF</string>
     <string name="supporting_text_nome">Name is required</string>
     <string name="supporting_text_service_price">Invalid value</string>
+    <string name="supporting_text_nome_empresa">Company name is required</string>
 
     // LABEL
     <string name="label_auth_code">Verify the app code</string>
@@ -187,6 +211,7 @@
     <string name="label_cpf">CPF</string>
     <string name="label_descricao">Description</string>
     <string name="label_text_search_country">Type to search</string>
+    <string name="label_nome_empresa">Company Name</string>
 
     // ORDER BY
     <string name="order_by_most_rated">Most Rated</string>

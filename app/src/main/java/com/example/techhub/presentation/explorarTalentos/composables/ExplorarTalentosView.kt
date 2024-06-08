@@ -30,7 +30,9 @@ import com.example.techhub.presentation.explorarTalentos.ExplorarTalentosViewMod
 @Composable
 fun ExplorarTalentosView(viewModel: ExplorarTalentosViewModel = ExplorarTalentosViewModel()) {
     val ordem = remember { mutableStateOf("avaliacao,desc") }
-    val (filtro, setFiltro) = remember { mutableStateOf(UsuarioFiltroData(tecnologiasIds = mutableListOf())) }
+    val (filtro, setFiltro) = remember { mutableStateOf(UsuarioFiltroData(
+        tecnologiasIds = mutableListOf()
+    )) }
     val context = LocalContext.current
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -43,7 +45,9 @@ fun ExplorarTalentosView(viewModel: ExplorarTalentosViewModel = ExplorarTalentos
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                     ModalDrawerSheet(
                         drawerContainerColor = Color(0xFFF8F8F8),
-                    ) { FilterDrawerContent(setFiltro, viewModel, drawerState, scope) }
+                    ) {
+                        FilterDrawerContent(setFiltro, viewModel, drawerState, scope)
+                    }
                 }
             },
         ) {
@@ -75,7 +79,6 @@ fun ExplorarTalentosView(viewModel: ExplorarTalentosViewModel = ExplorarTalentos
                             filtro = filtro,
                             context = context,
                             ordem = ordem,
-                            scope = scope,
                             drawerState = drawerState
                         )
                     }

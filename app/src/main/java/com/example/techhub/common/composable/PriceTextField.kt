@@ -1,5 +1,6 @@
 package com.example.techhub.common.composable
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,10 +26,11 @@ import com.example.techhub.R
 import com.example.techhub.common.utils.UiText
 import com.example.techhub.presentation.ui.theme.PrimaryBlue
 
+@SuppressLint("DefaultLocale")
 @Composable
 fun PriceTextField(
-    onValueChanged: (Double?) -> Unit,
-    initialValue: Double? = 0.0,
+    onValueChanged: (String?) -> Unit,
+    initialValue: String? = "",
     context: Context
 ) {
     var filledText by remember { mutableStateOf(initialValue) }
@@ -36,24 +38,15 @@ fun PriceTextField(
 
     Column {
         OutlinedTextField(
-            value = if (filledText == 0.0 || filledText == null) "" else "R$ ${
-                // TODO - Refatorar a máscara do decimal para editar o valor corretamente
-                String.format("%.2f", filledText)
-            }",
-            onValueChange = {
-                val cleanValue = it.removePrefix("R$ ").replace(",", ".")
-
-                var doubleValue = try {
-                    cleanValue.toDouble()
-                } catch (e: Exception) {
-                    filledText
+            value = filledText!!,
+            prefix = { Text(text = "R$ ", color = Color.Black) },
+            onValueChange = { input ->
+                filledText = if (input.contains(",")) {
+                    input.replace(",", ".")
+                } else {
+                    input
                 }
 
-                if (doubleValue != null && doubleValue < 0) {
-                    doubleValue = 0.0
-                }
-
-                filledText = doubleValue
                 onValueChanged(filledText)
             },
             label = {
@@ -106,7 +99,7 @@ fun PriceTextField(
             },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Decimal,
-                imeAction = ImeAction.Go
+                imeAction = ImeAction.Done
             ),
         )
     }

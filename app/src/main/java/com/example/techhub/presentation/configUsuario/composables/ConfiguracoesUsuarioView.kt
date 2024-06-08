@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -29,6 +30,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -36,12 +39,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.techhub.R
+import com.example.techhub.common.composable.CompanyNameTextField
 import com.example.techhub.common.composable.EmailTextField
 import com.example.techhub.common.composable.FlagDropDownMenu
 import com.example.techhub.common.composable.NameTextField
 import com.example.techhub.common.composable.PasswordTextField
+import com.example.techhub.common.composable.ProgressButton
 import com.example.techhub.common.composable.Switch2FALeft
 import com.example.techhub.common.composable.TopBar
+import com.example.techhub.common.enums.UsuarioFuncao
 import com.example.techhub.common.objects.countryFlagsList
 import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.base64Images.encodeBase64
@@ -64,7 +70,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun ConfiguracoesUsuarioView(
     redirectToAuth: (UsuarioSimpleVerifyData) -> Unit,
-    viewModel: ConfiguracoesUsuarioViewModel
+    viewModel: ConfiguracoesUsuarioViewModel,
 ) {
     val context = LocalContext.current
     var name by remember { mutableStateOf(CurrentUser.userProfile!!.nome!!) }
@@ -78,7 +84,12 @@ fun ConfiguracoesUsuarioView(
     var isUsing2FA by remember { mutableStateOf(CurrentUser.isUsing2FA) }
     val errorApi = viewModel.errorApi.observeAsState().value!!
     val usuarioTokenData = viewModel.usuarioTokenData.observeAsState()
+    val isLoading = viewModel.isLoading.observeAsState()
+    val focusRequester = remember { FocusRequester() }
 
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
 
     LaunchedEffect(usuarioTokenData.value) {
         if (!usuarioTokenData.value!!.secret.isNullOrBlank()) {
@@ -140,11 +151,28 @@ fun ConfiguracoesUsuarioView(
             ) {
                 Spacer(modifier = Modifier.padding(0.dp))
 
-                NameTextField(
-                    initialValue = CurrentUser.userProfile!!.nome!!,
-                    onValueChanged = { name = it },
-                    context = context
-                )
+//                NameTextField(
+//                    initialValue = CurrentUser.userProfile!!.nome!!,
+//                    onValueChanged = { name = it },
+//                    context = context,
+//                    modifier = Modifier.focusRequester(focusRequester)
+//                )
+
+                if (!CurrentUser.isEmpresa) {
+                    NameTextField(
+                        initialValue = CurrentUser.userProfile!!.nome!!,
+                        onValueChanged = { name = it },
+                        context = context,
+                        modifier = Modifier.focusRequester(focusRequester)
+                    )
+                } else {
+                    CompanyNameTextField(
+                        initialValue = CurrentUser.userProfile!!.nome!!,
+                        onValueChanged = { name = it },
+                        context = context,
+                        modifier = Modifier.focusRequester(focusRequester)
+                    )
+                }
 
                 FlagDropDownMenu(flag = nacionalidade, context = context)
 
@@ -168,7 +196,7 @@ fun ConfiguracoesUsuarioView(
 
             }
 
-            ElevatedButton(
+            ProgressButton(
                 onClick = {
                     val countryCode = countryFlagsList.find { it.name == nacionalidade.value }
                     val usuarioAtualizacaoData =
@@ -219,23 +247,15 @@ fun ConfiguracoesUsuarioView(
                         }
                     }
                 },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(60.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(PrimaryBlue.value),
-                    contentColor = Color.White,
-                ),
-                shape = RoundedCornerShape(10.dp),
-            ) {
-                Text(
-                    text = UiText.StringResource(
-                        R.string.btn_text_salvar,
-                    ).asString(context = context),
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight(500)
-                )
-            }
+                text = UiText.StringResource(
+                    R.string.btn_text_salvar,
+                ).asString(context = context),
+                backgroundColor = Color(PrimaryBlue.value),
+                height = (60),
+                padding = (0),
+                width = (385),
+                isLoading = isLoading
+            )
 
             Spacer(modifier = Modifier.padding(12.dp))
 
@@ -246,7 +266,7 @@ fun ConfiguracoesUsuarioView(
                     startNewActivity(context, PerfilActivity::class.java, extras)
                 },
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .width(385.dp)
                     .height(60.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,

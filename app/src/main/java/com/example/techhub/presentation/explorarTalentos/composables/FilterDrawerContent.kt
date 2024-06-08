@@ -9,12 +9,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DrawerState
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Shapes
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -36,6 +36,8 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+const val PRECO_MAX = 10_000.00f;
+
 @Composable
 fun FilterDrawerContent(
     setFiltro: (UsuarioFiltroData) -> Unit,
@@ -44,15 +46,13 @@ fun FilterDrawerContent(
     scope: CoroutineScope
 ) {
     val context = LocalContext.current
-    val talentos = viewModel.talentos.observeAsState().value!!
-    val maxPrice = talentos.toList().maxByOrNull { it.precoMedio ?: 0.0 }?.precoMedio ?: 0.0
 
     val (newFiltro, setNewFiltro) = remember {
         mutableStateOf(
             UsuarioFiltroData(
                 tecnologiasIds = mutableListOf(),
                 precoMin = 0f,
-                precoMax = 10_000.00f
+                precoMax = 5000f
             )
         )
     }
@@ -97,7 +97,7 @@ fun FilterDrawerContent(
                 .height(1.dp)
         )
 
-        FiltroPorPreco(newFiltro, setNewFiltro, maxPrice.toFloat(), context)
+        FiltroPorPreco(newFiltro, setNewFiltro, context)
 
         Spacer(
             modifier = Modifier
@@ -106,7 +106,7 @@ fun FilterDrawerContent(
                 .height(1.dp)
         )
 
-        TextButton(
+        ElevatedButton(
             onClick = {
                 setFiltro(newFiltro)
                 scope.launch {
@@ -116,31 +116,34 @@ fun FilterDrawerContent(
                 }
             },
             modifier = Modifier
-                .fillMaxWidth()
-                .background(PrimaryBlue),
-            shape = Shapes().extraLarge
+                .fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = PrimaryBlue,
+                contentColor = Color.White,
+            ),
+            shape = RoundedCornerShape(10.dp)
         ) {
             Text(
                 text = UiText.StringResource(
                     R.string.btn_text_apply_filter,
                 ).asString(context = context),
-                color = Color.White,
                 fontSize = 16.sp
             )
         }
 
-        // Limpar
-        OutlinedButton(
+        ElevatedButton(
             onClick = {
                 setNewFiltro(
-                    newFiltro.copy(
+                    UsuarioFiltroData(
+                        nome = null,
                         tecnologiasIds = mutableListOf(),
                         precoMin = 0f,
-                        precoMax = null,
+                        precoMax = 5000f
                     )
                 )
                 setFiltro(
                     UsuarioFiltroData(
+                        nome = null,
                         tecnologiasIds = mutableListOf(),
                         precoMin = null,
                         precoMax = null,
@@ -153,16 +156,20 @@ fun FilterDrawerContent(
                 }
             },
             modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.White),
-            shape = Shapes().extraLarge,
-            border = BorderStroke(1.dp, PrimaryBlue)
+                .fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.White,
+                contentColor = PrimaryBlue,
+            ),
+            border = BorderStroke(
+                1.dp, Color(PrimaryBlue.value)
+            ),
+            shape = RoundedCornerShape(10.dp),
         ) {
             Text(
                 text = UiText.StringResource(
                     R.string.btn_text_clear_filter,
                 ).asString(context = context),
-                color = PrimaryBlue,
                 fontSize = 16.sp
             )
         }

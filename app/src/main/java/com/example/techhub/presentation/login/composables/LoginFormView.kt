@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -15,10 +16,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -31,9 +36,11 @@ import com.example.techhub.common.composable.TopBar
 import com.example.techhub.domain.model.usuario.UsuarioLoginData
 import com.example.techhub.presentation.index.IndexActivity
 import com.example.techhub.R
+import com.example.techhub.common.composable.CircularProgressIndicatorTH
 import com.example.techhub.common.composable.ElevatedButtonTH
 import com.example.techhub.common.composable.EmailTextField
 import com.example.techhub.common.composable.PasswordTextField
+import com.example.techhub.common.composable.ProgressButton
 import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.presentation.cadastro.CadastroActivity
@@ -47,9 +54,14 @@ fun LoginFormView(
     onAuthSucess: (UsuarioLoginData) -> Unit
 ) {
     val context = LocalContext.current
-
+    val isLoading = viewModel.isLoading.observeAsState();
     val (user, userSetter) = remember {
         mutableStateOf(UsuarioLoginData())
+    }
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
     }
 
     Scaffold(
@@ -113,7 +125,8 @@ fun LoginFormView(
             ) {
                 EmailTextField(
                     onValueChanged = { userSetter(user.copy(email = it)) },
-                    context = context
+                    context = context,
+                    modifier = Modifier.focusRequester(focusRequester)
                 )
 
                 PasswordTextField(
@@ -124,14 +137,16 @@ fun LoginFormView(
 
             Spacer(modifier = Modifier.padding(12.dp))
 
-            ElevatedButtonTH(
+            ProgressButton(
                 onClick = { viewModel.loginUser(user, context, onAuthSucess) },
                 text = UiText.StringResource(
                     R.string.btn_text_entrar
                 ).asString(context = context),
                 backgroundColor = Color(PrimaryBlue.value),
-                width = (350),
                 height = (60),
+                width = (350),
+                padding = (10),
+                isLoading = isLoading
             )
 
             Spacer(modifier = Modifier.padding(8.dp))
