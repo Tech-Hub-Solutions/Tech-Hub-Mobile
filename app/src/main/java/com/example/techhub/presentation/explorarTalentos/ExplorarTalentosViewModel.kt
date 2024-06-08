@@ -16,7 +16,7 @@ class ExplorarTalentosViewModel : ViewModel() {
     val talentos = MutableLiveData(SnapshotStateList<UsuarioFavoritoData>())
     val erroApi = MutableLiveData("")
     val totalElements = MutableLiveData(0)
-    val isLoading = MutableLiveData(false)
+    val isLoading = MutableLiveData(true)
     val isloadingMoreTalents = MutableLiveData(false)
     val isLastPage = MutableLiveData(false)
 
@@ -51,8 +51,12 @@ class ExplorarTalentosViewModel : ViewModel() {
             } catch (e: Exception) {
                 Log.e(
                     "EXPLORAR_TALENTOS_VIEW_MODEL",
-                    "Ocorreu um erro no GET talentos ${e.message}"
+                    "Ocorreu um erro no GET talentos $e"
                 )
+                talentos.value!!.clear()
+                totalElements.postValue(0)
+                isLastPage.postValue(true)
+
             } finally {
                 isLoading.postValue(false)
                 isloadingMoreTalents.postValue(false)

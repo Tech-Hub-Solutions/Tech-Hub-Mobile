@@ -173,6 +173,7 @@
     <string name="text_curriculum_name">"CV - "</string>
     <string name="text_recommendations">Recommendations</string>
     <string name="text_interested_companies">Interested Companies</string>
+    <string name="text_no_talents_found">Ops! No talents found</string>
 
     // APPEND TEXT
     <string name="append_text_index_encontro">"The meeting point of "</string>
