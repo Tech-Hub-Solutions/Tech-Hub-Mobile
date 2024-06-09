@@ -132,7 +132,7 @@
     <string name="text_freelancer">Freelancer</string>
     <string name="text_empresa">Empresa</string>
     <string name="text_trava_tela_cadastro">Como deseja começar?</string>
-    <string name="text_authenticator">Habilitar autenticação de 2 fatores</string>
+    <string name="text_authenticator">Habilitar autenticação de dois fatores</string>
     <string name="text_scan_qr_code">Baixe o autenticador da Google (Google Authenticator)</string>
     <string name="text_sem_descricao">Sem descrição</string>
     <string name="text_valores">Valores</string>
