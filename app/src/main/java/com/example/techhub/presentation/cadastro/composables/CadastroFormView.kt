@@ -55,11 +55,14 @@ import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.base64Images.encodeBase64
 import com.example.techhub.common.utils.redirectToPerfilUsuario
 import com.example.techhub.common.utils.showToastError
+import com.example.techhub.data.prefdatastore.DataStoreManager
+import com.example.techhub.domain.model.datastore.DataStoreData
 import com.example.techhub.domain.service.RetrofitService
 import com.example.techhub.domain.model.updateCurrentUser
 import com.example.techhub.domain.model.usuario.UsuarioCriacaoData
 import com.example.techhub.domain.model.usuario.UsuarioSimpleVerifyData
 import com.example.techhub.domain.model.usuario.UsuarioTokenData
+import kotlinx.coroutines.flow.first
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -68,7 +71,7 @@ import retrofit2.Response
 fun CadastroFormView(
     navController: NavController,
     userType: String,
-    onAuthSuccess: (UsuarioSimpleVerifyData) -> Unit
+    onAuthSuccess: (UsuarioSimpleVerifyData) -> Unit,
 ) {
     val isLoading = MutableLiveData(false)
     var name by remember { mutableStateOf("") }
@@ -79,6 +82,12 @@ fun CadastroFormView(
     val context = LocalContext.current
     val toastErrorMessage = "Ops! Algo deu errado.\n Tente novamente."
     val focusRequester = remember { FocusRequester() }
+    val dataStoreManager = DataStoreManager(context = context)
+    var dataStoreData: DataStoreData? = null
+
+    LaunchedEffect(key1 = dataStoreManager) {
+        dataStoreData = dataStoreManager.getFromDataStore().first()
+    }
 
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
@@ -86,6 +95,7 @@ fun CadastroFormView(
 
     fun cadastrarUsuario() {
         isLoading.postValue(true)
+
         val user = UsuarioCriacaoData(
             nome = name,
             email = email,
@@ -104,6 +114,8 @@ fun CadastroFormView(
             ) {
 
                 if (response.isSuccessful) {
+                    dataStoreData?.let { updateCurrentUser(it) }
+
                     if (isUsing2FA) {
                         val secretQrCodeUrl = response.body()?.secretQrCodeUrl.toString()
                         val secretKey = response.body()?.secret.toString()
