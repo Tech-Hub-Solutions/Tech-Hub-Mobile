@@ -66,6 +66,7 @@
     <string name="toast_text_success_send_fun">Resume was successfully uploaded!</string>
     <string name="toast_error_send_curriculum_fun">Error sending resume!</string>
     <string name="toast_text_success_download_fun">Resume downloaded successfully!</string>
+    <string name="toast_text_error_visualizar_perfil">Oops! An error occurred while registering the profile view.</string>
 
     // TITLE, SUBTITLE
     <string name="subtitle_index">Bridging talent and need.</string>

@@ -67,6 +67,7 @@
     <string name="toast_text_success_send_fun">¡Curriculum enviado exitosamente!</string>
     <string name="toast_error_send_curriculum_fun">¡Error al enviar el currículum!</string>
     <string name="toast_text_success_download_fun">¡Curriculum descargado exitosamente!</string>
+    <string name="toast_text_error_visualizar_perfil">¡Ups! Se produjo un error al registrar la vista del perfil.</string>
 
     // TITLE, SUBTITLE
     <string name="subtitle_index">Uniendo talento y necesidad.</string>

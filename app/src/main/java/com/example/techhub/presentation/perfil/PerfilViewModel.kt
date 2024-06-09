@@ -13,7 +13,6 @@ import com.example.techhub.R
 import com.example.techhub.common.enums.TipoArquivo
 import com.example.techhub.common.utils.UiText
 import com.example.techhub.common.utils.showToastError
-import com.example.techhub.common.utils.startNewActivity
 import com.example.techhub.domain.service.RetrofitService
 import com.example.techhub.domain.model.CurrentUser
 import com.example.techhub.domain.model.avaliacao.AvaliacaoData
@@ -21,10 +20,8 @@ import com.example.techhub.domain.model.avaliacao.AvaliacaoTotalData
 import com.example.techhub.domain.model.perfil.PerfilAvaliacaoDetalhadoData
 import com.example.techhub.domain.model.perfil.PerfilGeralDetalhadoData
 import com.example.techhub.domain.model.updateFotoPerfil
-import com.example.techhub.presentation.explorarTalentos.ExplorarTalentosActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -314,9 +311,7 @@ class PerfilViewModel : ViewModel() {
         }
     }
 
-    fun setVisualizacaoUsuario(context: Context, perfilId: Int) {
-        val toastErrorMessage = "Ops! Ocorreu um erro ao registrar a visualização do perfil."
-
+    private fun setVisualizacaoUsuario(context: Context, perfilId: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = apiMetricas.registrarMetricasUsuario(perfilId)
@@ -328,7 +323,11 @@ class PerfilViewModel : ViewModel() {
 
             } catch (error: Exception) {
                 (context as Activity).runOnUiThread {
-                    showToastError(context = context, message = toastErrorMessage)
+                    showToastError(
+                        context = context,
+                        message = UiText.StringResource(
+                        R.string.toast_text_error_visualizar_perfil
+                    ).asString(context = context))
                 }
                 Log.e("PERFIL_VIEW_MODEL", "SET VISUALIZACAO PERFIL ERROR: ${error.message}")
             }
@@ -368,7 +367,7 @@ class PerfilViewModel : ViewModel() {
                 } else {
                     val toastErrorMessage = UiText.StringResource(
                         R.string.toast_error_send_curriculum_fun
-                    ).asString(context = context);
+                    ).asString(context = context)
 
                     (context as Activity).runOnUiThread {
                         showToastError(context = context, message = toastErrorMessage)
