@@ -1,20 +1,14 @@
 package com.example.techhub.presentation.cadastro.composables
 
 import android.os.Bundle
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,7 +32,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import com.example.techhub.R
-import com.example.techhub.common.composable.CircularProgressIndicatorTH
 import com.example.techhub.common.composable.CpfTextField
 import com.example.techhub.common.composable.EmailTextField
 import com.example.techhub.common.composable.NameTextField
@@ -49,6 +42,7 @@ import com.example.techhub.presentation.ui.theme.PrimaryBlue
 import com.example.techhub.common.enums.Screen
 import com.example.techhub.common.composable.CnpjTextField
 import com.example.techhub.common.composable.CompanyNameTextField
+import com.example.techhub.common.composable.ProgressButtonCadastro
 import com.example.techhub.common.composable.Switch2FA
 import com.example.techhub.common.enums.UsuarioFuncao
 import com.example.techhub.common.utils.UiText
@@ -80,7 +74,6 @@ fun CadastroFormView(
     var password by remember { mutableStateOf("") }
     var isUsing2FA by remember { mutableStateOf(false) }
     val context = LocalContext.current
-    val toastErrorMessage = "Ops! Algo deu errado.\n Tente novamente."
     val focusRequester = remember { FocusRequester() }
     val dataStoreManager = DataStoreManager(context = context)
     var dataStoreData: DataStoreData? = null
@@ -146,13 +139,23 @@ fun CadastroFormView(
                         )
                     }
                 } else {
-                    showToastError(context = context, message = toastErrorMessage)
+                    showToastError(
+                        context = context,
+                        message = UiText.StringResource(
+                            R.string.toast_text_error_login
+                        ).asString(context = context)
+                    )
                     isLoading.postValue(false)
                 }
             }
 
             override fun onFailure(call: Call<UsuarioTokenData>, t: Throwable) {
-                showToastError(context = context, message = toastErrorMessage)
+                showToastError(
+                    context = context,
+                    message = UiText.StringResource(
+                        R.string.toast_text_error_login
+                    ).asString(context = context)
+                )
                 isLoading.postValue(false)
             }
         })
@@ -269,38 +272,6 @@ fun CadastroFormView(
                     isLoading = isLoading.observeAsState().value!!,
                 )
             }
-        }
-    }
-}
-
-@Composable
-fun ProgressButtonCadastro(
-    onClick: () -> Unit,
-    text: String,
-    backgroundColor: Color,
-    textColor: Color = Color.White,
-    height: Int, padding: Int, width: Int,
-    isLoading: Boolean,
-) {
-    ElevatedButton(
-        onClick = { onClick() },
-        modifier = Modifier
-            .padding(padding.dp)
-            .width(width.dp)
-            .height(height.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = backgroundColor,
-            contentColor = textColor,
-        ),
-        border = BorderStroke(
-            1.dp, Color(PrimaryBlue.value)
-        ),
-        shape = RoundedCornerShape(10.dp),
-    ) {
-        if (isLoading) {
-            CircularProgressIndicatorTH(size = 30.0, color = Color.White)
-        } else {
-            Text(text = text, fontSize = 16.sp, fontWeight = FontWeight(300))
         }
     }
 }
