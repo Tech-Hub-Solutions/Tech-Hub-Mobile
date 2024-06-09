@@ -66,6 +66,7 @@
     <string name="toast_text_success_send_fun">Currículo enviado com sucesso!</string>
     <string name="toast_error_send_curriculum_fun">Erro ao enviar o currículo!</string>
     <string name="toast_text_success_download_fun">Currículo baixado com sucesso!</string>
+    <string name="toast_text_error_visualizar_perfil">Ops! Ocorreu um erro ao registrar a visualização do perfil.</string>
 
     // TITLE, SUBTITLE
     <string name="subtitle_index">Unindo talento e necessidade.</string>
@@ -130,7 +131,7 @@
     <string name="text_freelancer">Freelancer</string>
     <string name="text_empresa">Empresa</string>
     <string name="text_trava_tela_cadastro">Como deseja começar?</string>
-    <string name="text_authenticator">Habilitar autenticação de 2 fatores</string>
+    <string name="text_authenticator">Habilitar autenticação de dois fatores</string>
     <string name="text_scan_qr_code">Baixe o autenticador da Google (Google Authenticator)</string>
     <string name="text_sem_descricao">Sem descrição</string>
     <string name="text_valores">Valores</string>
